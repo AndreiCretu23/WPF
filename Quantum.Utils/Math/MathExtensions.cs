@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Diagnostics;
+using Quantum.Utils;
 
-namespace Quantum.Utils
+namespace Quantum.Math
 {
-    public static class NumericExtensions
+    public static class MathExtensions
     {
+        #region Private
+
         [DebuggerHidden]
         private static bool IsNonNullableNumeric<T>(this T obj)
         {
@@ -40,11 +47,14 @@ namespace Quantum.Utils
         private static T AssertNumeric<T>(this T obj)
         {
             obj.AssertNotNull("obj");
-            if(obj.IsNumeric()) {
+            if (obj.IsNumeric())
+            {
                 return obj;
             }
             throw new Exception("Error : Was expecting a numeric type.");
         }
+
+        #endregion Private
 
         [DebuggerHidden]
         public static bool ToBool<T>(this T numericValue)
@@ -53,7 +63,8 @@ namespace Quantum.Utils
             numericValue.AssertNotNull("Value");
             numericValue.AssertNumeric();
 
-            if(numericValue.CompareTo(0) <= 0) {
+            if (numericValue.CompareTo(0) <= 0)
+            {
                 return false;
             }
             return true;
@@ -85,6 +96,54 @@ namespace Quantum.Utils
                 return true;
             }
             return false;
+        }
+
+        [DebuggerHidden]
+        public static int CutToRange(int value, int min, int max)
+        {
+            return value < min ?
+               min :
+               value > max ? max : value;
+        }
+
+        [DebuggerHidden]
+        public static double CutToRange(double value, double min, double max)
+        {
+            return value < min ?
+               min :
+               value > max ? max : value;
+        }
+
+        [DebuggerHidden]
+        public static float CutToRange(float value, float min, float max)
+        {
+            return value < min ?
+               min :
+               value > max ? max : value;
+        }
+
+        [DebuggerHidden]
+        public static bool IsInRange(int value, int min, int max)
+        {
+            return min < value && value < max;
+        }
+
+        [DebuggerHidden]
+        public static bool IsInRange(double value, double min, double max)
+        {
+            return min < value && value < max;
+        }
+
+        [DebuggerHidden]
+        public static bool IsInRange(float value, float min, float max)
+        {
+            return min < value && value < max;
+        }
+
+        [DebuggerHidden]
+        public static double NaNFallback(double value, double fallback)
+        {
+            return double.IsNaN(value) ? fallback : value;
         }
     }
 }
