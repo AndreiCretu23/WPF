@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quantum.Exceptions
 {
@@ -10,6 +6,15 @@ namespace Quantum.Exceptions
     {
         public Type ExpectedType { get; private set; }
         public Type ActualType { get; private set; }
+
+        public UnexpectedTypeException()
+        {
+        }
+
+        public UnexpectedTypeException(string message)
+            : base(message)
+        {
+        }
 
         public UnexpectedTypeException(Type expectedType, Type actualType)
             : base($"Error : Unexpected Type. \nExpected Type was : {expectedType.Name} \nActual Type is : {actualType.Name}")

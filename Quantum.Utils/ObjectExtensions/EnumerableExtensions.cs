@@ -16,6 +16,12 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
+        public static bool ContainsDuplicates<T>(this IEnumerable<T> collection)
+        {
+            return collection.Distinct().Count() != collection.Count();
+        }
+
+        [DebuggerHidden]
         public static IEnumerable<object> EmptyIfNull(this IEnumerable collection)
         {
             return (collection ?? Enumerable.Empty<object>()).Cast<object>();
@@ -42,7 +48,7 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
         {
-            action.AssertParameterNotNull("action");
+            action.AssertParameterNotNull(nameof(action));
             foreach (var element in collection.AssertNotNull("Enumeration"))
             {
                 action(element);
@@ -53,7 +59,7 @@ namespace Quantum.Utils
         public static void ForEachIndexed<T>(this IEnumerable<T> collection, Action<int, T> action)
         {
             int index = 0;
-            action.AssertParameterNotNull("action");
+            action.AssertParameterNotNull(nameof(action));
             foreach (var item in collection.AssertParameterNotNull("collection"))
             {
                 action(index++, item);
@@ -64,7 +70,7 @@ namespace Quantum.Utils
         public static bool Includes<T>(this IEnumerable<T> collection, IEnumerable<T> otherCollection)
         {
             collection.AssertNotNull("Enumeration");
-            foreach (var element in otherCollection.AssertParameterNotNull("otherCollection"))
+            foreach (var element in otherCollection.AssertParameterNotNull(nameof(otherCollection)))
             {
                 if (!collection.Any(o => o.Equals(element)))
                 {
@@ -90,7 +96,7 @@ namespace Quantum.Utils
         public static int IndexOf<T>(this IEnumerable<T> collection, Func<T, bool> selector)
         {
             int index = 0;
-            selector.AssertParameterNotNull("selector");
+            selector.AssertParameterNotNull(nameof(selector));
             foreach (var item in collection.AssertNotNull("collection"))
             {
                 if (selector(item)) return index;
@@ -109,7 +115,7 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public static IEnumerable<T> ToEnumerable<T>(Func<T> getter)
         {
-            getter.AssertParameterNotNull("getter");
+            getter.AssertParameterNotNull(nameof(getter));
             yield return getter();
         }
 

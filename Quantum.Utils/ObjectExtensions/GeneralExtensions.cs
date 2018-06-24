@@ -47,7 +47,7 @@ namespace Quantum.Utils
         public static void IfNotNull<T>(this T source, Action<T> action)
             where T : class
         {
-            action.AssertParameterNotNull("action");
+            action.AssertParameterNotNull(nameof(action));
             if (source != null) {
                 action(source);
             }
@@ -57,7 +57,7 @@ namespace Quantum.Utils
         public static void IfNotNull<T>(this T? source, Action<T> action)
          where T : struct
         {
-            action.AssertParameterNotNull("action");
+            action.AssertParameterNotNull(nameof(action));
             if (source != null) {
                 action(source.Value);
             }
@@ -67,7 +67,7 @@ namespace Quantum.Utils
         public static TResult IfNotNull<T, TResult>(this T source, Func<T, TResult> getter, TResult defaultValue = default(TResult))
             where T : class
         {
-            getter.AssertParameterNotNull("getter");
+            getter.AssertParameterNotNull(nameof(getter));
             if (source != null) {
                 return getter(source);
             }
@@ -78,7 +78,7 @@ namespace Quantum.Utils
         public static TResult IfNotNull<T, TResult>(this T? source, Func<T, TResult> getter, TResult defaultValue = default(TResult))
          where T : struct
         {
-            getter.AssertParameterNotNull("getter");
+            getter.AssertParameterNotNull(nameof(getter));
             if (source != null) {
                 return getter(source.Value);
             }
@@ -87,23 +87,22 @@ namespace Quantum.Utils
 
 
         [DebuggerHidden]
-        public static T SafeCast<T>(this object source)
+        public static T SafeCast<T>(this object source, string message = null)
         {
             source.AssertNotNull();
             try {
                 return (T)source;
             }
             catch {
-                throw new UnexpectedTypeException(typeof(T), source.GetType());
+                throw new UnexpectedTypeException(typeof(T), source.GetType(), message);
             }
         }
-
-
+        
         [DebuggerHidden]
         public static void IfIs<T>(this object source, Action<T> action)
         {
             source.AssertNotNull();
-            action.AssertParameterNotNull("action");
+            action.AssertParameterNotNull(nameof(action));
             try {
                 action(source.SafeCast<T>());
             }
@@ -111,13 +110,13 @@ namespace Quantum.Utils
         }
         
         [DebuggerHidden]
-        public static TResult IfIs<T, TResult>(this object source, Func<T, TResult> method, TResult defaultValue = default(TResult))
+        public static TResult IfIs<T, TResult>(this object source, Func<T, TResult> func, TResult defaultValue = default(TResult))
             where T : class
         {
             source.AssertNotNull();
-            method.AssertParameterNotNull("method");
+            func.AssertParameterNotNull(nameof(func));
             try {
-                return method(source.SafeCast<T>());
+                return func(source.SafeCast<T>());
             }
             catch (UnexpectedTypeException) { return defaultValue; }  // Return the defaultValue. It means that the object is not of the specified type.
         }
@@ -152,7 +151,7 @@ namespace Quantum.Utils
         public TypeCase<T> CaseType<TDerived>(Action<TDerived> action)
            where TDerived : T
         {
-            action = action.AssertParameterNotNull("action");
+            action = action.AssertParameterNotNull(nameof(action));
 
             if (!this.IsMatched && this.Target is TDerived)
             {
@@ -165,8 +164,8 @@ namespace Quantum.Utils
         public TypeCase<T> CaseType<TDerived>(Func<TDerived, bool> extraMatch, Action<TDerived> action)
            where TDerived : T
         {
-            extraMatch = extraMatch.AssertParameterNotNull("extraMatch");
-            action = action.AssertParameterNotNull("action");
+            extraMatch = extraMatch.AssertParameterNotNull(nameof(extraMatch));
+            action = action.AssertParameterNotNull(nameof(action));
 
 
             if (!this.IsMatched && this.Target is TDerived && extraMatch((TDerived)this.Target))
@@ -179,7 +178,7 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public void Default(Action<T> defaultAction)
         {
-            defaultAction = defaultAction.AssertParameterNotNull("defaultAction");
+            defaultAction = defaultAction.AssertParameterNotNull(nameof(defaultAction));
             if (!this.IsMatched)
             {
                 defaultAction(this.Target);
@@ -221,7 +220,7 @@ namespace Quantum.Utils
         public TypeCase<T, TResult> CaseType<TDerived>(Func<TDerived, TResult> action)
            where TDerived : T
         {
-            action = action.AssertParameterNotNull("action");
+            action = action.AssertParameterNotNull(nameof(action));
 
             if (!this.IsMatched && this.Target is TDerived)
             {

@@ -21,7 +21,7 @@ namespace Quantum.Utils
         
         public static TResult IfNotNullOrEmpty<TResult>(this string str, Func<string, TResult> getter, TResult defaultValue = default(TResult))
         {
-            getter.AssertParameterNotNull("getter");
+            getter.AssertParameterNotNull(nameof(getter));
             if (!str.IsNullOrEmpty()) {
                 return getter(str);
             }
@@ -30,7 +30,7 @@ namespace Quantum.Utils
 
         public static TResult IfNotNullEmptyOrWhiteSpace<TResult>(this string str, Func<string, TResult> getter, TResult defaultValue = default(TResult))
         {
-            getter.AssertParameterNotNull("getter");
+            getter.AssertParameterNotNull(nameof(getter));
             if(!str.IsNullEmptyOrWhiteSpace()) {
                 return getter(str);
             }

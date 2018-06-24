@@ -39,14 +39,14 @@ namespace Quantum.Math
         [DebuggerHidden]
         private static bool IsNumeric<T>(this T obj)
         {
-            obj.AssertNotNull("obj");
+            obj.AssertNotNull(nameof(obj));
             return obj.IsNonNullableNumeric() || obj.IsNullableNumeric();
         }
 
         [DebuggerHidden]
         private static T AssertNumeric<T>(this T obj)
         {
-            obj.AssertNotNull("obj");
+            obj.AssertNotNull(nameof(obj));
             if (obj.IsNumeric())
             {
                 return obj;
@@ -60,7 +60,7 @@ namespace Quantum.Math
         public static bool ToBool<T>(this T numericValue)
             where T : struct, IComparable
         {
-            numericValue.AssertNotNull("Value");
+            numericValue.AssertNotNull(nameof(numericValue));
             numericValue.AssertNumeric();
 
             if (numericValue.CompareTo(0) <= 0)
