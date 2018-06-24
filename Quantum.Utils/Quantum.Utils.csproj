@@ -61,10 +61,9 @@
     <Compile Include="Reflection\MemberInfoExtensions.cs" />
     <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="Time\DateTimeUtils.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Time\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
