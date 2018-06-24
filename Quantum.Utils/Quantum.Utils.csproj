@@ -40,7 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\UnexpectedTypeException.cs" />
+    <Compile Include="ObjectExtensions\EnumerableExtensions.cs" />
+    <Compile Include="ObjectExtensions\GeneralExtensions.cs" />
+    <Compile Include="ObjectExtensions\NumericExtensions.cs" />
+    <Compile Include="ObjectExtensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="IO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
