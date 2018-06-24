@@ -68,7 +68,7 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public static bool IsCloseToInfinity(this double value)
         {
-            if (Double.IsInfinity(value) || (Math.Abs(value) > Math.Pow(10d, 10d)))
+            if (Double.IsInfinity(value) || (System.Math.Abs(value) > System.Math.Pow(10d, 10d)))
             {
                 return true;
             }
@@ -78,8 +78,8 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public static bool IsInCloseProximityOf(this double value, double otherValue)
         {
-            double range = Math.Pow(10d, -2);
-            double difference = Math.Abs(value - otherValue);
+            double range = System.Math.Pow(10d, -2);
+            double difference = System.Math.Abs(value - otherValue);
             if (difference < range)
             {
                 return true;
