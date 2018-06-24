@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,12 +46,19 @@
     <Compile Include="Application\AppInfo.cs" />
     <Compile Include="Exceptions\UnexpectedTypeException.cs" />
     <Compile Include="IO\CommonPaths.cs" />
+    <Compile Include="IO\FolderLock.cs" />
+    <Compile Include="IO\IOUtils.cs" />
     <Compile Include="ObjectExtensions\EnumerableExtensions.cs" />
     <Compile Include="ObjectExtensions\GeneralExtensions.cs" />
     <Compile Include="ObjectExtensions\NumericExtensions.cs" />
     <Compile Include="ObjectExtensions\StringExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Math\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
