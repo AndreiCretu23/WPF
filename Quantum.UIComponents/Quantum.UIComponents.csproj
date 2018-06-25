@@ -71,6 +71,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commanding\ICommandContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -89,6 +90,7 @@
     </Compile>
     <Compile Include="UIComponents\Shell\ShellViewModel.cs" />
     <Compile Include="QuantumUIModule.cs" />
+    <Compile Include="UICoreService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -108,9 +110,12 @@
       <Project>{195bcd01-e40e-443a-b495-2476e1a27fee}</Project>
       <Name>Quantum.UIComposition</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
+      <Project>{6052DC7E-36CE-4FC5-B91A-6BC1D83DBD33}</Project>
+      <Name>Quantum.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commanding\" />
     <Folder Include="UIComponents\MainMenu\" />
     <Folder Include="UIComponents\Paneling\" />
     <Folder Include="UIComponents\Toolbar\" />

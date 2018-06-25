@@ -60,6 +60,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +87,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.CoreModule\Quantum.CoreModule.csproj">
+      <Project>{017BFE32-C335-46F7-B878-BC5FD069917E}</Project>
+      <Name>Quantum.CoreModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.Core\Quantum.Core.csproj">
       <Project>{b1dac13b-1938-4b47-ada0-f28d72877ebb}</Project>
       <Name>Quantum.Core</Name>

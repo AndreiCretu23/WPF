@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Quantum.UIComponents.UIComponents.Shell
+namespace Quantum.UIComponents.Shell
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml

@@ -22,9 +22,9 @@ namespace Quantum.Core
             yield return new QuantumUIModule();
         }
         
-        private void CreateUI()
+        private void CreateShell(IUnityContainer container)
         {
-
+            container.Resolve<IUICoreService>().CreateUI();
         }
 
         public void Run()
@@ -40,7 +40,7 @@ namespace Quantum.Core
                 applicationModule.Initialize(container);
             }
 
-            CreateUI();
+            CreateShell(container);
         }
     }
 }

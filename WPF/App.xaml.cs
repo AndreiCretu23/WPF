@@ -13,5 +13,12 @@ namespace WPF
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var bootStrapper = new Bootstrapper();
+            bootStrapper.Run();
+
+            base.OnStartup(e);
+        }
     }
 }
