@@ -22,7 +22,7 @@ namespace Quantum.Core
 
         public void Run()
         {
-            
+
         }
     }
 }

@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\AppInfo.cs" />
+    <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Exceptions\TypeConflictException.cs" />
     <Compile Include="Exceptions\TypeNotFoundException.cs" />
     <Compile Include="Exceptions\UnexpectedTypeException.cs" />
