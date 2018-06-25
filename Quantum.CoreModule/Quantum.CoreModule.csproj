@@ -75,6 +75,7 @@
     <Compile Include="CoreModule.cs" />
     <Compile Include="Modularity\IQuantumModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EventAggregator\UnityEventAggregator.cs" />
     <Compile Include="Services\ObjectInitializationService\EventInitializer\HandlesAttribute.cs" />
     <Compile Include="Services\ObjectInitializationService\EventInitializer\SubscriberInitializer.cs" />
     <Compile Include="Services\ObjectInitializationService\IObjectInitializer.cs" />
@@ -93,5 +94,6 @@
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
