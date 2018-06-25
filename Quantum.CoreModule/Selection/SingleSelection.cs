@@ -1,6 +1,6 @@
 ﻿namespace Quantum.Services
 {
-    class SingleSelection<T> : SelectionBase
+    public abstract class SingleSelection<T> : SelectionBase
     {
         private T internalValue;
         public T Value

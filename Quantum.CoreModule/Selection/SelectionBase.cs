@@ -4,7 +4,7 @@ using System;
 
 namespace Quantum.Services
 {
-    public class SelectionBase : EventBase
+    public abstract class SelectionBase : EventBase
     {
         protected ScopedValue<bool> BlockNotificationsScope { get; set; } = new ScopedValue<bool>();
         

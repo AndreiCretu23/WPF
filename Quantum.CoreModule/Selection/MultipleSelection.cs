@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Quantum.Services
 {
-    public class MultipleSelection<T> : SelectionBase
+    public abstract class MultipleSelection<T> : SelectionBase
     {
         private ObservableCollection<T> internalValue;
         public ObservableCollection<T> Value
