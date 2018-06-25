@@ -1,14 +1,8 @@
 ﻿using Quantum.Services;
 using Quantum.UIComponents.Shell;
 using Quantum.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Unity;
-using Unity.Lifetime;
 
 namespace Quantum.UIComponents
 {
