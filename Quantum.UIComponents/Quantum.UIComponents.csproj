@@ -71,7 +71,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commanding\CommandManagerService.cs" />
     <Compile Include="Commanding\ICommandContainer.cs" />
+    <Compile Include="Commanding\ManagedCommand\ManagedCommand.cs" />
+    <Compile Include="Commanding\MetadataCollection\MetadataCollection.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\IDefinitionMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +120,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Commanding\MetadataProcessors\" />
+    <Folder Include="Dialog\" />
     <Folder Include="UIComponents\MainMenu\" />
     <Folder Include="UIComponents\Paneling\" />
     <Folder Include="UIComponents\Toolbar\" />
