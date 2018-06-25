@@ -1,4 +1,4 @@
-﻿using Quantum.Core.Services;
+﻿using Quantum.CoreModule;
 using System.Collections.Generic;
 using Unity;
 
@@ -13,16 +13,32 @@ namespace Quantum.Core
             return container;
         }
 
+        public abstract IEnumerable<IQuantumModule> GetApplicationModules();
+
         private IEnumerable<IQuantumModule> GetFrameworkModules()
         {
-            yield return new BaseModule();
+            yield return new QuantumCoreModule();
         }
+        
+        private void CreateUI()
+        {
 
-        public abstract IEnumerable<IQuantumModule> GetApplicationModules();
+        }
 
         public void Run()
         {
+            var container = CreateContainer();
 
+            foreach(var frameworkModule in GetFrameworkModules())
+            {
+                frameworkModule.Initialize(container);
+            }
+            foreach(var applicationModule in GetApplicationModules())
+            {
+                applicationModule.Initialize(container);
+            }
+
+            CreateUI();
         }
     }
 }

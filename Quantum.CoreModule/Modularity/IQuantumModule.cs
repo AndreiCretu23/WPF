@@ -1,6 +1,6 @@
 ﻿using Unity;
 
-namespace Quantum.Core
+namespace Quantum.CoreModule
 {
     public interface IQuantumModule
     {

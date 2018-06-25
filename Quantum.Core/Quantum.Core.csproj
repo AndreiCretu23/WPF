@@ -72,15 +72,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicServices\BaseModule.cs" />
-    <Compile Include="BasicServices\Services\EventInitializer\HandlesAttribute.cs" />
-    <Compile Include="BasicServices\Services\EventInitializer\SubscriberInitializer.cs" />
-    <Compile Include="BasicServices\Services\IObjectInitializer.cs" />
-    <Compile Include="BasicServices\Services\ObjectInitializationService.cs" />
-    <Compile Include="BasicServices\Services\ServiceInitializer\ServiceAttribute.cs" />
-    <Compile Include="BasicServices\Services\ServiceInitializer\ServiceInitializer.cs" />
-    <Compile Include="BasicServices\UnityContainerHelpers.cs" />
-    <Compile Include="Bootstrapper\Modularity\IQuantumModule.cs" />
     <Compile Include="Bootstrapper\QuantumBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +80,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.CoreModule\Quantum.CoreModule.csproj">
+      <Project>{017bfe32-c335-46f7-b878-bc5fd069917e}</Project>
+      <Name>Quantum.CoreModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quantum.UIComponents\Quantum.UIComponents.csproj">
+      <Project>{15e43722-0089-4ae8-a582-8ee8b7cd7728}</Project>
+      <Name>Quantum.UIComponents</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
       <Project>{6052DC7E-36CE-4FC5-B91A-6BC1D83DBD33}</Project>
       <Name>Quantum.Utils</Name>

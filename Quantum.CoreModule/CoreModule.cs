@@ -1,10 +1,11 @@
 ﻿using Microsoft.Practices.Composite.Events;
+using Quantum.Core.Services;
 using Unity;
 using Unity.Lifetime;
 
-namespace Quantum.Core.Services
+namespace Quantum.CoreModule
 {
-    internal class BaseModule : IQuantumModule
+    public class QuantumCoreModule : IQuantumModule
     {
         public void Initialize(IUnityContainer container)
         {

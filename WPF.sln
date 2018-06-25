@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantum.Controls", "Quantum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantum.ResourceLibrary", "Quantum.ResourceLibrary\Quantum.ResourceLibrary.csproj", "{89DDC633-A706-4A82-BEA3-03508370FFC9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quantum.CoreModule", "Quantum.CoreModule\Quantum.CoreModule.csproj", "{017BFE32-C335-46F7-B878-BC5FD069917E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{89DDC633-A706-4A82-BEA3-03508370FFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89DDC633-A706-4A82-BEA3-03508370FFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89DDC633-A706-4A82-BEA3-03508370FFC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017BFE32-C335-46F7-B878-BC5FD069917E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017BFE32-C335-46F7-B878-BC5FD069917E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017BFE32-C335-46F7-B878-BC5FD069917E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017BFE32-C335-46F7-B878-BC5FD069917E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{195BCD01-E40E-443A-B495-2476E1A27FEE} = {B75E0BEA-3F28-4A50-A88C-2EE2F980CDDD}
 		{3FF94C3C-29DA-4B14-9BE4-F7BF60379C0D} = {B75E0BEA-3F28-4A50-A88C-2EE2F980CDDD}
 		{89DDC633-A706-4A82-BEA3-03508370FFC9} = {B75E0BEA-3F28-4A50-A88C-2EE2F980CDDD}
+		{017BFE32-C335-46F7-B878-BC5FD069917E} = {B75E0BEA-3F28-4A50-A88C-2EE2F980CDDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB162B49-2105-4C44-8884-346B2B7B92C7}

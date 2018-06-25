@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Quantum.UIComponents
+namespace Quantum.UIComponents.UIComponents.Shell
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class ShellView : Window
     {
-        public UserControl1()
+        public ShellView()
         {
             InitializeComponent();
         }

@@ -54,16 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -92,6 +84,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quantum.Core\Quantum.Core.csproj">
+      <Project>{b1dac13b-1938-4b47-ada0-f28d72877ebb}</Project>
+      <Name>Quantum.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
+      <Project>{6052dc7e-36ce-4fc5-b91a-6bc1d83dbd33}</Project>
+      <Name>Quantum.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
