@@ -9,7 +9,7 @@ namespace Quantum.CoreModule
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventAggregator, UnityEventAggregator>(new ContainerControlledLifetimeManager());
             
             container.RegisterType<IObjectInitializationService, ObjectInitializationService>(new ContainerControlledLifetimeManager());
             container.Resolve<IObjectInitializationService>().RegisterInitializer<ServiceInitializer>();

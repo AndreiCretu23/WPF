@@ -1,4 +1,5 @@
-﻿using Quantum.Utils;
+﻿using Microsoft.Practices.Composite.Presentation.Events;
+using Quantum.Utils;
 using System.IO;
 using Unity;
 using Unity.Lifetime;
@@ -40,6 +41,22 @@ namespace Quantum.Services
                                                     Path.ChangeExtension(Path.Combine(AppInfo.ApplicationConfigRepository, typeof(TType).Name), ".bin"),
                                                     () => new TType()).Value);
         }
+
+
+        /// <summary>
+        /// Registers the specified event with the given payload into the container.
+        /// </summary>
+        /// <typeparam name="TEventType"></typeparam>
+        /// <typeparam name="TPayload"></typeparam>
+        /// <param name="container"></param>
+        public static void RegisterEvent<TEventType, TPayload>(this IUnityContainer container)
+            where TEventType : CompositePresentationEvent<TPayload>
+        {
+            container.AssertNotNull(nameof(container));
+            container.RegisterType<TEventType>(new ContainerControlledLifetimeManager());
+        }
+
+
 
         /// <summary>
         /// Registers the given type in the container as a service. Services have a container controlled lifetime manager, 
