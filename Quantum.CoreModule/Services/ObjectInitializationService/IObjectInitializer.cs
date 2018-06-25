@@ -1,6 +1,6 @@
 ﻿using Unity;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     public interface IObjectInitializer
     {

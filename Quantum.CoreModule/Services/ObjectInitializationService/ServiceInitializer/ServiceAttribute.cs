@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     /// <summary>
     /// In objects initialized by the IObjectInitializationService, fields and properties decorated with this attribute will automatically get

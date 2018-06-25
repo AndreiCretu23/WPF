@@ -2,7 +2,7 @@
 using System.Linq;
 using Unity;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     public interface IObjectInitializationService
     {

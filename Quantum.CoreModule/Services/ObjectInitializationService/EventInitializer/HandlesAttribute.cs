@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Composite.Presentation.Events;
 using System;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     /// <summary>
     /// In objects initialized by the IObjectInitializationService, methods that are decorated with this attribute

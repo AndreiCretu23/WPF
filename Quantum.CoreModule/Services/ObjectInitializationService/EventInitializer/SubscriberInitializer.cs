@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Unity;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     internal class SubscriberInitializer : IObjectInitializer
     {

@@ -3,7 +3,7 @@ using System.IO;
 using Unity;
 using Unity.Lifetime;
 
-namespace Quantum.Core.Services
+namespace Quantum.Services
 {
     public static class UnityContainerHelpers
     {

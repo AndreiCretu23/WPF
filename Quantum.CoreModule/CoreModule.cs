@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.Composite.Events;
-using Quantum.Core.Services;
+using Quantum.Services;
 using Unity;
 using Unity.Lifetime;
 

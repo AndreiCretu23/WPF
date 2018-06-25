@@ -81,6 +81,7 @@
     <Compile Include="Services\ObjectInitializationService\ObjectInitializationService.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceAttribute.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceInitializer.cs" />
+    <Compile Include="Services\QuantumServiceBase.cs" />
     <Compile Include="Services\UnityContainerHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
