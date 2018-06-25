@@ -1,4 +1,5 @@
 ﻿using Quantum.CoreModule;
+using Quantum.UIComponents;
 using System.Collections.Generic;
 using Unity;
 
@@ -18,6 +19,7 @@ namespace Quantum.Core
         private IEnumerable<IQuantumModule> GetFrameworkModules()
         {
             yield return new QuantumCoreModule();
+            yield return new QuantumUIModule();
         }
         
         private void CreateUI()
