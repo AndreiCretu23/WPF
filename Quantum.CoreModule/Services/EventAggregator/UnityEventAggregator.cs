@@ -1,18 +1,16 @@
 ﻿using Microsoft.Practices.Composite.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity;
+using Microsoft.Practices.Unity;
 
 namespace Quantum.Services
 {
-    public class UnityEventAggregator : QuantumServiceBase, IEventAggregator
+    public class UnityEventAggregator : IEventAggregator
     {
-        public UnityEventAggregator(IObjectInitializationService initSvc)
-            : base(initSvc)
+        [Service]
+        public IUnityContainer Container { get; set; }
+
+        public UnityEventAggregator(IUnityContainer container)
         {
+            Container = container;
         }
 
         public TEventType GetEvent<TEventType>() where TEventType : EventBase

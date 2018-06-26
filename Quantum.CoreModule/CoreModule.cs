@@ -1,7 +1,6 @@
 ﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Services;
-using Unity;
-using Unity.Lifetime;
 
 namespace Quantum.CoreModule
 {
@@ -9,11 +8,12 @@ namespace Quantum.CoreModule
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterType<IEventAggregator, UnityEventAggregator>(new ContainerControlledLifetimeManager());
-            
-            container.RegisterType<IObjectInitializationService, ObjectInitializationService>(new ContainerControlledLifetimeManager());
+            container.RegisterService<IObjectInitializationService, ObjectInitializationService>();
             container.Resolve<IObjectInitializationService>().RegisterInitializer<ServiceInitializer>();
             container.Resolve<IObjectInitializationService>().RegisterInitializer<SubscriberInitializer>();
+
+            container.RegisterService<IEventAggregator, UnityEventAggregator>();
+            
         }
     }
 }

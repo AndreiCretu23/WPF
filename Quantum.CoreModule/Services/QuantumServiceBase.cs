@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.Composite.Events;
-using Unity;
+using Microsoft.Practices.Unity;
 
 namespace Quantum.Services
 {

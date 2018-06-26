@@ -1,34 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Quantum.Services
 {
-    public abstract class MultipleSelection<T> : SelectionBase
+    public abstract class MultipleSelection<T> : SelectionBase<ObservableCollection<T>>
     {
-        private ObservableCollection<T> internalValue;
-        public ObservableCollection<T> Value
+        public MultipleSelection(IObjectInitializationService initSvc)
+            : base(initSvc)
         {
-            get
-            {
-                return internalValue;
-            }
-            set
-            {
-                OnCollectionReferenceChanging(value, internalValue, BlockNotificationsScope.Value);
-                internalValue = value;
-                if (internalValue != null) {
-                    internalValue.CollectionChanged += (sender, e) => {
-                        OnCollectionChanging((IEnumerable<T>)e.NewItems, (IEnumerable<T>)e.OldItems, BlockNotificationsScope.Value);
-                        Raise();
-                    };
-                }
-                Raise();
-            }
         }
 
-        protected virtual void OnCollectionReferenceChanging(ObservableCollection<T> newValue, ObservableCollection<T> oldValue, bool areExternalNotificationsBlocked) { }
+        public MultipleSelection(IObjectInitializationService initSvc, ObservableCollection<T> defaultValue, bool raiseOnDefaultValueSet = false)
+            : base(initSvc, defaultValue, raiseOnDefaultValueSet)
+        {
+        }
 
-        protected virtual void OnCollectionChanging(IEnumerable<T> newItems, IEnumerable<T> oldItems, bool areExternalNotificationsBlocked) { }
-        
+        protected override void OnSelectedValueChanged()
+        {
+            Value.CollectionChanged += (sender, e) => Raise();
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Linq;
-using Unity;
 
 namespace Quantum.Services
 {

@@ -1,7 +1,7 @@
-﻿using Quantum.CoreModule;
+﻿using Microsoft.Practices.Unity;
+using Quantum.CoreModule;
 using Quantum.UIComponents;
 using System.Collections.Generic;
-using Unity;
 
 namespace Quantum.Core
 {

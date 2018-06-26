@@ -1,8 +1,7 @@
 ﻿using Microsoft.Practices.Composite.Presentation.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Utils;
 using System.IO;
-using Unity;
-using Unity.Lifetime;
 
 namespace Quantum.Services
 {
@@ -54,6 +53,7 @@ namespace Quantum.Services
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TEventType>(new ContainerControlledLifetimeManager());
+            container.Resolve<TEventType>();
         }
 
 
@@ -68,6 +68,7 @@ namespace Quantum.Services
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TService>(new ContainerControlledLifetimeManager());
+            container.Resolve<TService>();
         }
 
         /// <summary>
@@ -83,6 +84,7 @@ namespace Quantum.Services
             container.AssertNotNull(nameof(container));
             container.RegisterType<TTo>(new ContainerControlledLifetimeManager());
             container.RegisterType<TFrom, TTo>();
+            container.Resolve<TFrom>();
         }
     }
 }

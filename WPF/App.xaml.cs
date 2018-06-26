@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Composite.Presentation.Events;
+using Quantum.Services;
 using System.Windows;
+using Quantum.Utils;
+using System.Threading;
+using Microsoft.Practices.Unity;
 
 namespace WPF
 {
@@ -17,8 +17,11 @@ namespace WPF
         {
             var bootStrapper = new Bootstrapper();
             bootStrapper.Run();
+            
 
             base.OnStartup(e);
         }
+
+        
     }
 }

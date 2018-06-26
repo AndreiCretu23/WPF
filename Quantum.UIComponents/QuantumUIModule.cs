@@ -1,8 +1,7 @@
-﻿using Quantum.CoreModule;
+﻿using Microsoft.Practices.Unity;
+using Quantum.CoreModule;
 using Quantum.Services;
 using Quantum.UIComponents.Shell;
-using Unity;
-using Unity.Lifetime;
 
 namespace Quantum.UIComponents
 {

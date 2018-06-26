@@ -1,12 +1,12 @@
 ﻿using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Events;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
-using Unity;
 
 namespace Quantum.Services
 {

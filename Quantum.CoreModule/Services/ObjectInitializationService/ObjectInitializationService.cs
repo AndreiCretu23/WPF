@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Practices.Unity;
+using System.Collections.Generic;
 using System.Linq;
-using Unity;
 
 namespace Quantum.Services
 {

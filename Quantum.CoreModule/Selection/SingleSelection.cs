@@ -1,20 +1,15 @@
 ﻿namespace Quantum.Services
 {
-    public abstract class SingleSelection<T> : SelectionBase
+    public abstract class SingleSelection<T> : SelectionBase<T>
     {
-        private T internalValue;
-        public T Value
+        public SingleSelection(IObjectInitializationService initSvc)
+            : base(initSvc)
         {
-            get {
-                return internalValue;
-            }
-            set {
-                OnValueChanging(value, internalValue, BlockNotificationsScope.Value);
-                internalValue = value;
-                Raise();
-            }
         }
 
-        protected virtual void OnValueChanging(T newValue, T oldValue, bool areExternalNotificationsBlocked) { }
+        public SingleSelection(IObjectInitializationService initSvc, T defaultValue, bool raiseOnDefaultValueSet = false)
+            : base(initSvc, defaultValue, raiseOnDefaultValueSet)
+        {
+        }
     }
 }

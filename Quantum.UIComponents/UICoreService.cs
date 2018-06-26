@@ -2,7 +2,6 @@
 using Quantum.UIComponents.Shell;
 using Quantum.Utils;
 using System.Windows;
-using Unity;
 
 namespace Quantum.UIComponents
 {

@@ -31,7 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\IonicZip\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -64,14 +65,12 @@
     <Compile Include="Reflection\MemberInfoExtensions.cs" />
     <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="Reflection\TypeExtensions.cs" />
+    <Compile Include="Scope\ThreadSyncScope.cs" />
     <Compile Include="Scope\ScopedValue.cs" />
     <Compile Include="Serialization\BinarySerialization\BinarySerializableObjectLifetimeManager.cs" />
     <Compile Include="Serialization\BinarySerialization\BinarySerializer.cs" />
     <Compile Include="Time\DateTimeUtils.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
