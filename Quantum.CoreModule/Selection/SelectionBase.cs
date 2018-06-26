@@ -5,7 +5,7 @@ using System;
 
 namespace Quantum.Services
 {
-    public abstract class SelectionBase<T> : EventBase
+    public abstract class SelectionBase<T> : EventBase, ISelection
     {
         private ThreadSyncScope BlockNotificationsScope { get; set; } = new ThreadSyncScope();
 
@@ -66,7 +66,7 @@ namespace Quantum.Services
             }
         }
 
-        public void ForceRaise() {
+        public void ForcePublish() {
             InternalPublish(this);
         }
 
@@ -98,28 +98,28 @@ namespace Quantum.Services
             }
         }
 
-        public virtual SubscriptionToken Subscribe(Action<SelectionBase<T>> action)
+        public SubscriptionToken Subscribe(Action<SelectionBase<T>> action)
         {
             return Subscribe(action, ThreadOption.UIThread);
         }
 
-        public virtual SubscriptionToken Subscribe(Action<SelectionBase<T>> action, ThreadOption threadOption)
+        public SubscriptionToken Subscribe(Action<SelectionBase<T>> action, ThreadOption threadOption)
         {
             return Subscribe(action, threadOption, false);
         }
 
-        public virtual SubscriptionToken Subscribe(Action<SelectionBase<T>> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive)
+        public SubscriptionToken Subscribe(Action<SelectionBase<T>> action, ThreadOption threadOption, bool keepSubscriberReferenceAlive)
         {
             IDelegateReference actionReference = new DelegateReference(action, keepSubscriberReferenceAlive);
             return Subscribe(actionReference, threadOption, keepSubscriberReferenceAlive);
         }
 
-        public virtual SubscriptionToken Subscribe(IDelegateReference actionReference, ThreadOption threadOption)
+        public SubscriptionToken Subscribe(IDelegateReference actionReference, ThreadOption threadOption)
         {
             return Subscribe(actionReference, threadOption, false);
         }
 
-        public virtual SubscriptionToken Subscribe(IDelegateReference actionReference, ThreadOption threadOption, bool keepSubscriberReferenceAlive)
+        public SubscriptionToken Subscribe(IDelegateReference actionReference, ThreadOption threadOption, bool keepSubscriberReferenceAlive)
         {
             IDelegateReference filterReference =
                new DelegateReference(new Predicate<SelectionBase<T>>(_ => true), true);
@@ -141,7 +141,7 @@ namespace Quantum.Services
             }
             return base.InternalSubscribe(subscription);
         }
-
+        
         #endregion Subscribe
         
     }

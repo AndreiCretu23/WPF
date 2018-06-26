@@ -56,8 +56,33 @@ namespace Quantum.Services
             container.Resolve<TEventType>();
         }
 
+        /// <summary>
+        /// Registers the specified selection in the container.
+        /// </summary>
+        /// <typeparam name="TSelection"></typeparam>
+        /// <param name="container"></param>
+        public static void RegisterSelection<TSelection>(this IUnityContainer container)
+            where TSelection : ISelection
+        {
+            container.AssertNotNull(nameof(container));
+            container.RegisterType<TSelection>(new ContainerControlledLifetimeManager());
+            container.Resolve<TSelection>();
+        }
 
-
+        /// <summary>
+        /// Registers the specified selection instance in the container.
+        /// </summary>
+        /// <typeparam name="TSelection"></typeparam>
+        /// <param name="container"></param>
+        /// <param name="selection"></param>
+        public static void RegisterSelection<TSelection>(this IUnityContainer container, TSelection selection)
+            where TSelection : ISelection
+        {
+            container.AssertNotNull(nameof(container));
+            selection.AssertParameterNotNull(nameof(selection));
+            container.RegisterInstance<TSelection>(selection);
+        }
+        
         /// <summary>
         /// Registers the given type in the container as a service. Services have a container controlled lifetime manager, 
         /// so only one instance will be registered. Resolving the type will return the same instance every time.
