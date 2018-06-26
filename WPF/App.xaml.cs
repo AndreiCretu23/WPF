@@ -22,6 +22,9 @@ namespace WPF
             base.OnStartup(e);
         }
 
+        public class SomeEvent : CompositePresentationEvent<int>
+        {
+        }
         
     }
 }

@@ -63,5 +63,10 @@ namespace Quantum.Utils
                 type = type.BaseType;
             }
         }
+
+        public static bool Extends(this Type type, Type otherType)
+        {
+            return type.GetBaseTypes().Contains(otherType);
+        }
     }
 }

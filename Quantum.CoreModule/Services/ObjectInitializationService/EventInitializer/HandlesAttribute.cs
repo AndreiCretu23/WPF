@@ -22,40 +22,33 @@ namespace Quantum.Services
         public Type EventType { get; private set; }
         public ThreadOption ThreadOption { get; private set; }
         public bool KeepSubscriberReferenceAlive { get; private set; }
-
-        public bool IsThreadOptionSet { get; private set; }
-        public bool IsKeepSubscriberReferenceAliveSet { get; set; }
-
+        
         public HandlesAttribute(Type eventType)
         {
-            this.EventType = eventType;
+            EventType = eventType;
+            ThreadOption = ThreadOption.PublisherThread;
+            KeepSubscriberReferenceAlive = true;
         }
 
         public HandlesAttribute(Type eventType, ThreadOption threadOption)
         {
-            this.EventType = eventType;
-
-            this.ThreadOption = threadOption;
-            this.IsThreadOptionSet = true;
+            EventType = eventType;
+            ThreadOption = threadOption;
+            KeepSubscriberReferenceAlive = true;
         }
 
         public HandlesAttribute(Type eventType, bool keepSubscriberReferenceAlive)
         {
-            this.EventType = eventType;
-
-            this.KeepSubscriberReferenceAlive = keepSubscriberReferenceAlive;
-            this.IsKeepSubscriberReferenceAliveSet = true;
+            EventType = eventType;
+            ThreadOption = ThreadOption.PublisherThread;
+            KeepSubscriberReferenceAlive = keepSubscriberReferenceAlive;
         }
 
         public HandlesAttribute(Type eventType, ThreadOption threadOption, bool keepSubscriberReferenceAlive)
         {
-            this.EventType = eventType;
-
-            this.ThreadOption = ThreadOption;
-            this.IsThreadOptionSet = true;
-
-            this.KeepSubscriberReferenceAlive = keepSubscriberReferenceAlive;
-            this.IsKeepSubscriberReferenceAliveSet = true;
+            EventType = eventType;
+            ThreadOption = ThreadOption;
+            KeepSubscriberReferenceAlive = keepSubscriberReferenceAlive;
         }
     }
 }
