@@ -61,8 +61,8 @@ namespace Quantum.Services
         /// </summary>
         /// <typeparam name="TSelection"></typeparam>
         /// <param name="container"></param>
-        public static void RegisterSelection<TSelection>(this IUnityContainer container)
-            where TSelection : ISelection
+        public static void RegisterSelection<TSelection, TSelectionType>(this IUnityContainer container)
+            where TSelection : SelectionBase<TSelectionType>
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TSelection>(new ContainerControlledLifetimeManager());
@@ -75,8 +75,8 @@ namespace Quantum.Services
         /// <typeparam name="TSelection"></typeparam>
         /// <param name="container"></param>
         /// <param name="selection"></param>
-        public static void RegisterSelection<TSelection>(this IUnityContainer container, TSelection selection)
-            where TSelection : ISelection
+        public static void RegisterSelection<TSelection, TSelectionType>(this IUnityContainer container, TSelection selection)
+            where TSelection : SelectionBase<TSelectionType>
         {
             container.AssertNotNull(nameof(container));
             selection.AssertParameterNotNull(nameof(selection));

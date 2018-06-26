@@ -5,7 +5,7 @@ using System;
 
 namespace Quantum.Services
 {
-    public abstract class SelectionBase<T> : EventBase, ISelection
+    public abstract class SelectionBase<T> : EventBase
     {
         private ThreadSyncScope BlockNotificationsScope { get; set; } = new ThreadSyncScope();
 
