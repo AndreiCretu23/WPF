@@ -100,7 +100,7 @@ namespace Quantum.Services
 
         public SubscriptionToken Subscribe(Action<SelectionBase<T>> action)
         {
-            return Subscribe(action, ThreadOption.UIThread);
+            return Subscribe(action, ThreadOption.PublisherThread);
         }
 
         public SubscriptionToken Subscribe(Action<SelectionBase<T>> action, ThreadOption threadOption)

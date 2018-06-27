@@ -63,10 +63,38 @@ namespace Quantum.Utils
                 type = type.BaseType;
             }
         }
-
-        public static bool Extends(this Type type, Type otherType)
+        
+        public static bool IsSubclassOfRawGeneric(this Type type, Type rawGenericType)
         {
-            return type.GetBaseTypes().Contains(otherType);
+            while(type != null && type != typeof(object)) {
+                var current = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+                if(rawGenericType == current) {
+                    return true;
+                }
+                type = type.BaseType;
+            }
+            return false;
+        }
+
+        public static Type GetBaseTypeGenericArgument(this Type type, Type rawBaseType) {
+            type.AssertNotNull(nameof(type));
+            rawBaseType.AssertParameterNotNull(nameof(rawBaseType));
+            if(!rawBaseType.IsGenericType) {
+                throw new TypeConflictException(rawBaseType, "Expected a generic type");
+            }
+            if(rawBaseType.GetGenericArguments().Count() > 1) {
+                throw new TypeConflictException(rawBaseType, "Expected a type with a single generic type argument");
+            }
+            
+            while(type != null && type != typeof(object)) {
+                var currentRawType = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+                if(rawBaseType == currentRawType && currentRawType.IsGenericType) {
+                    return type.GetGenericArguments().Single();
+                }
+                type = type.BaseType;
+            }
+
+            throw new TypeNotFoundException($"Error : Type {type.Name} does not extend {rawBaseType.Name}");
         }
     }
 }

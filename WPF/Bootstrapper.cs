@@ -12,7 +12,7 @@ namespace WPF
     {
         public override IEnumerable<IQuantumModule> GetApplicationModules()
         {
-            yield break;
+            yield return new ApplicationModule();
         }
     }
 }

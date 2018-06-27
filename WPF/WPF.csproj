@@ -80,7 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationModule.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="DummyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
