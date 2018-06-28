@@ -2,13 +2,13 @@
 {
     public abstract class SingleSelection<T> : SelectionBase<T>
     {
-        public SingleSelection(IObjectInitializationService initSvc)
-            : base(initSvc)
+        public SingleSelection()
+            : base()
         {
         }
-
+        
         public SingleSelection(IObjectInitializationService initSvc, T defaultValue, bool raiseOnDefaultValueSet = false)
-            : base(initSvc, defaultValue, raiseOnDefaultValueSet)
+            : base(defaultValue, raiseOnDefaultValueSet)
         {
         }
     }

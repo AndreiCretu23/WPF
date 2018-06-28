@@ -4,13 +4,13 @@ namespace Quantum.Services
 {
     public abstract class MultipleSelection<T> : SelectionBase<ObservableCollection<T>>
     {
-        public MultipleSelection(IObjectInitializationService initSvc)
-            : base(initSvc)
+        public MultipleSelection()
+            : base()
         {
         }
-
+        
         public MultipleSelection(IObjectInitializationService initSvc, ObservableCollection<T> defaultValue, bool raiseOnDefaultValueSet = false)
-            : base(initSvc, defaultValue, raiseOnDefaultValueSet)
+            : base(defaultValue, raiseOnDefaultValueSet)
         {
         }
 

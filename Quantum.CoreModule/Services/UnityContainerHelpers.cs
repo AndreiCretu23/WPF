@@ -1,6 +1,7 @@
-﻿using Microsoft.Practices.Composite.Presentation.Events;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Quantum.Utils;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Quantum.Services
@@ -51,6 +52,7 @@ namespace Quantum.Services
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TService>(new ContainerControlledLifetimeManager());
+            container.Resolve<TService>();
         }
 
         /// <summary>
@@ -66,6 +68,7 @@ namespace Quantum.Services
             container.AssertNotNull(nameof(container));
             container.RegisterType<TTo>(new ContainerControlledLifetimeManager());
             container.RegisterType<TFrom, TTo>();
+            container.Resolve<TFrom>();
         }
     }
 }

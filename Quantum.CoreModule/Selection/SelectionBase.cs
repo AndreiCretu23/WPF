@@ -9,14 +9,13 @@ namespace Quantum.Services
     {
         private ThreadSyncScope BlockNotificationsScope { get; set; } = new ThreadSyncScope();
 
-        public SelectionBase(IObjectInitializationService initSvc)
+        public SelectionBase()
         {
-            initSvc.Initialize(this);
             BlockNotificationsScope.OnAllScopesEnd += (sender, e) => OnAllBlockingScopesEnd();
         }
-
-        public SelectionBase(IObjectInitializationService initSvc, T defaultValue, bool raiseOnDefaultValueSet = false)
-            : this(initSvc)
+        
+        public SelectionBase(T defaultValue, bool raiseOnDefaultValueSet = false)
+            : this()
         {
             if(raiseOnDefaultValueSet) {
                 Value = defaultValue;

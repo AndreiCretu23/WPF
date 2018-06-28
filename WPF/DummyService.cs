@@ -38,10 +38,6 @@ namespace WPF
 
     public class DummySelection : SingleSelection<int>
     {
-        public DummySelection(IObjectInitializationService initSvc)
-            : base(initSvc)
-        { 
-        }
     }
 
 }
