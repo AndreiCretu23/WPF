@@ -14,10 +14,9 @@ namespace WPF
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterEvent<DummyEvent, int>();
-            container.RegisterSelection<DummySelection, int>();
             container.RegisterService<IDummyService, DummyService>();
-
+            var svc = container.Resolve<IDummyService>();
+            
             //container.Resolve<IEventAggregator>().GetEvent<DummyEvent>().Publish(5);
 
             var selection = container.Resolve<DummySelection>();
@@ -25,5 +24,6 @@ namespace WPF
             selection.Value = 20;
 
         }
+        
     }
 }

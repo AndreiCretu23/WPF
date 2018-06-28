@@ -40,48 +40,6 @@ namespace Quantum.Services
                                                     Path.ChangeExtension(Path.Combine(AppInfo.ApplicationConfigRepository, typeof(TType).Name), ".bin"),
                                                     () => new TType()).Value);
         }
-
-
-        /// <summary>
-        /// Registers the specified event with the given payload into the container.
-        /// </summary>
-        /// <typeparam name="TEventType"></typeparam>
-        /// <typeparam name="TPayload"></typeparam>
-        /// <param name="container"></param>
-        public static void RegisterEvent<TEventType, TPayload>(this IUnityContainer container)
-            where TEventType : CompositePresentationEvent<TPayload>
-        {
-            container.AssertNotNull(nameof(container));
-            container.RegisterType<TEventType>(new ContainerControlledLifetimeManager());
-            container.Resolve<TEventType>();
-        }
-
-        /// <summary>
-        /// Registers the specified selection in the container.
-        /// </summary>
-        /// <typeparam name="TSelection"></typeparam>
-        /// <param name="container"></param>
-        public static void RegisterSelection<TSelection, TSelectionType>(this IUnityContainer container)
-            where TSelection : SelectionBase<TSelectionType>
-        {
-            container.AssertNotNull(nameof(container));
-            container.RegisterType<TSelection>(new ContainerControlledLifetimeManager());
-            container.Resolve<TSelection>();
-        }
-
-        /// <summary>
-        /// Registers the specified selection instance in the container.
-        /// </summary>
-        /// <typeparam name="TSelection"></typeparam>
-        /// <param name="container"></param>
-        /// <param name="selection"></param>
-        public static void RegisterSelection<TSelection, TSelectionType>(this IUnityContainer container, TSelection selection)
-            where TSelection : SelectionBase<TSelectionType>
-        {
-            container.AssertNotNull(nameof(container));
-            selection.AssertParameterNotNull(nameof(selection));
-            container.RegisterInstance<TSelection>(selection);
-        }
         
         /// <summary>
         /// Registers the given type in the container as a service. Services have a container controlled lifetime manager, 
@@ -93,7 +51,6 @@ namespace Quantum.Services
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TService>(new ContainerControlledLifetimeManager());
-            container.Resolve<TService>();
         }
 
         /// <summary>
@@ -109,7 +66,6 @@ namespace Quantum.Services
             container.AssertNotNull(nameof(container));
             container.RegisterType<TTo>(new ContainerControlledLifetimeManager());
             container.RegisterType<TFrom, TTo>();
-            container.Resolve<TFrom>();
         }
     }
 }
