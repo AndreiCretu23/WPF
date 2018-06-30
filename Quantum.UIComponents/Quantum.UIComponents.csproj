@@ -51,10 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commanding\CommandManagerService.cs" />
+    <Compile Include="Commanding\Command\ManagedCommand\ManagedCommand.cs" />
+    <Compile Include="Commanding\Command\ManagedCommand\ManagedCommandMetadata.cs" />
     <Compile Include="Commanding\ICommandContainer.cs" />
-    <Compile Include="Commanding\ManagedCommand\ManagedCommand.cs" />
     <Compile Include="Commanding\MetadataCollection\MetadataCollection.cs" />
-    <Compile Include="Commanding\MetadataDefinitions\IDefinitionMetadata.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\IMetadataDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -98,7 +99,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commanding\MetadataProcessors\" />
+    <Folder Include="Commanding\MetadataProcessing\" />
     <Folder Include="Dialog\" />
     <Folder Include="UIComponents\MainMenu\" />
     <Folder Include="UIComponents\Paneling\" />
