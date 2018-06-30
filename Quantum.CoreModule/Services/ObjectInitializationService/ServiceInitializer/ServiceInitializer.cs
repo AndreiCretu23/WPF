@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using Quantum.Utils;
 using System;
 using System.Linq;
 
@@ -10,18 +11,15 @@ namespace Quantum.Services
 
         public void Initialize(object obj)
         {
-            var serviceFields = obj.GetType().GetFields().Where(o => o.GetCustomAttributes(true).OfType<ServiceAttribute>().Any());
-            var serviceProperties = obj.GetType().GetProperties().Where(o => o.GetCustomAttributes(true).OfType<ServiceAttribute>().Any());
-            foreach (var serviceField in serviceFields)
-            {
-                serviceField.SetValue(obj, Container.Resolve(serviceField.FieldType));
-            }
+            //var serviceProperties = obj.GetType().GetProperties().Where(o => o.GetCustomAttributes(true).OfType<ServiceAttribute>().Any());
+            var serviceProperties = obj.GetType().GetProperties().Where(prop => prop.HasAttribute<ServiceAttribute>());
+
             foreach (var serviceProperty in serviceProperties)
             {
                 if (serviceProperty.SetMethod == null || !serviceProperty.SetMethod.IsPublic)
                 {
-                    throw new Exception($"Error : {obj.GetType().Name}, property {serviceProperty.Name} \n" +
-                                        $"The service cannot be resolved because the property's set method is not accesible");
+                    throw new MethodAccessException($"Error : {obj.GetType().Name}, property {serviceProperty.Name} \n" +
+                                                    $"The service cannot be resolved because the property's set method is not accesible");
                 }
                 serviceProperty.SetValue(obj, Container.Resolve(serviceProperty.PropertyType));
             }
@@ -29,7 +27,11 @@ namespace Quantum.Services
 
         public void Teardown(object obj)
         {
-
+            var serviceProperties = obj.GetType().GetProperties().Where(prop => prop.HasAttribute<ServiceAttribute>());
+            foreach(var serviceProperty in serviceProperties)
+            {
+                serviceProperty.SetValue(obj, null);
+            }
         }
     }
 }

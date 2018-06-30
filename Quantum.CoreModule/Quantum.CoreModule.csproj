@@ -65,6 +65,8 @@
     <Compile Include="Services\ObjectInitializationService\EventInitializer\SubscriberInitializer.cs" />
     <Compile Include="Services\ObjectInitializationService\IObjectInitializer.cs" />
     <Compile Include="Services\ObjectInitializationService\ObjectInitializationService.cs" />
+    <Compile Include="Services\ObjectInitializationService\SelectionInitializer\SelectionAttribute.cs" />
+    <Compile Include="Services\ObjectInitializationService\SelectionInitializer\SelectionInitializer.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceAttribute.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceInitializer.cs" />
     <Compile Include="Services\QuantumServiceBase.cs" />

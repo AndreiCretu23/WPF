@@ -9,27 +9,25 @@ using System.Windows;
 
 namespace WPF
 {
-    public interface IDummyService { }
+    public interface IDummyService
+    {
+        void TestMethod();
+    }
 
     public class DummyService : QuantumServiceBase, IDummyService
     {
         public DummyService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            //EventAggregator.GetEvent<DummySelection>().Subscribe(o => Handle(), ThreadOption.PublisherThread, true);
-            //EventAggregator.GetEvent<DummySelection>().Subscribe(o => HandleArgs((DummySelection)o), ThreadOption.PublisherThread, true);
         }
 
-        [Handles(typeof(DummySelection))]
-        public void Handle()
-        {
-            MessageBox.Show("No Args");
-        }
+        
+        [Selection]
+        public DummySelection DummySelection { get; set; }
 
-        [Handles(typeof(DummySelection))]
-        public void HandleArgs(DummySelection args)
+        public void TestMethod()
         {
-            MessageBox.Show($"Args = {args.Value}");
+            MessageBox.Show(DummySelection.Value.ToString());
         }
     }
 

@@ -10,6 +10,7 @@ namespace Quantum.CoreModule
         {
             container.RegisterService<IObjectInitializationService, ObjectInitializationService>();
             container.Resolve<IObjectInitializationService>().RegisterInitializer<ServiceInitializer>();
+            container.Resolve<IObjectInitializationService>().RegisterInitializer<SelectionInitializer>();
             container.Resolve<IObjectInitializationService>().RegisterInitializer<SubscriberInitializer>();
 
             container.RegisterService<IEventAggregator, UnityEventAggregator>();

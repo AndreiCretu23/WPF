@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quantum.Utils
+namespace Quantum.Exceptions
 {
     public class TypeConflictException : Exception
     {

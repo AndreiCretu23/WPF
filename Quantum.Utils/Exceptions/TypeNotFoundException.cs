@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quantum.Utils
+namespace Quantum.Exceptions
 {
     public class TypeNotFoundException : Exception
     {

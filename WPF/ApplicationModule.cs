@@ -15,14 +15,12 @@ namespace WPF
         public void Initialize(IUnityContainer container)
         {
             container.RegisterService<IDummyService, DummyService>();
-            var svc = container.Resolve<IDummyService>();
             
-            //container.Resolve<IEventAggregator>().GetEvent<DummyEvent>().Publish(5);
-
             var selection = container.Resolve<DummySelection>();
             selection.Value = 15;
-            selection.Value = 20;
 
+
+            container.Resolve<IDummyService>().TestMethod();
         }
         
     }

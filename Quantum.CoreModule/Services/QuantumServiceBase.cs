@@ -16,5 +16,13 @@ namespace Quantum.Services
             initSvc.Initialize(this);
         }
 
+        /// <summary>
+        /// Tears down all services/events/selections initialized by the IObjectInitializationService
+        /// </summary>
+        protected void TearDown()
+        {
+            Container.Resolve<IObjectInitializationService>().TeardownAll(this);
+        }
+
     }
 }
