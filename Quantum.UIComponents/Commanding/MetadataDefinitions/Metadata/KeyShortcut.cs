@@ -28,4 +28,5 @@ namespace Quantum.Command
 
             return inputGestureText;
         }
+    }
 }
