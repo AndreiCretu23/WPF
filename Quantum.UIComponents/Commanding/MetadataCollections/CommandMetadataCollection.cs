@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quantum.Command
 {
-    public interface IMetadataDefinition
+    public class CommandMetadataCollection : MetadataCollection<ICommandMetadata>
     {
-        bool SupportsMultiple { get; set; }
     }
 }

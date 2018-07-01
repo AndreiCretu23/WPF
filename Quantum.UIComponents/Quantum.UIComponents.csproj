@@ -51,11 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commanding\CommandManagerService.cs" />
-    <Compile Include="Commanding\Command\ManagedCommand\ManagedCommand.cs" />
-    <Compile Include="Commanding\Command\ManagedCommand\ManagedCommandMetadata.cs" />
+    <Compile Include="Commanding\Command\ManagedCommand.cs" />
     <Compile Include="Commanding\ICommandContainer.cs" />
-    <Compile Include="Commanding\MetadataCollection\MetadataCollection.cs" />
-    <Compile Include="Commanding\MetadataDefinitions\IMetadataDefinition.cs" />
+    <Compile Include="Commanding\MetadataCollections\CommandMetadataCollection.cs" />
+    <Compile Include="Commanding\MetadataCollections\MainMenuMetadataCollection.cs" />
+    <Compile Include="Commanding\MetadataCollections\MetadataCollection.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\IMetadataDefinitions.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\AutoInvalidateOnEvent.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\AutoInvalidateOnSelection.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\Checkable.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\CheckChanged.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\Description.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\Icon.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\KeyShortcut.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\MenuPath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,7 +108,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commanding\MetadataProcessing\" />
+    <Folder Include="Commanding\CommandMetadataProcessor\" />
     <Folder Include="Dialog\" />
     <Folder Include="UIComponents\MainMenu\" />
     <Folder Include="UIComponents\Paneling\" />

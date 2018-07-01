@@ -20,4 +20,6 @@ namespace Quantum.Command
             InternalCollection.Add(metadataDefinition);
         }
     }
+
+    
 }

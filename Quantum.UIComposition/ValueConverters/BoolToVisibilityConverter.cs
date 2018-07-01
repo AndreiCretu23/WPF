@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Quantum.UIComposition.ValueConverters
+namespace Quantum.ValueConverters
 {
     public class BoolToVisibilityConverter : IValueConverter
     {

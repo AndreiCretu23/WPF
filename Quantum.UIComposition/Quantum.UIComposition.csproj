@@ -61,6 +61,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\IconConverter.cs" />
     <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -70,6 +71,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
+      <Project>{6052DC7E-36CE-4FC5-B91A-6BC1D83DBD33}</Project>
+      <Name>Quantum.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

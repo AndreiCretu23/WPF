@@ -52,6 +52,7 @@ namespace Quantum.Command
             }
         }
 
-        public ManagedCommandMetadataCollection Metadata { get; set; } = new ManagedCommandMetadataCollection();
+        public CommandMetadataCollection CommandMetadata { get; set; } = new CommandMetadataCollection();
+        public MainMenuMetadataCollection MainMenuMetadata { get; set; } = new MainMenuMetadataCollection();
     }
 }

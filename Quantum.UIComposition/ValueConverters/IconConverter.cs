@@ -1,18 +1,15 @@
-﻿using System;
+﻿using Quantum.Utils;
+using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace Quantum.ValueConverters
 {
-    public class NullToVisibilityConverter : IValueConverter
+    public class IconConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value != null) {
-                return Visibility.Visible;
-            }
-            return Visibility.Collapsed;
+            return IconUtils.GetResourceIcon(value.ToString());
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

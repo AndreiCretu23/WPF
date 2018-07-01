@@ -34,6 +34,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\IonicZip\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +53,7 @@
     <Compile Include="Exceptions\TypeConflictException.cs" />
     <Compile Include="Exceptions\TypeNotFoundException.cs" />
     <Compile Include="Exceptions\UnexpectedTypeException.cs" />
+    <Compile Include="Icon\IconUtils.cs" />
     <Compile Include="IO\CommonPaths.cs" />
     <Compile Include="IO\FolderLock.cs" />
     <Compile Include="IO\IOUtils.cs" />
