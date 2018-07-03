@@ -1,39 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Quantum.Command
 {
-    public delegate bool CommandCanExecute(object parameter);
-    public delegate void CommandExecute(object parameter);
+    public delegate bool CommandCanExecute();
+    public delegate void CommandExecute();
 
-    public class ManagedCommand : ICommand
+    public class ManagedCommand : IManagedCommand
     {
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
+        private event EventHandler canExecuteChanged;
+        public event EventHandler CanExecuteChanged
         {
-            return true;
+            add
+            {
+                CommandManager.RequerySuggested += value;
+                canExecuteChanged += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+                canExecuteChanged -= value;
+            }
         }
-
-        public void Execute(object parameter)
-        {
-            
-        }
-
+        
+        public bool CanExecute(object parameter) { return CanExecuteHandler(); }
+        public void Execute(object parameter) { ExecuteHandler(); }
+        
         public void RaiseCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, new EventArgs());
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                canExecuteChanged?.Invoke(this, EventArgs.Empty);
+            });
         }
 
         private CommandCanExecute canExecuteHandler;
         public CommandCanExecute CanExecuteHandler
         {
             get {
-                return canExecuteHandler ?? (o => true);
+                return canExecuteHandler ?? (() => true);
             }
             set {
                 canExecuteHandler = value;
@@ -45,7 +51,7 @@ namespace Quantum.Command
         public CommandExecute ExecuteHandler
         {
             get {
-                return executeHandler ?? (o => { });
+                return executeHandler ?? (() => { });
             }
             set {
                 executeHandler = value;

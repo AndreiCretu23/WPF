@@ -1,5 +1,5 @@
-﻿using Quantum.Services;
-using Quantum.UIComponents.Shell;
+﻿using Quantum.Command;
+using Quantum.Services;
 using Quantum.Utils;
 using System.Windows;
 
@@ -15,6 +15,15 @@ namespace Quantum.UIComponents
 
     internal class UICoreService : QuantumServiceBase, IUICoreService
     {
+        [Service]
+        public ShellView ShellView { get; set; }
+
+        [Service]
+        public ShellViewModel ShellViewModel { get; set; }
+
+        [Service]
+        public IMenuManagerService MenuManager { get; set; }
+
         public UICoreService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -22,15 +31,14 @@ namespace Quantum.UIComponents
         
         public void CreateUI()
         {
-            var shellViewModel = Container.Resolve<ShellViewModel>();
-            var shellView = Container.Resolve<ShellView>();
+            MenuManager.CreateMainMenu();
 
-            shellView.DataContext = shellViewModel;
-            shellView.Title = AppInfo.ApplicationName;
 
-            Application.Current.MainWindow = shellView;
+            ShellView.DataContext = ShellViewModel;
+            ShellView.Title = AppInfo.ApplicationName;
+            Application.Current.MainWindow = ShellView;
 
-            shellView.Show();
+            ShellView.Show();
         }
     }
 }

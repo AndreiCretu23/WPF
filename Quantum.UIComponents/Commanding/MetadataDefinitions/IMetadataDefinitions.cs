@@ -14,7 +14,7 @@ namespace Quantum.Command
     public interface ICommandMetadata : IMetadataDefinition
     {
     }
-
+    
     public interface IMainMenuMetadata : IMetadataDefinition
     {
     }

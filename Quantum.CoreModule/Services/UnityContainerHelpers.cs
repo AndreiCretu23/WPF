@@ -49,6 +49,7 @@ namespace Quantum.Services
         /// <typeparam name="TService"></typeparam>
         /// <param name="container"></param>
         public static void RegisterService<TService>(this IUnityContainer container)
+            where TService : class
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TService>(new ContainerControlledLifetimeManager());
@@ -64,6 +65,7 @@ namespace Quantum.Services
         /// <param name="container"></param>
         public static void RegisterService<TFrom, TTo>(this IUnityContainer container)
             where TTo : class, TFrom
+            where TFrom : class
         {
             container.AssertNotNull(nameof(container));
             container.RegisterType<TTo>(new ContainerControlledLifetimeManager());

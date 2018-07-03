@@ -21,20 +21,17 @@ namespace WPF
         {
         }
 
-        
-        [Selection]
-        public DummySelection DummySelection { get; set; }
-
         public void TestMethod()
         {
-            MessageBox.Show(DummySelection.Value.ToString());
+            // Do Nothing.
         }
+
     }
 
 
-    public class DummyEvent : CompositePresentationEvent<int> { }
+    public class TestingEvent : CompositePresentationEvent<int> { }
 
-    public class DummySelection : SingleSelection<int>
+    public class SelectedNumber : SingleSelection<int>
     {
     }
 

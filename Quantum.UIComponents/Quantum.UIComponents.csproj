@@ -31,6 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Composite, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft\Microsoft.Practices.Composite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\lib\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
@@ -51,6 +59,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commanding\CommandManagerService.cs" />
+    <Compile Include="Commanding\CommandMetadataProcessor\CommandMetadataProcessorService.cs" />
+    <Compile Include="Commanding\CommandMetadataProcessor\ICommandMetadataProcessorService.cs" />
+    <Compile Include="Commanding\Command\IManagedCommand.cs" />
     <Compile Include="Commanding\Command\ManagedCommand.cs" />
     <Compile Include="Commanding\ICommandContainer.cs" />
     <Compile Include="Commanding\MetadataCollections\CommandMetadataCollection.cs" />
@@ -65,6 +76,7 @@
     <Compile Include="Commanding\MetadataDefinitions\Metadata\Icon.cs" />
     <Compile Include="Commanding\MetadataDefinitions\Metadata\KeyShortcut.cs" />
     <Compile Include="Commanding\MetadataDefinitions\Metadata\MenuPath.cs" />
+    <Compile Include="Commanding\MetadataDefinitions\Metadata\ToolTip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -78,6 +90,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UIComponents\MainMenu\MenuManagerService.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -108,9 +121,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commanding\CommandMetadataProcessor\" />
     <Folder Include="Dialog\" />
-    <Folder Include="UIComponents\MainMenu\" />
     <Folder Include="UIComponents\Paneling\" />
     <Folder Include="UIComponents\Toolbar\" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Quantum.CoreModule;
 using Quantum.Services;
-using Quantum.UIComponents.Shell;
+using Quantum.Command;
 
 namespace Quantum.UIComponents
 {
@@ -9,8 +9,11 @@ namespace Quantum.UIComponents
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterType<ShellView>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ShellViewModel>(new ContainerControlledLifetimeManager());
+            container.RegisterService<ShellView>();
+            container.RegisterService<ShellViewModel>();
+            container.RegisterService<ICommandMetadataProcessorService, CommandMetadataProcessorService>();
+            container.RegisterService<ICommandManagerService, CommandManagerService>();
+            container.RegisterService<IMenuManagerService, MenuManagerService>();
 
             container.RegisterService<IUICoreService, UICoreService>();
         }
