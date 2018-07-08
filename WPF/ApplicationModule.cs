@@ -55,7 +55,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.SubCat3To4, 0, 0), 
                         new Description("qwerty"), 
                     }
@@ -68,7 +68,7 @@ namespace WPF
             {
                 CanExecuteHandler = () => true, 
                 ExecuteHandler = () => { }, 
-                MainMenuMetadata = new MainMenuMetadataCollection() {
+                MainMenuMetadata = new MenuMetadataCollection() {
                     new MenuPath(MenuLocations.Yolo2, 1, 1), 
                     new Description("asd"), 
                 }
@@ -80,7 +80,7 @@ namespace WPF
             {
                 CanExecuteHandler = () => true,
                 ExecuteHandler = () => { },
-                MainMenuMetadata = new MainMenuMetadataCollection() {
+                MainMenuMetadata = new MenuMetadataCollection() {
                     new MenuPath(MenuLocations.Yolo1, 1, 1),
                     new Description("asd"),
                 }
@@ -95,7 +95,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }, 
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.File, 1, 0), 
                         new Description("Change1"), 
                         new Checkable(false), 
@@ -114,7 +114,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }, 
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.File, 2, 0), 
                         new Description("Change2"), 
                         new KeyShortcut(ModifierKeys.Control, Key.D1)
@@ -131,7 +131,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Category3To4, 0, 0),
                         new Description("Change3"),
                         new KeyShortcut(ModifierKeys.Control, Key.D3)
@@ -151,7 +151,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Category3To4, 0, 1),
                         new Description("Change4"),
                         new KeyShortcut(ModifierKeys.Control, Key.D4)
@@ -171,9 +171,42 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber)),
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.File, 2, 0),
                         new Description("Change5"),
+                    }
+                };
+            }
+        }
+
+        public MultiManagedCommand RecentCommands
+        {
+            get
+            {
+                return new MultiManagedCommand()
+                {
+                    SubCommands = () =>
+                    {
+                        var collection = new SubCommandCollection();
+                        for(int i = 0; i < Number.Value; i++) {
+                            collection.Add(new SubCommand()
+                            {
+                                CanExecuteHandler = () => true,
+                                ExecuteHandler = () => MessageBox.Show(i.ToString()),
+                                CommandMetadata = new CommandMetadataCollection() {
+                                    new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                                },
+                                SubCommandMetadata = new SubMenuMetadataCollection() {
+                                    new Description($"Print {i.ToString()}"),
+                                }
+                            });
+                        }
+                        return collection;
+                    },
+                    MenuMetadata = new MultiMenuMetadataCollection()
+                    {
+                        new MenuPath(MenuLocations.Recent, 0, 0), 
+                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };
             }
@@ -192,7 +225,7 @@ namespace WPF
         //                CommandMetadata = new CommandMetadataCollection() {
         //                    new AutoInvalidateOnSelection(typeof(SelectedNumber))
         //                }, 
-        //                MainMenuMetadata = new MainMenuMetadataCollection() {
+        //                MainMenuMetadata = new MenuMetadataCollection() {
         //                    new MenuPath(MenuLocations.Recent, 0, i), 
         //                    new Description($"Print {i.ToString()}"), 
         //                }
@@ -216,7 +249,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber)),
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.File, 2, 0),
                         new Description("Change5"),
                     }
@@ -236,7 +269,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Edit, 1, 1),
                         new Description("Change7"),
                         new KeyShortcut(ModifierKeys.Control, Key.D7)
@@ -256,7 +289,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Category8To10, 1, 0), 
                         new Description("Change8"), 
                         new KeyShortcut(ModifierKeys.Control, Key.D8)
@@ -276,7 +309,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Category8To10, 2, 0),
                         new Description("Change9"),
                         new KeyShortcut(ModifierKeys.Control, Key.D9)
@@ -296,7 +329,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Category8To10, 2, 1),
                         new Description("Change10"),
                     }
@@ -315,7 +348,7 @@ namespace WPF
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }, 
-                    MainMenuMetadata = new MainMenuMetadataCollection() {
+                    MainMenuMetadata = new MenuMetadataCollection() {
                         new MenuPath(MenuLocations.Edit, 3, 0),
                         new Description("Check Me"), 
                         new Checkable(true), 

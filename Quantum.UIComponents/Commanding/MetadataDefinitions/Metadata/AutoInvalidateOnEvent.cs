@@ -2,9 +2,10 @@
 
 namespace Quantum.Command
 {
-    public class AutoInvalidateOnEvent : ICommandMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(true)]
+    public class AutoInvalidateOnEvent : ICommandMetadata, IMultiMenuMetadata
     {
-        public bool SupportsMultiple { get { return true; } }
         public Type EventType { get; private set; }
         public AutoInvalidateOnEvent(Type eventType)
         {

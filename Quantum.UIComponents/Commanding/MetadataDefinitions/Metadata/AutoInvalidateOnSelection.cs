@@ -2,9 +2,10 @@
 
 namespace Quantum.Command
 {
-    public class AutoInvalidateOnSelection : ICommandMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(true)]
+    public class AutoInvalidateOnSelection : ICommandMetadata, IMultiMenuMetadata
     {
-        public bool SupportsMultiple { get { return true; } }
         public Type SelectionType { get; private set; }
         public AutoInvalidateOnSelection(Type selectionType)
         {

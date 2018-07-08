@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Quantum.Command
 {
-    public class Icon : IMainMenuMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(false)]
+    public class Icon : IMenuMetadata, ISubMenuMetadata
     {
-        public bool SupportsMultiple { get { return false; } }
         public string IconPath { get; private set; }
         public Icon(string iconPath)
         {

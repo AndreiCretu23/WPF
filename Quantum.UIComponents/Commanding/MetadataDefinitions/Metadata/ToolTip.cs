@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Quantum.Command
 {
-    public class ToolTip : IMainMenuMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(false)]
+    public class ToolTip : IMenuMetadata, ISubMenuMetadata
     {
         public ToolTip(string toolTip)
         {
             Value = toolTip;
         }
-
-        public bool SupportsMultiple { get { return false; } }
+        
         public string Value { get; private set; }
     }
 }

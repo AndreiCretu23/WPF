@@ -43,7 +43,9 @@ namespace Quantum.Command
         }
     }
 
-    public class MenuPath : IMainMenuMetadata, IMenuEntry
+    [Mandatory(true)]
+    [SupportsMultiple(false)]
+    public class MenuPath : IMenuMetadata, IMultiMenuMetadata, IMenuEntry
     {
         public MenuPath(AbstractMenuPath parentPath, int categoryIndex, int orderIndex)
         {
@@ -51,8 +53,7 @@ namespace Quantum.Command
             CategoryIndex = categoryIndex;
             OrderIndex = orderIndex;
         }
-
-        public bool SupportsMultiple { get { return false; } }
+        
         public AbstractMenuPath ParentPath { get; private set; }
         public int CategoryIndex { get; private set; }
         public int OrderIndex { get; private set; }

@@ -11,6 +11,7 @@ namespace Quantum.UIComponents
         {
             container.RegisterService<ShellView>();
             container.RegisterService<ShellViewModel>();
+            container.RegisterService<IMetadataAsserterService, MetadataAsserterService>();
             container.RegisterService<ICommandMetadataProcessorService, CommandMetadataProcessorService>();
             container.RegisterService<ICommandManagerService, CommandManagerService>();
             container.RegisterService<IMenuManagerService, MenuManagerService>();

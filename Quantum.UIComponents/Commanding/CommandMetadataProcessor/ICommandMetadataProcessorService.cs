@@ -2,6 +2,6 @@
 {
     internal interface ICommandMetadataProcessorService
     {
-        void ProcessMetadata(IManagedCommand command);
+        void ProcessMetadata(ICommandBase command);
     }
 }

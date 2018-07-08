@@ -2,9 +2,10 @@
 
 namespace Quantum.Command
 {
-    public class Description : IMainMenuMetadata
+    [Mandatory(true)]
+    [SupportsMultiple(false)]
+    public class Description : IMenuMetadata, ISubMenuMetadata
     {
-        public bool SupportsMultiple { get { return false; } }
         public string Value { get; private set; }
         public Description(string description)
         {

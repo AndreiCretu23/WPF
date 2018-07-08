@@ -14,7 +14,7 @@ namespace Quantum.Command
         {
         }
         
-        public void ProcessMetadata(IManagedCommand command)
+        public void ProcessMetadata(ICommandBase command)
         {
             if (command.CommandMetadata == null) return;
 
@@ -31,7 +31,7 @@ namespace Quantum.Command
 
         #region SubscribeToEvent
 
-        private void ProcessAutoInvalidateOnEvent(IManagedCommand command, AutoInvalidateOnEvent metadata)
+        private void ProcessAutoInvalidateOnEvent(ICommandBase command, AutoInvalidateOnEvent metadata)
         {
             if (metadata.EventType == null) return;
             if (!metadata.EventType.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>))) {
@@ -43,7 +43,7 @@ namespace Quantum.Command
 
         }
 
-        public void SubscribeCommandToEvent<TEvent, TPayload>(IManagedCommand command)
+        public void SubscribeCommandToEvent<TEvent, TPayload>(ICommandBase command)
             where TEvent : CompositePresentationEvent<TPayload>
         {
             EventAggregator.GetEvent<TEvent>().Subscribe(args => command.RaiseCanExecuteChanged(), ThreadOption.PublisherThread, true);
@@ -53,7 +53,7 @@ namespace Quantum.Command
 
         #region SubscribeToSelection
 
-        private void ProcessAutoInvalidateOnSelection(IManagedCommand command, AutoInvalidateOnSelection metadata)
+        private void ProcessAutoInvalidateOnSelection(ICommandBase command, AutoInvalidateOnSelection metadata)
         {
             if (metadata.SelectionType == null) return;
             if(!metadata.SelectionType.IsSubclassOfRawGeneric(typeof(SelectionBase<>))) {
@@ -64,7 +64,7 @@ namespace Quantum.Command
                 Invoke(this, new object[] { command });
         }
 
-        public void SubscribeCommandToSelection<TSelection, TPayload>(IManagedCommand command)
+        public void SubscribeCommandToSelection<TSelection, TPayload>(ICommandBase command)
             where TSelection : SelectionBase<TPayload>
         {
             EventAggregator.GetEvent<TSelection>().Subscribe(selection => command.RaiseCanExecuteChanged(), ThreadOption.PublisherThread, true);

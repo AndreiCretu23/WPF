@@ -7,14 +7,24 @@ using System.Windows.Input;
 
 namespace Quantum.Command
 {
-    public interface IManagedCommand : ICommand
+    public interface ICommandBase : ICommand
     {
         void RaiseCanExecuteChanged();
         CommandMetadataCollection CommandMetadata { get; }
     }
 
-    public interface IMainMenuCommand : IManagedCommand
+    public interface IManagedCommand : ICommandBase
     {
-        MainMenuMetadataCollection MainMenuMetadata { get; }
+        MenuMetadataCollection MainMenuMetadata { get; }
+    }
+
+    public interface IMultiManagedCommand
+    {
+        MultiMenuMetadataCollection MenuMetadata { get; }
+    }
+
+    public interface ISubCommand : ICommandBase
+    {
+        SubMenuMetadataCollection SubCommandMetadata { get; }
     }
 }

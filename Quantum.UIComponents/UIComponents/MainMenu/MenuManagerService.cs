@@ -25,6 +25,10 @@ namespace Quantum.UIComponents
         [Service]
         public ICommandManagerService CommandManager { get; set; }
 
+        [Service]
+        public ICommandMetadataProcessorService MetadataProcessor { get; set; }
+
+
         public MenuManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -35,10 +39,13 @@ namespace Quantum.UIComponents
 
         public void CreateMainMenu()
         {
-            var managedCommands = CommandManager.ManagedCommands;
-            var menuPaths = managedCommands.Select(o => o.MainMenuMetadata.OfType<MenuPath>().Single());
+            var managedCommands = CommandManager.ManagedCommands.Where(c => c.MainMenuMetadata.Any());
+            var multiManagedCommands = CommandManager.MultiManagedCommands.Where(c => c.MenuMetadata.Any());
+            var menuPaths = managedCommands.Select(o => o.MainMenuMetadata.OfType<MenuPath>().Single()).
+                     Concat(multiManagedCommands.Select(c => c.MenuMetadata.OfType<MenuPath>().Single()));
             CreateMenuSkeleton(menuPaths);
             CreateMenuOptions(managedCommands);
+            CreateMultiMenuOptions(multiManagedCommands);
         }
 
 
@@ -194,6 +201,13 @@ namespace Quantum.UIComponents
         #endregion MenuOptions
 
         #region MultiMenuOptions
+
+        private readonly Dictionary<MultiManagedCommand, IEnumerable<MenuItem>> RegisteredMultiOptions = new Dictionary<MultiManagedCommand, IEnumerable<MenuItem>>();  
+
+        private void CreateMultiMenuOptions(IEnumerable<MultiManagedCommand> multiCommands)
+        {
+            //TODO : Implement.
+        }
 
         #endregion MultiMenuOptions
     }

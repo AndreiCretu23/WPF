@@ -13,6 +13,7 @@ namespace Quantum.Command
     public interface ICommandManagerService
     {
         IEnumerable<ManagedCommand> ManagedCommands { get; }
+        IEnumerable<MultiManagedCommand> MultiManagedCommands { get; }
         
         void RegisterCommandContainer<TCommandContainer>() where TCommandContainer : class, ICommandContainer;
         void RegisterCommandContainer<IContainer, TContainer>() where TContainer : class, IContainer 
@@ -22,14 +23,19 @@ namespace Quantum.Command
     internal class CommandManagerService : QuantumServiceBase, ICommandManagerService
     {
         [Service]
-        public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
+        public IMetadataAsserterService MetadataAsserter { get; set; }
 
+        [Service]
+        public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
+        
         #region InternalLists
         private List<ManagedCommand> managedCommands { get; set; } = new List<ManagedCommand>();
-        
+        private List<MultiManagedCommand> multiManagedCommands { get; set; } = new List<MultiManagedCommand>();
+
         #endregion InternalLists
 
         public IEnumerable<ManagedCommand> ManagedCommands { get => managedCommands; }
+        public IEnumerable<MultiManagedCommand> MultiManagedCommands { get => multiManagedCommands; }
         
         public CommandManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -54,13 +60,16 @@ namespace Quantum.Command
         private void AddCommandContainer<TCommandContainer>(TCommandContainer commandContainer)
             where TCommandContainer : class, ICommandContainer
         {
+            MetadataAsserter.AssertMetadata<TCommandContainer>();
+
             var properties = typeof(TCommandContainer).GetProperties();
             var containerManagedCommands = properties.Where(prop => prop.PropertyType == typeof(ManagedCommand)).Select(prop => (ManagedCommand)prop.GetValue(commandContainer));
+            var containerMultiManagedCommands = properties.Where(prop => prop.PropertyType == typeof(MultiManagedCommand)).Select(prop => (MultiManagedCommand)prop.GetValue(commandContainer));
 
             containerManagedCommands.ForEach(c => CommandMetadataProcessor.ProcessMetadata(c));
 
-
             managedCommands.AddRange(containerManagedCommands);
+            multiManagedCommands.AddRange(containerMultiManagedCommands);
         }
         
     }

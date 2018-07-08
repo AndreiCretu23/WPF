@@ -8,14 +8,21 @@ namespace Quantum.Command
 {
     public interface IMetadataDefinition
     {
-        bool SupportsMultiple { get; }
     }
     
     public interface ICommandMetadata : IMetadataDefinition
     {
     }
     
-    public interface IMainMenuMetadata : IMetadataDefinition
+    public interface IMenuMetadata : IMetadataDefinition
+    {
+    }
+    
+    public interface IMultiMenuMetadata : IMetadataDefinition
+    {
+    }
+
+    public interface ISubMenuMetadata : IMetadataDefinition
     {
     }
 }

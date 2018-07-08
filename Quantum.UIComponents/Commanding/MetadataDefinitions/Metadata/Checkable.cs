@@ -2,9 +2,10 @@
 
 namespace Quantum.Command
 {
-    public class Checkable : IMainMenuMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(false)]
+    public class Checkable : IMenuMetadata, ISubMenuMetadata
     {
-        public bool SupportsMultiple { get { return false; } }
         public bool Value { get; private set; }
         public Checkable(bool isCheckable) {
             Value = isCheckable;

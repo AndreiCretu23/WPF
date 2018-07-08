@@ -120,6 +120,15 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
+        public static IEnumerable<object> ToGenericEnumerable(this IEnumerable collection)
+        {
+            collection.AssertNotNull("Enumeration");
+            foreach(var element in collection) {
+                yield return element;
+            }
+        }
+
+        [DebuggerHidden]
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
         {
             source.AssertNotNull("Enumeration");

@@ -2,9 +2,10 @@
 
 namespace Quantum.Command
 {
-    public class CheckChanged : IMainMenuMetadata
+    [Mandatory(false)]
+    [SupportsMultiple(false)]
+    public class CheckChanged : IMenuMetadata, ISubMenuMetadata
     {
-        public bool SupportsMultiple { get { return false; } }
         public Action<bool> OnCheckChanged { get; private set; }
         public CheckChanged(Action<bool> onCheckChanged)
         {
