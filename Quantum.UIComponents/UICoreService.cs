@@ -20,9 +20,7 @@ namespace Quantum.UIComponents
 
         [Service]
         public ShellViewModel ShellViewModel { get; set; }
-
-        [Service]
-        public IMenuManagerService MenuManager { get; set; }
+        
 
         public UICoreService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -31,9 +29,7 @@ namespace Quantum.UIComponents
         
         public void CreateUI()
         {
-            MenuManager.CreateMainMenu();
-
-
+            
             ShellView.DataContext = ShellViewModel;
             ShellView.Title = AppInfo.ApplicationName;
             Application.Current.MainWindow = ShellView;

@@ -7,7 +7,15 @@ using System.Windows.Input;
 
 namespace Quantum.UIComponents
 {
-    public class ShellViewModel
+    public class ShellViewModel : ViewModelBase
     {
+        public IMainMenuViewModel MainMenuViewModel { get; set; }
+
+        public ShellViewModel(IObjectInitializationService initSvc)
+            : base(initSvc)
+        {
+            MainMenuViewModel = new MainMenuViewModel(initSvc);
+        }
+        
     }
 }

@@ -9,13 +9,14 @@ namespace Quantum.UIComponents
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterService<ShellView>();
-            container.RegisterService<ShellViewModel>();
+
             container.RegisterService<IMetadataAsserterService, MetadataAsserterService>();
             container.RegisterService<ICommandMetadataProcessorService, CommandMetadataProcessorService>();
             container.RegisterService<ICommandManagerService, CommandManagerService>();
-            container.RegisterService<IMenuManagerService, MenuManagerService>();
 
+            
+            container.RegisterService<ShellView>();
+            container.RegisterService<ShellViewModel>();
             container.RegisterService<IUICoreService, UICoreService>();
         }
     }

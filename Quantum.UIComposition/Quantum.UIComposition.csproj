@@ -63,6 +63,7 @@
     <Compile Include="ValueConverters\BoolToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\IconConverter.cs" />
     <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\ObservableObject.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -78,5 +79,6 @@
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

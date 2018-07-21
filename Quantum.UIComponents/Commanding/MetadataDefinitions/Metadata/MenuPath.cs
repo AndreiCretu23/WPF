@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Quantum.Command
 {
-    internal interface IMenuEntry
+    public interface IMenuEntry
     {
         AbstractMenuPath ParentPath { get; }
         int CategoryIndex { get; }

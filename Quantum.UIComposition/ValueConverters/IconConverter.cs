@@ -9,7 +9,10 @@ namespace Quantum.ValueConverters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return IconUtils.GetResourceIcon(value.ToString());
+            if(value != null) {
+                return IconUtils.GetResourceIcon(value.ToString());
+            }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

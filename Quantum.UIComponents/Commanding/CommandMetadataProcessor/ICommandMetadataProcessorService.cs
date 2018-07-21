@@ -1,6 +1,6 @@
 ﻿namespace Quantum.Command
 {
-    internal interface ICommandMetadataProcessorService
+    public interface ICommandMetadataProcessorService
     {
         void ProcessMetadata(ICommandBase command);
     }
