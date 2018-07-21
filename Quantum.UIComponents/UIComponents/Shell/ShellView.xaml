@@ -4,20 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:uiCore="clr-namespace:Quantum.UIComponents"
+        xmlns:p="clr-namespace:Quantum.UIComposition;assembly=Quantum.UIComposition"
         mc:Ignorable="d"
         Title="ShellView"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized">
-    <!--
-    <Grid>
-        <Menu x:Name="MainMenu"
-              Height="30"
-              HorizontalAlignment="Stretch"
-              VerticalAlignment="Top"/>
-        
-        
+        WindowState="Maximized"
+        p:AttachedProperties.Shortcuts="{Binding Shortcuts}">
 
-    </Grid> -->
     <DockPanel>
         <uiCore:MainMenuView DataContext="{Binding MainMenuViewModel}"
                              HorizontalAlignment="Stretch"
