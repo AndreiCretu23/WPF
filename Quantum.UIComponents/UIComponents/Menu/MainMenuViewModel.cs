@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Composite.Presentation.Events;
 using Quantum.Command;
+using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
 using System;
@@ -93,7 +94,7 @@ namespace Quantum.UIComponents
                             var subCommands = c.SubCommands();
                             foreach(var subCommand in subCommands)
                             {
-                                MetadataAsserter.AssertCommand(subCommand, "Unknown", subCommand.ToString());
+                                MetadataAsserter.AssertMetadataCollections(subCommand, "Anonymous");
                                 MetadataProcessor.ProcessMetadata(subCommand);
                                 children.Add(new MainMenuItemViewModel(entry.Key)
                                 {
@@ -175,39 +176,15 @@ namespace Quantum.UIComponents
                 return;
             }
 
-            var autoInvalidationEvents = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath)
-                                                                            .SelectMany(c => c.MenuMetadata.OfType<AutoInvalidateOnEvent>());
-            var autoInvalidationSelections = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath)
-                                                                                .SelectMany(c => c.MenuMetadata.OfType<AutoInvalidateOnSelection>());
-
-            foreach(var evt in autoInvalidationEvents)
+            var childMultiCommandsMetadata = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath)
+                                                                           .SelectMany(c => c.MenuMetadata);
+            foreach(var metadata in childMultiCommandsMetadata)
             {
-                var evtType = evt.EventType;
-                var payloadType = evtType.GetBaseTypeGenericArgument(typeof(CompositePresentationEvent<>));
-                GetType().GetMethod("InvalidateOnEvent").MakeGenericMethod(new Type[] { evtType, payloadType }).Invoke(this, new object[] { viewModelItem });
+                metadata.IfIs((AutoInvalidateOnEvent e) => EventAggregator.Subscribe(e.EventType, () => viewModelItem.RaiseChildrenChanged(), ThreadOption.UIThread, true));
+                metadata.IfIs((AutoInvalidateOnSelection s) => EventAggregator.Subscribe(s.SelectionType, () => viewModelItem.RaiseChildrenChanged(), ThreadOption.UIThread, true));
             }
-
-            foreach (var selection in autoInvalidationSelections)
-            {
-                var selectionType = selection.SelectionType;
-                var payloadType = selectionType.GetBaseTypeGenericArgument(typeof(SelectionBase<>));
-                GetType().GetMethod("InvalidateOnSelection").MakeGenericMethod(new Type[] { selectionType, payloadType }).Invoke(this, new object[] { viewModelItem });
-            }
-            
         }
-
-        public void InvalidateOnEvent<TEvent, TPayload>(MainMenuItemViewModel viewModelItem) 
-            where TEvent : CompositePresentationEvent<TPayload>
-        {
-            EventAggregator.GetEvent<TEvent>().Subscribe(o => viewModelItem.RaiseChildrenChanged(), ThreadOption.UIThread, true);
-        }
-
-        public void InvalidateOnSelection<TSelection, TPayload>(MainMenuItemViewModel viewModelItem)
-            where TSelection : SelectionBase<TPayload>
-        {
-            EventAggregator.GetEvent<TSelection>().Subscribe(o => viewModelItem.RaiseChildrenChanged(), ThreadOption.UIThread, true);
-        }
-
+        
         #endregion Utils
 
 

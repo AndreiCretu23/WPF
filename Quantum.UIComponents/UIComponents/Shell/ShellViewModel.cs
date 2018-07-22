@@ -1,11 +1,9 @@
-﻿using Quantum.Services;
-using Quantum.Command;
-using System.Windows;
-using System.ComponentModel;
-using Microsoft.Practices.Composite.Presentation.Commands;
-using System.Windows.Input;
+﻿using Quantum.Command;
+using Quantum.Metadata;
+using Quantum.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Quantum.UIComponents
 {
@@ -13,8 +11,7 @@ namespace Quantum.UIComponents
     {
         [Service]
         public ICommandManagerService CommandManager { get; set; }
-
-
+        
         public IEnumerable<KeyBinding> Shortcuts
         {
             get

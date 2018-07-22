@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Quantum.Metadata;
 using System.Windows.Input;
 
 namespace Quantum.Command

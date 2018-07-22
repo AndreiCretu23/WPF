@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quantum.Command
+namespace Quantum.Metadata
 {
+    [MandatoryCollection(false)]
     public class CommandMetadataCollection : MetadataCollection<ICommandMetadata>
     {
     }

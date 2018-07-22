@@ -60,6 +60,7 @@
     <Compile Include="Selection\MultipleSelection.cs" />
     <Compile Include="Selection\SelectionBase.cs" />
     <Compile Include="Selection\SingleSelection.cs" />
+    <Compile Include="Services\EventAggregatorHelpers.cs" />
     <Compile Include="Services\EventAggregator\UnityEventAggregator.cs" />
     <Compile Include="Services\ObjectInitializationService\EventInitializer\HandlesAttribute.cs" />
     <Compile Include="Services\ObjectInitializationService\EventInitializer\SubscriberInitializer.cs" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Quantum.Command
+namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]

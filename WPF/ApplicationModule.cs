@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.CoreModule;
+using Quantum.Metadata;
 using Quantum.Services;
 using System.Windows;
 using System.Windows.Input;

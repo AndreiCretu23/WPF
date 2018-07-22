@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Quantum.Command
+namespace Quantum.Metadata
 {
     public abstract class MetadataCollection<TDefinition> : IEnumerable<TDefinition>
         where TDefinition : IMetadataDefinition

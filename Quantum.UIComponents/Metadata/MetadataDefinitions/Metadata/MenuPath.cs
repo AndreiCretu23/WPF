@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Quantum.Command
+namespace Quantum.Metadata
 {
     public interface IMenuEntry
     {

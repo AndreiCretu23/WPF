@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quantum.Command
+namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(true)]

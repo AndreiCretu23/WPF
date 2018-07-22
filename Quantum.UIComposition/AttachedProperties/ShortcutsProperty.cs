@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -24,6 +23,7 @@ namespace Quantum.UIComposition
             obj.SetValue(ShortcutsProperty, value);
         }
 
+        [SuppressMessage("Microsoft.Design", "IDE0019")]
         private static void ShortcutsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var uiElement = obj as UIElement;

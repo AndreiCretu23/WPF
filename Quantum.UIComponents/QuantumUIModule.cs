@@ -2,6 +2,7 @@
 using Quantum.CoreModule;
 using Quantum.Services;
 using Quantum.Command;
+using Quantum.Metadata;
 
 namespace Quantum.UIComponents
 {

@@ -17,6 +17,16 @@
                              VerticalAlignment="Top"
                              Height="30"
                              DockPanel.Dock="Top"/>
+
+        <ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Top" DockPanel.Dock="Top" Height="50">
+            <ToolBar Band="0">
+                <Button Content="Button1"/>
+            </ToolBar>
+            <ToolBar Band="1">
+                <Button Content="Button4"/>
+            </ToolBar>
+        </ToolBarTray>
+
     </DockPanel>
-    
+
 </Window>

@@ -3,6 +3,7 @@ using Quantum.UIComponents;
 using Quantum.Utils;
 using System;
 using System.Collections.Generic;
+using Quantum.Metadata;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
@@ -60,13 +61,40 @@ namespace Quantum.Command
         private void AddCommandContainer<TCommandContainer>(TCommandContainer commandContainer)
             where TCommandContainer : class, ICommandContainer
         {
-            MetadataAsserter.AssertMetadata<TCommandContainer>();
-
             var properties = typeof(TCommandContainer).GetProperties();
-            var containerManagedCommands = properties.Where(prop => prop.PropertyType == typeof(ManagedCommand)).Select(prop => (ManagedCommand)prop.GetValue(commandContainer));
-            var containerMultiManagedCommands = properties.Where(prop => prop.PropertyType == typeof(MultiManagedCommand)).Select(prop => (MultiManagedCommand)prop.GetValue(commandContainer));
 
-            containerManagedCommands.ForEach(c => CommandMetadataProcessor.ProcessMetadata(c));
+            var containerManagedCommands = new List<ManagedCommand>();
+            var containerMultiManagedCommands = new List<MultiManagedCommand>();
+
+            var commandNames = new Dictionary<object, string>();
+            
+            foreach(var prop in properties)
+            {
+                if(prop.PropertyType == typeof(ManagedCommand))
+                {
+                    var command = (ManagedCommand)prop.GetValue(commandContainer);
+                    containerManagedCommands.Add(command);
+                    commandNames.Add(command, prop.Name);   
+                }
+                
+                else if(prop.PropertyType == typeof(MultiManagedCommand))
+                {
+                    var command = (MultiManagedCommand)prop.GetValue(commandContainer);
+                    containerMultiManagedCommands.Add(command);
+                    commandNames.Add(command, prop.Name);
+                }
+            }
+            
+            containerManagedCommands.ForEach(c =>
+            {
+                MetadataAsserter.AssertMetadataCollections(c, commandNames[c]);
+                CommandMetadataProcessor.ProcessMetadata(c);
+            });
+
+            containerMultiManagedCommands.ForEach(c =>
+            {
+                MetadataAsserter.AssertMetadataCollections(c, commandNames[c]);
+            });
 
             managedCommands.AddRange(containerManagedCommands);
             multiManagedCommands.AddRange(containerMultiManagedCommands);
