@@ -18,12 +18,15 @@
                              Height="30"
                              DockPanel.Dock="Top"/>
 
-        <ToolBarTray HorizontalAlignment="Stretch" VerticalAlignment="Top" DockPanel.Dock="Top" Height="50">
+        <ToolBarTray x:Name="toolBarTray" HorizontalAlignment="Stretch" VerticalAlignment="Top" DockPanel.Dock="Top" Height="100">
             <ToolBar Band="0">
                 <Button Content="Button1"/>
             </ToolBar>
-            <ToolBar Band="1">
+            <ToolBar Band="2" BandIndex="5">
                 <Button Content="Button4"/>
+            </ToolBar>
+            <ToolBar Band="2" BandIndex="4">
+                <Button Content="Button5"/>
             </ToolBar>
         </ToolBarTray>
 
