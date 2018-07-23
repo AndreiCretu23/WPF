@@ -19,4 +19,8 @@
     public interface ISubMenuMetadata : IMetadataDefinition
     {
     }
+
+    public interface IToolBarMetadata : IMetadataDefinition
+    {
+    }
 }

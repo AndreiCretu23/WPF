@@ -74,6 +74,7 @@
     <Compile Include="Metadata\MetadataCollections\MetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\MultiMenuMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\SubMenuMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\ToolBarMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataDefinitions\IMetadataDefinitions.cs" />
     <Compile Include="Metadata\MetadataDefinitions\MetadataAttributes.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidateOnEvent.cs" />
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="UIComponents\Shell\ShellViewModel.cs" />
     <Compile Include="QuantumUIModule.cs" />
+    <Compile Include="UIComponents\Toolbar\IToolBarManagerService.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarDefinition.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -140,7 +144,6 @@
   <ItemGroup>
     <Folder Include="Dialog\" />
     <Folder Include="UIComponents\Paneling\" />
-    <Folder Include="UIComponents\Toolbar\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">

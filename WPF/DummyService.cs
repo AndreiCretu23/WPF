@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Composite.Presentation.Events;
 using Quantum.Services;
+using Quantum.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,19 @@ namespace WPF
             : base(initSvc)
         {
         }
+
+        [Handles(typeof(ApplicationExitEvent))]
+        public void OnAppExit()
+        {
+            MessageBox.Show("Application Exiting");
+        }
+
+        [Handles(typeof(UnhandledExceptionEvent))]
+        public void OnUnhandledException()
+        {
+            MessageBox.Show("App Crashed!");
+        }
+
 
         public void TestMethod()
         {

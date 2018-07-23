@@ -40,6 +40,6 @@
               UsesItemContainerTemplate="True"
               ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}">
         </Menu>
-
+        
     </Grid>
 </UserControl>

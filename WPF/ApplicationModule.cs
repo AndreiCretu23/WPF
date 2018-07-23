@@ -12,9 +12,8 @@ namespace WPF
     {
         public void Initialize(IUnityContainer container)
         {
-            //container.RegisterService<IDummyService, DummyService>();
+            container.RegisterService<IDummyService, DummyService>();            
             container.Resolve<ICommandManagerService>().RegisterCommandContainer<CommonCommands>();
-            
         }
         
     }

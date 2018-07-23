@@ -14,7 +14,10 @@ namespace Quantum.CoreModule
             container.Resolve<IObjectInitializationService>().RegisterInitializer<SubscriberInitializer>();
 
             container.RegisterService<IEventAggregator, UnityEventAggregator>();
-            
+
+            container.RegisterService<IWPFEventManagerService, WPFEventManagerService>();
+            container.Resolve<IWPFEventManagerService>().HookWpfEvents();
+
         }
     }
 }
