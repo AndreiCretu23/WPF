@@ -1,6 +1,6 @@
 ﻿namespace Quantum.UIComponents
 {
-    public interface IToolBarContainerViewModel
+    internal interface IToolBarContainerViewModel
     {
     }
 }

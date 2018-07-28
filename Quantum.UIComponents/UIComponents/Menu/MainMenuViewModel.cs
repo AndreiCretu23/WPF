@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Quantum.UIComponents
 {
-    public class MainMenuViewModel : ViewModelBase, IMainMenuViewModel
+    internal class MainMenuViewModel : ViewModelBase, IMainMenuViewModel
     {
         [Service]
         public ICommandManagerService CommandManager { get; set; }

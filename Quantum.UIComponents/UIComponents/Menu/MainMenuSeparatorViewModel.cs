@@ -2,7 +2,7 @@
 
 namespace Quantum.UIComponents
 {
-    public class MainMenuSeparatorViewModel : ObservableObject, IMainMenuItemViewModel
+    internal class MainMenuSeparatorViewModel : ObservableObject, IMainMenuItemViewModel
     {
         public MainMenuSeparatorViewModel()
         {

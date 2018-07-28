@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Quantum.UIComponents
 {
-    public class ShellViewModel : ViewModelBase
+    internal class ShellViewModel : ViewModelBase
     {
         [Service]
         public ICommandManagerService CommandManager { get; set; }

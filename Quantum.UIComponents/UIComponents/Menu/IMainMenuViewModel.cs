@@ -1,6 +1,6 @@
 ﻿namespace Quantum.UIComponents
 {
-    public interface IMainMenuViewModel
+    internal interface IMainMenuViewModel
     {
     }
 }

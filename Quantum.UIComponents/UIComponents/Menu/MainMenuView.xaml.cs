@@ -6,7 +6,7 @@ namespace Quantum.UIComponents
     /// <summary>
     /// Interaction logic for MainMenuView.xaml
     /// </summary>
-    public partial class MainMenuView : UserControl, IMainMenuView
+    internal partial class MainMenuView : UserControl, IMainMenuView
     {
         public MainMenuView()
         {
@@ -14,7 +14,7 @@ namespace Quantum.UIComponents
         }
     }
 
-    public class MainMenuItemContainerTemplateSelector : ItemContainerTemplateSelector
+    internal class MainMenuItemContainerTemplateSelector : ItemContainerTemplateSelector
     {
         public override DataTemplate SelectTemplate(object item, ItemsControl parentItemsControl)
         {

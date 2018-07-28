@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Quantum.UIComponents
 {
-    public class MainMenuItemViewModel : ObservableObject, IMainMenuItemViewModel
+    internal class MainMenuItemViewModel : ObservableObject, IMainMenuItemViewModel
     {
         public IMenuEntry MenuEntry { get; private set; }
 

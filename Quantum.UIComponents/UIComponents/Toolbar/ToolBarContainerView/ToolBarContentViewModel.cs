@@ -2,7 +2,7 @@
 
 namespace Quantum.UIComponents
 {
-    public class ToolBarContentViewModel : ObservableObject
+    internal class ToolBarContentViewModel : ObservableObject
     {
         private object content;
         public object Content
