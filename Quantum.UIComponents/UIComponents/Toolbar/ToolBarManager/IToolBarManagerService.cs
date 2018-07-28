@@ -10,7 +10,13 @@ namespace Quantum.UIComponents
     public interface IToolBarManagerService
     {
         void RegisterToolBarDefinition<ITView, TView, ITViewModel, TViewModel>(ToolBarDefinition<ITView, TView, ITViewModel, TViewModel> toolbarDefinition)
-            where TView : UserControl, ITView
-            where TViewModel : ITViewModel;
+            where TView : UserControl, ITView, new()
+            where ITView : class
+            where TViewModel : class, ITViewModel
+            where ITViewModel : class;
+
+        void RegisterToolBarDefinition(IToolBarDefinition toolBarDefinition);
+
+        IEnumerable<IToolBarDefinition> GetToolBarDefinitions();
     }
 }

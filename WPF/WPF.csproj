@@ -78,6 +78,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ToolBars\FirstToolBar\FirstToolBarView.xaml.cs">
+      <DependentUpon>FirstToolBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolBars\FirstToolBar\FirstToolBarViewModel.cs" />
+    <Compile Include="ToolBars\SecondToolBar\SecondToolBarView.xaml.cs">
+      <DependentUpon>SecondToolBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ToolBars\SecondToolBar\SecondToolBarViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationModule.cs" />
@@ -109,6 +117,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.Controls\Quantum.Controls.csproj">
+      <Project>{3ff94c3c-29da-4b14-9be4-f7bf60379c0d}</Project>
+      <Name>Quantum.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.CoreModule\Quantum.CoreModule.csproj">
       <Project>{017BFE32-C335-46F7-B878-BC5FD069917E}</Project>
       <Name>Quantum.CoreModule</Name>
@@ -125,6 +137,17 @@
       <Project>{6052dc7e-36ce-4fc5-b91a-6bc1d83dbd33}</Project>
       <Name>Quantum.Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="ToolBars\FirstToolBar\FirstToolBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolBars\SecondToolBar\SecondToolBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

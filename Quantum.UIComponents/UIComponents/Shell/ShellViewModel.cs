@@ -26,11 +26,13 @@ namespace Quantum.UIComponents
         }
         
         public IMainMenuViewModel MainMenuViewModel { get; set; }
+        public IToolBarContainerViewModel ToolBarContainerViewModel { get; set; }
 
         public ShellViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
             MainMenuViewModel = new MainMenuViewModel(initSvc);
+            ToolBarContainerViewModel = new ToolBarContainerViewModel(initSvc);
         }
         
     }

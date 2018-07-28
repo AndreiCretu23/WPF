@@ -3,8 +3,11 @@ using Quantum.Command;
 using Quantum.CoreModule;
 using Quantum.Metadata;
 using Quantum.Services;
+using Quantum.UIComponents;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using WPF.ToolBars;
 
 namespace WPF
 {
@@ -14,8 +17,38 @@ namespace WPF
         {
             container.RegisterService<IDummyService, DummyService>();            
             container.Resolve<ICommandManagerService>().RegisterCommandContainer<CommonCommands>();
+
+            var toolBarManager = container.Resolve<IToolBarManagerService>();
+            foreach(var toolBar in GetToolBars(container))
+            {
+                toolBarManager.RegisterToolBarDefinition(toolBar);
+            }
+
         }
-        
+
+        private IEnumerable<IToolBarDefinition> GetToolBars(IUnityContainer container)
+        {
+            return new List<IToolBarDefinition>()
+            {
+                new ToolBarDefinition<ISecondToolBarView, SecondToolBarView, ISecondToolBarViewModel, SecondToolBarViewModel>()
+                {
+                    Band = 0,
+                    BandIndex = 1,
+                    Visibility = () => container.Resolve<SelectedNumber>().Value > 5,
+                    ToolBarMetadata = new ToolBarMetadataCollection()
+                    {
+                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                    }
+                },
+
+                new ToolBarDefinition<IFirstToolBarView, FirstToolBarView, IFirstToolBarViewModel, FirstToolBarViewModel>()
+                {
+                    Band = 0,
+                    BandIndex = 0,
+                }
+            };
+        }
+
     }
 
     public static class MenuLocations

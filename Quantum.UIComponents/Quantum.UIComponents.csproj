@@ -113,9 +113,19 @@
     </Compile>
     <Compile Include="UIComponents\Shell\ShellViewModel.cs" />
     <Compile Include="QuantumUIModule.cs" />
-    <Compile Include="UIComponents\Toolbar\IToolBarManagerService.cs" />
-    <Compile Include="UIComponents\Toolbar\ToolBarDefinition.cs" />
-    <Compile Include="UIComponents\Toolbar\ToolBarManagerService.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\IToolBarContainerView.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\IToolBarContainerViewModel.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarContainerView.xaml.cs">
+      <DependentUpon>ToolBarContainerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarContainerViewModel.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarContentViewModel.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarViewModel.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\IToolBarDefinition.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\IToolBarManagerService.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarDefinition.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarLayoutChangedEvent.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -128,6 +138,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.Controls\Quantum.Controls.csproj">
+      <Project>{3ff94c3c-29da-4b14-9be4-f7bf60379c0d}</Project>
+      <Name>Quantum.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.CoreModule\Quantum.CoreModule.csproj">
       <Project>{017bfe32-c335-46f7-b878-bc5fd069917e}</Project>
       <Name>Quantum.CoreModule</Name>
@@ -151,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\Shell\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
