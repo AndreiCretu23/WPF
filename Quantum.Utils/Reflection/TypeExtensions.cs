@@ -17,6 +17,17 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
+        public static void AssertTypeHasGuid(this Type type, string message = null)
+        {
+            type.AssertNotNull(nameof(type));
+
+            message = message ?? $"Error : {type.Name} does not have a GUID specified via attribute.";
+            if(type.GetGuid() == null) {
+                throw new Exception(message);
+            }
+        }
+
+        [DebuggerHidden]
         public static string GetGuid(this Type type)
         {
             type.AssertNotNull(nameof(type));
