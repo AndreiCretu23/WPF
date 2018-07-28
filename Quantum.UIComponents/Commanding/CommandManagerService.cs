@@ -30,6 +30,7 @@ namespace Quantum.Command
         public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
         
         #region InternalLists
+
         private List<ManagedCommand> managedCommands { get; set; } = new List<ManagedCommand>();
         private List<MultiManagedCommand> multiManagedCommands { get; set; } = new List<MultiManagedCommand>();
 
