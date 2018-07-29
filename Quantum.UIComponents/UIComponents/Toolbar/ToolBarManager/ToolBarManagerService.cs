@@ -35,9 +35,6 @@ namespace Quantum.UIComponents
         public void RegisterToolBarDefinition(IToolBarDefinition toolBarDefinition)
         {
             toolBarDefinition.AssertNotNull(nameof(toolBarDefinition));
-            if(!toolBarDefinition.GetType().IsGenericType || !(toolBarDefinition.GetType().GetGenericTypeDefinition() == typeof(ToolBarDefinition<,,,>))) {
-                throw new Exception($"The passed in argument must be of type {typeof(ToolBarDefinition<,,,>).Name}");
-            }
             AssertTypes(toolBarDefinition.IView, toolBarDefinition.View, toolBarDefinition.IViewModel, toolBarDefinition.ViewModel);
             ToolBarDefinitions.Add(toolBarDefinition);
             Container.RegisterService(toolBarDefinition.IViewModel, toolBarDefinition.ViewModel);
@@ -76,19 +73,31 @@ namespace Quantum.UIComponents
             view.AssertParameterNotNull(nameof(view));
             iViewModel.AssertParameterNotNull(nameof(iViewModel));
             viewModel.AssertParameterNotNull(nameof(viewModel));
+            
+            view.AssertTypeHasGuid(ComposeAssertGuidMessage(view));
+            iView.AssertTypeHasGuid(ComposeAssertGuidMessage(iView));
+            viewModel.AssertTypeHasGuid(ComposeAssertGuidMessage(viewModel));
+            iViewModel.AssertTypeHasGuid(ComposeAssertGuidMessage(iViewModel));
 
-            if(view.GetGuid() == null) {
-                throw new Exception(ComposeAssertGuidMessage(view));
+            
+            if(!view.IsClass || 
+               !view.IsSubclassOf(typeof(UserControl)) || 
+               view.GetConstructors().Count() != 1 ||
+               view.GetConstructors().Single().GetParameters().Any())
+            {
+                throw new Exception($"Error : {view.Name} must be a class inheriting from user control with an empty constructor.");
             }
-            if(iView.GetGuid() == null) {
-                throw new Exception(ComposeAssertGuidMessage(iView));
+
+            if(!view.Implements(iView))
+            {
+                throw new Exception($"Error : {view.Name} does not implement {iView.Name}.");
             }
-            if(viewModel.GetGuid() == null) {
-                throw new Exception(ComposeAssertGuidMessage(viewModel));
+
+            if(!viewModel.Implements(iViewModel))
+            {
+                throw new Exception($"Error : {viewModel.Name} does not implement {iViewModel.Name}.");
             }
-            if (iViewModel.GetGuid() == null) {
-                throw new Exception(ComposeAssertGuidMessage(iViewModel));
-            }
+
             if(ToolBarDefinitions.Any(def => def.View == view)) {
                 throw new Exception($"Error! View {view.Name} has already been registered.");
             }

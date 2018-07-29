@@ -57,6 +57,14 @@ namespace Quantum.Utils
             }
             return false;
         }
+        
+        [DebuggerHidden]
+        public static bool Implements(this Type type, Type interfaceType)
+        {
+            type.AssertNotNull(nameof(type));
+            interfaceType.AssertParameterNotNull(nameof(interfaceType));
+            return interfaceType.IsInterface && interfaceType.IsAssignableFrom(type);
+        }
 
         [DebuggerHidden]
         public static bool IsSubtypeOf<T>(this Type type)
