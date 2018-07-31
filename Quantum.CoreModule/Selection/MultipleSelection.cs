@@ -5,7 +5,7 @@ namespace Quantum.Services
     public abstract class MultipleSelection<T> : SelectionBase<ObservableCollection<T>>
     {
         public MultipleSelection()
-            : base()
+            : base(new ObservableCollection<T>(), false)
         {
         }
         
