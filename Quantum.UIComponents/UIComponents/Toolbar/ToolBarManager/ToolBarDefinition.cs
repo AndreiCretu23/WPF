@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using Quantum.Metadata;
+using Quantum.Utils;
 
 namespace Quantum.UIComponents
 {
@@ -50,6 +51,23 @@ namespace Quantum.UIComponents
         /// The interface type implemented by the ViewModel.
         /// </summary>
         public Type IViewModel => typeof(ITViewModel);
+        
+        /// <summary>
+        /// Returns a clone of this object.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            var metadata = new ToolBarMetadataCollection();
+            ToolBarMetadata.ForEach(_ => metadata.Add(_));
+
+            return new ToolBarDefinition<ITView, TView, ITViewModel, TViewModel>()
+            {
+                Band = Band,
+                BandIndex = BandIndex, 
+                ToolBarMetadata = metadata
+            };
+        }
 
         public ToolBarDefinition()
         {

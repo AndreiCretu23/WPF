@@ -12,12 +12,15 @@ namespace Quantum.UIComponents
 {
     internal class ToolBarManagerService : QuantumServiceBase, IToolBarManagerService
     {
+        private List<IToolBarDefinition> DefaultDefinitions { get; set; } = new List<IToolBarDefinition>();
         private List<IToolBarDefinition> ToolBarDefinitions { get; set; } = new List<IToolBarDefinition>();
 
         public ToolBarManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
         }
+
+        
 
         #region Register
 
@@ -27,8 +30,10 @@ namespace Quantum.UIComponents
             where TViewModel : class, ITViewModel
             where ITViewModel : class
         {
+            toolbarDefinition.AssertNotNull(nameof(toolbarDefinition));
             AssertTypes(typeof(ITView), typeof(TView), typeof(ITViewModel), typeof(TViewModel));
             ToolBarDefinitions.Add(toolbarDefinition);
+            DefaultDefinitions.Add((IToolBarDefinition)toolbarDefinition.Clone());
             Container.RegisterService<ITViewModel, TViewModel>();
         }
 
@@ -37,10 +42,20 @@ namespace Quantum.UIComponents
             toolBarDefinition.AssertNotNull(nameof(toolBarDefinition));
             AssertTypes(toolBarDefinition.IView, toolBarDefinition.View, toolBarDefinition.IViewModel, toolBarDefinition.ViewModel);
             ToolBarDefinitions.Add(toolBarDefinition);
+            DefaultDefinitions.Add((IToolBarDefinition)toolBarDefinition.Clone());
             Container.RegisterService(toolBarDefinition.IViewModel, toolBarDefinition.ViewModel);
         }
 
         #endregion Register
+
+        #region Restore
+
+        public void RestoreLayout()
+        {
+            EventAggregator.GetEvent<ToolBarLayoutRestoreRequest>().Publish(new ToolBarLayoutRestoreArgs(DefaultDefinitions));
+        }
+
+        #endregion Restore
 
         #region Extract
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Quantum.UIComponents
 {
-    public interface IToolBarDefinition
+    public interface IToolBarDefinition : ICloneable
     {
         /// <summary>
         /// The Band on which the associated View will be located on the ToolBar.

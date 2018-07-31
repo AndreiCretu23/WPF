@@ -96,5 +96,13 @@ namespace Quantum.UIComponents
         {
             RaisePropertyChanged(() => IsVisible);
         }
+
+        [Handles(typeof(ToolBarLayoutRestoreRequest))]
+        public void OnToolBarRestoreRequest(ToolBarLayoutRestoreArgs args)
+        {
+            var associatedDefinition = args.DefaultDefinitions.Single(o => o.View == Content.GetType());
+            Band = associatedDefinition.Band;
+            BandIndex = associatedDefinition.BandIndex;
+        }
     }
 }

@@ -131,6 +131,7 @@
     <Compile Include="UIComponents\Toolbar\ToolBarManager\IToolBarManagerService.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarDefinition.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarLayoutChangedEvent.cs" />
+    <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarLayoutRestoreRequest.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

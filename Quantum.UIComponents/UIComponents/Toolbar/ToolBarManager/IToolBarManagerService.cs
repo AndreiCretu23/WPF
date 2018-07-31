@@ -31,5 +31,11 @@ namespace Quantum.UIComponents
         /// </summary>
         /// <returns></returns>
         IEnumerable<IToolBarDefinition> GetToolBarDefinitions();
+
+
+        /// <summary>
+        /// Restores all toolbars to their default layout.
+        /// </summary>
+        void RestoreLayout();
     }
 }

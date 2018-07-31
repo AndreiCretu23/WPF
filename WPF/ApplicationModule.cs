@@ -84,7 +84,7 @@ namespace WPF
                 return new ManagedCommand()
                 {
                     CanExecuteHandler = () => true,
-                    ExecuteHandler = () => { },
+                    ExecuteHandler = () => { Container.Resolve<IToolBarManagerService>().RestoreLayout(); },
                     CommandMetadata = new CommandMetadataCollection() {
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
