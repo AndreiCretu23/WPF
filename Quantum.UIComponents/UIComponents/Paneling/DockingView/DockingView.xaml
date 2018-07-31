@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Quantum.UIComponents.DockingView"
+             x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:dockctrl="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
+             xmlns:local="clr-namespace:Quantum.UIComponents"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <dock:DockingManager x:Name="DockManager">
+            <dock:LayoutRoot>
+                <dock:LayoutPanel>
+                    
+                    <!--Left Group-->
+                    <dock:LayoutAnchorablePaneGroup DockWidth="200" DockHeight="*" Orientation="Vertical">
+                        <dock:LayoutAnchorablePane x:Name="UpperLeftPane"
+                                                   DockHeight="400"/>
+                        <dock:LayoutAnchorablePane x:Name="BottomLeftPane"
+                                                   DockHeight="400"/>
+                    </dock:LayoutAnchorablePaneGroup>
+                    
+                    <!--Center Group-->
+                    <dock:LayoutAnchorablePaneGroup DockWidth="1000">
+                        <dock:LayoutAnchorablePane x:Name="CenterPane"
+                                                   DockHeight="*">
+                        </dock:LayoutAnchorablePane>
+                    </dock:LayoutAnchorablePaneGroup>
+
+                    <!--Right Group-->
+                    <dock:LayoutAnchorablePaneGroup DockWidth="150" DockHeight="*" Orientation="Vertical">
+                        <dock:LayoutAnchorablePane x:Name="UpperRightPane"
+                                                   DockHeight="400"/>
+                        <dock:LayoutAnchorablePane x:Name="BottomRightPane"
+                                                   DockHeight="400"/>
+                    </dock:LayoutAnchorablePaneGroup>
+                </dock:LayoutPanel>
+            </dock:LayoutRoot>
+        </dock:DockingManager>
+    </Grid>
+</UserControl>

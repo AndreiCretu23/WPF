@@ -27,12 +27,14 @@ namespace Quantum.UIComponents
         
         public IMainMenuViewModel MainMenuViewModel { get; set; }
         public IToolBarContainerViewModel ToolBarContainerViewModel { get; set; }
+        public IDockingView DockingView { get; set; }
 
         public ShellViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
             MainMenuViewModel = new MainMenuViewModel(initSvc);
             ToolBarContainerViewModel = new ToolBarContainerViewModel(initSvc);
+            DockingView = Container.Resolve<IDockingView>();
         }
         
     }

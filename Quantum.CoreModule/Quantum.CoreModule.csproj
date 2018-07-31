@@ -54,6 +54,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\IIdentifiable.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Events\ApplicationExitEvent.cs" />
     <Compile Include="Events\UnhandledExceptionEvent.cs" />

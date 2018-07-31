@@ -16,7 +16,8 @@ namespace Quantum.UIComponents
             container.RegisterService<ICommandManagerService, CommandManagerService>();
 
             container.RegisterService<IToolBarManagerService, ToolBarManagerService>();
-            
+
+            container.RegisterService<IDockingView, DockingView>();
             container.RegisterService<ShellView>();
             container.RegisterService<ShellViewModel>();
             container.RegisterService<IUICoreService, UICoreService>();

@@ -13,6 +13,7 @@
         p:AttachedProperties.Shortcuts="{Binding Shortcuts}">
 
     <DockPanel>
+        
         <uiCore:MainMenuView DataContext="{Binding MainMenuViewModel}"
                              HorizontalAlignment="Stretch"
                              VerticalAlignment="Top"
@@ -23,6 +24,10 @@
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Top"
                                      DockPanel.Dock="Top"/>
+
+        <ContentControl>
+            <ContentPresenter Content="{Binding DockingView}"/>
+        </ContentControl>
 
     </DockPanel>
 

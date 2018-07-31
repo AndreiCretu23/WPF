@@ -114,6 +114,10 @@
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Menu\MainMenuViewModel.cs" />
+    <Compile Include="UIComponents\Paneling\DockingView\DockingView.xaml.cs">
+      <DependentUpon>DockingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -164,10 +168,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog\" />
-    <Folder Include="UIComponents\Paneling\" />
+    <Folder Include="UIComponents\Paneling\PanelManager\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\Paneling\DockingView\DockingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
