@@ -120,6 +120,11 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\DynamicPanelDefinition.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IDynamicPanelDefinition.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IPanelDefinition.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IStaticPanelDefinition.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\StaticPanelDefinition.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -171,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog\" />
-    <Folder Include="UIComponents\Paneling\PanelManager\PanelDefinitions\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
