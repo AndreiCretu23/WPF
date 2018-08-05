@@ -79,6 +79,7 @@
     <Compile Include="Metadata\MetadataCollections\MenuMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\MetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\MultiMenuMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\PanelMenuOption.cs" />
     <Compile Include="Metadata\MetadataCollections\SubMenuMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\ToolBarMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataDefinitions\IMetadataDefinitions.cs" />

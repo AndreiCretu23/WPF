@@ -31,4 +31,8 @@
     public interface IDynamicPanelMetadata : IMetadataDefinition
     {
     }
+
+    public interface IPanelMenuEntryMetadata : IMetadataDefinition
+    {
+    }
 }

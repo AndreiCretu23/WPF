@@ -78,10 +78,16 @@ namespace Quantum.Metadata
                     }
                 }
 
-                foreach(var metadataDef in metadataCollection.OfType<IAssertable>())
+                foreach(var metadataDef in metadataCollection)
+            {
+                metadataDef.IfIs((IAssertable assertableDef) => assertableDef.Assert(objName));
+                var metadataDefType = metadataDef.GetType();
+                if(metadataDefType.IsSubclassOfRawGeneric(typeof(MetadataCollection<>)))
                 {
-                    metadataDef.Assert(objName);
+                    GetType().GetMethod("AssertMetadataCollection").MakeGenericMethod(new Type[] { metadataDefType, metadataDefType.GetBaseTypeGenericArgument(typeof(MetadataCollection<>))}).
+                        Invoke(this, new object[] { metadataDef, objName });
                 }
+            }
             }
         }
 
@@ -105,9 +111,15 @@ namespace Quantum.Metadata
                 }
             }
 
-            foreach(var metadataDef in collection.OfType<IAssertable>())
+            foreach(var metadataDef in collection)
             {
-                metadataDef.Assert(collectionName);
+                metadataDef.IfIs((IAssertable assertableDef) => assertableDef.Assert(collectionName));
+                var metadataDefType = metadataDef.GetType();
+                if(metadataDefType.IsSubclassOfRawGeneric(typeof(MetadataCollection<>)))
+                {
+                    GetType().GetMethod("AssertMetadataCollection").MakeGenericMethod(new Type[] { metadataDefType, metadataDefType.GetBaseTypeGenericArgument(typeof(MetadataCollection<>))}).
+                        Invoke(this, new object[] { metadataDef, objName });
+                }
             }
         }
         
