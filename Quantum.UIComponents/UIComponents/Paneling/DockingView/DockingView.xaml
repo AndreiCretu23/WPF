@@ -17,14 +17,17 @@
                     <!--Left Group-->
                     <dock:LayoutAnchorablePaneGroup DockWidth="200" DockHeight="*" Orientation="Vertical">
                         <dock:LayoutAnchorablePane x:Name="UpperLeftPane"
+                                                   x:FieldModifier="private"
                                                    DockHeight="400"/>
                         <dock:LayoutAnchorablePane x:Name="BottomLeftPane"
+                                                   x:FieldModifier="private"
                                                    DockHeight="400"/>
                     </dock:LayoutAnchorablePaneGroup>
                     
                     <!--Center Group-->
                     <dock:LayoutAnchorablePaneGroup DockWidth="1000">
                         <dock:LayoutAnchorablePane x:Name="CenterPane"
+                                                   x:FieldModifier="private"
                                                    DockHeight="*">
                         </dock:LayoutAnchorablePane>
                     </dock:LayoutAnchorablePaneGroup>
@@ -32,8 +35,10 @@
                     <!--Right Group-->
                     <dock:LayoutAnchorablePaneGroup DockWidth="150" DockHeight="*" Orientation="Vertical">
                         <dock:LayoutAnchorablePane x:Name="UpperRightPane"
+                                                   x:FieldModifier="private"
                                                    DockHeight="400"/>
                         <dock:LayoutAnchorablePane x:Name="BottomRightPane"
+                                                   x:FieldModifier="private"
                                                    DockHeight="400"/>
                     </dock:LayoutAnchorablePaneGroup>
                 </dock:LayoutPanel>

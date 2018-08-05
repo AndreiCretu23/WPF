@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
@@ -22,6 +8,12 @@ namespace Quantum.UIComponents
     /// </summary>
     internal partial class DockingView : UserControl, IDockingView
     {
+        public LayoutAnchorablePane UpperLeftArea { get { return UpperLeftPane; } }
+        public LayoutAnchorablePane BottomLeftArea { get { return BottomLeftPane; } }
+        public LayoutAnchorablePane CenterArea { get { return CenterPane; } }
+        public LayoutAnchorablePane UpperRightArea { get { return UpperRightPane; } }
+        public LayoutAnchorablePane BottomRightArea { get { return BottomRightPane; } }
+
         public DockingView()
         {
             InitializeComponent();
