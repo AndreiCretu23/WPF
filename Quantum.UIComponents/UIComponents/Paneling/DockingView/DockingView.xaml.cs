@@ -3,9 +3,6 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    /// <summary>
-    /// Interaction logic for DockingView.xaml
-    /// </summary>
     internal partial class DockingView : UserControl, IDockingView
     {
         public LayoutAnchorablePane UpperLeftArea { get { return UpperLeftPane; } }
