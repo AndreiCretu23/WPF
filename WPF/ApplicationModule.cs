@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.CoreModule;
 using Quantum.Metadata;
@@ -15,8 +16,12 @@ namespace WPF
     {
         public void Initialize(IUnityContainer container)
         {
-            container.RegisterService<IDummyService, DummyService>();            
+            container.RegisterService<IDummyService, DummyService>();
+            container.Resolve<IDummyService>().TestMethod();
+
+
             container.Resolve<ICommandManagerService>().RegisterCommandContainer<CommonCommands>();
+
 
             var toolBarManager = container.Resolve<IToolBarManagerService>();
             foreach(var toolBar in GetToolBars(container))

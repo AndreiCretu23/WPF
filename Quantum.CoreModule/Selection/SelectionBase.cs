@@ -5,7 +5,7 @@ using System;
 
 namespace Quantum.Services
 {
-    public abstract class SelectionBase<T> : EventBase
+    public abstract class SelectionBase<T> : EventBase, ISelection
     {
         private ThreadSyncScope BlockNotificationsScope { get; set; } = new ThreadSyncScope();
 
@@ -14,30 +14,10 @@ namespace Quantum.Services
             BlockNotificationsScope.OnAllScopesEnd += (sender, e) => OnAllBlockingScopesEnd();
         }
         
-        public SelectionBase(T defaultValue, bool raiseOnDefaultValueSet = false)
-            : this()
-        {
-            if(raiseOnDefaultValueSet) {
-                Value = defaultValue;
-            }
-            else {
-                internalValue = defaultValue;
-            }
-        }
+        public abstract T Value { get; set; }
 
-        private T internalValue;
-        public T Value
-        {
-            get
-            {
-                return internalValue;
-            }
-            set
-            {
-                internalValue = value;
-                Raise();
-            }
-        }
+        object ISelection.SelectedObject => Value;
+        Type ISelection.SelectionType => typeof(T);
 
         #region Raise
 

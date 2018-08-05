@@ -37,16 +37,12 @@ namespace WPF
 
         public void TestMethod()
         {
-            // Do Nothing.
+            // Testing Code
         }
-
+   
     }
-
-
-    public class TestingEvent : CompositePresentationEvent<int> { }
-
+    
     public class SelectedNumber : SingleSelection<int>
     {
     }
-
 }
