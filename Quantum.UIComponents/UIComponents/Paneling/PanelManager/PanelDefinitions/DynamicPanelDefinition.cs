@@ -5,6 +5,7 @@ using System.Windows.Controls;
 
 namespace Quantum.UIComponents
 {
+    [MandatoryCollection(false)]
     public class DynamicPanelDefinition<ITView, TView, ITViewModel, TViewModel> : MetadataCollection<IDynamicPanelMetadata>, IDynamicPanelDefinition
         where TView : UserControl, ITView, new()
         where ITView : class
