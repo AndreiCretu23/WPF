@@ -1,10 +1,12 @@
-﻿using Quantum.Exceptions;
+﻿using Quantum.Common;
+using Quantum.Exceptions;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,23 +45,9 @@ namespace Quantum.Metadata
             : base(initSvc)
         {
         }
-        
-        //public void AssertMetadata<TCommandContainer>() where TCommandContainer : class, ICommandContainer
-        //{
-        //    var commandContainer = Container.Resolve<TCommandContainer>();
-        //    var commandContainerName = typeof(TCommandContainer).Name;
-        //    var commandProperties = typeof(TCommandContainer).GetProperties().Where(prop => typeof(IManagedCommand).IsAssignableFrom(prop.PropertyType));
 
-        //    foreach (var commandProperty in commandProperties)
-        //    {
-        //        var commandName = commandProperty.Name;
-        //        var command = commandProperty.GetValue(commandContainer);
-        //        AssertCommand(command, commandContainerName, commandName);
-        //    }       
-        //}
-        
-
-        public void AssertMetadataCollections(object obj, string objName = null)
+        [DebuggerHidden]
+        public void AssertMetadataCollectionProperties(object obj, string objName = null)
         {
             objName = objName ?? obj.ToString();
 
@@ -89,10 +77,40 @@ namespace Quantum.Metadata
                         throw new Exception($"Error : {objName}, {metadataCollectionName} contains more than one instance of {metadataType}. This metadata type does not support multiple instances.");
                     }
                 }
+
+                foreach(var metadataDef in metadataCollection.OfType<IAssertable>())
+                {
+                    metadataDef.Assert(objName);
+                }
             }
         }
 
+        [DebuggerHidden]
+        public void AssertMetadataCollection<TCollection, TDefinition>(TCollection collection, string collectionName = null)
+            where TDefinition : IMetadataDefinition
+            where TCollection : MetadataCollection<TDefinition>
+        {
+            var objName = collectionName ?? collection.ToString();
+            var metadataCollectionName = typeof(TCollection).Name;
 
+            foreach(var metadataType in MetadataTypes.Where(metadataType => metadataType.Implements(typeof(TDefinition))))
+            {
+                if(IsMandatory(metadataType) && !collection.Any(metadata => metadata.GetType() == metadataType))
+                {
+                    throw new Exception($"Error : {objName}, {metadataCollectionName} does not contain any instance of the mandatory metadata type {metadataType.Name}");
+                }
+                if (!SupportsMultiple(metadataType) && collection.Count(metadata => metadata.GetType() == metadataType) > 1)
+                {
+                    throw new Exception($"Error : {objName}, {metadataCollectionName} contains more than one instance of {metadataType}. This metadata type does not support multiple instances.");
+                }
+            }
+
+            foreach(var metadataDef in collection.OfType<IAssertable>())
+            {
+                metadataDef.Assert(collectionName);
+            }
+        }
+        
         private bool IsMandatory(Type metadataType)
         {
             return metadataType.GetCustomAttributes(false).OfType<MandatoryAttribute>().Single().IsMandatory;

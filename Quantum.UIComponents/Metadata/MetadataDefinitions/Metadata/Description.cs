@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Quantum.Common;
+using System;
+using System.Diagnostics;
 
 namespace Quantum.Metadata
 {
     [Mandatory(true)]
     [SupportsMultiple(false)]
-    public class Description : IMenuMetadata, ISubMenuMetadata
+    public class Description : IAssertable, IMenuMetadata, ISubMenuMetadata
     {
         public string Value { get; private set; }
         public Description(string description)
@@ -16,5 +18,13 @@ namespace Quantum.Metadata
             Value = descriptionGetter();
         }
 
+        [DebuggerHidden]
+        public void Assert(string objName = null)
+        {
+            if(Value == null)
+            {
+                throw new Exception($"Error : {objName ?? String.Empty} contains a Description metadata definition that has a null value.");
+            }
+        }
     }
 }

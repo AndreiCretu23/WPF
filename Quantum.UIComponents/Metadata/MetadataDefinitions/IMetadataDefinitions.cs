@@ -23,4 +23,12 @@
     public interface IToolBarMetadata : IMetadataDefinition
     {
     }
+
+    public interface IStaticPanelMetadata : IMetadataDefinition
+    {
+    }
+
+    public interface IDynamicPanelMetadata : IMetadataDefinition
+    {
+    }
 }

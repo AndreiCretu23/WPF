@@ -2,6 +2,10 @@
 {
     public interface IMetadataAsserterService
     {
-        void AssertMetadataCollections(object obj, string objName = null);
+        void AssertMetadataCollectionProperties(object obj, string objName = null);
+
+        void AssertMetadataCollection<TCollection, TDefinition>(TCollection collection, string collectionName = null)
+            where TDefinition : IMetadataDefinition
+            where TCollection : MetadataCollection<TDefinition>;
     }
 }

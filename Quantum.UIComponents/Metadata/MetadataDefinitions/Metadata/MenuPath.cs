@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Quantum.Common;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Quantum.Metadata
@@ -45,7 +48,7 @@ namespace Quantum.Metadata
 
     [Mandatory(true)]
     [SupportsMultiple(false)]
-    public class MenuPath : IMenuMetadata, IMultiMenuMetadata, IMenuEntry
+    public class MenuPath : IAssertable, IMenuMetadata, IMultiMenuMetadata, IMenuEntry
     {
         public MenuPath(AbstractMenuPath parentPath, int categoryIndex, int orderIndex)
         {
@@ -58,5 +61,14 @@ namespace Quantum.Metadata
         public int CategoryIndex { get; private set; }
         public int OrderIndex { get; private set; }
         public int Depth { get { return ParentPath.Depth + 1; } }
+
+        [DebuggerHidden]
+        public void Assert(string objName = null)
+        {
+            if(ParentPath == null)
+            {
+                throw new Exception($"Error : {objName ?? String.Empty} has a MenuPath metadata definition that has a null ParentPath.");
+            }
+        }
     }
 }

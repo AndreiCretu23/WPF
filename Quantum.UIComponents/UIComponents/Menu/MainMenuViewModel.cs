@@ -94,7 +94,7 @@ namespace Quantum.UIComponents
                             var subCommands = c.SubCommands();
                             foreach(var subCommand in subCommands)
                             {
-                                MetadataAsserter.AssertMetadataCollections(subCommand, "Anonymous");
+                                MetadataAsserter.AssertMetadataCollectionProperties(subCommand, "Anonymous");
                                 MetadataProcessor.ProcessMetadata(subCommand);
                                 children.Add(new MainMenuItemViewModel(entry.Key)
                                 {
