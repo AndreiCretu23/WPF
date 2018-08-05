@@ -1,4 +1,5 @@
 ﻿using Quantum.Command;
+using Quantum.Events;
 using Quantum.Services;
 using Quantum.Utils;
 using System.Windows;
@@ -29,11 +30,12 @@ namespace Quantum.UIComponents
         
         public void CreateUI()
         {
-            
+            ShellView.Loaded += (sender, e) => EventAggregator.GetEvent<UILoadedEvent>().Publish(new UILoadedArgs());
+
             ShellView.DataContext = ShellViewModel;
             ShellView.Title = AppInfo.ApplicationName;
             Application.Current.MainWindow = ShellView;
-
+            
             ShellView.Show();
         }
     }

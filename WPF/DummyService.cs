@@ -39,7 +39,6 @@ namespace WPF
         {
             // Testing Code
         }
-   
     }
     
     public class SelectedNumber : SingleSelection<int>

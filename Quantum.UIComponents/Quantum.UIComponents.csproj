@@ -138,6 +138,7 @@
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarLayoutRestoreRequest.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
+    <Compile Include="UIEvents\UILoadedEvent.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -168,7 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog\" />
-    <Folder Include="UIComponents\Paneling\PanelManager\" />
+    <Folder Include="UIComponents\Paneling\PanelManager\PanelDefinitions\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
