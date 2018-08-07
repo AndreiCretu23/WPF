@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -124,7 +125,19 @@ namespace Quantum.Utils
             {
                 throw new Exception("Source " + source + " does not exist");
             }
+        }
 
+        public static void DeleteIfExists(string source)
+        {
+            source.AssertParameterNotNull(nameof(source));
+            if(File.Exists(source))
+            {
+                File.Delete(source);
+            }
+            else if(Directory.Exists(source))
+            {
+                Directory.Delete(source);
+            }
         }
 
 
@@ -249,6 +262,7 @@ namespace Quantum.Utils
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "IDE0018")]
         public static long GetFileSizeOnDisk(string file)
         {
             if (!File.Exists(file)) return 0;

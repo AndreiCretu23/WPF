@@ -1,9 +1,11 @@
-﻿using Xceed.Wpf.AvalonDock.Layout;
+﻿using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
     public interface IDockingView
     {
+        DockingManager DockingManager { get; }
         LayoutAnchorablePane UpperLeftArea { get; }
         LayoutAnchorablePane BottomLeftArea { get; }
         LayoutAnchorablePane CenterArea { get; }

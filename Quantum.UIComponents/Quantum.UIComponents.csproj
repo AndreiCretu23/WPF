@@ -121,6 +121,9 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\IPanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\PanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelProcessingService\IPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\DefaultDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\IDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\DynamicPanelDefinition.cs" />
@@ -130,6 +133,8 @@
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\StaticPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\IPanelManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\PanelManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelProcessingService\PanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelUtils\LayoutAnchorableExtensions.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
