@@ -1,4 +1,5 @@
-﻿using Quantum.Common;
+﻿using Microsoft.Practices.Composite.Presentation.Events;
+using Quantum.Common;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
@@ -184,5 +185,40 @@ namespace Quantum.UIComponents
 
         #endregion Assert
 
+
+        #region Config
+
+        private IDockingConfiguration DefaultDockingConfiguration = new DefaultDockingConfiguration();
+        private IDockingConfiguration CustomDockingConfiguration;
+
+        public IDockingConfiguration DockingConfiguration { get { return CustomDockingConfiguration ?? DefaultDockingConfiguration; } }
+
+        public void SetDockingConfiguration(IDockingConfiguration configuration)
+        {
+            configuration.AssertParameterNotNull(nameof(configuration));
+            if(configuration.SerializesLayout)
+            {
+                if(configuration.LayoutSerializationEvent == null)
+                {
+                    throw new Exception($"Error : LayoutSerializationEvent is null.");
+                }
+                if(configuration.LayoutDeserializationEvent == null)
+                {
+                    throw new Exception($"Error : LayoutDeserializationEvent is null.");
+                }
+
+                if(!configuration.LayoutSerializationEvent.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>)))
+                {
+                    throw new Exception($"Error : {configuration.LayoutSerializationEvent.Name} is not a valid event type. The event type must be event-aggregator compatible, which means it must extend CompositePresentationEvent<TPayload>.");
+                }
+                if (!configuration.LayoutDeserializationEvent.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>)))
+                {
+                    throw new Exception($"Error : {configuration.LayoutDeserializationEvent.Name} is not a valid event type. The event type must be event-aggregator compatible, which means it must extend CompositePresentationEvent<TPayload>.");
+                }
+            }
+
+            CustomDockingConfiguration = configuration;
+        }
+        #endregion Config
     }
 }

@@ -8,11 +8,16 @@ namespace Quantum.UIComponents
         /// Retrieves the Static Panel Definitions that are currently registered.
         /// </summary>
         IEnumerable<IStaticPanelDefinition> StaticPanelDefinitions { get; }
-        
+
         /// <summary>
         /// Retrieves the Dynamic Panel Definitions that are currently registered.
         /// </summary>
         IEnumerable<IDynamicPanelDefinition> DynamicPanelDefinitions { get; }
+
+        /// <summary>
+        /// Returns the docking configuration used by the PanelManager.
+        /// </summary>
+        IDockingConfiguration DockingConfiguration { get; }
 
         /// <summary>
         /// Registers the given IStaticPanelDefinition instance. It is recommended that you use the 
@@ -39,5 +44,12 @@ namespace Quantum.UIComponents
         /// </summary>
         /// <param name="definition"></param>
         void RegisterPanelDefinition(IPanelDefinition definition);
+
+        /// <summary>
+        /// Sets the DockingConfiguration. If no docking configuration is provided, the default one will be used. In order to set
+        /// a custom one, an instance of a custom implementation of IDockingConfiguration will have to be passed.
+        /// </summary>
+        /// <param name="configuration"></param>
+        void SetDockingConfiguration(IDockingConfiguration configuration);
     }
 }
