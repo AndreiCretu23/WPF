@@ -122,7 +122,7 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelManipulationChangedEvent.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelInvalidationEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelVisibilityChangedEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\IPanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\PanelLayoutManagerService.cs" />
