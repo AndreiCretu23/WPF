@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Quantum.Events;
 using Quantum.Services;
 using Quantum.Utils;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
@@ -30,7 +31,7 @@ namespace Quantum.UIComponents
         public void OnUILoaded()
         {
             IsUILoaded = true;
-            
+
         }
 
     }

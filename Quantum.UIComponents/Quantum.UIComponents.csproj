@@ -112,6 +112,7 @@
     <Compile Include="UIComponents\Menu\IMainMenuView.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuItemViewModel.cs" />
+    <Compile Include="UIComponents\Menu\MainMenuPanelEntryViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuSeparatorViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -121,6 +122,8 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelManipulationChangedEvent.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelVisibilityChangedEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\IPanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\PanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelProcessingService\IPanelProcessingService.cs" />

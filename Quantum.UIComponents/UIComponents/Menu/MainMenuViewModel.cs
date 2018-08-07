@@ -12,17 +12,23 @@ namespace Quantum.UIComponents
     internal class MainMenuViewModel : ViewModelBase, IMainMenuViewModel
     {
         [Service]
-        public ICommandManagerService CommandManager { get; set; }
+        public IMetadataAsserterService MetadataAsserter { get; set; }
 
         [Service]
-        public IMetadataAsserterService MetadataAsserter { get; set; }
+        public ICommandManagerService CommandManager { get; set; }
 
         [Service]
         public ICommandMetadataProcessorService MetadataProcessor { get; set; }
         
+        [Service]
+        public IPanelManagerService PanelManager { get; set; }
+
+        private IObjectInitializationService InitializationService { get; set; }
+
         public MainMenuViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
+            InitializationService = initSvc;
         }
 
         public IEnumerable<IMainMenuItemViewModel> Children { get { return CreateMenuContent(); } }
@@ -60,11 +66,13 @@ namespace Quantum.UIComponents
                 var managedCommands = CommandManager.ManagedCommands.Where(c => GetMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
                 var multiManagedCommands = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
                 var subAbstractMenuPaths = AbstractMenuPaths.Where(path => path.ParentPath == abstractMenuPath);
+                var panelMenuOptions = PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any());
 
                 var rawChildren = new Dictionary<IMenuEntry, object>();
                 managedCommands.ForEach(c => rawChildren.Add(GetMenuMetadata<MenuPath>(c), c));
                 multiManagedCommands.ForEach(c => rawChildren.Add(GetMultiMenuMetadata<MenuPath>(c), c));
                 subAbstractMenuPaths.ForEach(path => rawChildren.Add(path, path));
+                panelMenuOptions.ForEach(o => rawChildren.Add(GetPanelMenuOptionMetadata<MenuPath>(o), o));
 
                 int categoryIndex = 0;
                 int categoriesCount = rawChildren.Select(o => o.Key.CategoryIndex).Distinct().Count();
@@ -109,6 +117,21 @@ namespace Quantum.UIComponents
                             }
                         });
 
+                        entry.Value.IfIs((IStaticPanelDefinition def) =>
+                        {
+                            children.Add(new MainMenuPanelEntryViewModel(InitializationService)
+                            {
+                                PanelDefinition = def,
+                                Header = GetPanelMenuOptionMetadata<Description>(def)?.Value,
+                                ToolTip = GetPanelMenuOptionMetadata<ToolTip>(def)?.Value,
+                                Icon = GetPanelMenuOptionMetadata<Icon>(def)?.IconPath,
+                                IsEnabled = def.OfType<StaticPanelConfiguration>().Single().IsVisible() ?
+                                                def.OfType<StaticPanelConfiguration>().Single().CanClose() :
+                                                def.OfType<StaticPanelConfiguration>().Single().CanOpen(),
+                                IsOpened = def.OfType<StaticPanelConfiguration>().Single().IsVisible()
+                            });
+                        });
+
                         entry.Value.IfIs((AbstractMenuPath p) =>
                         {
                             var childViewModel = new MainMenuItemViewModel(entry.Key)
@@ -146,7 +169,8 @@ namespace Quantum.UIComponents
             {
                 if (abstractMenuPaths == null) {
                     abstractMenuPaths = CommandManager.ManagedCommands.Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
-                                .Concat(CommandManager.MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath)).
+                                .Concat(CommandManager.MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
+                                .Concat(PanelManager.StaticPanelDefinitions.Where(def => def.Any(m => m is PanelMenuOption)).Select(def => GetPanelMenuOptionMetadata<MenuPath>(def).ParentPath)).
                              SelectMany(path => path.GetPathsToRoot()).Distinct();
                 }
                 return abstractMenuPaths;
@@ -166,6 +190,11 @@ namespace Quantum.UIComponents
         private TMetadata GetSubmenuMetadata<TMetadata>(ISubCommand subCommand) where TMetadata : ISubMenuMetadata
         {
             return subCommand.SubCommandMetadata.OfType<TMetadata>().SingleOrDefault();
+        }
+
+        private TMetadata GetPanelMenuOptionMetadata<TMetadata>(IStaticPanelDefinition definition) where TMetadata : IPanelMenuEntryMetadata
+        {
+            return definition.OfType<PanelMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
         private void SubscribeToMultiCommandChildrenAutoInvalidationEvents(MainMenuItemViewModel viewModelItem)

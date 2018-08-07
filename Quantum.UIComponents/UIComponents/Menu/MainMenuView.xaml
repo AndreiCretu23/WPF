@@ -26,6 +26,15 @@
                       ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"/>
         </HierarchicalDataTemplate>
 
+        <DataTemplate DataType="{x:Type local:MainMenuPanelEntryViewModel}">
+            <MenuItem Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
+                      IsCheckable="True"
+                      IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Header="{Binding Header}"
+                      ToolTip="{Binding ToolTip}"/>
+
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type local:MainMenuSeparatorViewModel}">
             <Separator FlowDirection="LeftToRight"
                        HorizontalAlignment="Stretch"/>
