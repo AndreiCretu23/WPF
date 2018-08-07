@@ -121,6 +121,8 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\DefaultDockingConfiguration.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\IDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\DynamicPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IDynamicPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IPanelDefinition.cs" />
