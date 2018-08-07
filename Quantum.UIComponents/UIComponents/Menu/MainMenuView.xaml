@@ -32,7 +32,6 @@
                       IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       Header="{Binding Header}"
                       ToolTip="{Binding ToolTip}"/>
-
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type local:MainMenuSeparatorViewModel}">
