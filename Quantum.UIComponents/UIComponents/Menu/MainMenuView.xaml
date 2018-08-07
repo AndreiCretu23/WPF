@@ -28,10 +28,11 @@
 
         <DataTemplate DataType="{x:Type local:MainMenuPanelEntryViewModel}">
             <MenuItem Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
+                      Header="{Binding Header}"
+                      ToolTip="{Binding ToolTip}"
                       IsCheckable="True"
                       IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      Header="{Binding Header}"
-                      ToolTip="{Binding ToolTip}"/>
+                      IsEnabled="{Binding IsEnabled}"/>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type local:MainMenuSeparatorViewModel}">
