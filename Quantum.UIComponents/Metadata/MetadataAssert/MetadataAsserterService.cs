@@ -94,7 +94,7 @@ namespace Quantum.Metadata
         [DebuggerHidden]
         public void AssertMetadataCollection<TCollection, TDefinition>(TCollection collection, string collectionName = null)
             where TDefinition : IMetadataDefinition
-            where TCollection : MetadataCollection<TDefinition>
+            where TCollection : IEnumerable<TDefinition>
         {
             var objName = collectionName ?? collection.ToString();
             var metadataCollectionName = typeof(TCollection).Name;

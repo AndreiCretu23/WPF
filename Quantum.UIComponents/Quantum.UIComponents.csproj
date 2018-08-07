@@ -126,6 +126,8 @@
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\IStaticPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\StaticPanelDefinition.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\IPanelManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\PanelManagerService.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
