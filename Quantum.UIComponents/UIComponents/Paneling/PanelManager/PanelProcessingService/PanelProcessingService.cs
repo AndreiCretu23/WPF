@@ -70,6 +70,7 @@ namespace Quantum.UIComponents
 
                 anchorable.CanAutoHide = true;
                 anchorable.CanFloat = config.CanFloat();
+                anchorable.Show();
 
                 var visibility = config.IsVisible() && config.CanOpen();
 
@@ -132,14 +133,14 @@ namespace Quantum.UIComponents
             if (!IsUILoaded) return;
 
             var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
-            if(anchorable.IsVisible != args.Visibility)
-            {
+            //if(anchorable.IsVisible != args.Visibility)
+            //{
                 anchorable.SetVisibility(args.Visibility);
                 if(args.Visibility)
                 {
                     anchorable.CanClose = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
                 }
-            }
+            //}
         }
 
         #endregion StaticPanelProcessing

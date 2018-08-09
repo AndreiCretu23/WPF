@@ -15,13 +15,13 @@ namespace Quantum.UIComponents
             layoutAnchorable.AssertNotNull(nameof(layoutAnchorable));
             try
             {
-                if(visibility)
+                if(visibility && layoutAnchorable.IsAutoHidden)
                 {
-                    layoutAnchorable.Show();
+                    layoutAnchorable.ToggleAutoHide();
                 }
-                else
+                else if(!visibility && !layoutAnchorable.IsAutoHidden)
                 {
-                    layoutAnchorable.Hide();
+                    layoutAnchorable.ToggleAutoHide();
                 }
             }
             catch
