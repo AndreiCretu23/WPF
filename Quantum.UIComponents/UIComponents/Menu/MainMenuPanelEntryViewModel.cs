@@ -1,10 +1,6 @@
-﻿using Quantum.Services;
-using Quantum.UIComposition;
-using System;
-using System.Collections.Generic;
+﻿using Quantum.Metadata;
+using Quantum.Services;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quantum.UIComponents
 {
@@ -53,6 +49,7 @@ namespace Quantum.UIComponents
             {
                 isOpened = value;
                 RaisePropertyChanged(() => IsOpened);
+                EventAggregator.GetEvent<PanelMenuEntryStateChangedEvent>().Publish(new PanelMenuEntryStateChangedArgs(PanelDefinition, value));
             }
         }
 
@@ -72,15 +69,30 @@ namespace Quantum.UIComponents
         {
         }
 
-        //[Handles(typeof(PanelVisibilityChangedEvent))]
-        //public void OnVisibilityChanged(PanelVisibilityChangedArgs args)
-        //{
-        //    if(args.IViewModel == PanelDefinition.IViewModel && 
-        //        IsOpened != args.Visibility)
-        //    {
-        //        IsOpened = args.Visibility;
-        //    }
-        //}
+        [Handles(typeof(PanelClosingEvent))]
+        public void OnVisibilityChanged(PanelClosingArgs args)
+        {
+            if (args.Definition.IViewModel == PanelDefinition.IViewModel)
+            {
+                if(IsOpened == true) {
+                    IsOpened = false;
+                }
+                IsEnabled = PanelDefinition.CanChangeVisibility(false);
+            }
+        }
 
+        [Handles(typeof(PanelInvalidationEvent))]
+        public void OnInvalidation(PanelInvalidationArgs args)
+        {
+            if(args.Definition == PanelDefinition)
+            {
+                var configuration = args.Definition.OfType<StaticPanelConfiguration>().Single();
+                var visibility = configuration.IsVisible();
+                var isEnabled = args.Definition.CanChangeVisibility(visibility);
+
+                IsOpened = visibility;
+                IsEnabled = isEnabled;
+            }
+        }
     }
 }

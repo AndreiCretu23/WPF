@@ -125,10 +125,8 @@ namespace Quantum.UIComponents
                                 Header = GetPanelMenuOptionMetadata<Description>(def)?.Value,
                                 ToolTip = GetPanelMenuOptionMetadata<ToolTip>(def)?.Value,
                                 Icon = GetPanelMenuOptionMetadata<Icon>(def)?.IconPath,
-                                IsEnabled = def.OfType<StaticPanelConfiguration>().Single().IsVisible() ?
-                                                def.OfType<StaticPanelConfiguration>().Single().CanClose() :
-                                                def.OfType<StaticPanelConfiguration>().Single().CanOpen(),
-                                IsOpened = def.OfType<StaticPanelConfiguration>().Single().IsVisible()
+                                IsOpened = def.OfType<StaticPanelConfiguration>().Single().IsVisible(),
+                                IsEnabled = def.CanChangeVisibility(def.OfType<StaticPanelConfiguration>().Single().IsVisible())
                             });
                         });
 

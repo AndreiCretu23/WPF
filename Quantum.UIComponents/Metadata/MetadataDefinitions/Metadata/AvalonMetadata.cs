@@ -6,6 +6,7 @@ namespace Quantum.Metadata
     [SupportsMultiple(false)]
     public class StaticPanelConfiguration : IStaticPanelMetadata
     {
+        public Func<string> Title { get; set; } = () => "StaticPanel";
         public Func<bool> CanFloat { get; set; } = () => true;
         public Func<bool> CanClose { get; set; } = () => true;
         public Func<bool> CanOpen { get; set; } = () => true;
@@ -17,6 +18,7 @@ namespace Quantum.Metadata
     [SupportsMultiple(false)]
     public class DynamicPanelConfiguration : IDynamicPanelMetadata
     {
+        Func<string> Title { get; set; } = () => "DynamicPanel";
         public Func<bool> CanFloat { get; set; } = () => true;
         public PanelPlacement Placement { get; set; } = PanelPlacement.Center;
     }

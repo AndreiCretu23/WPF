@@ -31,7 +31,7 @@
                       Header="{Binding Header}"
                       ToolTip="{Binding ToolTip}"
                       IsCheckable="True"
-                      IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding IsOpened, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       IsEnabled="{Binding IsEnabled}"/>
         </DataTemplate>
         

@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.CoreModule;
 using Quantum.Metadata;
@@ -8,6 +7,7 @@ using Quantum.UIComponents;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using WPF.Panels;
 using WPF.ToolBars;
 
 namespace WPF
@@ -27,6 +27,13 @@ namespace WPF
             foreach(var toolBar in GetToolBars(container))
             {
                 toolBarManager.RegisterToolBarDefinition(toolBar);
+            }
+
+
+            var panelManager = container.Resolve<IPanelManagerService>();
+            foreach(var panelDef in GetPanels(container))
+            {
+                panelManager.RegisterPanelDefinition(panelDef);
             }
 
         }
@@ -54,12 +61,34 @@ namespace WPF
             };
         }
 
+        private IEnumerable<IPanelDefinition> GetPanels(IUnityContainer container)
+        {
+            yield return new StaticPanelDefinition<IActivePanelView, ActivePanelView, IActivePanelViewModel, ActivePanelViewModel>()
+            {
+                new StaticPanelConfiguration()
+                {
+                     CanClose = () => true,
+                     CanFloat = () => true,
+                     CanOpen = () => true,
+                     IsVisible = () => true,
+                     Placement = PanelPlacement.Center,
+                     Title = () => "ActivePanel"
+                },
+                new PanelMenuOption()
+                {
+                    new MenuPath(MenuLocations.View, 0, 0), 
+                    new Description("ActivePanel")
+                }, 
+            };
+        }
+
     }
 
     public static class MenuLocations
     {
         public static readonly AbstractMenuPath File = new AbstractMenuPath(AbstractMenuPath.Root, new Description("File"), 0, 1);
         public static readonly AbstractMenuPath Edit = new AbstractMenuPath(AbstractMenuPath.Root, new Description("Edit"), 0, 2);
+        public static readonly AbstractMenuPath View = new AbstractMenuPath(AbstractMenuPath.Root, new Description("View"), 0, 3);
 
         public static readonly AbstractMenuPath Category3To4 = new AbstractMenuPath(File, new Description("3To4"), 1, 1);
         public static readonly AbstractMenuPath Yolo1 = new AbstractMenuPath(Category3To4, new Description("Yolo1"), 1, 4);
