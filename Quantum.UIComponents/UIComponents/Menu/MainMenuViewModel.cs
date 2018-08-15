@@ -66,7 +66,7 @@ namespace Quantum.UIComponents
                 var managedCommands = CommandManager.ManagedCommands.Where(c => GetMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
                 var multiManagedCommands = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
                 var subAbstractMenuPaths = AbstractMenuPaths.Where(path => path.ParentPath == abstractMenuPath);
-                var panelMenuOptions = PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any());
+                var panelMenuOptions = PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any() && def.OfType<PanelMenuOption>().Single().OfType<MenuPath>().Single().ParentPath == abstractMenuPath);
 
                 var rawChildren = new Dictionary<IMenuEntry, object>();
                 managedCommands.ForEach(c => rawChildren.Add(GetMenuMetadata<MenuPath>(c), c));

@@ -67,7 +67,7 @@ namespace WPF
             {
                 new StaticPanelConfiguration()
                 {
-                     CanClose = () => false,
+                     CanClose = () => true,
                      CanFloat = () => true,
                      CanOpen = () => true,
                      IsVisible = () => true,
@@ -87,16 +87,18 @@ namespace WPF
                 {
                     CanClose = () => true,
                     CanFloat = () => true,
-                    CanOpen = () => true,
-                    IsVisible = () => true,
+                    CanOpen = () => container.Resolve<SelectedNumber>().Value > 5,
+                    IsVisible = () => container.Resolve<SelectedNumber>().Value > 5,
                     Placement = PanelPlacement.TopRight,
                     Title = () => "SelectionPanel"
                 },
                 new PanelMenuOption()
                 {
-                    new MenuPath(MenuLocations.View, 0, 1), 
+                    new MenuPath(MenuLocations.View, 0, 1),
                     new Description("SelectionPanel")
-                }
+                },
+
+                new AutoInvalidateOnSelection(typeof(SelectedNumber))
             };
         }
 
