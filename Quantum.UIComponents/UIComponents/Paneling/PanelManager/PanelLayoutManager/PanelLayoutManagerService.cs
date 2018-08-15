@@ -86,17 +86,14 @@ namespace Quantum.UIComponents
         public bool SaveLayout(string directory)
         {
             if (DockingView == null) return false;
-
-            var layoutFileName = Path.Combine(directory, "PanelLayout.xml");
-            var visibilityCacheFileName = Path.Combine(directory, "VisibilityCache.xml");
-
+            
             var dockingManager = DockingView.DockingManager;
             dockingManager.UpdateLayout();
+            
+            var layoutFileName = Path.Combine(directory, "PanelLayout.xml");
+            IOUtils.DeleteIfExists(layoutFileName);
 
             var serializer = new XmlLayoutSerializer(dockingManager);
-            IOUtils.DeleteIfExists(layoutFileName);
-            IOUtils.DeleteIfExists(visibilityCacheFileName);
-
             using (var stream = new FileStream(layoutFileName, FileMode.Create))
             {
                 serializer.Serialize(stream);
