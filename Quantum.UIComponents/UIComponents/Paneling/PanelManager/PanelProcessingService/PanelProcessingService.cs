@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +20,17 @@ namespace Quantum.UIComponents
         public IPanelManagerService PanelManager { get; set; }
         
         [Service]
+        public IPanelVisibilityManagerService VisibilityManager { get; set; }
+
+        [Service]
         public IPanelLayoutManagerService LayoutManager { get; set; }
-        
+
         private IDockingView DockingView { get { return Container.Resolve<IDockingView>(); } }
         
         public PanelProcessingService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
+            ProcessConfig();
         }
 
         private bool IsUILoaded = false;
@@ -36,6 +41,7 @@ namespace Quantum.UIComponents
             IsUILoaded = true;
             ProcessStaticPanelDefinitions();
             ProcessDynamicPanelDefinitions();
+            EventAggregator.GetEvent<PanelsLoadedEvent>().Publish(new PanelsLoadedArgs());
         }
 
         #region StaticPanelProcessing
@@ -44,6 +50,8 @@ namespace Quantum.UIComponents
 
         private void ProcessStaticPanelDefinitions()
         {
+            var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
+
             foreach(var definition in PanelManager.StaticPanelDefinitions)
             {
                 var config = definition.OfType<StaticPanelConfiguration>().Single();
@@ -58,33 +66,37 @@ namespace Quantum.UIComponents
                 anchorable.ContentId = definition.View.GetGuid();
                 anchorable.Title = config.Title();
 
+                LayoutAnchorablePane container = null;
                 switch (config.Placement)
                 {
-                    case PanelPlacement.TopLeft: { DockingView.UpperLeftArea.Children.Add(anchorable); break; }
-                    case PanelPlacement.BottomLeft: { DockingView.BottomLeftArea.Children.Add(anchorable); break; }
-                    case PanelPlacement.Center: { DockingView.CenterArea.Children.Add(anchorable); break; }
-                    case PanelPlacement.TopRight: { DockingView.UpperRightArea.Children.Add(anchorable); break; }
-                    case PanelPlacement.BottomRight: { DockingView.BottomRightArea.Children.Add(anchorable); break; }
+                    case PanelPlacement.TopLeft: { container = DockingView.UpperLeftArea; break; }
+                    case PanelPlacement.BottomLeft: { container = DockingView.BottomLeftArea; break; }
+                    case PanelPlacement.Center: { container = DockingView.CenterArea; break; }
+                    case PanelPlacement.TopRight: { container = DockingView.UpperRightArea; break; }
+                    case PanelPlacement.BottomRight: { container = DockingView.BottomRightArea; break; }
                     default: { throw new Exception($"Internal Error : Unregistered panel placement group position added."); }
                 }
 
+                container.Children.Add(anchorable);
+                layoutGroupData.Add(anchorable, container);
+
                 anchorable.CanAutoHide = true;
                 anchorable.CanFloat = config.CanFloat();
-                anchorable.Show();
 
                 var visibility = config.IsVisible() && config.CanOpen();
-
-                anchorable.SetVisibility(visibility);
+                
+                VisibilityManager.SetVisibility(anchorable, visibility);
                 if (visibility) {
-                    anchorable.CanClose = config.CanClose();
+                    anchorable.CanHide = config.CanClose();
                 }
+                
 
                 anchorableDefinitions.Add(anchorable, definition);
 
                 anchorable.Hiding += (sender, e) => {
                     if(anchorable.IsVisible)
                     {
-                        EventAggregator.GetEvent<PanelClosingEvent>().Publish(new PanelClosingArgs(definition));
+                        EventAggregator.GetEvent<PanelVisibilityChangedEvent>().Publish(new PanelVisibilityChangedArgs(definition, false));
                     }
                     
                 };
@@ -101,6 +113,8 @@ namespace Quantum.UIComponents
                     }, ThreadOption.PublisherThread, true);
                 }
             }
+            VisibilityManager.SetLayoutGroupData(layoutGroupData);
+            
         }
 
         [Handles(typeof(PanelInvalidationEvent))]
@@ -116,15 +130,13 @@ namespace Quantum.UIComponents
             var visibility = config.IsVisible();
             if(visibility && config.CanOpen() && !anchorable.IsVisible)
             {
-                anchorable.SetVisibility(true);
-                anchorable.CanClose = config.CanClose();
+                VisibilityManager.SetVisibility(anchorable, true);
+                anchorable.CanHide = config.CanClose();
             }
             else if(!visibility && config.CanClose() && anchorable.IsVisible)
             {
-                anchorable.SetVisibility(false);
+                VisibilityManager.SetVisibility(anchorable, false);
             }
-
-            //EventAggregator.GetEvent<PanelVisibilityChangedEvent>().Publish(new PanelVisibilityChangedArgs(args.Definition.IViewModel, anchorable.IsVisible));
         }
 
         [Handles(typeof(PanelMenuEntryStateChangedEvent))]
@@ -133,14 +145,12 @@ namespace Quantum.UIComponents
             if (!IsUILoaded) return;
 
             var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
-            //if(anchorable.IsVisible != args.Visibility)
-            //{
-                anchorable.SetVisibility(args.Visibility);
-                if(args.Visibility)
-                {
-                    anchorable.CanClose = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
-                }
-            //}
+            
+            VisibilityManager.SetVisibility(anchorable, args.Visibility);
+            if(args.Visibility)
+            {
+                anchorable.CanHide = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
+            }
         }
 
         #endregion StaticPanelProcessing
@@ -149,6 +159,53 @@ namespace Quantum.UIComponents
         {
 
         }
+
+        #region ConfigProcessing
+
+        private void ProcessConfig()
+        {
+            var config = PanelManager.DockingConfiguration;
+            var configDirectory = config.LayoutSerializationDirectory;
+            if(!Directory.Exists(configDirectory))
+            {
+                throw new DirectoryNotFoundException($"Error : Panel Configuration Directory {configDirectory} not found!");
+            }
+
+            var layoutDirectory = Path.Combine(configDirectory, "Layout");
+            if(!Directory.Exists(layoutDirectory)) {
+                Directory.CreateDirectory(layoutDirectory);
+            }
+
+            EventAggregator.Subscribe(config.LayoutSerializationEvent, () => LayoutManager.SaveLayout(layoutDirectory));
+            EventAggregator.Subscribe(config.LayoutDeserializationEvent, () =>
+            {
+                if(File.Exists(Path.Combine(layoutDirectory, "PanelLayout.xml")))
+                {
+                    LayoutManager.LoadLayout(layoutDirectory);
+                }
+            });
+
+        }
+
+        #endregion ConfigProcessing
+
+
+        #region OnLayoutLoaded
+
+        [Handles(typeof(LayoutLoadedEvent))]
+        public void OnLayoutLoaded(LayoutLoadedArgs args)
+        {
+            anchorableDefinitions.Clear();
+            foreach (var anchorable in args.LayoutAnchorables)
+            {
+                var associatedDefinition = PanelManager.StaticPanelDefinitions.Single(o => o.View.GetGuid() == anchorable.Content.GetType().GetGuid() &&
+                                                                                           o.ViewModel.GetGuid() == anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid());
+                anchorableDefinitions.Add(anchorable, associatedDefinition);
+                anchorable.Hiding += (sender, e) => EventAggregator.GetEvent<PanelVisibilityChangedEvent>().Publish(new PanelVisibilityChangedArgs(anchorableDefinitions[anchorable], false));
+            }
+        }
+
+        #endregion OnLayoutLoaded
 
     }
 }

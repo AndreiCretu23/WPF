@@ -7,6 +7,7 @@ namespace Quantum.UIComponents
     internal partial class DockingView : UserControl, IDockingView
     {
         public DockingManager DockingManager { get { return DockManager; } }
+        public LayoutRoot LayoutRoot { get { return Root; } }
         public LayoutAnchorablePane UpperLeftArea { get { return UpperLeftPane; } }
         public LayoutAnchorablePane BottomLeftArea { get { return BottomLeftPane; } }
         public LayoutAnchorablePane CenterArea { get { return CenterPane; } }

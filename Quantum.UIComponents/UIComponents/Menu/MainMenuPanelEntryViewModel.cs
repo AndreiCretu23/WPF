@@ -69,15 +69,14 @@ namespace Quantum.UIComponents
         {
         }
 
-        [Handles(typeof(PanelClosingEvent))]
-        public void OnVisibilityChanged(PanelClosingArgs args)
+        [Handles(typeof(PanelVisibilityChangedEvent))]
+        public void OnVisibilityChanged(PanelVisibilityChangedArgs args)
         {
             if (args.Definition.IViewModel == PanelDefinition.IViewModel)
             {
-                if(IsOpened == true) {
-                    IsOpened = false;
-                }
-                IsEnabled = PanelDefinition.CanChangeVisibility(false);
+                isOpened = args.Visibility;
+                RaisePropertyChanged(() => IsOpened);
+                IsEnabled = PanelDefinition.CanChangeVisibility(args.Visibility);
             }
         }
 
