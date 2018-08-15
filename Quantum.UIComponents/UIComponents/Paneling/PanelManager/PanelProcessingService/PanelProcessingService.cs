@@ -128,12 +128,12 @@ namespace Quantum.UIComponents
             anchorable.Title = config.Title();
 
             var visibility = config.IsVisible();
-            if(visibility && config.CanOpen() && !anchorable.IsHidden)
+            if(visibility && config.CanOpen() && anchorable.IsHidden)
             {
                 VisibilityManager.SetVisibility(anchorable, true);
                 anchorable.CanHide = config.CanClose();
             }
-            else if(!visibility && config.CanClose() && anchorable.IsHidden)
+            else if(!visibility && config.CanClose() && !anchorable.IsHidden)
             {
                 VisibilityManager.SetVisibility(anchorable, false);
             }

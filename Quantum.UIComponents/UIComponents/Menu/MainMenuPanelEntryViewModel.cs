@@ -89,7 +89,9 @@ namespace Quantum.UIComponents
                 var visibility = configuration.IsVisible();
                 var isEnabled = args.Definition.CanChangeVisibility(visibility);
 
-                IsOpened = visibility;
+                isOpened = visibility;
+                RaisePropertyChanged(() => IsOpened);
+
                 IsEnabled = isEnabled;
             }
         }

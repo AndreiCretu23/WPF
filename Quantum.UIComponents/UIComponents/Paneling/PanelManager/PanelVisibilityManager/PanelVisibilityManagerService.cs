@@ -44,7 +44,6 @@ namespace Quantum.UIComponents
                 {
                     LayoutGroups[anchorable].Children.Add(anchorable);
                     anchorable.Show();
-                    var vis = LayoutGroups[anchorable].IsVisible;
                 }
                 else
                 {
