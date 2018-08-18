@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Microsoft.Practices.Composite.Presentation.Events;
+using Quantum.Events;
+using Quantum.Metadata;
+using Quantum.Services;
+using Quantum.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Quantum.Services;
-using Quantum.Metadata;
-using Xceed.Wpf.AvalonDock.Layout;
 using System.Windows.Controls;
-using Quantum.Utils;
-using Microsoft.Practices.Composite.Presentation.Events;
-using Quantum.Events;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {

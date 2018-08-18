@@ -128,6 +128,8 @@
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelMenuEntryStateChanged.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\IPanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\PanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\DynamicPanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\IDynamicPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\IPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\DefaultDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\IDockingConfiguration.cs" />
@@ -196,7 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog\" />
-    <Folder Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">

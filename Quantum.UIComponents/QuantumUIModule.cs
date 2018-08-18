@@ -25,6 +25,7 @@ namespace Quantum.UIComponents
             container.RegisterService<IStaticPanelVisibilityManagerService, StaticPanelVisibilityManagerService>();
             container.RegisterService<IPanelLayoutManagerService, PanelLayoutManagerService>();
             container.RegisterService<IStaticPanelProcessingService, StaticPanelProcessingService>();
+            container.RegisterService<IDynamicPanelProcessingService, DynamicPanelProcessingService>();
             container.RegisterService<IPanelProcessingService, PanelProcessingService>();
 
             //View Components
