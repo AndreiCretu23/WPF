@@ -24,6 +24,9 @@ namespace Quantum.UIComponents
         public IStaticPanelProcessingService StaticPanelProcessor { get; set; }
         
         [Service]
+        public IDynamicPanelProcessingService DynamicPanelProcessor { get; set; }
+
+        [Service]
         public IPanelLayoutManagerService LayoutManager { get; set; }
         
         public PanelProcessingService(IObjectInitializationService initSvc)
@@ -37,7 +40,7 @@ namespace Quantum.UIComponents
             ProcessConfig();
 
             StaticPanelProcessor.ProcessStaticPanelDefinitions();
-
+            DynamicPanelProcessor.ProcessDynamicPanelDefinitions();
             
             EventAggregator.GetEvent<PanelsLoadedEvent>().Publish(new PanelsLoadedArgs());
         }

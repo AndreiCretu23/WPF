@@ -16,10 +16,10 @@ namespace Quantum.Metadata
 
     [Mandatory(true)]
     [SupportsMultiple(false)]
-    public class DynamicPanelConfiguration<TViewModel> : IDynamicPanelMetadata
+    public class DynamicPanelConfiguration<T> : IDynamicPanelMetadata
     {
-        public Func<TViewModel, string> Title { get; set; } = o => "DynamicPanel";
-        public Func<TViewModel, bool> CanFloat { get; set; } = o => true;
+        public Func<T, string> Title { get; set; } = o => "DynamicPanel";
+        public Func<T, bool> CanFloat { get; set; } = o => true;
         public PanelPlacement Placement { get; set; } = PanelPlacement.Center;
     }
 

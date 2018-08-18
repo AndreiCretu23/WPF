@@ -128,7 +128,9 @@
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelMenuEntryStateChanged.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\IPanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\PanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\DynamicPanelManager.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\DynamicPanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\IDynamicPanelManager.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\IDynamicPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\IPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\DefaultDockingConfiguration.cs" />

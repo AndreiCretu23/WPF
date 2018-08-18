@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Quantum.Services;
-using Quantum.Metadata;
+﻿using Quantum.Services;
 using System.Collections.ObjectModel;
 
 namespace Quantum.UIComponents
@@ -16,6 +10,8 @@ namespace Quantum.UIComponents
         
         private IObjectInitializationService InitializationService { get; set; }
 
+        private Collection<IDynamicPanelManager> dynamicPanelManagers = new Collection<IDynamicPanelManager>();
+        
         public DynamicPanelProcessingService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -25,6 +21,16 @@ namespace Quantum.UIComponents
         public void ProcessDynamicPanelDefinitions()
         {
             var definitions = PanelManager.DynamicPanelDefinitions;
+
+            foreach (var def in definitions)
+            {
+                dynamicPanelManagers.Add(new DynamicPanelManager(InitializationService, def));
+            }
+
+            foreach(var manager in dynamicPanelManagers)
+            {
+                manager.ProcessDefinition();
+            }
         }
     }
 }
