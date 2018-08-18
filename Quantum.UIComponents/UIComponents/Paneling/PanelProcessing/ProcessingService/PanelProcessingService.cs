@@ -25,13 +25,10 @@ namespace Quantum.UIComponents
         
         [Service]
         public IPanelLayoutManagerService LayoutManager { get; set; }
-
-
-         
+        
         public PanelProcessingService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            
         }
         
         [Handles(typeof(UILoadedEvent))]
@@ -45,6 +42,8 @@ namespace Quantum.UIComponents
             EventAggregator.GetEvent<PanelsLoadedEvent>().Publish(new PanelsLoadedArgs());
         }
         
+
+
         #region ConfigProcessing
 
         private void ProcessConfig()
