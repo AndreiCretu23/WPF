@@ -79,7 +79,7 @@ namespace Quantum.Metadata
                 }
 
                 foreach(var metadataDef in metadataCollection)
-            {
+                {
                 metadataDef.IfIs((IAssertable assertableDef) => assertableDef.Assert(objName));
                 var metadataDefType = metadataDef.GetType();
                 if(metadataDefType.IsSubclassOfRawGeneric(typeof(MetadataCollection<>)))
@@ -87,10 +87,10 @@ namespace Quantum.Metadata
                     GetType().GetMethod("AssertMetadataCollection").MakeGenericMethod(new Type[] { metadataDefType, metadataDefType.GetBaseTypeGenericArgument(typeof(MetadataCollection<>))}).
                         Invoke(this, new object[] { metadataDef, objName });
                 }
-            }
+                }
             }
         }
-
+        
         [DebuggerHidden]
         public void AssertMetadataCollection<TCollection, TDefinition>(TCollection collection, string collectionName = null)
             where TDefinition : IMetadataDefinition
@@ -101,11 +101,11 @@ namespace Quantum.Metadata
 
             foreach(var metadataType in MetadataTypes.Where(metadataType => metadataType.Implements(typeof(TDefinition))))
             {
-                if(IsMandatory(metadataType) && !collection.Any(metadata => metadata.GetType() == metadataType))
+                if (IsMandatory(metadataType) && !MetadataCollectionContainsType<TCollection, TDefinition>(collection, metadataType))
                 {
                     throw new Exception($"Error : {objName}, {metadataCollectionName} does not contain any instance of the mandatory metadata type {metadataType.Name}");
                 }
-                if (!SupportsMultiple(metadataType) && collection.Count(metadata => metadata.GetType() == metadataType) > 1)
+                if (!SupportsMultiple(metadataType) && CountMetadataTypes<TCollection, TDefinition>(collection, metadataType) > 1)
                 {
                     throw new Exception($"Error : {objName}, {metadataCollectionName} contains more than one instance of {metadataType}. This metadata type does not support multiple instances.");
                 }
@@ -122,7 +122,9 @@ namespace Quantum.Metadata
                 }
             }
         }
-        
+
+        #region Utils
+
         private bool IsMandatory(Type metadataType)
         {
             return metadataType.GetCustomAttributes(false).OfType<MandatoryAttribute>().Single().IsMandatory;
@@ -137,6 +139,37 @@ namespace Quantum.Metadata
         {
             return metadataCollectionType.GetCustomAttributes(false).OfType<MandatoryCollectionAttribute>().Single().IsMandatoryCollection;
         }
-        
+
+        [DebuggerHidden]
+        private bool MetadataCollectionContainsType<TCollection, TDefinition>(TCollection collection, Type metadataType)
+            where TDefinition : IMetadataDefinition
+            where TCollection : IEnumerable<TDefinition>
+        {
+            if (metadataType.IsGenericType)
+            {
+                return collection.Where(metadata => metadata.GetType().IsGenericType).Any(metadata => metadata.GetType().GetGenericTypeDefinition() == metadataType.GetGenericTypeDefinition());
+            }
+            else
+            {
+                return collection.Any(metadata => metadata.GetType() == metadataType);
+            }
+        }
+
+        private int CountMetadataTypes<TCollection, TDefinition>(TCollection collection, Type metadataType)
+            where TDefinition : IMetadataDefinition
+            where TCollection : IEnumerable<TDefinition>
+        {
+            if (metadataType.IsGenericType)
+            {
+                return collection.Where(metadata => metadata.GetType().IsGenericType).Count(metadata => metadata.GetType().GetGenericTypeDefinition() == metadataType.GetGenericTypeDefinition());
+            }
+            else
+            {
+                return collection.Count(metadata => metadata.GetType() == metadataType);
+            }
+        }
+
+        #endregion Utils
+
     }
 }

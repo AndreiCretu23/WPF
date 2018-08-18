@@ -86,6 +86,13 @@
     <Compile Include="Panels\ActivePanel\ActivePanelViewModel.cs" />
     <Compile Include="Panels\ActivePanel\IActivePanelView.cs" />
     <Compile Include="Panels\ActivePanel\IActivePanelViewModel.cs" />
+    <Compile Include="Panels\DynamicPanel\DynamicPanelSelection.cs" />
+    <Compile Include="Panels\DynamicPanel\DynamicPanelView.xaml.cs">
+      <DependentUpon>DynamicPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\DynamicPanel\DynamicPanelViewModel.cs" />
+    <Compile Include="Panels\DynamicPanel\IDynamicPanelView.cs" />
+    <Compile Include="Panels\DynamicPanel\IDynamicPanelViewModel.cs" />
     <Compile Include="Panels\SelectionPanel\ISelectionPanelView.cs" />
     <Compile Include="Panels\SelectionPanel\ISelectionPanelViewModel.cs" />
     <Compile Include="Panels\SelectionPanel\SelectionPanelView.xaml.cs">
@@ -147,6 +154,10 @@
       <Project>{15E43722-0089-4AE8-A582-8EE8B7CD7728}</Project>
       <Name>Quantum.UIComponents</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quantum.UIComposition\Quantum.UIComposition.csproj">
+      <Project>{195BCD01-E40E-443A-B495-2476E1A27FEE}</Project>
+      <Name>Quantum.UIComposition</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
       <Project>{6052dc7e-36ce-4fc5-b91a-6bc1d83dbd33}</Project>
       <Name>Quantum.Utils</Name>
@@ -155,6 +166,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Panels\ActivePanel\ActivePanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\DynamicPanel\DynamicPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

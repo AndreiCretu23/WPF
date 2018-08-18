@@ -1,9 +1,11 @@
 ﻿using Microsoft.Practices.Unity;
 using Quantum.Command;
+using Quantum.Common;
 using Quantum.CoreModule;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.UIComponents;
+using Quantum.Utils;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
@@ -99,6 +101,17 @@ namespace WPF
                 },
 
                 new AutoInvalidateOnSelection(typeof(SelectedNumber))
+            };
+
+            yield return new DynamicPanelDefinition<IDynamicPanelView, DynamicPanelView, IDynamicPanelViewModel, DynamicPanelViewModel>()
+            {
+                new DynamicPanelConfiguration<IDynamicPanelViewModel>()
+                {
+                    CanFloat = o => true,
+                    Title = o => $"DynamicPanel{o.SafeCast<IIdentifiable>().Guid}",
+                    Placement = PanelPlacement.Center,
+                },
+                new PanelSelectionBinding(typeof(DynamicPanelSelection))
             };
         }
 

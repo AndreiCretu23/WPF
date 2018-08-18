@@ -8,7 +8,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(true)]
-    public class AutoInvalidateOnEvent : IAssertable, ICommandMetadata, IMultiMenuMetadata, IToolBarMetadata, IStaticPanelMetadata
+    public class AutoInvalidateOnEvent : IAssertable, ICommandMetadata, IMultiMenuMetadata, IToolBarMetadata, IStaticPanelMetadata, IDynamicPanelMetadata
     {
         public Type EventType { get; private set; }
         public AutoInvalidateOnEvent(Type eventType)

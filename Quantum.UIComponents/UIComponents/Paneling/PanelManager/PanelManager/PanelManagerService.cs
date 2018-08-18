@@ -127,10 +127,10 @@ namespace Quantum.UIComponents
         {
             definition.AssertParameterNotNull(nameof(definition));
 
-            definition.IView.AssertNotNull($"IStaticPanelDefinition.IView");
-            definition.View.AssertNotNull($"IStaticPanelDefinition.View");
-            definition.IViewModel.AssertNotNull($"IStaticPanelDefinition.IViewModel");
-            definition.ViewModel.AssertNotNull($"IStaticPanelDefinition.ViewModel");
+            definition.IView.AssertNotNull($"IDynamicPanelDefinition.IView");
+            definition.View.AssertNotNull($"IDynamicPanelDefinition.View");
+            definition.IViewModel.AssertNotNull($"IDynamicPanelDefinition.IViewModel");
+            definition.ViewModel.AssertNotNull($"IDynamicPanelDefinition.ViewModel");
             
             if (!definition.View.IsClass ||
                !definition.View.IsSubclassOf(typeof(UserControl)) ||
@@ -173,7 +173,18 @@ namespace Quantum.UIComponents
                 throw new Exception($"Error! A DynamicPanelDefinitions with the associated ViewModel interface : {definition.IViewModel.Name} has already been registered.");
             }
 
-            MetadataAsserter.AssertMetadataCollection<IDynamicPanelDefinition, IDynamicPanelMetadata>(definition, $"StaticPanelDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}>");
+            MetadataAsserter.AssertMetadataCollection<IDynamicPanelDefinition, IDynamicPanelMetadata>(definition, $"DynamicPanelDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}>");
+
+            var config = definition.Single(o => o.GetType().IsGenericType && o.GetType().GetGenericTypeDefinition() == typeof(DynamicPanelConfiguration<>));
+            var configGenericParamType = config.GetType().GetGenericArguments().Single();
+            if(!(configGenericParamType == definition.View || 
+                configGenericParamType == definition.IView ||
+                configGenericParamType == definition.ViewModel || 
+                configGenericParamType == definition.IViewModel))
+            {
+                throw new Exception($"Error : DynamicPanelDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}> : \n" +
+                                    $"The DynamicPanelConfiguration Generic Parameter must be of one of the following types : {definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}");
+            }
         }
 
         [DebuggerHidden]
