@@ -2,16 +2,16 @@
 
 namespace Quantum.UIComponents
 {
-    internal class PanelVisibilityChangedEvent : CompositePresentationEvent<PanelVisibilityChangedArgs>
+    internal class StaticPanelVisibilityChangedEvent : CompositePresentationEvent<StaticPanelVisibilityChangedArgs>
     {
     }
 
-    internal class PanelVisibilityChangedArgs
+    internal class StaticPanelVisibilityChangedArgs
     {
         public IStaticPanelDefinition Definition { get; private set; }
         public bool Visibility { get; private set; }
 
-        public PanelVisibilityChangedArgs(IStaticPanelDefinition definition, bool visibility)
+        public StaticPanelVisibilityChangedArgs(IStaticPanelDefinition definition, bool visibility)
         {
             Definition = definition;
             Visibility = visibility;

@@ -69,8 +69,8 @@ namespace Quantum.UIComponents
         {
         }
 
-        [Handles(typeof(PanelVisibilityChangedEvent))]
-        public void OnVisibilityChanged(PanelVisibilityChangedArgs args)
+        [Handles(typeof(StaticPanelVisibilityChangedEvent))]
+        public void OnVisibilityChanged(StaticPanelVisibilityChangedArgs args)
         {
             if (args.Definition.IViewModel == PanelDefinition.IViewModel)
             {
