@@ -1,12 +1,7 @@
 ﻿using Quantum.Services;
 using Quantum.Utils;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows.Controls;
-using System.Xml;
-using System.Xml.Serialization;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
@@ -14,12 +9,6 @@ namespace Quantum.UIComponents
 {
     internal class PanelLayoutManagerService : QuantumServiceBase, IPanelLayoutManagerService
     {
-        [Service]
-        public IPanelManagerService PanelManager { get; set; }
-
-        [Service]
-        public IStaticPanelVisibilityManagerService VisibilityManager { get; set; }
-
         private IDockingView DockingView { get { return Container.Resolve<IDockingView>(); } }
         
         public PanelLayoutManagerService(IObjectInitializationService initSvc)
