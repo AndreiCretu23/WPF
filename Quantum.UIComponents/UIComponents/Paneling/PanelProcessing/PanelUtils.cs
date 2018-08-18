@@ -85,6 +85,12 @@ namespace Quantum.UIComponents
             return definition.OfType<PanelSelectionBinding>().Single().SelectionType;
         }
 
+        internal static Type GetSelectionBindingRawType(this IDynamicPanelDefinition definition)
+        {
+            definition.AssertNotNull(nameof(definition));
+            return definition.GetSelectionBindingType().GetBaseTypeGenericArgument(typeof(MultipleSelection<>));
+        }
+
         internal static IMultipleSelection GetSelectionBinding(this IDynamicPanelDefinition definition, IUnityContainer container)
         {
             definition.AssertNotNull(nameof(definition));

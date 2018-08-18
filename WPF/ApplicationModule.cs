@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.Common;
 using Quantum.CoreModule;
@@ -36,6 +37,17 @@ namespace WPF
             foreach(var panelDef in GetPanels(container))
             {
                 panelManager.RegisterPanelDefinition(panelDef);
+            }
+
+
+            var selection = container.Resolve<IEventAggregator>().GetEvent<DynamicPanelSelection>();
+            for (int i = 1; i <= 5; i++)
+            {
+                selection.Value.Add(new DynamicPanelViewModel(container.Resolve<IObjectInitializationService>())
+                {
+                    Guid = i.ToString(),
+                    DisplayText = $"DynamicPanel {i.ToString()}"
+                });
             }
 
         }

@@ -41,11 +41,12 @@ namespace Quantum.UIComponents
         {
             var layoutElements = DockingView.DockingManager.Layout.Descendents();
 
-            var anchorables = layoutElements.OfType<LayoutAnchorable>();
+            var staticAnchorables = args.LayoutAnchorables.Where(o => PanelManager.StaticPanelDefinitions.Any(def => def.View == o.Content.GetType() && 
+                                                                                                                     def.ViewModel == ((UserControl)o.Content).DataContext.GetType()));
             var groups = layoutElements.OfType<LayoutAnchorablePane>();
 
             var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
-            foreach (var anchorable in anchorables)
+            foreach (var anchorable in staticAnchorables)
             {
                 var viewGuid = anchorable.Content.GetType().GetGuid();
                 var viewModelGuid = anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid();

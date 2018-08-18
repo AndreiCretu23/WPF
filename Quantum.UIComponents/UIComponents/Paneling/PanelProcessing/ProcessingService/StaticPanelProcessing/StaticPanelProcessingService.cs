@@ -149,7 +149,9 @@ namespace Quantum.UIComponents
         public void OnLayoutLoaded(LayoutLoadedArgs args)
         {
             anchorableDefinitions.Clear();
-            foreach (var anchorable in args.LayoutAnchorables)
+            var staticAnchorables = args.LayoutAnchorables.Where(o => PanelManager.StaticPanelDefinitions.Any(def => def.View == o.Content.GetType() &&
+                                                                                                                     def.ViewModel == ((UserControl)o.Content).DataContext.GetType()));
+            foreach (var anchorable in staticAnchorables)
             {
                 var associatedDefinition = PanelManager.StaticPanelDefinitions.Single(o => o.View.GetGuid() == anchorable.Content.GetType().GetGuid() &&
                                                                                            o.ViewModel.GetGuid() == anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid());

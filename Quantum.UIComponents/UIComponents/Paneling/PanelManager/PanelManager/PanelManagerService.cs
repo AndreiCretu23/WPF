@@ -185,6 +185,14 @@ namespace Quantum.UIComponents
                 throw new Exception($"Error : DynamicPanelDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}> : \n" +
                                     $"The DynamicPanelConfiguration Generic Parameter must be of one of the following types : {definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}");
             }
+
+            var selectionBindingType = definition.GetSelectionBindingRawType();
+            if(!(selectionBindingType == definition.ViewModel || selectionBindingType == definition.IViewModel))
+            {
+                throw new Exception($"Error : DynamicPanelDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}> : \n " +
+                                    $"The PanelSelectionBinding type does not match the viewModel Type.");
+            }
+
         }
 
         [DebuggerHidden]
