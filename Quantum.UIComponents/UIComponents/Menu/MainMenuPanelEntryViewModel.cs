@@ -80,8 +80,8 @@ namespace Quantum.UIComponents
             }
         }
 
-        [Handles(typeof(PanelInvalidationEvent))]
-        public void OnInvalidation(PanelInvalidationArgs args)
+        [Handles(typeof(StaticPanelInvalidationEvent))]
+        public void OnInvalidation(StaticPanelInvalidationArgs args)
         {
             if(args.Definition == PanelDefinition)
             {

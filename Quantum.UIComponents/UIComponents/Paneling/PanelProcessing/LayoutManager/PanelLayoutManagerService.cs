@@ -18,7 +18,7 @@ namespace Quantum.UIComponents
         public IPanelManagerService PanelManager { get; set; }
 
         [Service]
-        public IPanelVisibilityManagerService VisibilityManager { get; set; }
+        public IStaticPanelVisibilityManagerService VisibilityManager { get; set; }
 
         private IDockingView DockingView { get { return Container.Resolve<IDockingView>(); } }
         
@@ -44,34 +44,7 @@ namespace Quantum.UIComponents
                     layoutSerializer.Deserialize(stream);
                 }
                 
-                var layoutElements = DockingView.DockingManager.Layout.Descendents();
-
-                var anchorables = layoutElements.OfType<LayoutAnchorable>();
-                var groups = layoutElements.OfType<LayoutAnchorablePane>();
-
-                var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
-                foreach (var anchorable in anchorables)
-                {
-                    var viewGuid = anchorable.Content.GetType().GetGuid();
-                    var viewModelGuid = anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid();
-                    
-                    LayoutAnchorablePane layoutGroup = null;
-
-                    if (anchorable.Parent != null && anchorable.Parent is LayoutAnchorablePane)
-                    {
-                        layoutGroup = anchorable.Parent as LayoutAnchorablePane;
-                    }
-                    else
-                    {
-                        layoutGroup = anchorable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).
-                                      Single(prop => prop.Name == "PreviousContainer").GetValue(anchorable) as LayoutAnchorablePane;
-                    }
-                    
-                    layoutGroupData.Add(anchorable, layoutGroup);
-                    EventAggregator.GetEvent<PanelVisibilityChangedEvent>().Publish(new PanelVisibilityChangedArgs(PanelManager.StaticPanelDefinitions.Single(o => o.View.GetGuid() == viewGuid && o.ViewModel.GetGuid() == viewModelGuid), !anchorable.IsHidden));
-                }
-
-                VisibilityManager.SetLayoutGroupData(layoutGroupData);
+                var anchorables = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>();
                 EventAggregator.GetEvent<LayoutLoadedEvent>().Publish(new LayoutLoadedArgs(anchorables));
 
                 return true;

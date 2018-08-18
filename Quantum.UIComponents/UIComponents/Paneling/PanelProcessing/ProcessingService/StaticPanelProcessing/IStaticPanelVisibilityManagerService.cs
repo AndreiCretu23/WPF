@@ -7,7 +7,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    internal interface IPanelVisibilityManagerService
+    internal interface IStaticPanelVisibilityManagerService
     {
         void SetLayoutGroupData(IDictionary<LayoutAnchorable, LayoutAnchorablePane> layoutData);
 

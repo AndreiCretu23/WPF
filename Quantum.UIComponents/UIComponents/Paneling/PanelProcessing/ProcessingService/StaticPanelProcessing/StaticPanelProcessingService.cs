@@ -1,63 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Quantum.Services;
+using Quantum.Metadata;
+using Xceed.Wpf.AvalonDock.Layout;
 using System.Windows.Controls;
+using Quantum.Utils;
 using Microsoft.Practices.Composite.Presentation.Events;
 using Quantum.Events;
-using Quantum.Metadata;
-using Quantum.Services;
-using Quantum.Utils;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    internal class PanelProcessingService : QuantumServiceBase, IPanelProcessingService
+    internal class StaticPanelProcessingService : QuantumServiceBase, IStaticPanelProcessingService
     {
         [Service]
         public IPanelManagerService PanelManager { get; set; }
-        
-        [Service]
-        public IPanelVisibilityManagerService VisibilityManager { get; set; }
 
         [Service]
-        public IPanelLayoutManagerService LayoutManager { get; set; }
+        public IStaticPanelVisibilityManagerService VisibilityManager { get; set; }
 
         private IDockingView DockingView { get { return Container.Resolve<IDockingView>(); } }
-        
-        public PanelProcessingService(IObjectInitializationService initSvc)
+
+        public StaticPanelProcessingService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            ProcessConfig();
         }
 
         private bool IsUILoaded = false;
 
         [Handles(typeof(UILoadedEvent))]
-        public void OnUILoaded()
-        {
+        public void OnUILoaded() {
             IsUILoaded = true;
-            ProcessStaticPanelDefinitions();
-            ProcessDynamicPanelDefinitions();
-            EventAggregator.GetEvent<PanelsLoadedEvent>().Publish(new PanelsLoadedArgs());
         }
 
-        #region StaticPanelProcessing
 
         private Dictionary<LayoutAnchorable, IStaticPanelDefinition> anchorableDefinitions = new Dictionary<LayoutAnchorable, IStaticPanelDefinition>();
 
-        private void ProcessStaticPanelDefinitions()
+        public void ProcessStaticPanelDefinitions()
         {
             var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
 
-            foreach(var definition in PanelManager.StaticPanelDefinitions)
+            foreach (var definition in PanelManager.StaticPanelDefinitions)
             {
                 var config = definition.OfType<StaticPanelConfiguration>().Single();
 
                 var anchorable = new LayoutAnchorable();
-                
+
                 var view = (UserControl)Activator.CreateInstance(definition.View);
                 var viewModel = Container.Resolve(definition.IViewModel);
                 view.DataContext = viewModel;
@@ -84,21 +74,22 @@ namespace Quantum.UIComponents
                 anchorable.CanFloat = config.CanFloat();
 
                 var visibility = config.IsVisible() && config.CanOpen();
-                
+
                 VisibilityManager.SetVisibility(anchorable, visibility);
-                if (visibility) {
+                if (visibility)
+                {
                     anchorable.CanHide = config.CanClose();
                 }
-                
+
 
                 anchorableDefinitions.Add(anchorable, definition);
 
                 anchorable.Hiding += (sender, e) => {
-                    if(anchorable.IsVisible)
+                    if (anchorable.IsVisible)
                     {
                         EventAggregator.GetEvent<PanelVisibilityChangedEvent>().Publish(new PanelVisibilityChangedArgs(definition, false));
                     }
-                    
+
                 };
 
 
@@ -109,16 +100,16 @@ namespace Quantum.UIComponents
                 {
                     EventAggregator.Subscribe(invalidationEvent, () =>
                     {
-                        EventAggregator.GetEvent<PanelInvalidationEvent>().Publish(new PanelInvalidationArgs(definition));
+                        EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition));
                     }, ThreadOption.PublisherThread, true);
                 }
             }
             VisibilityManager.SetLayoutGroupData(layoutGroupData);
-            
+
         }
 
-        [Handles(typeof(PanelInvalidationEvent))]
-        public void OnPanelInvalidation(PanelInvalidationArgs args)
+        [Handles(typeof(StaticPanelInvalidationEvent))]
+        public void OnPanelInvalidation(StaticPanelInvalidationArgs args)
         {
             if (!IsUILoaded) return;
 
@@ -128,12 +119,12 @@ namespace Quantum.UIComponents
             anchorable.Title = config.Title();
 
             var visibility = config.IsVisible();
-            if(visibility && config.CanOpen() && anchorable.IsHidden)
+            if (visibility && config.CanOpen() && anchorable.IsHidden)
             {
                 VisibilityManager.SetVisibility(anchorable, true);
                 anchorable.CanHide = config.CanClose();
             }
-            else if(!visibility && config.CanClose() && !anchorable.IsHidden)
+            else if (!visibility && config.CanClose() && !anchorable.IsHidden)
             {
                 VisibilityManager.SetVisibility(anchorable, false);
             }
@@ -145,49 +136,13 @@ namespace Quantum.UIComponents
             if (!IsUILoaded) return;
 
             var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
-            
+
             VisibilityManager.SetVisibility(anchorable, args.Visibility);
-            if(args.Visibility)
+            if (args.Visibility)
             {
                 anchorable.CanHide = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
             }
         }
-
-        #endregion StaticPanelProcessing
-
-        private void ProcessDynamicPanelDefinitions()
-        {
-
-        }
-
-        #region ConfigProcessing
-
-        private void ProcessConfig()
-        {
-            var config = PanelManager.DockingConfiguration;
-            var configDirectory = config.LayoutSerializationDirectory;
-            if(!Directory.Exists(configDirectory))
-            {
-                throw new DirectoryNotFoundException($"Error : Panel Configuration Directory {configDirectory} not found!");
-            }
-
-            var layoutDirectory = Path.Combine(configDirectory, "Layout");
-            if(!Directory.Exists(layoutDirectory)) {
-                Directory.CreateDirectory(layoutDirectory);
-            }
-
-            EventAggregator.Subscribe(config.LayoutSerializationEvent, () => LayoutManager.SaveLayout(layoutDirectory));
-            EventAggregator.Subscribe(config.LayoutDeserializationEvent, () =>
-            {
-                if(File.Exists(Path.Combine(layoutDirectory, "PanelLayout.xml")))
-                {
-                    LayoutManager.LoadLayout(layoutDirectory);
-                }
-            });
-
-        }
-
-        #endregion ConfigProcessing
 
 
         #region OnLayoutLoaded
@@ -206,6 +161,5 @@ namespace Quantum.UIComponents
         }
 
         #endregion OnLayoutLoaded
-
     }
 }

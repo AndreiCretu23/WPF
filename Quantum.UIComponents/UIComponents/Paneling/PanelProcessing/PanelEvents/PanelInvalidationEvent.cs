@@ -2,15 +2,15 @@
 
 namespace Quantum.UIComponents
 {
-    internal class PanelInvalidationEvent : CompositePresentationEvent<PanelInvalidationArgs>
+    internal class StaticPanelInvalidationEvent : CompositePresentationEvent<StaticPanelInvalidationArgs>
     {
     }
 
-    internal class PanelInvalidationArgs
+    internal class StaticPanelInvalidationArgs
     {
         internal IStaticPanelDefinition Definition { get; private set; }
 
-        internal PanelInvalidationArgs(IStaticPanelDefinition definition)
+        internal StaticPanelInvalidationArgs(IStaticPanelDefinition definition)
         {
             Definition = definition;
         }

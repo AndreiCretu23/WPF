@@ -122,13 +122,13 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\LayoutLoadedEvent.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelVisibilityChangedEvent.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelInvalidationEvent.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelEvents\PanelMenuEntryStateChanged.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\IPanelLayoutManagerService.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelLayoutManager\PanelLayoutManagerService.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelProcessingService\IPanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\LayoutLoadedEvent.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelVisibilityChangedEvent.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelInvalidationEvent.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelMenuEntryStateChanged.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\IPanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\PanelLayoutManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\IPanelProcessingService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\DefaultDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelConfig\IDockingConfiguration.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\DynamicPanelDefinition.cs" />
@@ -138,10 +138,12 @@
     <Compile Include="UIComponents\Paneling\PanelManager\PanelDefinitions\StaticPanelDefinition.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\IPanelManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelManager\PanelManager\PanelManagerService.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelProcessingService\PanelProcessingService.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelUtils\PanelDefinitionExt.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelVisibilityManager\IPanelVisibilityManagerService.cs" />
-    <Compile Include="UIComponents\Paneling\PanelManager\PanelVisibilityManager\PanelVisibilityManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\PanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelUtils.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\StaticPanelProcessing\IStaticPanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\StaticPanelProcessing\IStaticPanelVisibilityManagerService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\StaticPanelProcessing\StaticPanelProcessingService.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\StaticPanelProcessing\StaticPanelVisibilityManagerService.cs" />
     <Compile Include="UIComponents\Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -194,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog\" />
+    <Folder Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
