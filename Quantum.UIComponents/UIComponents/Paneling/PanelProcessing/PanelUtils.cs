@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
@@ -97,7 +98,9 @@ namespace Quantum.UIComponents
             definition.AssertParameterNotNull(nameof(container));
 
             var selectionType = definition.GetSelectionBindingType();
-            return container.Resolve(selectionType).SafeCast<IMultipleSelection>();
+            var eventAggregator = container.Resolve<IEventAggregator>();
+
+            return eventAggregator.GetEvent(selectionType).SafeCast<IMultipleSelection>();
         }
 
         #endregion DynamicPanelDefinition

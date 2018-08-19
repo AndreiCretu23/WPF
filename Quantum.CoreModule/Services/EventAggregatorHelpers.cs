@@ -11,6 +11,21 @@ namespace Quantum.Services
 {
     public static class EventAggregatorHelpers
     {
+        public static object GetEvent(this IEventAggregator eventAggregator, Type eventType)
+        {
+            eventAggregator.AssertNotNull(nameof(eventAggregator));
+            eventType.AssertParameterNotNull(nameof(eventType));
+
+            if(!(eventType.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>)) || 
+                 eventType.IsSubclassOfRawGeneric(typeof(SelectionBase<>))))
+            {
+                throw new NotSupportedException($"Error : {eventType.Name} is not a supported eventType. Supported types are either subtypes of CompositePresentationEvent<T> (events) or " +
+                                                $"subtypes of SelectionBase<T>(selections).");
+            }
+
+            var eventGetter = typeof(IEventAggregator).GetMethod("GetEvent").MakeGenericMethod(eventType);
+            return eventGetter.Invoke(eventAggregator, new object[] { });
+        }
 
         public static void Subscribe(this IEventAggregator eventAggregator, Type eventType, Action action, ThreadOption threadOption = ThreadOption.PublisherThread, bool keepSubscriberReferenceAlive = true)
         {
