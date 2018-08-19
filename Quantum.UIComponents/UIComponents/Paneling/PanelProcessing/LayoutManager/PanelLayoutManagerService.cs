@@ -33,8 +33,18 @@ namespace Quantum.UIComponents
                     layoutSerializer.Deserialize(stream);
                 }
                 
-                var anchorables = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>();
-                EventAggregator.GetEvent<LayoutLoadedEvent>().Publish(new LayoutLoadedArgs(anchorables));
+                // On occasion, avalon serializes some closed panels (DynamicPanels), leading to the mess-up of the associated dynamicPanelCollection layout restoration.
+                // To avoid this, we simply re-close them.
+                var anchorables = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>().ToList();
+                foreach(var anch in anchorables)
+                {
+                    if (anch.Content == null)
+                    {
+                        anch.Close();
+                    }
+                }
+
+                EventAggregator.GetEvent<LayoutLoadedEvent>().Publish(new LayoutLoadedArgs(DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>()));
 
                 return true;
             }

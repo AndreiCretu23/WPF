@@ -10,6 +10,7 @@ using Quantum.Utils;
 using System.Windows.Controls;
 using Quantum.Common;
 using Microsoft.Practices.Composite.Presentation.Events;
+using System.Collections.ObjectModel;
 
 namespace Quantum.UIComponents
 {
@@ -33,24 +34,85 @@ namespace Quantum.UIComponents
         
         public void ProcessDefinition()
         {
-            LayoutAnchorablePane container = null;
-            switch (Definition.GetPlacement())
-            {
-                case PanelPlacement.TopLeft: { container = DockingView.UpperLeftArea; break; }
-                case PanelPlacement.BottomLeft: { container = DockingView.BottomLeftArea; break; }
-                case PanelPlacement.Center: { container = DockingView.CenterArea; break; }
-                case PanelPlacement.TopRight: { container = DockingView.UpperRightArea; break; }
-                case PanelPlacement.BottomRight: { container = DockingView.BottomRightArea; break; }
-                default: { throw new Exception($"Internal Error : Unregistered panel placement group position added."); }
-            }
+            LayoutAnchorablePane container = GetDefaultLayoutContainer();
 
             foreach(var viewModel in ViewModelSelection.SelectedObject)
             {
                 var anchorable = CreateDynamicPanel(viewModel);
                 container.Children.Add(anchorable);
+                ActivePanels.Add(anchorable);
+            }
+
+            EventAggregator.Subscribe(Definition.GetSelectionBindingType(), OnSelectionBindingChanged, ThreadOption.UIThread, true);
+        }
+
+        #region Events
+
+        private void OnSelectionBindingChanged()
+        {
+            var activeViewModels = ActivePanels.Select(o => o.Content.SafeCast<UserControl>().DataContext);
+
+            var addedItems = ViewModelSelection.SelectedObject.Except(activeViewModels).ToList();
+            foreach(var item in addedItems) {
+                var anchorable = CreateDynamicPanel(item);
+                var group = GetPrefferedLayoutContainer();
+                group.Children.Add(anchorable);
+                group.SelectedContentIndex = group.Children.IndexOf(anchorable);
+                ActivePanels.Add(anchorable);
+            }
+
+            var removedItems = activeViewModels.Except(ViewModelSelection.SelectedObject).ToList();
+            foreach(var item in removedItems)
+            {
+                var anchorable = ActivePanels.Single(anch => anch.Content.SafeCast<UserControl>().DataContext == item);
+                anchorable.Close();
+                ActivePanels.Remove(anchorable);
+            }
+            
+        }
+
+        [Handles(typeof(LayoutLoadedEvent))]
+        public void OnLayoutLoaded(LayoutLoadedArgs args)
+        {
+            var matchingAnchorables = args.LayoutAnchorables.Where(anch => anch.Content.GetType() == Definition.View && 
+                                                                           anch.Content.SafeCast<UserControl>().DataContext.GetType() == Definition.ViewModel && 
+                                                                           anch.IsVisible);
+
+            ActivePanels.Clear();
+            foreach(var anchorable in matchingAnchorables)
+            {
+                ActivePanels.Add(anchorable);
+            }
+
+            SyncSelection(ActivePanels.Select(o => o.Content.SafeCast<UserControl>().DataContext));
+        }
+
+        #endregion Events
+
+
+        #region SelectionHandling
+
+        private void SyncSelection(IEnumerable<object> syncWith)
+        {
+            using (ViewModelSelection.BeginBlockingNotifications())
+            {
+                var addedItems = syncWith.Except(ViewModelSelection.SelectedObject).ToList();
+                var removedItems = ViewModelSelection.SelectedObject.Except(syncWith).ToList();
+
+                foreach(var item in addedItems) {
+                    ViewModelSelection.Add(item);
+                }
+                foreach(var item in removedItems) {
+                    ViewModelSelection.Remove(item);
+                }
             }
         }
-        
+
+        #endregion SelectionHandling
+
+
+        #region ContentOperations
+
         private LayoutAnchorable CreateDynamicPanel(object viewModel)
         {
             if (viewModel == null)
@@ -74,6 +136,11 @@ namespace Quantum.UIComponents
             anchorable.ContentId = viewModel.SafeCast<IIdentifiable>().Guid;
 
             ProcessInvalidators(anchorable);
+
+            anchorable.Hiding += (sender, e) =>
+            {
+                ViewModelSelection.Remove(sender.SafeCast<LayoutAnchorable>().Content.SafeCast<UserControl>().DataContext);
+            };
 
             return anchorable;
         }
@@ -104,5 +171,33 @@ namespace Quantum.UIComponents
             anchorable.Title = Definition.ComputeTitle(view, viewModel);
             anchorable.CanFloat = Definition.ComputeCanFloat(view, viewModel);
         }
+
+        private LayoutAnchorablePane GetDefaultLayoutContainer()
+        {
+            switch (Definition.GetPlacement())
+            {
+                case PanelPlacement.TopLeft: { return DockingView.UpperLeftArea; }
+                case PanelPlacement.BottomLeft: { return DockingView.BottomLeftArea; }
+                case PanelPlacement.Center: { return DockingView.CenterArea; }
+                case PanelPlacement.TopRight: { return DockingView.UpperRightArea; }
+                case PanelPlacement.BottomRight: { return DockingView.BottomRightArea; }
+                default: { throw new Exception($"Internal Error : Unregistered panel placement group position added."); }
+            }
+        }
+
+        private LayoutAnchorablePane GetPrefferedLayoutContainer()
+        {
+            var defaultContainer = GetDefaultLayoutContainer();
+            if(defaultContainer != null && defaultContainer.GetRoot() == DockingView.DockingManager.Layout && defaultContainer.IsVisible) {
+                return defaultContainer;
+            }
+
+            var allContainers = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorablePane>();
+            return allContainers.OrderByDescending(o => o.Children.Where(anch => anch.Content.GetType() == Definition.View &&
+                                                                                 anch.Content.SafeCast<UserControl>().DataContext.GetType() == Definition.ViewModel).Count()).FirstOrDefault();
+            
+        }
+
+        #endregion ContentOperations
     }
 }

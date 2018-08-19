@@ -94,7 +94,12 @@ namespace Quantum.Utils
                 return (T)source;
             }
             catch {
-                throw new UnexpectedTypeException(typeof(T), source.GetType(), message);
+                if(message == null) {
+                    throw new UnexpectedTypeException(typeof(T), source.GetType());
+                }
+                else {
+                    throw new UnexpectedTypeException(typeof(T), source.GetType(), message);
+                }
             }
         }
         

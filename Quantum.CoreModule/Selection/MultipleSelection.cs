@@ -38,7 +38,30 @@ namespace Quantum.Services
         }
 
 
+        public void Add(T value) {
+            Value.Add(value);
+        }
+
+        public void Remove(T value) {
+            Value.Remove(value);
+        }
+
+
         IEnumerable<object> IMultipleSelection.SelectedObject => Value.Cast<object>();
         Type IMultipleSelection.SelectionType => typeof(T);
+
+        void IMultipleSelection.Add(object value)
+        {
+            Add(value.SafeCast<T>($"Error : The specified value does not match the type of the selection : \n " +
+                                  $"Selection type is : {typeof(T).Name} \n " +
+                                  $"Actual type is : {value.GetType().Name}"));
+        }
+
+        void IMultipleSelection.Remove(object value)
+        {
+            Remove(value.SafeCast<T>($"Error : The specified value does not match the type of the selection : \n " +
+                                     $"Selection type is : {typeof(T).Name} \n " +
+                                     $"Actual type is : {value.GetType().Name}"));
+        }
     }
 }

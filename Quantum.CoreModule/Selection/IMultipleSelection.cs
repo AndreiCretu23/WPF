@@ -7,5 +7,8 @@ namespace Quantum.Services
     {
         new Type SelectionType { get; }
         new IEnumerable<object> SelectedObject { get; }
+
+        void Add(object value);
+        void Remove(object value);
     }
 }

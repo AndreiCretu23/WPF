@@ -22,6 +22,9 @@ namespace WPF
             container.RegisterService<IDummyService, DummyService>();
             container.Resolve<IDummyService>().TestMethod();
 
+            container.RegisterService<IDynamicPanelSelectionManagerService, DynamicPanelSelectionManagerService>();
+            container.Resolve<IDynamicPanelSelectionManagerService>().InitializeDynamicPanelSelection();
+
             //Menu
             container.Resolve<ICommandManagerService>().RegisterCommandContainer<CommonCommands>();
 
@@ -38,18 +41,7 @@ namespace WPF
             {
                 panelManager.RegisterPanelDefinition(panelDef);
             }
-
-            //DynamicPanelSelection init
-            var selection = container.Resolve<IEventAggregator>().GetEvent<DynamicPanelSelection>();
-            for (int i = 1; i <= 5; i++)
-            {
-                selection.Value.Add(new DynamicPanelViewModel(container.Resolve<IObjectInitializationService>())
-                {
-                    Guid = i.ToString(),
-                    DisplayText = $"DynamicPanel {i.ToString()}"
-                });
-            }
-
+            
         }
 
         private IEnumerable<IToolBarDefinition> GetToolBars(IUnityContainer container)
