@@ -6,7 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <Button Content="FirstButton" Width="75" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
+        <Button Content="Add Dynamic Panel" Width="125" DockPanel.Dock="Left" HorizontalAlignment="Left" Command="{Binding AddPanelCommand}"/>
         <TextBox Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
     </DockPanel>
 </UserControl>
