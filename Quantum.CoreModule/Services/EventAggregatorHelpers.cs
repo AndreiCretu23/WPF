@@ -2,15 +2,18 @@
 using Microsoft.Practices.Composite.Presentation.Events;
 using Quantum.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Quantum.Services
 {
     public static class EventAggregatorHelpers
     {
+        /// <summary>
+        /// Returns the instance of the specified event type (from the container), performing a registration check first. 
+        /// It is the equivalent of EventAggregator.GetEvent'1, but this can be called on runtime.
+        /// </summary>
+        /// <param name="eventAggregator"></param>
+        /// <param name="eventType"></param>
+        /// <returns></returns>
         public static object GetEvent(this IEventAggregator eventAggregator, Type eventType)
         {
             eventAggregator.AssertNotNull(nameof(eventAggregator));
@@ -27,6 +30,15 @@ namespace Quantum.Services
             return eventGetter.Invoke(eventAggregator, new object[] { });
         }
 
+        /// <summary>
+        /// Subscribes the given action to the given event/selection type. Since the eventType is determined at runtime, the event/selection arguments are not available : 
+        /// you can just subscribe a parameterless action.
+        /// </summary>
+        /// <param name="eventAggregator"></param>
+        /// <param name="eventType"></param>
+        /// <param name="action"></param>
+        /// <param name="threadOption"></param>
+        /// <param name="keepSubscriberReferenceAlive"></param>
         public static void Subscribe(this IEventAggregator eventAggregator, Type eventType, Action action, ThreadOption threadOption = ThreadOption.PublisherThread, bool keepSubscriberReferenceAlive = true)
         {
             eventAggregator.AssertNotNull(nameof(eventAggregator));

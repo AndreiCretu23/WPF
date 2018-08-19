@@ -22,24 +22,24 @@ namespace WPF
             container.RegisterService<IDummyService, DummyService>();
             container.Resolve<IDummyService>().TestMethod();
 
-
+            //Menu
             container.Resolve<ICommandManagerService>().RegisterCommandContainer<CommonCommands>();
 
-
+            //ToolBar
             var toolBarManager = container.Resolve<IToolBarManagerService>();
             foreach(var toolBar in GetToolBars(container))
             {
                 toolBarManager.RegisterToolBarDefinition(toolBar);
             }
 
-
+            //PanelDefinitions
             var panelManager = container.Resolve<IPanelManagerService>();
             foreach(var panelDef in GetPanels(container))
             {
                 panelManager.RegisterPanelDefinition(panelDef);
             }
 
-
+            //DynamicPanelSelection init
             var selection = container.Resolve<IEventAggregator>().GetEvent<DynamicPanelSelection>();
             for (int i = 1; i <= 5; i++)
             {
