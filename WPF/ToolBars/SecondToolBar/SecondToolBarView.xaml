@@ -6,10 +6,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <DockPanel>
-        <Button Width="75" Content="SecondButton" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
         <ComboBox Width="75" DockPanel.Dock="Left" Margin="5,0,0,0" HorizontalAlignment="Left">
             <ComboBoxItem Content="Item1"/>
             <ComboBoxItem Content="Item2"/>
         </ComboBox>
+        <Button Content="Bring Active Panel Into View"
+                Width="150"
+                DockPanel.Dock="Left"
+                Command="{Binding ShowPanelCommand}"/>
     </DockPanel>
 </UserControl>

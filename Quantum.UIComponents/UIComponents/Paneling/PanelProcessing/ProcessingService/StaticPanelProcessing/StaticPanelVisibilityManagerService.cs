@@ -83,19 +83,25 @@ namespace Quantum.UIComponents
                 {
                     LayoutGroups[anchorable].Children.Add(anchorable);
                     anchorable.Show();
+                    LayoutGroups[anchorable].SelectedContentIndex = LayoutGroups[anchorable].Children.IndexOf(anchorable);
                 }
                 else
                 {
-                    if (anchorable.Parent != null && anchorable.Parent is LayoutAnchorablePane)
-                    {
-                        LayoutGroups[anchorable] = anchorable.Parent as LayoutAnchorablePane;
-                    }
+                    UpdateContainer(anchorable);
                     anchorable.Hide();
                 }
             }
             catch
             {
                 //Do nothing. Means the layout anchorable has not been loaded yet in the UI.
+            }
+        }
+
+        public void UpdateContainer(LayoutAnchorable anchorable)
+        {
+            if(anchorable.Parent != null && anchorable.Parent is LayoutAnchorablePane)
+            {
+                LayoutGroups[anchorable] = anchorable.Parent as LayoutAnchorablePane;
             }
         }
 

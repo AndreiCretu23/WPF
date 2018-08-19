@@ -239,5 +239,21 @@ namespace Quantum.UIComponents
             CustomDockingConfiguration = configuration;
         }
         #endregion Config
+
+
+        #region Request
+
+        public void BringStaticPanelIntoView<TViewModel>()
+        {
+            EventAggregator.GetEvent<BringStaticPanelIntoViewRequest>().Publish(new BringStaticPanelIntoViewArgs(typeof(TViewModel)));
+        }
+
+        public void BringDynamicPanelIntoView<TViewModel>(TViewModel viewModel)
+        {
+            viewModel.AssertNotNull(nameof(viewModel));
+            EventAggregator.GetEvent<BringDynamicPanelIntoViewRequest>().Publish(new BringDynamicPanelIntoViewArgs(typeof(TViewModel), viewModel));
+        }
+
+        #endregion Request
     }
 }

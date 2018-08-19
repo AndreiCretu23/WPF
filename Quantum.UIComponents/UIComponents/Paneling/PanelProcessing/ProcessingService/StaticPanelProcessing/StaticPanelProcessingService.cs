@@ -83,8 +83,10 @@ namespace Quantum.UIComponents
                 anchorableDefinitions.Add(anchorable, definition);
 
                 anchorable.Hiding += (sender, e) => {
-                    if (anchorable.IsVisible)
+                    var source = sender.SafeCast<LayoutAnchorable>();
+                    if (source.IsVisible)
                     {
+                        VisibilityManager.UpdateContainer(source);
                         EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(definition, false));
                     }
 
@@ -105,7 +107,7 @@ namespace Quantum.UIComponents
             VisibilityManager.SetLayoutGroupData(layoutGroupData);
 
         }
-
+        
         [Handles(typeof(StaticPanelInvalidationEvent))]
         public void OnPanelInvalidation(StaticPanelInvalidationArgs args)
         {
@@ -141,10 +143,7 @@ namespace Quantum.UIComponents
                 anchorable.CanHide = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
             }
         }
-
-
-        #region OnLayoutLoaded
-
+        
         [Handles(typeof(LayoutLoadedEvent))]
         public void OnLayoutLoaded(LayoutLoadedArgs args)
         {
@@ -159,7 +158,32 @@ namespace Quantum.UIComponents
                 anchorable.Hiding += (sender, e) => EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(anchorableDefinitions[anchorable], false));
             }
         }
+        
+        [Handles(typeof(BringStaticPanelIntoViewRequest))]
+        public void OnBringIntoViewRequest(BringStaticPanelIntoViewArgs args)
+        {
+            IStaticPanelDefinition definition = null;
+            LayoutAnchorable anchorable = null;
+            try
+            {
+                anchorable = anchorableDefinitions.Single(o => o.Value.ViewModel == args.PanelViewModel || o.Value.IViewModel == args.PanelViewModel).Key;
+                definition = anchorableDefinitions[anchorable];
+            }
+            catch(InvalidOperationException)
+            {
+                throw new Exception($"Error : BringStaticPanelIntoView({args.PanelViewModel.Name}) : \n" +
+                                    $"There is no StaticPanelDefinition registered associated with the given ViewModel type.");
+            }
 
-        #endregion OnLayoutLoaded
+            if(anchorable.IsHidden && definition.CanChangeVisibility(false)) {
+                VisibilityManager.SetVisibility(anchorable, true);
+                EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(definition, true));
+            }
+            else
+            {
+                var group = anchorable.Parent.SafeCast<LayoutAnchorablePane>();
+                group.SelectedContentIndex = group.Children.IndexOf(anchorable);
+            }
+        }
     }
 }

@@ -46,6 +46,21 @@ namespace Quantum.UIComponents
         void RegisterPanelDefinition(IPanelDefinition definition);
 
         /// <summary>
+        /// Brings the static panel associated with the given ViewModel type into view. If the panel is active, the parent container will have it selected. 
+        /// Otherwise, if it's hidden, it the panel will become visible and selected in it's cached container.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        void BringStaticPanelIntoView<TViewModel>();
+
+        /// <summary>
+        /// Brings the dynamic panel instance of the given ViewModel type into view. The SelectionBinding associated with the DynamicPanelDefinition of the given type 
+        /// must contain the instance passed as a parameter, otherwise an exception will be thrown.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="viewModel"></param>
+        void BringDynamicPanelIntoView<TViewModel>(TViewModel viewModel);
+        
+        /// <summary>
         /// Sets the DockingConfiguration. If no docking configuration is provided, the default one will be used. In order to set
         /// a custom one, an instance of a custom implementation of IDockingConfiguration will have to be passed.
         /// </summary>

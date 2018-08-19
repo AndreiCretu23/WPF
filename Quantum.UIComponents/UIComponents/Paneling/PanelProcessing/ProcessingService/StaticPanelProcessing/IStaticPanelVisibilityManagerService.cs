@@ -12,5 +12,6 @@ namespace Quantum.UIComponents
         void SetLayoutGroupData(IDictionary<LayoutAnchorable, LayoutAnchorablePane> layoutData);
 
         void SetVisibility(LayoutAnchorable anchorable, bool visibility);
+        void UpdateContainer(LayoutAnchorable anchorable);
     }
 }

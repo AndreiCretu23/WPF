@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.Practices.Composite.Presentation.Commands;
+using Quantum.Services;
+using Quantum.UIComponents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WPF.Panels;
 
 namespace WPF.ToolBars
 {
@@ -13,7 +17,20 @@ namespace WPF.ToolBars
     }
 
     [Guid("C63CB9E1-8540-4D8D-85EE-DA38D28DAA5F")]
-    public class SecondToolBarViewModel : ISecondToolBarViewModel
+    public class SecondToolBarViewModel : ViewModelBase, ISecondToolBarViewModel
     {
+        [Service]
+        public IPanelManagerService PanelManager { get; set; }
+
+        public SecondToolBarViewModel(IObjectInitializationService initSvc)
+            : base(initSvc)
+        {
+        }
+
+        public DelegateCommand<object> ShowPanelCommand => new DelegateCommand<object>
+            (
+                canExecuteMethod: o => true, 
+                executeMethod: o => PanelManager.BringStaticPanelIntoView<IActivePanelViewModel>()
+            );
     }
 }

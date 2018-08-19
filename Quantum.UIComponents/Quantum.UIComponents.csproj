@@ -122,6 +122,8 @@
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Paneling\DockingView\IDockingView.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\BringDynamicPanelIntoViewRequest.cs" />
+    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\BringStaticPanelIntoViewRequest.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\LayoutLoadedEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\StaticPanelVisibilityChangedEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\StaticPanelInvalidationEvent.cs" />
