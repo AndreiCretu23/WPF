@@ -14,5 +14,8 @@
                 Width="150"
                 DockPanel.Dock="Left"
                 Command="{Binding ShowPanelCommand}"/>
+        <Button Content="Bring Dynamic Panel Into View"
+                Width="200"
+                Command="{Binding ShowDynamicPanelCommand}"/>
     </DockPanel>
 </UserControl>

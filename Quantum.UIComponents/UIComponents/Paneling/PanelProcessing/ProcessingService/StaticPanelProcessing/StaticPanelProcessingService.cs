@@ -89,7 +89,6 @@ namespace Quantum.UIComponents
                         VisibilityManager.UpdateContainer(source);
                         EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(definition, false));
                     }
-
                 };
 
 
@@ -155,7 +154,12 @@ namespace Quantum.UIComponents
                 var associatedDefinition = PanelManager.StaticPanelDefinitions.Single(o => o.View.GetGuid() == anchorable.Content.GetType().GetGuid() &&
                                                                                            o.ViewModel.GetGuid() == anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid());
                 anchorableDefinitions.Add(anchorable, associatedDefinition);
-                anchorable.Hiding += (sender, e) => EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(anchorableDefinitions[anchorable], false));
+                anchorable.Hiding += (sender, e) =>
+                {
+                    var source = sender.SafeCast<LayoutAnchorable>();
+                    VisibilityManager.UpdateContainer(source);
+                    EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(anchorableDefinitions[source], false));
+                };
             }
         }
         

@@ -22,15 +22,32 @@ namespace WPF.ToolBars
         [Service]
         public IPanelManagerService PanelManager { get; set; }
 
+        [Selection]
+        public DynamicPanelSelection PanelSelection { get; set; }
+
         public SecondToolBarViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
         }
 
+        #region StaticPanelBringIntoView
+
         public DelegateCommand<object> ShowPanelCommand => new DelegateCommand<object>
             (
                 canExecuteMethod: o => true, 
                 executeMethod: o => PanelManager.BringStaticPanelIntoView<IActivePanelViewModel>()
+            );
+
+        #endregion StaticPanelBringIntoView
+
+        public DelegateCommand<object> ShowDynamicPanelCommand => new DelegateCommand<object>
+            (
+                canExecuteMethod: o => PanelSelection.Value.Count() > 0,
+                executeMethod: o =>
+                {
+                    var viewModel = PanelSelection.Value.First();
+                    PanelManager.BringDynamicPanelIntoView(viewModel);
+                }
             );
     }
 }

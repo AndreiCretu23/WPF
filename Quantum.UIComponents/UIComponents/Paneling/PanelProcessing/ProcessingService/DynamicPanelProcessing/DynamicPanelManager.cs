@@ -82,6 +82,10 @@ namespace Quantum.UIComponents
             foreach(var anchorable in matchingAnchorables)
             {
                 ActivePanels.Add(anchorable);
+                anchorable.Hiding += (sender, e) =>
+                {
+                    ViewModelSelection.Remove(sender.SafeCast<LayoutAnchorable>().Content.SafeCast<UserControl>().DataContext);
+                };
             }
 
             SyncSelection(ActivePanels.Select(o => o.Content.SafeCast<UserControl>().DataContext));
@@ -199,5 +203,28 @@ namespace Quantum.UIComponents
         }
 
         #endregion ContentOperations
+
+
+        #region BringIntoView
+
+        public void BringPanelIntoView(object viewModel)
+        {
+            LayoutAnchorable anchorable = null;
+
+            try
+            {
+                anchorable = ActivePanels.Single(o => o.Content.SafeCast<UserControl>().DataContext == viewModel);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new Exception($"Error bringing the dynamic panel associated with the ViewModel instance of type {viewModel.GetType().Name} into view : \n " +
+                                    $"The PanelSelectionBinding associated to the DynamicPanelDefinition of the given viewModelType does not contain the given instance");
+            }
+
+            var parent = anchorable.Parent.SafeCast<LayoutAnchorablePane>();
+            parent.SelectedContentIndex = parent.Children.IndexOf(anchorable);
+        }
+
+        #endregion BringIntoView
     }
 }
