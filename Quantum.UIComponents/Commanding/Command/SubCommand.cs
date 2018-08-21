@@ -35,7 +35,8 @@ namespace Quantum.Command
                 executeHandler = value;
             }
         }
-        
+
+        public CommandMetadataCollection Metadata { get; set; } = new CommandMetadataCollection();
         public SubMenuMetadataCollection SubCommandMetadata { get; set; } = new SubMenuMetadataCollection();
     }
 

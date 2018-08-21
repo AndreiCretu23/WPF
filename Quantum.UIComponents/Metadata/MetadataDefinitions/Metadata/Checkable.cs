@@ -4,7 +4,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]
-    public class Checkable : IMenuMetadata, ISubMenuMetadata
+    public class Checkable : IMainMenuMetadata, ISubMenuMetadata
     {
         public bool Value { get; private set; }
         public Checkable(bool isCheckable) {

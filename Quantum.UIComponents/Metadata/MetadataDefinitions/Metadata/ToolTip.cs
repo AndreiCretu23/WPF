@@ -6,7 +6,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]
-    public class ToolTip : IAssertable, IMenuMetadata, ISubMenuMetadata, IPanelMenuEntryMetadata
+    public class ToolTip : IAssertable, IMainMenuMetadata, ISubMenuMetadata, IPanelMenuEntryMetadata
     {
         public ToolTip(string toolTip)
         {

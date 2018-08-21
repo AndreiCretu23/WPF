@@ -6,12 +6,11 @@ namespace Quantum.Command
     public interface ICommandBase : ICommand
     {
         void RaiseCanExecuteChanged();
-        CommandMetadataCollection CommandMetadata { get; }
     }
 
     public interface IManagedCommand : ICommandBase
     {
-        MenuMetadataCollection MainMenuMetadata { get; }
+        CommandMetadataCollection Metadata { get; }
     }
 
     public interface IMultiManagedCommand
@@ -21,6 +20,7 @@ namespace Quantum.Command
 
     public interface ISubCommand : ICommandBase
     {
+        CommandMetadataCollection Metadata { get; }
         SubMenuMetadataCollection SubCommandMetadata { get; }
     }
 }

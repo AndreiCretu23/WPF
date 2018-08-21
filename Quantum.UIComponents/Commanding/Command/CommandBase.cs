@@ -1,5 +1,4 @@
-﻿using Quantum.Metadata;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -33,6 +32,5 @@ namespace Quantum.Command
         public abstract bool CanExecute(object parameter);
         public abstract void Execute(object parameter);
         
-        public CommandMetadataCollection CommandMetadata { get; set; } = new CommandMetadataCollection();
     }
 }

@@ -82,7 +82,7 @@ namespace Quantum.Command
             containerManagedCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
-                CommandMetadataProcessor.ProcessMetadata(c);
+                CommandMetadataProcessor.ProcessMetadata(c, cmd => cmd.Metadata);
             });
 
             containerMultiManagedCommands.ForEach(c =>

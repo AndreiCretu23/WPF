@@ -103,7 +103,7 @@ namespace Quantum.UIComponents
                             foreach(var subCommand in subCommands)
                             {
                                 MetadataAsserter.AssertMetadataCollectionProperties(subCommand, "Anonymous");
-                                MetadataProcessor.ProcessMetadata(subCommand);
+                                MetadataProcessor.ProcessMetadata(subCommand, s => s.SubCommandMetadata);
                                 children.Add(new MainMenuItemViewModel(entry.Key)
                                 {
                                     Command = subCommand,
@@ -166,7 +166,7 @@ namespace Quantum.UIComponents
             get
             {
                 if (abstractMenuPaths == null) {
-                    abstractMenuPaths = CommandManager.ManagedCommands.Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
+                    abstractMenuPaths = CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any()).Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
                                 .Concat(CommandManager.MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
                                 .Concat(PanelManager.StaticPanelDefinitions.Where(def => def.Any(m => m is PanelMenuOption)).Select(def => GetPanelMenuOptionMetadata<MenuPath>(def).ParentPath)).
                              SelectMany(path => path.GetPathsToRoot()).Distinct();
@@ -175,9 +175,9 @@ namespace Quantum.UIComponents
             }
         }
 
-        private TMetadata GetMenuMetadata<TMetadata>(IManagedCommand managedCommand) where TMetadata : IMenuMetadata
+        private TMetadata GetMenuMetadata<TMetadata>(IManagedCommand managedCommand) where TMetadata : IMainMenuMetadata
         {
-            return managedCommand.MainMenuMetadata.OfType<TMetadata>().SingleOrDefault();
+            return managedCommand.Metadata.OfType<MainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
         private TMetadata GetMultiMenuMetadata<TMetadata>(IMultiManagedCommand multiManagedCommand) where TMetadata : IMultiMenuMetadata

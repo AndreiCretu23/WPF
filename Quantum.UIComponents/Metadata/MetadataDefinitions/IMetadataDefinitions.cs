@@ -8,7 +8,7 @@
     {
     }
     
-    public interface IMenuMetadata : IMetadataDefinition
+    public interface IMainMenuMetadata : IMetadataDefinition
     {
     }
     
