@@ -67,6 +67,16 @@
     <Compile Include="Commanding\CommandManagerService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\CommandMetadataProcessorService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\ICommandMetadataProcessorService.cs" />
+    <Compile Include="Commanding\CommandModel\DependencyMetadataOwnerCommand.cs" />
+    <Compile Include="Commanding\CommandModel\MultiDependencyCommand.cs" />
+    <Compile Include="Commanding\CommandModel\MultiDependencyMetadataOwnerCommand.cs" />
+    <Compile Include="Commanding\CommandModel\MultiStaticCommand.cs" />
+    <Compile Include="Commanding\CommandModel\MultiStaticMetadataOwnerCommandcs.cs" />
+    <Compile Include="Commanding\CommandModel\StaticMetadataOwnerCommand.cs" />
+    <Compile Include="Commanding\CommandModel\UICommand.cs" />
+    <Compile Include="Commanding\CommandModel\DependencyCommand.cs" />
+    <Compile Include="Commanding\ICommand\ICommandModel.cs" />
+    <Compile Include="Commanding\CommandModel\StaticCommand.cs" />
     <Compile Include="Metadata\MetadataAssert\IMetadataAsserterService.cs" />
     <Compile Include="Metadata\MetadataAssert\MetadataAsserterService.cs" />
     <Compile Include="Commanding\Command\CommandBase.cs" />

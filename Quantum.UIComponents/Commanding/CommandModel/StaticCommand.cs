@@ -1,19 +1,22 @@
-﻿using Quantum.Metadata;
-
-namespace Quantum.Command
+﻿namespace Quantum.Command
 {
-    public class ManagedCommand : CommandBase, IManagedCommand
+    public delegate bool CommandCanExecute();
+    public delegate void CommandExecute();
+
+    public abstract class StaticCommand : UICommand, IStaticCommand
     {
         public override bool CanExecute(object parameter) { return CanExecuteHandler(); }
         public override void Execute(object parameter) { ExecuteHandler(); }
-        
+
         private CommandCanExecute canExecuteHandler;
         public CommandCanExecute CanExecuteHandler
         {
-            get {
+            get
+            {
                 return canExecuteHandler ?? (() => true);
             }
-            set {
+            set
+            {
                 canExecuteHandler = value;
                 RaiseCanExecuteChanged();
             }
@@ -22,14 +25,14 @@ namespace Quantum.Command
         private CommandExecute executeHandler;
         public CommandExecute ExecuteHandler
         {
-            get {
+            get
+            {
                 return executeHandler ?? (() => { });
             }
-            set {
+            set
+            {
                 executeHandler = value;
             }
         }
-        
-        public CommandMetadataCollection Metadata { get; set; } = new CommandMetadataCollection();
     }
 }
