@@ -16,7 +16,6 @@ namespace Quantum.Command
 
         [Service]
         public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
-
         
         private CommandCache CachedCommands { get; set; } = new CommandCache();
         public IEnumerable<object> Commands { get => CachedCommands.GetCommands(); }
