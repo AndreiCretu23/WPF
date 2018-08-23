@@ -111,15 +111,15 @@ namespace Quantum.Command
         public object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandProperty)
             where TCommandContainer : ICommandContainer
         {
-            commandName.AssertParameterNotNull(nameof(commandName));
-            return CachedCommands.GetCommand(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandName));
+            commandProperty.AssertParameterNotNull(nameof(commandProperty));
+            return CachedCommands.GetCommand(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandProperty));
         }
 
         public TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandProperty)
             where TCommandContainer : ICommandContainer
         {
-            commandName.AssertParameterNotNull(nameof(commandName));
-            return CachedCommands.GetCommand<TCommand>(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandName));
+            commandProperty.AssertParameterNotNull(nameof(commandProperty));
+            return CachedCommands.GetCommand<TCommand>(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandProperty));
         }
         
     }
