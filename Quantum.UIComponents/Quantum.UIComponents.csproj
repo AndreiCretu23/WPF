@@ -75,6 +75,7 @@
     <Compile Include="Commanding\CommandModel\StaticMetadataOwnerCommand.cs" />
     <Compile Include="Commanding\CommandModel\UICommand.cs" />
     <Compile Include="Commanding\CommandModel\DependencyCommand.cs" />
+    <Compile Include="Commanding\Command\DelegateCommand.cs" />
     <Compile Include="Commanding\ICommand\ICommand.cs" />
     <Compile Include="Commanding\ICommand\ICommandModel.cs" />
     <Compile Include="Commanding\CommandModel\StaticCommand.cs" />

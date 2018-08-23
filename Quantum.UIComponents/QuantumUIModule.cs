@@ -22,8 +22,8 @@ namespace Quantum.UIComponents
 
             //Docking
             container.RegisterService<IPanelManagerService, PanelManagerService>();
-            container.RegisterService<IStaticPanelVisibilityManagerService, StaticPanelVisibilityManagerService>();
             container.RegisterService<IPanelLayoutManagerService, PanelLayoutManagerService>();
+            container.RegisterService<IStaticPanelVisibilityManagerService, StaticPanelVisibilityManagerService>();
             container.RegisterService<IStaticPanelProcessingService, StaticPanelProcessingService>();
             container.RegisterService<IDynamicPanelProcessingService, DynamicPanelProcessingService>();
             container.RegisterService<IPanelProcessingService, PanelProcessingService>();
