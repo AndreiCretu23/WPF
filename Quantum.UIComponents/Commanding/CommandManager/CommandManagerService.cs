@@ -18,10 +18,10 @@ namespace Quantum.Command
         void RegisterCommandContainer<IContainer, TContainer>() where TContainer : class, IContainer 
                                                                 where IContainer : class, ICommandContainer;
 
-        object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandName) 
+        object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandProperty) 
             where TCommandContainer : ICommandContainer;
 
-        TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandName)
+        TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandProperty)
             where TCommandContainer : ICommandContainer;
     }
 
@@ -108,14 +108,14 @@ namespace Quantum.Command
             containerMultiManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
         }
 
-        public object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandName)
+        public object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandProperty)
             where TCommandContainer : ICommandContainer
         {
             commandName.AssertParameterNotNull(nameof(commandName));
             return CachedCommands.GetCommand(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandName));
         }
 
-        public TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandName)
+        public TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandProperty)
             where TCommandContainer : ICommandContainer
         {
             commandName.AssertParameterNotNull(nameof(commandName));
