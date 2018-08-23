@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Commanding\CommandManager\CommandCache.cs" />
     <Compile Include="Commanding\CommandManager\CommandManagerService.cs" />
+    <Compile Include="Commanding\CommandManager\ICommandManagerService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\CommandMetadataProcessorService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\ICommandMetadataProcessorService.cs" />
     <Compile Include="Commanding\CommandModel\DependencyMetadataOwnerCommand.cs" />
