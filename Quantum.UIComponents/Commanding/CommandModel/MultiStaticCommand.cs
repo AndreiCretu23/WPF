@@ -5,7 +5,7 @@ using System.Linq;
 namespace Quantum.Command
 {
     public abstract class MultiStaticCommand<TCommand> : IMultiStaticCommand<TCommand>
-        where TCommand : StaticCommand
+        where TCommand : IStaticCommand
     {
         public event Action<IEnumerable<TCommand>> OnCommandsComputed;
 

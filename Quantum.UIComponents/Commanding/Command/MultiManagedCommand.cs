@@ -1,17 +1,8 @@
 ﻿using Quantum.Metadata;
-using System;
 
 namespace Quantum.Command
 {
-    public class MultiManagedCommand : IMultiManagedCommand
+    public class MultiManagedCommand : MultiStaticMetadataOwnerCommand<ISubCommand, MultiCommandMetadataCollection, IMultiCommandMetadata>, IMultiManagedCommand
     {
-        private Func<SubCommandCollection> subCommands;
-        public Func<SubCommandCollection> SubCommands
-        {
-            get => subCommands ?? (() => new SubCommandCollection());
-            set => subCommands = value;
-        }
-
-        public MultiMenuMetadataCollection MenuMetadata { get; set; } = new MultiMenuMetadataCollection();
     }
 }

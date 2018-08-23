@@ -11,14 +11,24 @@
     public interface IMainMenuMetadata : IMetadataDefinition
     {
     }
-    
-    public interface IMultiMenuMetadata : IMetadataDefinition
+
+    public interface IMultiCommandMetadata : IMetadataDefinition
     {
     }
 
-    public interface ISubMenuMetadata : IMetadataDefinition
+    public interface IMultiMainMenuMetadata : IMetadataDefinition
     {
     }
+
+    public interface ISubCommandMetadata : IMetadataDefinition
+    {
+    }
+
+    public interface ISubMainMenuMetadata : IMetadataDefinition
+    {
+    }
+
+
 
     public interface IToolBarMetadata : IMetadataDefinition
     {

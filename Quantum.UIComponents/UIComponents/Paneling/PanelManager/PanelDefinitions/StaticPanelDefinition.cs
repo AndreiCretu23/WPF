@@ -4,7 +4,6 @@ using System.Windows.Controls;
 
 namespace Quantum.UIComponents
 {
-    [MandatoryCollection(false)]
     public class StaticPanelDefinition<ITView, TView, ITViewModel, TViewModel> : MetadataCollection<IStaticPanelMetadata>, IStaticPanelDefinition
         where TView : UserControl, ITView, new()
         where ITView : class

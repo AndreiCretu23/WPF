@@ -75,12 +75,11 @@
     <Compile Include="Commanding\CommandModel\StaticMetadataOwnerCommand.cs" />
     <Compile Include="Commanding\CommandModel\UICommand.cs" />
     <Compile Include="Commanding\CommandModel\DependencyCommand.cs" />
+    <Compile Include="Commanding\ICommand\ICommand.cs" />
     <Compile Include="Commanding\ICommand\ICommandModel.cs" />
     <Compile Include="Commanding\CommandModel\StaticCommand.cs" />
     <Compile Include="Metadata\MetadataAssert\IMetadataAsserterService.cs" />
     <Compile Include="Metadata\MetadataAssert\MetadataAsserterService.cs" />
-    <Compile Include="Commanding\Command\CommandBase.cs" />
-    <Compile Include="Commanding\Command\IManagedCommand.cs" />
     <Compile Include="Commanding\Command\ManagedCommand.cs" />
     <Compile Include="Commanding\Command\MultiManagedCommand.cs" />
     <Compile Include="Commanding\Command\SubCommand.cs" />
@@ -88,9 +87,11 @@
     <Compile Include="Metadata\MetadataCollections\CommandMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\MainMenuOption.cs" />
     <Compile Include="Metadata\MetadataCollections\MetadataCollection.cs" />
-    <Compile Include="Metadata\MetadataCollections\MultiMenuMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\MultiCommandMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\MultiMainMenuOption.cs" />
     <Compile Include="Metadata\MetadataCollections\PanelMenuOption.cs" />
-    <Compile Include="Metadata\MetadataCollections\SubMenuMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\SubCommandMetadataCollection.cs" />
+    <Compile Include="Metadata\MetadataCollections\SubMainMenuOption.cs" />
     <Compile Include="Metadata\MetadataCollections\ToolBarMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataDefinitions\IMetadataDefinitions.cs" />
     <Compile Include="Metadata\MetadataDefinitions\MetadataAttributes.cs" />

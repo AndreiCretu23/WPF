@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Quantum.Metadata
 {
-    [MandatoryCollection(false)]
     public class ToolBarMetadataCollection : MetadataCollection<IToolBarMetadata>
     {
     }

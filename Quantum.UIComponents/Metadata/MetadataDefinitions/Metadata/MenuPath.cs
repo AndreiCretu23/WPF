@@ -48,7 +48,7 @@ namespace Quantum.Metadata
 
     [Mandatory(true)]
     [SupportsMultiple(false)]
-    public class MenuPath : IAssertable, IMainMenuMetadata, IMultiMenuMetadata, IPanelMenuEntryMetadata, IMenuEntry
+    public class MenuPath : IAssertable, IMainMenuMetadata, IMultiMainMenuMetadata, IPanelMenuEntryMetadata, IMenuEntry
     {
         public MenuPath(AbstractMenuPath parentPath, int categoryIndex, int orderIndex)
         {

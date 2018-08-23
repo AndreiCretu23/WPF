@@ -31,19 +31,5 @@ namespace Quantum.Metadata
             SupportsMultiple = supportsMultiple;
         }
     }
-
-    /// <summary>
-    /// This attribute must be set on every MetadataCollection Type. It defines if whether within an object containing metadata collections, 
-    /// the particular collection type MUST be defined or not (let empty).
-    /// </summary>
-    [AttributeUsage(validOn: AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class MandatoryCollectionAttribute : Attribute
-    {
-        public bool IsMandatoryCollection { get; private set; }
-
-        public MandatoryCollectionAttribute(bool isMandatoryCollection)
-        {
-            IsMandatoryCollection = isMandatoryCollection;
-        }
-    }
+    
 }

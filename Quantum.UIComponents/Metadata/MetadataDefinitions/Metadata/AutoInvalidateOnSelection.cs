@@ -8,7 +8,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(true)]
-    public class AutoInvalidateOnSelection : IAssertable, ICommandMetadata, IMultiMenuMetadata, IToolBarMetadata, IStaticPanelMetadata, IDynamicPanelMetadata
+    public class AutoInvalidateOnSelection : IAssertable, ICommandMetadata, IMultiCommandMetadata, ISubCommandMetadata, IToolBarMetadata, IStaticPanelMetadata, IDynamicPanelMetadata
     {
         public Type SelectionType { get; private set; }
         public AutoInvalidateOnSelection(Type selectionType)

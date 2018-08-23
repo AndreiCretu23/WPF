@@ -17,7 +17,7 @@ namespace Quantum.Command
         }
         
         public void ProcessMetadata<TCommand, TCollection>(TCommand command, Func<TCommand, TCollection> getMetadataCollection)
-            where TCommand : ICommandBase
+            where TCommand : IUICommand
             where TCollection : IEnumerable<IMetadataDefinition>
         {
             foreach(var metadata in getMetadataCollection(command))

@@ -29,16 +29,6 @@ namespace Quantum.Metadata
                     throw new MissingAttributeException(metadataType, typeof(SupportsMultipleAttribute), $"Internal Error: { metadataType.Name } does not have a SupportsMultiple that specifies if the particular metadata is supports multiple instances in a MetadataCollection!");
                 }
             }
-
-            var metadataCollectionTypes = typeof(MetadataCollection<>).Assembly.GetTypes().Where(t => t.IsAnsiClass && t.IsSubclassOfRawGeneric(typeof(MetadataCollection<>)));
-            foreach(var metadataCollectionType in metadataCollectionTypes)
-            {
-                if(!(metadataCollectionType.GetCustomAttributes(true).OfType<MandatoryCollectionAttribute>().Count() == 1) && 
-                    !(metadataCollectionType.IsGenericType && metadataCollectionType.GetGenericTypeDefinition() == typeof(MetadataCollection<>)))
-                {
-                    throw new MissingAttributeException(metadataCollectionType, typeof(MandatoryCollectionAttribute), $"Internal Error: {metadataCollectionType.Name} does not have a MandatoryCollectionAttribute that specifies if the particular metadata collection type must be set or not within an object containing it as a property.");
-                }
-            }
         }
 
         public MetadataAsserterService(IObjectInitializationService initSvc)
@@ -60,12 +50,7 @@ namespace Quantum.Metadata
                     throw new Exception($"Error : {objName}, {metadataCollectionName} must not be set to null. The default internal value is an empty collection." +
                                         $"If the intention is to not have any metadata, simply don't assign any value to the metadataCollection.");
                 }
-
-                if (!metadataCollection.Any() && !IsMandatoryCollection(metadataCollectionProperty.PropertyType))
-                {
-                    continue;
-                }
-
+                
                 foreach (var metadataType in MetadataTypes.Where(metadataType => metadataCollectionProperty.PropertyType.GetBaseTypeGenericArgument(typeof(MetadataCollection<>)).IsAssignableFrom(metadataType)))
                 {
                     if (IsMandatory(metadataType) && !metadataCollection.Any(metadata => metadata.GetType() == metadataType))
@@ -133,11 +118,6 @@ namespace Quantum.Metadata
         private bool SupportsMultiple(Type metadataType)
         {
             return metadataType.GetCustomAttributes(false).OfType<SupportsMultipleAttribute>().Single().SupportsMultiple;
-        }
-
-        private bool IsMandatoryCollection(Type metadataCollectionType)
-        {
-            return metadataCollectionType.GetCustomAttributes(false).OfType<MandatoryCollectionAttribute>().Single().IsMandatoryCollection;
         }
 
         [DebuggerHidden]

@@ -6,7 +6,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]
-    public class CheckChanged : IAssertable, IMainMenuMetadata, ISubMenuMetadata
+    public class CheckChanged : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata
     {
         public Action<bool> OnCheckChanged { get; private set; }
         public CheckChanged(Action<bool> onCheckChanged)

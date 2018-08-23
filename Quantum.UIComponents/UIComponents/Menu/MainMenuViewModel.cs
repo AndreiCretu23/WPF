@@ -12,23 +12,22 @@ namespace Quantum.UIComponents
     internal class MainMenuViewModel : ViewModelBase, IMainMenuViewModel
     {
         [Service]
-        public IMetadataAsserterService MetadataAsserter { get; set; }
-
-        [Service]
         public ICommandManagerService CommandManager { get; set; }
-
-        [Service]
-        public ICommandMetadataProcessorService MetadataProcessor { get; set; }
-        
+   
         [Service]
         public IPanelManagerService PanelManager { get; set; }
 
-        private IObjectInitializationService InitializationService { get; set; }
+        [Service]
+        public IObjectInitializationService InitializationService { get; set; }
+
+
+        private IEnumerable<IManagedCommand> ManagedCommands => CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any());
+        private IEnumerable<IMultiManagedCommand> MultiManagedCommands => CommandManager.MultiManagedCommands.Where(c => c.Metadata.OfType<MultiMainMenuOption>().Any());
+        private IEnumerable<IStaticPanelDefinition> StaticPanelDefinitions => PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any());
 
         public MainMenuViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            InitializationService = initSvc;
         }
 
         public IEnumerable<IMainMenuItemViewModel> Children { get { return CreateMenuContent(); } }
@@ -63,10 +62,10 @@ namespace Quantum.UIComponents
                 var abstractMenuPath = viewModelItem.MenuEntry as AbstractMenuPath;
                 var children = new List<IMainMenuItemViewModel>();
 
-                var managedCommands = CommandManager.ManagedCommands.Where(c => GetMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
-                var multiManagedCommands = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
+                var managedCommands = ManagedCommands.Where(c => GetMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
+                var multiManagedCommands = MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath);
                 var subAbstractMenuPaths = AbstractMenuPaths.Where(path => path.ParentPath == abstractMenuPath);
-                var panelMenuOptions = PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any() && def.OfType<PanelMenuOption>().Single().OfType<MenuPath>().Single().ParentPath == abstractMenuPath);
+                var panelMenuOptions = StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any() && def.OfType<PanelMenuOption>().Single().OfType<MenuPath>().Single().ParentPath == abstractMenuPath);
 
                 var rawChildren = new Dictionary<IMenuEntry, object>();
                 managedCommands.ForEach(c => rawChildren.Add(GetMenuMetadata<MenuPath>(c), c));
@@ -82,7 +81,7 @@ namespace Quantum.UIComponents
                     categoryIndex++;
                     foreach(var entry in category.OrderBy(o => o.Key.OrderIndex))
                     {
-                        entry.Value.IfIs((ManagedCommand c) =>
+                        entry.Value.IfIs((IManagedCommand c) =>
                         {
                             children.Add(new MainMenuItemViewModel(entry.Key)
                             {
@@ -97,13 +96,11 @@ namespace Quantum.UIComponents
                             });
                         });
 
-                        entry.Value.IfIs((MultiManagedCommand c) =>
+                        entry.Value.IfIs((IMultiManagedCommand c) =>
                         {
-                            var subCommands = c.SubCommands();
+                            var subCommands = c.ComputeCommands().Where(subCmd => subCmd.Metadata.OfType<SubMainMenuOption>().Any());
                             foreach(var subCommand in subCommands)
                             {
-                                MetadataAsserter.AssertMetadataCollectionProperties(subCommand, "Anonymous");
-                                MetadataProcessor.ProcessMetadata(subCommand, s => s.SubCommandMetadata);
                                 children.Add(new MainMenuItemViewModel(entry.Key)
                                 {
                                     Command = subCommand,
@@ -160,34 +157,36 @@ namespace Quantum.UIComponents
 
 
         #region Utils
+
         private IEnumerable<AbstractMenuPath> abstractMenuPaths;
         private IEnumerable<AbstractMenuPath> AbstractMenuPaths
         {
             get
             {
                 if (abstractMenuPaths == null) {
-                    abstractMenuPaths = CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any()).Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
-                                .Concat(CommandManager.MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
-                                .Concat(PanelManager.StaticPanelDefinitions.Where(def => def.Any(m => m is PanelMenuOption)).Select(def => GetPanelMenuOptionMetadata<MenuPath>(def).ParentPath)).
+                    abstractMenuPaths = ManagedCommands.Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
+                                .Concat(MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
+                                .Concat(StaticPanelDefinitions.Select(def => GetPanelMenuOptionMetadata<MenuPath>(def).ParentPath)).
                              SelectMany(path => path.GetPathsToRoot()).Distinct();
                 }
                 return abstractMenuPaths;
             }
         }
 
+        
         private TMetadata GetMenuMetadata<TMetadata>(IManagedCommand managedCommand) where TMetadata : IMainMenuMetadata
         {
             return managedCommand.Metadata.OfType<MainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
-        private TMetadata GetMultiMenuMetadata<TMetadata>(IMultiManagedCommand multiManagedCommand) where TMetadata : IMultiMenuMetadata
+        private TMetadata GetMultiMenuMetadata<TMetadata>(IMultiManagedCommand multiManagedCommand) where TMetadata : IMultiMainMenuMetadata
         {
-            return multiManagedCommand.MenuMetadata.OfType<TMetadata>().SingleOrDefault();
+            return multiManagedCommand.Metadata.OfType<MultiMainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
-        private TMetadata GetSubmenuMetadata<TMetadata>(ISubCommand subCommand) where TMetadata : ISubMenuMetadata
+        private TMetadata GetSubmenuMetadata<TMetadata>(ISubCommand subCommand) where TMetadata : ISubMainMenuMetadata
         {
-            return subCommand.SubCommandMetadata.OfType<TMetadata>().SingleOrDefault();
+            return subCommand.Metadata.OfType<SubMainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
         private TMetadata GetPanelMenuOptionMetadata<TMetadata>(IStaticPanelDefinition definition) where TMetadata : IPanelMenuEntryMetadata
@@ -203,8 +202,9 @@ namespace Quantum.UIComponents
                 return;
             }
 
-            var childMultiCommandsMetadata = CommandManager.MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath)
-                                                                           .SelectMany(c => c.MenuMetadata);
+            var childMultiCommandsMetadata = MultiManagedCommands.Where(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath == abstractMenuPath).
+                                                                  SelectMany(c => c.Metadata);
+
             foreach(var metadata in childMultiCommandsMetadata)
             {
                 metadata.IfIs((AutoInvalidateOnEvent e) => EventAggregator.Subscribe(e.EventType, () => viewModelItem.RaiseChildrenChanged(), ThreadOption.UIThread, true));

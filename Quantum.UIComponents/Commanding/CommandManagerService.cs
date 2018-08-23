@@ -1,13 +1,16 @@
 ﻿using Quantum.Metadata;
 using Quantum.Services;
+using Quantum.Utils;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Quantum.Command
 {
     public interface ICommandManagerService
     {
-        IEnumerable<ManagedCommand> ManagedCommands { get; }
-        IEnumerable<MultiManagedCommand> MultiManagedCommands { get; }
+        IEnumerable<IManagedCommand> ManagedCommands { get; }
+        IEnumerable<IMultiManagedCommand> MultiManagedCommands { get; }
         
         void RegisterCommandContainer<TCommandContainer>() where TCommandContainer : class, ICommandContainer;
         void RegisterCommandContainer<IContainer, TContainer>() where TContainer : class, IContainer 
@@ -24,13 +27,13 @@ namespace Quantum.Command
         
         #region InternalLists
 
-        private List<ManagedCommand> managedCommands { get; set; } = new List<ManagedCommand>();
-        private List<MultiManagedCommand> multiManagedCommands { get; set; } = new List<MultiManagedCommand>();
+        private List<IManagedCommand> managedCommands { get; set; } = new List<IManagedCommand>();
+        private List<IMultiManagedCommand> multiManagedCommands { get; set; } = new List<IMultiManagedCommand>();
 
         #endregion InternalLists
 
-        public IEnumerable<ManagedCommand> ManagedCommands { get => managedCommands; }
-        public IEnumerable<MultiManagedCommand> MultiManagedCommands { get => multiManagedCommands; }
+        public IEnumerable<IManagedCommand> ManagedCommands { get => managedCommands; }
+        public IEnumerable<IMultiManagedCommand> MultiManagedCommands { get => multiManagedCommands; }
         
         public CommandManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -57,23 +60,23 @@ namespace Quantum.Command
         {
             var properties = typeof(TCommandContainer).GetProperties();
 
-            var containerManagedCommands = new List<ManagedCommand>();
-            var containerMultiManagedCommands = new List<MultiManagedCommand>();
+            var containerManagedCommands = new Collection<IManagedCommand>();
+            var containerMultiManagedCommands = new Collection<IMultiManagedCommand>();
 
             var commandNames = new Dictionary<object, string>();
             
             foreach(var prop in properties)
             {
-                if(prop.PropertyType == typeof(ManagedCommand))
+                if(typeof(IManagedCommand).IsAssignableFrom(prop.PropertyType))
                 {
-                    var command = (ManagedCommand)prop.GetValue(commandContainer);
+                    var command = (IManagedCommand)prop.GetValue(commandContainer);
                     containerManagedCommands.Add(command);
                     commandNames.Add(command, prop.Name);   
                 }
                 
-                else if(prop.PropertyType == typeof(MultiManagedCommand))
+                else if(typeof(IMultiManagedCommand).IsAssignableFrom(prop.PropertyType))
                 {
-                    var command = (MultiManagedCommand)prop.GetValue(commandContainer);
+                    var command = (IMultiManagedCommand)prop.GetValue(commandContainer);
                     containerMultiManagedCommands.Add(command);
                     commandNames.Add(command, prop.Name);
                 }
@@ -88,6 +91,14 @@ namespace Quantum.Command
             containerMultiManagedCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
+                c.OnCommandsComputed += computedCommands =>
+                {
+                    computedCommands.ForEach(_ =>
+                    {
+                        MetadataAsserter.AssertMetadataCollectionProperties(_, $"{commandNames[c]} -> ComputedCommands");
+                        CommandMetadataProcessor.ProcessMetadata(_, subCmd => subCmd.Metadata);
+                    });
+                };
             });
 
             managedCommands.AddRange(containerManagedCommands);

@@ -2,34 +2,7 @@
 
 namespace Quantum.Command
 {
-    public class ManagedCommand : CommandBase, IManagedCommand
+    public class ManagedCommand : StaticMetadataOwnerCommand<CommandMetadataCollection, ICommandMetadata>, IManagedCommand
     {
-        public override bool CanExecute(object parameter) { return CanExecuteHandler(); }
-        public override void Execute(object parameter) { ExecuteHandler(); }
-        
-        private CommandCanExecute canExecuteHandler;
-        public CommandCanExecute CanExecuteHandler
-        {
-            get {
-                return canExecuteHandler ?? (() => true);
-            }
-            set {
-                canExecuteHandler = value;
-                RaiseCanExecuteChanged();
-            }
-        }
-
-        private CommandExecute executeHandler;
-        public CommandExecute ExecuteHandler
-        {
-            get {
-                return executeHandler ?? (() => { });
-            }
-            set {
-                executeHandler = value;
-            }
-        }
-        
-        public CommandMetadataCollection Metadata { get; set; } = new CommandMetadataCollection();
     }
 }

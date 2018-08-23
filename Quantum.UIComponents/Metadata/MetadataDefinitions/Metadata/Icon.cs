@@ -6,7 +6,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]
-    public class Icon : IAssertable, IMainMenuMetadata, ISubMenuMetadata, IPanelMenuEntryMetadata
+    public class Icon : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata, IPanelMenuEntryMetadata
     {
         public string IconPath { get; private set; }
         public Icon(string iconPath)

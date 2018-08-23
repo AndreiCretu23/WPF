@@ -4,7 +4,7 @@ namespace Quantum.Command
 {
     public class MultiDependencyMetadataOwnerCommand<T, TCommand, TMetadataCollection, TMetadataDefinition> : MultiDependencyCommand<T, TCommand>, IMultiDependencyMetadataOwnerCommand<TCommand, TMetadataCollection, TMetadataDefinition>
         where T : class
-        where TCommand : DependencyCommand<T>
+        where TCommand : IDependencyCommand
         where TMetadataCollection : MetadataCollection<TMetadataDefinition>, new()
         where TMetadataDefinition : IMetadataDefinition
     {

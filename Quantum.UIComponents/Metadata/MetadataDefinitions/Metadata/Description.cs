@@ -6,7 +6,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(true)]
     [SupportsMultiple(false)]
-    public class Description : IAssertable, IMainMenuMetadata, ISubMenuMetadata, IPanelMenuEntryMetadata
+    public class Description : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata, IPanelMenuEntryMetadata
     {
         public string Value { get; private set; }
         public Description(string description)

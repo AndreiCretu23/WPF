@@ -8,6 +8,7 @@ using Quantum.Services;
 using Quantum.UIComponents;
 using Quantum.Utils;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using WPF.Panels;
@@ -294,36 +295,44 @@ namespace WPF
                 };
             }
         }
-
-        public MultiManagedCommand RecentCommands
+        
+        public IMultiManagedCommand RecentCommands
         {
             get
             {
                 return new MultiManagedCommand()
                 {
-                    SubCommands = () =>
+                    Commands = () =>
                     {
-                        var collection = new SubCommandCollection();
-                        for(int i = 0; i < Number.Value; i++) {
+                        var collection = new Collection<ISubCommand>();
+                        for (int i = 0; i < Number.Value; i++)
+                        {
                             collection.Add(new SubCommand()
                             {
                                 CanExecuteHandler = () => true,
                                 ExecuteHandler = () => MessageBox.Show(i.ToString()),
-                                Metadata = new CommandMetadataCollection() {
+                                Metadata = new SubCommandMetadataCollection()
+                                {
+                                    new SubMainMenuOption()
+                                    {
+                                        new Description($"Print {i.ToString()}")
+                                    }, 
                                     new AutoInvalidateOnSelection(typeof(SelectedNumber))
-                                },
-                                SubCommandMetadata = new SubMenuMetadataCollection() {
-                                    new Description($"Print {i.ToString()}"),
                                 }
                             });
                         }
                         return collection;
-                    },
-                    MenuMetadata = new MultiMenuMetadataCollection()
+                    }, 
+
+                    Metadata = new MultiCommandMetadataCollection()
                     {
-                        new MenuPath(MenuLocations.Recent, 0, 0), 
+                        new MultiMainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.Recent, 0, 0)
+                        }, 
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
+
                 };
             }
         }

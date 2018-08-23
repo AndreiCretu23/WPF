@@ -6,7 +6,7 @@ namespace Quantum.Command
 {
     public abstract class MultiDependencyCommand<T, TCommand> : IMultiDependencyCommand<TCommand>
         where T : class
-        where TCommand : DependencyCommand<T>
+        where TCommand : IDependencyCommand
     {
         public Type DependencyType { get { return typeof(T); } }
         public event Action<IEnumerable<TCommand>> OnCommandsComputed;
