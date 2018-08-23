@@ -64,7 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commanding\CommandManagerService.cs" />
+    <Compile Include="Commanding\CommandManager\CommandCache.cs" />
+    <Compile Include="Commanding\CommandManager\CommandManagerService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\CommandMetadataProcessorService.cs" />
     <Compile Include="Commanding\CommandMetadataProcessor\ICommandMetadataProcessorService.cs" />
     <Compile Include="Commanding\CommandModel\DependencyMetadataOwnerCommand.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Commanding\Command\ManagedCommand.cs" />
     <Compile Include="Commanding\Command\MultiManagedCommand.cs" />
     <Compile Include="Commanding\Command\SubCommand.cs" />
-    <Compile Include="Commanding\ICommandContainer.cs" />
+    <Compile Include="Commanding\CommandManager\ICommandContainer.cs" />
     <Compile Include="Metadata\MetadataCollections\CommandMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataCollections\MainMenuOption.cs" />
     <Compile Include="Metadata\MetadataCollections\MetadataCollection.cs" />

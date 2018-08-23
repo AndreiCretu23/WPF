@@ -80,6 +80,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CommonCommands.cs" />
+    <Compile Include="Commands\ICommonCommands.cs" />
+    <Compile Include="Commands\MenuLocations.cs" />
     <Compile Include="DynamicPanelManagerService.cs" />
     <Compile Include="Panels\ActivePanel\ActivePanelView.xaml.cs">
       <DependentUpon>ActivePanelView.xaml</DependentUpon>

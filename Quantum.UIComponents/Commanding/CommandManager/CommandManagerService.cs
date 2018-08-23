@@ -1,20 +1,28 @@
 ﻿using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Quantum.Command
 {
     public interface ICommandManagerService
     {
+        IEnumerable<object> Commands { get; }
         IEnumerable<IManagedCommand> ManagedCommands { get; }
         IEnumerable<IMultiManagedCommand> MultiManagedCommands { get; }
         
-        void RegisterCommandContainer<TCommandContainer>() where TCommandContainer : class, ICommandContainer;
         void RegisterCommandContainer<IContainer, TContainer>() where TContainer : class, IContainer 
                                                                 where IContainer : class, ICommandContainer;
+
+        object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandName) 
+            where TCommandContainer : ICommandContainer;
+
+        TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandName)
+            where TCommandContainer : ICommandContainer;
     }
 
     internal class CommandManagerService : QuantumServiceBase, ICommandManagerService
@@ -24,41 +32,36 @@ namespace Quantum.Command
 
         [Service]
         public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
+
         
-        #region InternalLists
-
-        private List<IManagedCommand> managedCommands { get; set; } = new List<IManagedCommand>();
-        private List<IMultiManagedCommand> multiManagedCommands { get; set; } = new List<IMultiManagedCommand>();
-
-        #endregion InternalLists
-
-        public IEnumerable<IManagedCommand> ManagedCommands { get => managedCommands; }
-        public IEnumerable<IMultiManagedCommand> MultiManagedCommands { get => multiManagedCommands; }
+        private CommandCache CachedCommands { get; set; } = new CommandCache();
+        public IEnumerable<object> Commands { get => CachedCommands.GetCommands(); }
+        public IEnumerable<IManagedCommand> ManagedCommands { get => CachedCommands.GetCommandsOfType<IManagedCommand>(); }
+        public IEnumerable<IMultiManagedCommand> MultiManagedCommands { get => CachedCommands.GetCommandsOfType<IMultiManagedCommand>(); }
         
         public CommandManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
         }
-
-        public void RegisterCommandContainer<TCommandContainer>()
-            where TCommandContainer : class, ICommandContainer
-        {
-            Container.RegisterService<TCommandContainer>();
-            AddCommandContainer(Container.Resolve<TCommandContainer>());
-        }
-
+        
         public void RegisterCommandContainer<IContainer, TContainer>()
             where TContainer : class, IContainer
             where IContainer : class, ICommandContainer
         {
+            if(CachedCommands.GetRegisteredContainers().Contains(typeof(TContainer)))
+            {
+                throw new Exception($"Error : The Command Container {typeof(TContainer).Name} has already been registered.");
+            }
+
             Container.RegisterService<IContainer, TContainer>();
             AddCommandContainer(Container.Resolve<IContainer>());
         }
 
-        private void AddCommandContainer<TCommandContainer>(TCommandContainer commandContainer)
-            where TCommandContainer : class, ICommandContainer
+        private void AddCommandContainer<IContainer>(IContainer commandContainer)
+            where IContainer : class, ICommandContainer
         {
-            var properties = typeof(TCommandContainer).GetProperties();
+            var containerType = commandContainer.GetType();
+            var properties = containerType.GetProperties();
 
             var containerManagedCommands = new Collection<IManagedCommand>();
             var containerMultiManagedCommands = new Collection<IMultiManagedCommand>();
@@ -100,9 +103,23 @@ namespace Quantum.Command
                     });
                 };
             });
+            
+            containerManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
+            containerMultiManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
+        }
 
-            managedCommands.AddRange(containerManagedCommands);
-            multiManagedCommands.AddRange(containerMultiManagedCommands);
+        public object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandName)
+            where TCommandContainer : ICommandContainer
+        {
+            commandName.AssertParameterNotNull(nameof(commandName));
+            return CachedCommands.GetCommand(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandName));
+        }
+
+        public TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandName)
+            where TCommandContainer : ICommandContainer
+        {
+            commandName.AssertParameterNotNull(nameof(commandName));
+            return CachedCommands.GetCommand<TCommand>(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandName));
         }
         
     }
