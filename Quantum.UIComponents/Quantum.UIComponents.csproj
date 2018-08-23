@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commanding\CommandManager\CommandAttributes.cs" />
     <Compile Include="Commanding\CommandManager\CommandCache.cs" />
     <Compile Include="Commanding\CommandManager\CommandManagerService.cs" />
     <Compile Include="Commanding\CommandManager\ICommandManagerService.cs" />

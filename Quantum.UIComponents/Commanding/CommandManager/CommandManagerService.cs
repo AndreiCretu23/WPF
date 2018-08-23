@@ -45,7 +45,7 @@ namespace Quantum.Command
             where IContainer : class, ICommandContainer
         {
             var containerType = commandContainer.GetType();
-            var properties = containerType.GetProperties();
+            var properties = containerType.GetProperties().Where(prop => !prop.HasAttribute<IgnoreCommandAttribute>());
 
             var containerManagedCommands = new Collection<IManagedCommand>();
             var containerMultiManagedCommands = new Collection<IMultiManagedCommand>();

@@ -71,7 +71,7 @@ namespace WPF.Commands
                     }
                 }
             };
-
+        
         public IManagedCommand Change1
         {
             get
