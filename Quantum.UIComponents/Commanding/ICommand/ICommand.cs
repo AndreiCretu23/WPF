@@ -2,6 +2,10 @@
 
 namespace Quantum.Command
 {
+    public interface IDelegateCommand : IStaticCommand
+    {
+    }
+
     public interface IManagedCommand : IStaticMetadataOwnerCommand<CommandMetadataCollection, ICommandMetadata>
     {
     }
