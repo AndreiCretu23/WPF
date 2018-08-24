@@ -16,11 +16,10 @@ namespace Quantum.UIComponents
         {
             get
             {
-                var commands = CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Count() == 1).
-                                                              Where(c => c.Metadata.OfType<MainMenuOption>().Single().OfType<KeyShortcut>().Count() == 1);
+                var commands = CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<KeyShortcut>().Count() == 1);
                 foreach(var command in commands)
                 {
-                    var shortcut = command.Metadata.OfType<MainMenuOption>().Single().OfType<KeyShortcut>().Single();
+                    var shortcut = command.Metadata.OfType<KeyShortcut>().Single();
                     yield return new KeyBinding(command, new KeyGesture(shortcut.Key, shortcut.ModifierKeys));
                 }
             }

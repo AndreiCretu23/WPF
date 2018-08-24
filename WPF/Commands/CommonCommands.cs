@@ -85,9 +85,9 @@ namespace WPF.Commands
                         {
                             new MenuPath(MenuLocations.File, 1, 0),
                             new Description("Change1"),
-                            new Checkable(false),
-                            new KeyShortcut(ModifierKeys.Control, Key.D1)
+                            new Checkable(false)
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D1),
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
                 };
@@ -106,9 +106,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.File, 2, 0),
-                            new Description("Change2"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D1)
+                            new Description("Change2")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D2), 
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     },
                 };
@@ -127,9 +127,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.Category3To4, 0, 0),
-                            new Description("Change3"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D3)
+                            new Description("Change3")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D3), 
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };
@@ -148,9 +148,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.Category3To4, 0, 1),
-                            new Description("Change4"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D4)
+                            new Description("Change4")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D4),
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };
@@ -196,7 +196,8 @@ namespace WPF.Commands
                                 {
                                     new SubMainMenuOption()
                                     {
-                                        new Description($"Print {i.ToString()}")
+                                        new Description($"Print {i.ToString()}"), 
+                                        new ToolTip($"{i.ToString()}")
                                     },
                                     new AutoInvalidateOnSelection(typeof(SelectedNumber))
                                 }
@@ -250,9 +251,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.Edit, 1, 1),
-                            new Description("Change7"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D7)
+                            new Description("Change7")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D7), 
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };
@@ -271,9 +272,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.Category8To10, 1, 0),
-                            new Description("Change8"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D8)
+                            new Description("Change8")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D8),
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };
@@ -292,9 +293,9 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.Category8To10, 2, 0),
-                            new Description("Change9"),
-                            new KeyShortcut(ModifierKeys.Control, Key.D9)
+                            new Description("Change9")
                         },
+                        new KeyShortcut(ModifierKeys.Control, Key.D9),
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
                     }
                 };

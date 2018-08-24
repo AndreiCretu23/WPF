@@ -89,7 +89,7 @@ namespace Quantum.UIComponents
                                 Header = GetMenuMetadata<Description>(c)?.Value,
                                 Icon = GetMenuMetadata<Icon>(c)?.IconPath,
                                 ToolTip = GetMenuMetadata<ToolTip>(c)?.Value,
-                                Shortcut = GetMenuMetadata<KeyShortcut>(c)?.GetInputGestureText(),
+                                Shortcut = c.Metadata.OfType<KeyShortcut>().SingleOrDefault()?.GetInputGestureText(),
                                 IsCheckable = GetMenuMetadata<Checkable>(c)?.Value ?? false,
                                 CheckedChanged = GetMenuMetadata<CheckChanged>(c)?.OnCheckChanged,
                                 ChildrenDelegate = o => Enumerable.Empty<IMainMenuItemViewModel>()

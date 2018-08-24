@@ -5,7 +5,7 @@ namespace Quantum.Metadata
 {
     [Mandatory(false)]
     [SupportsMultiple(false)]
-    public class KeyShortcut : IMainMenuMetadata
+    public class KeyShortcut : ICommandMetadata
     {
         public ModifierKeys ModifierKeys { get; private set; }
         public Key Key { get; private set; }
