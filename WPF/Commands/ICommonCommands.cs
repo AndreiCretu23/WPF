@@ -26,5 +26,8 @@ namespace WPF.Commands
 
         IManagedCommand CheckCommand { get; }
         IMultiManagedCommand RecentCommands { get; }
+
+        IManagedCommand HiddenCommand { get; }
+        
     }
 }

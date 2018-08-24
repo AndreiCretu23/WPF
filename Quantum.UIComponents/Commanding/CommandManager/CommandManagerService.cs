@@ -4,6 +4,7 @@ using Quantum.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -56,6 +57,7 @@ namespace Quantum.Command
                 if(typeof(IManagedCommand).IsAssignableFrom(prop.PropertyType))
                 {
                     var command = (IManagedCommand)prop.GetValue(commandContainer);
+                    AssertCommandPropertyNotNull(command, containerType, prop.Name);
                     containerManagedCommands.Add(command);
                     commandNames.Add(command, prop.Name);   
                 }
@@ -63,6 +65,7 @@ namespace Quantum.Command
                 else if(typeof(IMultiManagedCommand).IsAssignableFrom(prop.PropertyType))
                 {
                     var command = (IMultiManagedCommand)prop.GetValue(commandContainer);
+                    AssertCommandPropertyNotNull(command, containerType, prop.Name);
                     containerMultiManagedCommands.Add(command);
                     commandNames.Add(command, prop.Name);
                 }
@@ -91,6 +94,17 @@ namespace Quantum.Command
             containerMultiManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
         }
 
+        [DebuggerHidden]
+        private void AssertCommandPropertyNotNull(object command, Type commandContainer, string commandPropertyName)
+        {
+            if (command == null)
+            {
+                throw new Exception($"Error registering the command {commandContainer.Name}.{commandPropertyName}. Property value is null!");
+            }
+        }
+
+
+
         public object GetCommand<TCommandContainer>(Expression<Func<TCommandContainer, object>> commandProperty)
             where TCommandContainer : ICommandContainer
         {
@@ -105,5 +119,8 @@ namespace Quantum.Command
             return CachedCommands.GetCommand<TCommand>(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandProperty));
         }
         
+
+        
+
     }
 }

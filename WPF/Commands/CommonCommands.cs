@@ -345,6 +345,24 @@ namespace WPF.Commands
         }
 
 
+        public IManagedCommand HiddenCommand
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    CanExecuteHandler = () => Number.Value != 7,
+                    ExecuteHandler = () => MessageBox.Show("Hidden Command"),
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new KeyShortcut(ModifierKeys.Control, Key.H), 
+                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                    }
+                };
+            }
+        }
+        
     }
 
 }
