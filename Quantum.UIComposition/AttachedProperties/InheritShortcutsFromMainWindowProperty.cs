@@ -1,5 +1,6 @@
 ﻿using Quantum.Utils;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -7,6 +8,7 @@ using System.Windows.Input;
 
 namespace Quantum.UIComposition
 {
+    [SuppressMessage("Microsoft.Design", "IDE0019")]
     public static partial class AttachedProperties
     {
         public static bool GetInheritInputBindingFromMainWindow(DependencyObject obj)
