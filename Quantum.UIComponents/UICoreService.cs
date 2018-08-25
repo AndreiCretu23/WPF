@@ -1,5 +1,4 @@
-﻿using Quantum.Command;
-using Quantum.Events;
+﻿using Quantum.Events;
 using Quantum.Services;
 using Quantum.Utils;
 using System.Windows;

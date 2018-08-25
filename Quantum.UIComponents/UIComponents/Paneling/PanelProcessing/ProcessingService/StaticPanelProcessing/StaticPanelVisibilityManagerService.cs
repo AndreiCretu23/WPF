@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Quantum.Services;
+using Quantum.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
-using Quantum.Services;
-using Quantum.Utils;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
@@ -93,7 +90,29 @@ namespace Quantum.UIComponents
             }
             catch
             {
-                //Do nothing. Means the layout anchorable has not been loaded yet in the UI.
+                // Due to serializing/deserializing the application multiple times, a reference an an anchorable/an anchorable's parent might be lost.
+                // If that's the case, we refresh the view and add it in the first available pane.
+                if(DockingView != null && DockingView.DockingManager != null)
+                {
+                    var root = DockingView.DockingManager.Layout;
+                    var availablePane = root.IfNotNull(o => o.Descendents().ExcludeDefaultValues().OfType<LayoutAnchorablePane>().FirstOrDefault());
+                    if(availablePane != null)
+                    {
+                        if(LayoutGroups.ContainsKey(anchorable))
+                        {
+                            LayoutGroups[anchorable] = availablePane;
+                        }
+                        else
+                        {
+                            LayoutGroups.Add(anchorable, availablePane);
+                        }
+                        LayoutGroups[anchorable].Children.Add(anchorable);
+                        LayoutGroups[anchorable].SelectedContentIndex = LayoutGroups[anchorable].Children.IndexOf(anchorable);
+                    }
+                }
+
+                // Do nothing. If this point is reached, it means the layout anchorable has not been loaded yet in the UI.
+                // This can happen due to various UI events triggering by the initialization of viewModel components(MainMenuViewModel for example).
             }
         }
 
