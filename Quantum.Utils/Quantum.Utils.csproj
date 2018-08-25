@@ -60,6 +60,7 @@
     <Compile Include="Math\Geometry\Circle.cs" />
     <Compile Include="Math\Geometry\Line.cs" />
     <Compile Include="Math\MathExtensions.cs" />
+    <Compile Include="ObjectExtensions\DictionaryExtensions.cs" />
     <Compile Include="ObjectExtensions\EnumerableExtensions.cs" />
     <Compile Include="ObjectExtensions\GeneralExtensions.cs" />
     <Compile Include="ObjectExtensions\StringExtensions.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Serialization\BinarySerialization\BinarySerializableObjectLifetimeManager.cs" />
     <Compile Include="Serialization\BinarySerialization\BinarySerializer.cs" />
     <Compile Include="Time\DateTimeUtils.cs" />
+    <Compile Include="UI\UIUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

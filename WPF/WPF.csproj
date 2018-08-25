@@ -154,6 +154,10 @@
       <Project>{b1dac13b-1938-4b47-ada0-f28d72877ebb}</Project>
       <Name>Quantum.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quantum.ResourceLibrary\Quantum.ResourceLibrary.csproj">
+      <Project>{89ddc633-a706-4a82-bea3-03508370ffc9}</Project>
+      <Name>Quantum.ResourceLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.UIComponents\Quantum.UIComponents.csproj">
       <Project>{15E43722-0089-4AE8-A582-8EE8B7CD7728}</Project>
       <Name>Quantum.UIComponents</Name>

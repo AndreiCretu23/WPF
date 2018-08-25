@@ -9,6 +9,15 @@
              xmlns:local="clr-namespace:Quantum.UIComponents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="AvalonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <dock:DockingManager x:Name="DockManager">
             <dock:LayoutRoot x:Name="Root">

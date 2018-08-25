@@ -42,5 +42,33 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\Avalon\HTabGroup.png" />
+    <Resource Include="Icons\Avalon\Locked.png" />
+    <Resource Include="Icons\Avalon\PinAutoHide.png" />
+    <Resource Include="Icons\Avalon\PinAutoHide_Black.png" />
+    <Resource Include="Icons\Avalon\PinAutoHide_Dark.png" />
+    <Resource Include="Icons\Avalon\PinAutoHide_Light.png" />
+    <Resource Include="Icons\Avalon\PinClose.png" />
+    <Resource Include="Icons\Avalon\PinClose_Black.png" />
+    <Resource Include="Icons\Avalon\PinClose_Dark.png" />
+    <Resource Include="Icons\Avalon\PinClose_Light.png" />
+    <Resource Include="Icons\Avalon\PinDocMenu_Black.png" />
+    <Resource Include="Icons\Avalon\PinDocMenu_Dark.png" />
+    <Resource Include="Icons\Avalon\PinMaximize.png" />
+    <Resource Include="Icons\Avalon\PinMaximize_Black.png" />
+    <Resource Include="Icons\Avalon\PinMaximize_Dark.png" />
+    <Resource Include="Icons\Avalon\PinMaximize_Light.png" />
+    <Resource Include="Icons\Avalon\PinMenu.png" />
+    <Resource Include="Icons\Avalon\PinMenu_Black.png" />
+    <Resource Include="Icons\Avalon\PinMenu_Dark.png" />
+    <Resource Include="Icons\Avalon\PinMenu_Light.png" />
+    <Resource Include="Icons\Avalon\PinRestore.png" />
+    <Resource Include="Icons\Avalon\PinRestore_Black.png" />
+    <Resource Include="Icons\Avalon\PinRestore_Dark.png" />
+    <Resource Include="Icons\Avalon\PinRestore_Light.png" />
+    <Resource Include="Icons\Avalon\VTabGroup.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

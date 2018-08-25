@@ -133,6 +133,8 @@
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Menu\MainMenuViewModel.cs" />
+    <Compile Include="UIComponents\Paneling\DockingView\AvalonProperties.cs" />
+    <Compile Include="UIComponents\Paneling\DockingView\AvalonContextMenuProperties.cs" />
     <Compile Include="UIComponents\Paneling\DockingView\DockingView.xaml.cs">
       <DependentUpon>DockingView.xaml</DependentUpon>
     </Compile>
@@ -206,6 +208,10 @@
       <Project>{017bfe32-c335-46f7-b878-bc5fd069917e}</Project>
       <Name>Quantum.CoreModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quantum.ResourceLibrary\Quantum.ResourceLibrary.csproj">
+      <Project>{89ddc633-a706-4a82-bea3-03508370ffc9}</Project>
+      <Name>Quantum.ResourceLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.UIComposition\Quantum.UIComposition.csproj">
       <Project>{195bcd01-e40e-443a-b495-2476e1a27fee}</Project>
       <Name>Quantum.UIComposition</Name>
@@ -220,6 +226,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\Paneling\DockingView\AvalonStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

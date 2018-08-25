@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.Common;
 using Quantum.CoreModule;
@@ -8,9 +7,6 @@ using Quantum.Services;
 using Quantum.UIComponents;
 using Quantum.Utils;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
 using WPF.Commands;
 using WPF.Panels;
 using WPF.ToolBars;
