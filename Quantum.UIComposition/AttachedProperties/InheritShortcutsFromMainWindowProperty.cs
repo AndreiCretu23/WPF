@@ -26,7 +26,7 @@ namespace Quantum.UIComposition
         {
             if (e.NewValue.Equals(true))
             {
-                var uiElement = d as FrameworkElement;
+                var uiElement = d as UIElement;
                 var mainWindow = Application.Current.MainWindow;
                 foreach (var item in mainWindow.InputBindings.Cast<InputBinding>())
                 {
