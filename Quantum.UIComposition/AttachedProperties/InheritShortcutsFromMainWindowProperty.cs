@@ -25,26 +25,36 @@ namespace Quantum.UIComposition
 
         static void OnInheritInputBindingFromMainWindowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue.Equals(true))
+            var frameworkElement = d as FrameworkElement;
+            if (frameworkElement == null)
             {
-                var frameworkElement = d as FrameworkElement;
-                if(frameworkElement == null)
-                {
-                    throw new Exception("In order to inherit the shortcuts from the MainWindow, a binding must be created between " +
-                                        "the InputBindingProperty of the UIElement and the InputBindingContext of the MainWindow." +
-                                        "Only FrameWorkElements support binding.");
-                }
-                
-                var mainWindow = Application.Current.MainWindow;
+                throw new Exception("In order to inherit the shortcuts from the MainWindow, a binding must be created between " +
+                                    "the InputBindingProperty of the UIElement and the InputBindingContext of the MainWindow." +
+                                    "Only FrameWorkElements support binding.");
+            }
 
-                var shortcutsBinding = BindingOperations.GetBinding(mainWindow, ShortcutsProperty);
-                if(shortcutsBinding != null)
+            var mainWindow = Application.Current.MainWindow;
+            var shortcutsBinding = BindingOperations.GetBinding(mainWindow, ShortcutsProperty);
+
+            if(shortcutsBinding != null)
+            {
+                if (e.NewValue.Equals(true))
                 {
                     frameworkElement.SetBinding(ShortcutsProperty, new Binding()
                     {
                         Path = shortcutsBinding.Path,
                         Source = mainWindow.DataContext,
                     });
+                }
+                else
+                {
+                    var currentBinding = BindingOperations.GetBinding(frameworkElement, ShortcutsProperty);
+                    if(currentBinding != null && 
+                       currentBinding.Source == shortcutsBinding.Source &&
+                       currentBinding.Path == shortcutsBinding.Path)
+                    {
+                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
+                    }
                 }
             }
         }
