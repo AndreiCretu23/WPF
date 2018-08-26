@@ -1,9 +1,60 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:ui="clr-namespace:Quantum.UIComponents">
+                    xmlns:ui="clr-namespace:Quantum.UIComponents"
+                    xmlns:converters="clr-namespace:Quantum.ValueConverters;assembly=Quantum.UIComposition">
+
+
+    <converters:BoolToVisibilityConverter x:Key="visibilityConverter"/>
+    <converters:IconConverter x:Key="iconConverter"/>
+    <converters:NullToVisibilityConverter x:Key="nullVisibilityConverter"/>
 
     <!--<Style TargetType="{x:Type ui:DialogWindow}">
-        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:DialogWindow}">
+                    <Border Background="Transparent"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="0">
+                        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0"
+                                    Background="{TemplateBinding HeaderBackground}"
+                                    BorderBrush="{TemplateBinding HeaderBorderBrush}"
+                                    BorderThickness="{TemplateBinding HeaderBorderThickness}">
+                                <DockPanel>
+
+                                    <Image Width="22"
+                                           Margin="3,0,0,0"
+                                           Source="{TemplateBinding Icon}"
+                                           DockPanel.Dock="Left"/>
+
+                                    <TextBlock Height="22"
+                                               Background="Transparent"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontFamily="{TemplateBinding FontFamily}"
+                                               FontSize="{TemplateBinding FontSize}"
+                                               FontStretch="{TemplateBinding FontStretch}"
+                                               FontStyle="{TemplateBinding FontStyle}"
+                                               FontWeight="{TemplateBinding FontWeight}"
+                                               DockPanel.Dock="Left"/>
+
+                                </DockPanel>
+                            </Border>
+                            
+                            
+                            
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>-->
 
 </ResourceDictionary>

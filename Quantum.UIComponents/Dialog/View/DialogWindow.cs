@@ -19,11 +19,19 @@ namespace Quantum.UIComponents
         public static readonly DependencyProperty ValidatesOnEnterProperty =
             DependencyProperty.Register("ValidatesOnEnter", typeof(bool), typeof(DialogWindow), new PropertyMetadata(false));
 
-        public static readonly DependencyProperty HeaderBrushProperty =
-            DependencyProperty.Register("HeaderBrush", typeof(Brush), typeof(DialogWindow), new PropertyMetadata(new SolidColorBrush(SystemColors.WindowColor)));
+        public static readonly DependencyProperty HeaderBackgroundProperty =
+            DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(DialogWindow), new PropertyMetadata(new SolidColorBrush(SystemColors.WindowColor)));
+
+        public static readonly DependencyProperty HeaderBorderBrushProperty =
+            DependencyProperty.Register("HeaderBorderBrush", typeof(Brush), typeof(DialogWindow), new PropertyMetadata(new SolidColorBrush(SystemColors.WindowColor)));
+
+        public static readonly DependencyProperty HeaderBorderThicknessProperty =
+            DependencyProperty.Register("HeaderBorderThickness", typeof(Thickness), typeof(DialogWindow), new PropertyMetadata(new Thickness(0d)));
 
         #endregion DependencyProperties
-        
+
+        #region Properties
+
         public bool AbortsOnEscape
         {
             get { return (bool)GetValue(AbortsOnEscapeProperty); }
@@ -36,12 +44,25 @@ namespace Quantum.UIComponents
             set { SetValue(ValidatesOnEnterProperty, value); }
         }
 
-        public Brush HeaderBrush
+        public Brush HeaderBackground
         {
-            get { return (Brush)GetValue(HeaderBrushProperty); }
-            set { SetValue(HeaderBrushProperty, value); }
+            get { return (Brush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
         }
 
+        public Brush HeaderBorderBrush
+        {
+            get { return (Brush)GetValue(HeaderBorderBrushProperty); }
+            set { SetValue(HeaderBorderBrushProperty, value); }
+        }
+
+        public Thickness HeaderBorderThickness
+        {
+            get { return (Thickness)GetValue(HeaderBorderThicknessProperty); }
+            set { SetValue(HeaderBorderThicknessProperty, value); }
+        }
+
+        #endregion Properties
 
         public DialogWindow()
         {
