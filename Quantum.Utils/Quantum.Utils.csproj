@@ -48,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\AppInfo.cs" />
+    <Compile Include="Threading\DelayedExecutor.cs" />
+    <Compile Include="Events\WeakEventListener.cs" />
+    <Compile Include="Events\WeakEventListenerManager.cs" />
     <Compile Include="Exceptions\InvalidMethodParametersException.cs" />
     <Compile Include="Exceptions\MissingAttributeException.cs" />
     <Compile Include="Exceptions\TypeConflictException.cs" />
