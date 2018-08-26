@@ -9,6 +9,14 @@ namespace Quantum.Utils
 {
     public static class EnumerableExtensions
     {
+
+        [DebuggerHidden]
+        public static bool AnyOfType<T>(this IEnumerable collection)
+        {
+            collection.AssertNotNull(nameof(collection));
+            return collection.OfType<T>().Any();
+        }
+
         [DebuggerHidden]
         public static IEnumerable<int> Between(int start, int end)
         {

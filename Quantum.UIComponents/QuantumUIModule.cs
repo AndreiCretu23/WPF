@@ -33,6 +33,11 @@ namespace Quantum.UIComponents
             container.RegisterService<ShellView>();
             container.RegisterService<ShellViewModel>();
 
+
+            //DialogManager
+            container.RegisterService<IDialogManagerService, DialogManagerService>();
+
+
             //View Core
             container.RegisterService<IUICoreService, UICoreService>();
         }

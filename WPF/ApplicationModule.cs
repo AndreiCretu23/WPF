@@ -8,6 +8,7 @@ using Quantum.UIComponents;
 using Quantum.Utils;
 using System.Collections.Generic;
 using WPF.Commands;
+using WPF.Dialogs;
 using WPF.Panels;
 using WPF.ToolBars;
 
@@ -39,7 +40,11 @@ namespace WPF
             {
                 panelManager.RegisterPanelDefinition(panelDef);
             }
-            
+
+
+            //Dialogs
+            var dialogManager = container.Resolve<IDialogManagerService>();
+            dialogManager.RegisterAllDefinitions(GetDialogs());
         }
 
         private IEnumerable<IToolBarDefinition> GetToolBars(IUnityContainer container)
@@ -117,6 +122,10 @@ namespace WPF
             };
         }
 
+        private IEnumerable<IDialogDefinition> GetDialogs()
+        {
+            yield return new DialogDefinition<ICustomDialogView, CustomDialogView, ICustomDialogViewModel, CustomDialogViewModel>();
+        }
     }
 
     

@@ -37,11 +37,17 @@ namespace Quantum.UIComposition
 
             var mainWindow = Application.Current.MainWindow;
             var shortcutsBinding = BindingOperations.GetBinding(mainWindow, ShortcutsProperty);
+            var currentBinding = BindingOperations.GetBinding(frameworkElement, ShortcutsProperty);
 
-            if(shortcutsBinding != null)
+            if (shortcutsBinding != null)
             {
                 if (e.NewValue.Equals(true))
                 {
+                    if(currentBinding != null)
+                    {
+                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
+                    }
+
                     frameworkElement.SetBinding(ShortcutsProperty, new Binding()
                     {
                         Path = shortcutsBinding.Path,
@@ -50,7 +56,6 @@ namespace Quantum.UIComposition
                 }
                 else
                 {
-                    var currentBinding = BindingOperations.GetBinding(frameworkElement, ShortcutsProperty);
                     if(currentBinding != null && 
                        currentBinding.Source == shortcutsBinding.Source &&
                        currentBinding.Path == shortcutsBinding.Path)

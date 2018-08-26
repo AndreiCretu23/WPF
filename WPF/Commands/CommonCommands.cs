@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using WPF.Dialogs;
 
 namespace WPF.Commands
 {
@@ -72,6 +73,45 @@ namespace WPF.Commands
                 }
             };
         
+        public IManagedCommand OpenDialog
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    CanExecuteHandler = () => true,
+                    ExecuteHandler = () =>
+                    {
+                        var dialogManager = Container.Resolve<IDialogManagerService>();
+                        var result = dialogManager.ShowDialog<ICustomDialogViewModel>();
+                        if(result == true)
+                        {
+                            MessageBox.Show("True Dialog Result");
+                        }
+
+                        else if(result == false)
+                        {
+                            MessageBox.Show("False Dialog Result");
+                        }
+
+                        else
+                        {
+                            MessageBox.Show("Null Dialog Result");
+                        }
+                    },
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 0), 
+                            new Description("Open Dialog"), 
+                        }, 
+                        new KeyShortcut(ModifierKeys.Control, Key.N)
+                    }
+                };
+            }
+        }
+
         public IManagedCommand Change1
         {
             get

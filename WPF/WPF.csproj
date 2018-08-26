@@ -83,6 +83,12 @@
     <Compile Include="Commands\CommonCommands.cs" />
     <Compile Include="Commands\ICommonCommands.cs" />
     <Compile Include="Commands\MenuLocations.cs" />
+    <Compile Include="Dialogs\CustomDialogView\CustomDialogView.xaml.cs">
+      <DependentUpon>CustomDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\CustomDialogView\CustomDialogViewModel.cs" />
+    <Compile Include="Dialogs\CustomDialogView\ICustomDialogView.cs" />
+    <Compile Include="Dialogs\CustomDialogView\ICustomDialogViewModel.cs" />
     <Compile Include="DynamicPanelManagerService.cs" />
     <Compile Include="Panels\ActivePanel\ActivePanelView.xaml.cs">
       <DependentUpon>ActivePanelView.xaml</DependentUpon>
@@ -173,6 +179,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Dialogs\CustomDialogView\CustomDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Panels\ActivePanel\ActivePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

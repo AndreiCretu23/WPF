@@ -82,6 +82,14 @@
     <Compile Include="Commanding\ICommand\ICommand.cs" />
     <Compile Include="Commanding\ICommand\ICommandModel.cs" />
     <Compile Include="Commanding\CommandModel\StaticCommand.cs" />
+    <Compile Include="Dialog\DialogDefinition\DialogDefinition.cs" />
+    <Compile Include="Dialog\DialogDefinition\IDialogDefinition.cs" />
+    <Compile Include="Dialog\DialogManager\DialogManagerService.cs" />
+    <Compile Include="Dialog\DialogManager\IDialogManagerService.cs" />
+    <Compile Include="Dialog\ViewModel\DialogViewModel.cs" />
+    <Compile Include="Dialog\ViewModel\IDialogViewModel.cs" />
+    <Compile Include="Dialog\View\DialogWindow.cs" />
+    <Compile Include="Dialog\View\IDialogWindow.cs" />
     <Compile Include="Metadata\MetadataAssert\IMetadataAsserterService.cs" />
     <Compile Include="Metadata\MetadataAssert\MetadataAsserterService.cs" />
     <Compile Include="Commanding\Command\ManagedCommand.cs" />
@@ -221,10 +229,16 @@
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Dialog\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Dialog\View\DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QuantumUIResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIComponents\Menu\MainMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
