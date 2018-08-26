@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Quantum.UIComponents
 {
@@ -17,6 +18,9 @@ namespace Quantum.UIComponents
 
         public static readonly DependencyProperty ValidatesOnEnterProperty =
             DependencyProperty.Register("ValidatesOnEnter", typeof(bool), typeof(DialogWindow), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty HeaderBrushProperty =
+            DependencyProperty.Register("HeaderBrush", typeof(Brush), typeof(DialogWindow), new PropertyMetadata(new SolidColorBrush(SystemColors.WindowColor)));
 
         #endregion DependencyProperties
         
@@ -31,7 +35,14 @@ namespace Quantum.UIComponents
             get { return (bool)GetValue(ValidatesOnEnterProperty); }
             set { SetValue(ValidatesOnEnterProperty, value); }
         }
-        
+
+        public Brush HeaderBrush
+        {
+            get { return (Brush)GetValue(HeaderBrushProperty); }
+            set { SetValue(HeaderBrushProperty, value); }
+        }
+
+
         public DialogWindow()
         {
             DataContextChanged += OnDataContextChanged;
@@ -55,6 +66,7 @@ namespace Quantum.UIComponents
                     Close();
                 }
             }
+
             base.OnKeyDown(e);
         }
         

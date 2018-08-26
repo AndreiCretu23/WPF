@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:ui="clr-namespace:Quantum.UIComponents">
 
-    <!--<Style TargetType="{x:Type ui:DialogView}">
-        
+    <!--<Style TargetType="{x:Type ui:DialogWindow}">
         
     </Style>-->
 

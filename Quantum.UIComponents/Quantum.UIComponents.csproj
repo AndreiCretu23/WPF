@@ -229,7 +229,6 @@
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Dialog\View\DialogWindow.xaml">
       <SubType>Designer</SubType>
