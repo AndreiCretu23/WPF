@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Quantum.UIComponents;component/QuantumUIResources.xaml"/>
+                <ResourceDictionary Source="/Quantum.UIComponents;component/UICoreResources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

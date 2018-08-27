@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Dialog/View/DialogWindow.xaml"/>
+        <ResourceDictionary Source="/Quantum.UIComposition;component/UIResources.xaml"/>
         <ResourceDictionary Source="UIComponents/Paneling/DockingView/AvalonStyles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     

@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Quantum.UIComposition">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Themes/Generic.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>
