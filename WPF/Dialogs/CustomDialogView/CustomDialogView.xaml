@@ -4,10 +4,12 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:ui="clr-namespace:Quantum.UIComponents;assembly=Quantum.UIComponents"
+                 xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
                  mc:Ignorable="d"
                  AbortsOnEscape="True"
                  ValidatesOnEnter="True"
-                 Title="CustomDialogView" Height="450" Width="800">
+                 Title="CustomDialogView" Height="450" Width="800"
+                 Style="{StaticResource {x:Type controls:WindowShell}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

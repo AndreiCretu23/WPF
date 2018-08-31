@@ -14,7 +14,7 @@ namespace WPF.Dialogs
             : base(initSvc)
         {
         }
-
+        
 
         protected override bool ValidateContent()
         {

@@ -76,13 +76,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.Controls\Quantum.Controls.csproj">
+      <Project>{3ff94c3c-29da-4b14-9be4-f7bf60379c0d}</Project>
+      <Name>Quantum.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
       <Project>{6052DC7E-36CE-4FC5-B91A-6BC1D83DBD33}</Project>
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
+    <Page Include="Themes\ExpressionDark\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\ExpressionDark\Window\WindowShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

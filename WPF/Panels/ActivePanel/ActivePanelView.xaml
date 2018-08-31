@@ -4,13 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF.Panels"
+             xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image Width="30"
+        <!--<Image Width="30"
                Height="30"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.lightning.png"/>
+               Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.lightning.png"/>-->
+
+        <!--<Button Width="300"
+                Height="300"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderThickness="1">
+            <Button.Background>
+                <SolidColorBrush Color="#FF272727" Opacity="1"/>
+            </Button.Background>
+            <Button.BorderBrush>
+                <SolidColorBrush Color="#FF4169E1" Opacity="1"/>
+            </Button.BorderBrush>
+        </Button>-->
+
+        <Button Width="300" 
+                Height="300"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource ChromeCloseButtonStyle}">
+            <Button.Content>
+                <Image Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.close.png"/>
+            </Button.Content>
+        </Button>
+
     </Grid>
 </UserControl>

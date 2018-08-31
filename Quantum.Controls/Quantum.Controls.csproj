@@ -49,13 +49,7 @@
   <ItemGroup>
     <Compile Include="SplineBorder\SplineBorder.cs" />
     <Compile Include="ToolBarContainer\ToolBarContainer.cs" />
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="CustomControl1.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Window\WindowShell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -81,7 +75,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Window\" />
+    <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
+      <Project>{6052dc7e-36ce-4fc5-b91a-6bc1d83dbd33}</Project>
+      <Name>Quantum.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,264 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark.Window"
+                    xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
+                    xmlns:converters="clr-namespace:Quantum.ValueConverters">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Colors.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <converters:BoolToVisibilityConverter x:Key="b2v"/>
+
+    <Style x:Key="ChromeButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            
+                            <Setter Property="Background" Value="{StaticResource WindowShell_ButtonHover}"/>
+                            
+                        </MultiTrigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ChromeCloseButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="IsEnabled" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        
+                        <ContentPresenter x:Name="PART_Content"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}"/>
+                        
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter Property="Background" Value="{StaticResource WindowShell_CloseHover}"/>
+
+                        </MultiTrigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RectBorderStyle" TargetType="Rectangle">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Fill" Value="Transparent" />
+    </Style>
+
+    <Style TargetType="{x:Type controls:WindowShell}">
+        <Setter Property="Background" Value="{StaticResource WindowShell_Background}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:WindowShell}">
+                    <Grid>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Border x:Name="PART_Header"
+                                Grid.Row="0"
+                                Background="{StaticResource WindowShell_HeaderBackground}"
+                                BorderBrush="{StaticResource WindowShell_BorderBrush}"
+                                BorderThickness="1,1,1,0">
+
+                                <DockPanel LastChildFill="False">
+                                    <Image  Width="25"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        DockPanel.Dock="Left"
+                                        Source="{TemplateBinding Icon}"/>
+
+                                    <TextBlock Margin="3,0,0,0"
+                                           DockPanel.Dock="Left"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{TemplateBinding FontFamily}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           FontStretch="{TemplateBinding FontStretch}"
+                                           FontStyle="{TemplateBinding FontStyle}"
+                                           FontWeight="{TemplateBinding FontWeight}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Text="{TemplateBinding Title}"/>
+
+                                    <Button x:Name="PART_Close"
+                                        Width="40" 
+                                        Height="25"
+                                        VerticalAlignment="Top"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ChromeCloseButtonStyle}">
+                                        <Button.Content>
+                                            <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.close.png"/>
+                                        </Button.Content>
+                                    </Button>
+
+                                    <Button x:Name="PART_State"
+                                        Width="40"
+                                        Height="25"
+                                        VerticalAlignment="Top"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ChromeButtonStyle}">
+                                        <Button.Content>
+                                            <Image x:Name="StateImage" Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.checkmark.uncrossed.png"/>
+                                        </Button.Content>
+                                    </Button>
+
+                                    <Button x:Name="PART_Minimize"
+                                        Width="40"
+                                        Height="25"
+                                        VerticalAlignment="Top"
+                                        DockPanel.Dock="Right"
+                                        Style="{StaticResource ChromeButtonStyle}">
+                                        <Button.Content>
+                                            <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.minus.png"/>
+                                        </Button.Content>
+                                    </Button>
+
+                                </DockPanel>
+
+                            </Border>
+
+                            <Border Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{StaticResource WindowShell_BorderBrush}"
+                                BorderThickness="1,0,1,1">
+                                <ContentPresenter/>
+                            </Border>
+                        </Grid>
+
+                        <!--   Edge Grips   -->
+                        <Rectangle x:Name="PART_LeftSizeGrip"
+                                   Width="7"
+                                   HorizontalAlignment="Left"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle x:Name="PART_RightSizeGrip"
+                                   Width="7"
+                                   HorizontalAlignment="Right"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle x:Name="PART_TopSizeGrip"
+                                   Height="7"
+                                   VerticalAlignment="Top"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle x:Name="PART_BottomSizeGrip"
+                                   Height="7"
+                                   VerticalAlignment="Bottom"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        
+
+                        <!--  Corners  -->
+
+                        <Rectangle Name="PART_TopLeftSizeGrip"
+                                   Width="7"
+                                   Height="7"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle Name="PART_BottomRightSizeGrip"
+                                   Width="7"
+                                   Height="7"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Bottom"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle Name="PART_TopRightSizeGrip"
+                                   Width="7"
+                                   Height="7"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+                        <Rectangle Name="PART_BottomLeftSizeGrip"
+                                   Width="7"
+                                   Height="7"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   Cursor="Arrow"
+                                   Style="{StaticResource RectBorderStyle}" />
+
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="StateImage" Property="Source" Value="/Quantum.ResourceLibrary;component/Icons/Common/appbar.window.restore.png"/>
+                        </Trigger>
+
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="PART_Minimize" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_State" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter TargetName="PART_State" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        
+                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                            <Setter TargetName="PART_LeftSizeGrip" Property="Cursor" Value="SizeWE"/>
+                            <Setter TargetName="PART_RightSizeGrip" Property="Cursor" Value="SizeWE"/>
+                            <Setter TargetName="PART_TopSizeGrip" Property="Cursor" Value="SizeNS"/>
+                            <Setter TargetName="PART_BottomSizeGrip" Property="Cursor" Value="SizeNS"/>
+                            <Setter TargetName="PART_TopLeftSizeGrip" Property="Cursor" Value="SizeNWSE"/>
+                            <Setter TargetName="PART_BottomRightSizeGrip" Property="Cursor" Value="SizeNWSE"/>
+                            <Setter TargetName="PART_TopRightSizeGrip" Property="Cursor" Value="SizeNESW"/>
+                            <Setter TargetName="PART_BottomLeftSizeGrip" Property="Cursor" Value="SizeNESW"/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+</ResourceDictionary>

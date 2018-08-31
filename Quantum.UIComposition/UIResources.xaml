@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:Quantum.UIComposition">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Themes/Generic.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/Colors.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/Window/WindowShell.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
 </ResourceDictionary>

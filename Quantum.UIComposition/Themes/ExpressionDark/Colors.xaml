@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark">
+
+
+    <SolidColorBrush x:Key="WindowShell_HeaderBackground" Color="#FF272727" Opacity="1"/>
+    <SolidColorBrush x:Key="WindowShell_BorderBrush" Color="#FF4169E1" Opacity="1"/>
+    <SolidColorBrush x:Key="WindowShell_Background" Color="#FF4B4B4B" Opacity="1"/>
+    <SolidColorBrush x:Key="WindowShell_ButtonHover" Color="DarkGray" Opacity="0.5"/>
+    <SolidColorBrush x:Key="WindowShell_CloseHover" Color="Red" Opacity="0.8"/>
+
+
+</ResourceDictionary>

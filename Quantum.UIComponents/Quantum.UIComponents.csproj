@@ -230,10 +230,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dialog\View\DialogWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UICoreResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
