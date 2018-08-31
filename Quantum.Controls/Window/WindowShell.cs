@@ -206,7 +206,7 @@ namespace Quantum.Controls
                 var senderRect = sender as Rectangle;
                 if (senderRect != null)
                 {
-                    ResizeInProcess = false; ;
+                    ResizeInProcess = false;
                     senderRect.ReleaseMouseCapture();
                 }
             }            

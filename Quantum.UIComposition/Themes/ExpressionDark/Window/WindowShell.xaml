@@ -97,107 +97,116 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:WindowShell}">
                     <Grid>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                            <Border x:Name="PART_Header"
-                                Grid.Row="0"
-                                Background="{StaticResource WindowShell_HeaderBackground}"
-                                BorderBrush="{StaticResource WindowShell_BorderBrush}"
-                                BorderThickness="1,1,1,0">
+                        <Border x:Name="PART_Header"
+                            Grid.Row="0"
+                            Background="{StaticResource WindowShell_HeaderBackground}"
+                            BorderBrush="{StaticResource WindowShell_BorderBrush}"
+                            BorderThickness="1,1,1,0">
 
-                                <DockPanel LastChildFill="False">
-                                    <Image  Width="25"
-                                        Margin="5,0,0,0"
-                                        VerticalAlignment="Center"
+                            <DockPanel LastChildFill="False">
+                                <Image  Width="25"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Source="{TemplateBinding Icon}"/>
+
+                                <TextBlock Margin="3,0,0,0"
                                         DockPanel.Dock="Left"
-                                        Source="{TemplateBinding Icon}"/>
+                                        VerticalAlignment="Center"
+                                        FontFamily="{TemplateBinding FontFamily}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        FontStretch="{TemplateBinding FontStretch}"
+                                        FontStyle="{TemplateBinding FontStyle}"
+                                        FontWeight="{TemplateBinding FontWeight}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        Text="{TemplateBinding Title}"/>
 
-                                    <TextBlock Margin="3,0,0,0"
-                                           DockPanel.Dock="Left"
-                                           VerticalAlignment="Center"
-                                           FontFamily="{TemplateBinding FontFamily}"
-                                           FontSize="{TemplateBinding FontSize}"
-                                           FontStretch="{TemplateBinding FontStretch}"
-                                           FontStyle="{TemplateBinding FontStyle}"
-                                           FontWeight="{TemplateBinding FontWeight}"
-                                           Foreground="{TemplateBinding Foreground}"
-                                           Text="{TemplateBinding Title}"/>
+                                <Button x:Name="PART_Close"
+                                    Width="40" 
+                                    Height="25"
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Right"
+                                    Style="{StaticResource ChromeCloseButtonStyle}">
+                                    <Button.Content>
+                                        <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.close.png"/>
+                                    </Button.Content>
+                                </Button>
 
-                                    <Button x:Name="PART_Close"
-                                        Width="40" 
-                                        Height="25"
-                                        VerticalAlignment="Top"
-                                        DockPanel.Dock="Right"
-                                        Style="{StaticResource ChromeCloseButtonStyle}">
-                                        <Button.Content>
-                                            <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.close.png"/>
-                                        </Button.Content>
-                                    </Button>
+                                <Button x:Name="PART_State"
+                                    Width="40"
+                                    Height="25"
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Right"
+                                    Style="{StaticResource ChromeButtonStyle}">
+                                    <Button.Content>
+                                        <Image x:Name="StateImage" Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.checkmark.uncrossed.png"/>
+                                    </Button.Content>
+                                </Button>
 
-                                    <Button x:Name="PART_State"
-                                        Width="40"
-                                        Height="25"
-                                        VerticalAlignment="Top"
-                                        DockPanel.Dock="Right"
-                                        Style="{StaticResource ChromeButtonStyle}">
-                                        <Button.Content>
-                                            <Image x:Name="StateImage" Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.checkmark.uncrossed.png"/>
-                                        </Button.Content>
-                                    </Button>
+                                <Button x:Name="PART_Minimize"
+                                    Width="40"
+                                    Height="25"
+                                    VerticalAlignment="Top"
+                                    DockPanel.Dock="Right"
+                                    Style="{StaticResource ChromeButtonStyle}">
+                                    <Button.Content>
+                                        <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.minus.png"/>
+                                    </Button.Content>
+                                </Button>
 
-                                    <Button x:Name="PART_Minimize"
-                                        Width="40"
-                                        Height="25"
-                                        VerticalAlignment="Top"
-                                        DockPanel.Dock="Right"
-                                        Style="{StaticResource ChromeButtonStyle}">
-                                        <Button.Content>
-                                            <Image Width="25" Height="20" Source="/Quantum.ResourceLibrary;component/Icons/Common/appbar.minus.png"/>
-                                        </Button.Content>
-                                    </Button>
+                            </DockPanel>
 
-                                </DockPanel>
+                        </Border>
 
-                            </Border>
+                        <Border Grid.Row="1"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{StaticResource WindowShell_BorderBrush}"
+                            BorderThickness="1,0,1,1">
+                            <ContentPresenter/>
+                        </Border>
 
-                            <Border Grid.Row="1"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{StaticResource WindowShell_BorderBrush}"
-                                BorderThickness="1,0,1,1">
-                                <ContentPresenter/>
-                            </Border>
-                        </Grid>
 
                         <!--   Edge Grips   -->
                         <Rectangle x:Name="PART_LeftSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    HorizontalAlignment="Left"
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle x:Name="PART_RightSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    HorizontalAlignment="Right"
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle x:Name="PART_TopSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Height="7"
                                    VerticalAlignment="Top"
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle x:Name="PART_BottomSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Height="7"
                                    VerticalAlignment="Bottom"
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
-                        
+
 
                         <!--  Corners  -->
 
                         <Rectangle Name="PART_TopLeftSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    Height="7"
                                    HorizontalAlignment="Left"
@@ -205,6 +214,8 @@
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle Name="PART_BottomRightSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    Height="7"
                                    HorizontalAlignment="Right"
@@ -212,6 +223,8 @@
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle Name="PART_TopRightSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    Height="7"
                                    HorizontalAlignment="Right"
@@ -219,13 +232,14 @@
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
                         <Rectangle Name="PART_BottomLeftSizeGrip"
+                                   Grid.Row="0"
+                                   Grid.RowSpan="2"
                                    Width="7"
                                    Height="7"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Bottom"
                                    Cursor="Arrow"
                                    Style="{StaticResource RectBorderStyle}" />
-
                     </Grid>
                     <ControlTemplate.Triggers>
                         
