@@ -119,11 +119,7 @@ namespace Quantum.UIComponents
         {
             if(DataContext != null && (DataContext is IDialogViewModel viewModel))
             {
-                var currentBinding = BindingOperations.GetBinding(closeButton, Button.CommandProperty);
-                if(currentBinding != null)
-                {
-                    BindingOperations.ClearBinding(closeButton, Button.CommandProperty);
-                }
+                BindingOperations.ClearBinding(closeButton, Button.CommandProperty);
 
                 closeButton.SetBinding(Button.CommandProperty, new Binding()
                 {
