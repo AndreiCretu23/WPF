@@ -92,21 +92,28 @@ namespace Quantum.Controls
         {
             if(!IsInDrag)
             {
-                var percentageHorizontal = PointToScreen(Mouse.GetPosition(this)).X / ActualWidth;
-                var targetHorizontal = RestoreBounds.Width * percentageHorizontal;
+                var pointToScreen = PointToScreen(Mouse.GetPosition(this));
 
-                var percentageVertival = PointToScreen(Mouse.GetPosition(this)).Y / ActualHeight;
-                var targetVertical = RestoreBounds.Height * percentageVertival;
+                var horizontalScreenCoord = pointToScreen.X;
+                var verticalScreenCoord = pointToScreen.Y;
+
+                var percentageHorizontal = horizontalScreenCoord < 0 ? (ActualWidth - System.Math.Abs(horizontalScreenCoord)) / ActualWidth : 
+                                                                        horizontalScreenCoord / ActualWidth;
+                var percentageVertical = verticalScreenCoord < 0 ? (ActualHeight - System.Math.Abs(verticalScreenCoord)) / ActualHeight :
+                                                                        verticalScreenCoord / ActualHeight;
+
+
+                var horizontalOffset = RestoreBounds.Width * percentageHorizontal;
+                var verticalOffset = RestoreBounds.Width * percentageVertical;
 
                 WindowState = WindowState.Normal;
 
                 var cursorPosition = UINativeUtils.GetCursorPos();
-                
-                Left = cursorPosition.X - targetHorizontal;
-                Top = cursorPosition.Y - targetVertical;
 
-                IsInDrag = true;
-                DragMove();
+                Left = cursorPosition.X - horizontalOffset;
+                Top = cursorPosition.Y - verticalOffset;
+                
+                HandleNormalDrag();
             }
         }
         
