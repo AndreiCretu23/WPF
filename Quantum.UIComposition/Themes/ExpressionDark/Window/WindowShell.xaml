@@ -9,6 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BoolToVisibilityConverter x:Key="b2v"/>
+    <converters:NullToVisibilityConverter x:Key="n2v"/>
 
     <Style x:Key="ChromeButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>
@@ -98,7 +99,7 @@
                 <ControlTemplate TargetType="{x:Type controls:WindowShell}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="25"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
@@ -110,12 +111,13 @@
 
                             <DockPanel LastChildFill="False">
                                 <Image  Width="25"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    DockPanel.Dock="Left"
-                                    Source="{TemplateBinding Icon}"/>
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        DockPanel.Dock="Left"
+                                        Source="{TemplateBinding Icon}"
+                                        Visibility="{Binding Source, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource n2v}}"/>
 
-                                <TextBlock Margin="3,0,0,0"
+                                <TextBlock Margin="10,0,0,0"
                                         DockPanel.Dock="Left"
                                         VerticalAlignment="Center"
                                         FontFamily="{TemplateBinding FontFamily}"

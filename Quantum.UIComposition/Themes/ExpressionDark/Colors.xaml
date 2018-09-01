@@ -3,10 +3,10 @@
                     xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark">
 
 
-    <SolidColorBrush x:Key="WindowShell_HeaderBackground" Color="#FF272727" Opacity="1"/>
-    <SolidColorBrush x:Key="WindowShell_BorderBrush" Color="#FF4169E1" Opacity="1"/>
+    <SolidColorBrush x:Key="WindowShell_HeaderBackground" Color="#FF323232" Opacity="1"/>
+    <SolidColorBrush x:Key="WindowShell_BorderBrush" Color="RoyalBlue" Opacity="1"/>
     <SolidColorBrush x:Key="WindowShell_Background" Color="#FF4B4B4B" Opacity="1"/>
-    <SolidColorBrush x:Key="WindowShell_ButtonHover" Color="DarkGray" Opacity="0.5"/>
+    <SolidColorBrush x:Key="WindowShell_ButtonHover" Color="#FF717171" Opacity="0.2"/>
     <SolidColorBrush x:Key="WindowShell_CloseHover" Color="Red" Opacity="0.8"/>
 
 
