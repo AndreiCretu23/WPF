@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
+                    xmlns:converters="clr-namespace:Quantum.ValueConverters">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Styles/WindowShell.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>

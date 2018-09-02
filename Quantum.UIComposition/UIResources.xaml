@@ -4,7 +4,12 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes/ExpressionDark/Colors.xaml"/>
-        <ResourceDictionary Source="Themes/ExpressionDark/Window/WindowShell.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/Thumb/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ToggleButton/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ToolBar/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ToolBarContainer/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ToolBarTray/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/Window/Styles.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

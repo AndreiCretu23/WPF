@@ -3,6 +3,15 @@
                     xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark">
 
 
+    <SolidColorBrush x:Key="ToolBar_Background" Color="#FF323232" Opacity="1"/>
+    <SolidColorBrush x:Key="ToolBar_ToggleButton_Foreground" Color="#FF686868" Opacity="1"/>
+    <SolidColorBrush x:Key="ToolBar_OverFlowToggle_Foreground" Color="#FFD1D1D1" Opacity="1"/>
+    <SolidColorBrush x:Key="ToolBar_OverFlowToggle_ForegroundHover" Color="White" Opacity="1"/>
+    <SolidColorBrush x:Key="ToolBar_OverFlowPopup_Background" Color="#FF323232" Opacity="1"/>
+    <SolidColorBrush x:Key="ToolBar_OverFlowPopup_BorderBrush" Color="#FF888888" Opacity="1"/>
+
+    <SolidColorBrush x:Key="ToolBarTray_Background" Color="#FF323232" Opacity="1"/>
+
     <SolidColorBrush x:Key="WindowShell_HeaderBackground" Color="#FF323232" Opacity="1"/>
     <SolidColorBrush x:Key="WindowShell_BorderBrush" Color="RoyalBlue" Opacity="1"/>
     <SolidColorBrush x:Key="WindowShell_Background" Color="#FF4B4B4B" Opacity="1"/>

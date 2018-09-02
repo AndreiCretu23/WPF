@@ -1,11 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark.Window"
                     xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
                     xmlns:converters="clr-namespace:Quantum.ValueConverters">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Colors.xaml"/>
+        <ResourceDictionary Source="../../Colors.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BoolToVisibilityConverter x:Key="b2v"/>
@@ -28,17 +27,17 @@
                                       Content="{TemplateBinding Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            
+
                             <Setter Property="Background" Value="{StaticResource WindowShell_ButtonHover}"/>
-                            
+
                         </MultiTrigger>
-                        
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -58,12 +57,12 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        
+
                         <ContentPresenter x:Name="PART_Content"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Content="{TemplateBinding Content}"/>
-                        
+
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -244,7 +243,7 @@
                                    Style="{StaticResource RectBorderStyle}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        
+
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter TargetName="StateImage" Property="Source" Value="/Quantum.ResourceLibrary;component/Icons/Common/appbar.window.restore.png"/>
                         </Trigger>
@@ -257,7 +256,7 @@
                         <Trigger Property="ResizeMode" Value="CanMinimize">
                             <Setter TargetName="PART_State" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
-                        
+
                         <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
                             <Setter TargetName="PART_LeftSizeGrip" Property="Cursor" Value="SizeWE"/>
                             <Setter TargetName="PART_RightSizeGrip" Property="Cursor" Value="SizeWE"/>
@@ -268,13 +267,13 @@
                             <Setter TargetName="PART_TopRightSizeGrip" Property="Cursor" Value="SizeNESW"/>
                             <Setter TargetName="PART_BottomLeftSizeGrip" Property="Cursor" Value="SizeNESW"/>
                         </Trigger>
-                        
+
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    
+
 </ResourceDictionary>
