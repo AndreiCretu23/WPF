@@ -131,12 +131,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UIComponents\Menu\IMainMenuCommandExtractor.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuItemViewModel.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuView.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuViewModel.cs" />
-    <Compile Include="UIComponents\Menu\MainMenuItemViewModel.cs" />
+    <Compile Include="UIComponents\Menu\MainMenuCommandExtractor.cs" />
+    <Compile Include="UIComponents\Menu\MainMenuCommandViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuPanelEntryViewModel.cs" />
+    <Compile Include="UIComponents\Menu\MainMenuPathViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuSeparatorViewModel.cs" />
+    <Compile Include="UIComponents\Menu\MainMenuSubCommandViewModel.cs" />
     <Compile Include="UIComponents\Menu\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>

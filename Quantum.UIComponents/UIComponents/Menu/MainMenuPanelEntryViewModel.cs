@@ -7,12 +7,12 @@ namespace Quantum.UIComponents
 {
     internal class MainMenuPanelEntryViewModel : ViewModelBase, IMainMenuItemViewModel
     {
-        public IStaticPanelDefinition PanelDefinition { get; set; }
-        
+        private IStaticPanelDefinition PanelDefinition { get; }
+        private IMainMenuCommandExtractor CommandExtractor { get; }
 
-        public string Header => GetPanelMenuMetadata<Description>()?.Value;
-        public string ToolTip => GetPanelMenuMetadata<ToolTip>()?.Value;
-        public string Icon => GetPanelMenuMetadata<Icon>()?.IconPath;
+        public string Header => CommandExtractor.GetPanelMenuOptionMetadata<Description>(PanelDefinition)?.Value;
+        public string ToolTip => CommandExtractor.GetPanelMenuOptionMetadata<ToolTip>(PanelDefinition)?.Value;
+        public string Icon => CommandExtractor.GetPanelMenuOptionMetadata<Icon>(PanelDefinition)?.IconPath;
         
         public IDelegateCommand BringIntoView
         {
@@ -27,9 +27,10 @@ namespace Quantum.UIComponents
         }
 
 
-        public MainMenuPanelEntryViewModel(IObjectInitializationService initSvc, IStaticPanelDefinition definition)
+        public MainMenuPanelEntryViewModel(IObjectInitializationService initSvc, IMainMenuCommandExtractor commandExtractor, IStaticPanelDefinition definition)
             : base(initSvc)
         {
+            CommandExtractor = commandExtractor;
             PanelDefinition = definition;
         }
 
@@ -45,10 +46,6 @@ namespace Quantum.UIComponents
                 BringIntoView.RaiseCanExecuteChanged();
             }
         }
-
-        private TMetadata GetPanelMenuMetadata<TMetadata>()
-        {
-            return PanelDefinition.OfType<PanelMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
-        }
+        
     }
 }

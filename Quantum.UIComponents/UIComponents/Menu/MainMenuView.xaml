@@ -13,19 +13,34 @@
         <converters:IconConverter x:Key="iconConverter"/>
         <local:MainMenuItemContainerTemplateSelector x:Key="MenuItemTemplateSelector"/>
 
-        <HierarchicalDataTemplate DataType="{x:Type local:MainMenuItemViewModel}"
+        <HierarchicalDataTemplate DataType="{x:Type local:MainMenuPathViewModel}"
                                   ItemsSource="{Binding Children}">
-            <MenuItem Command="{Binding Command}"
+            <MenuItem Header="{Binding Header}"
                       Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
-                      IsCheckable="{Binding IsCheckable}"
-                      IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      Header="{Binding Header}"
                       ToolTip="{Binding ToolTip}"
-                      InputGestureText="{Binding Shortcut}"
                       UsesItemContainerTemplate="True"
                       ItemContainerTemplateSelector="{StaticResource MenuItemTemplateSelector}"/>
         </HierarchicalDataTemplate>
+        
+        <DataTemplate DataType="{x:Type local:MainMenuCommandViewModel}">
+            <MenuItem Header="{Binding Header}" 
+                      Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
+                      IsCheckable="{Binding IsCheckable}"
+                      IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      InputGestureText="{Binding Shortcut}"
+                      ToolTip="{Binding ToolTip}"
+                      Command="{Binding Command}"/>
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type local:MainMenuSubCommandViewModel}">
+            <MenuItem Header="{Binding Header}"
+                      Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
+                      IsCheckable="{Binding IsCheckable}"
+                      IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ToolTip="{Binding ToolTip}" 
+                      Command="{Binding SubCommand}"/>
+        </DataTemplate>
+        
         <DataTemplate DataType="{x:Type local:MainMenuPanelEntryViewModel}">
             <MenuItem Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
                       Header="{Binding Header}"

@@ -18,10 +18,11 @@ namespace Quantum.Metadata
     {
         public static readonly AbstractMenuPath Root = new AbstractMenuPath(null, null, 0, 0, null);
 
-        public AbstractMenuPath(AbstractMenuPath parentPath, Description description, int categoryIndex, int orderIndex, Icon icon = null)
+        public AbstractMenuPath(AbstractMenuPath parentPath, Description description, int categoryIndex, int orderIndex, ToolTip toolTip = null, Icon icon = null)
         {
             ParentPath = parentPath;
             Description = description;
+            ToolTip = toolTip;
             CategoryIndex = categoryIndex;
             OrderIndex = orderIndex;
             Icon = icon;
@@ -29,6 +30,7 @@ namespace Quantum.Metadata
 
         public AbstractMenuPath ParentPath { get; private set; }
         public Description Description { get; private set; }
+        public ToolTip ToolTip { get; private set; }
         public int CategoryIndex { get; private set; }
         public int OrderIndex { get; private set; }
         public Icon Icon { get; private set; }
