@@ -15,7 +15,7 @@ namespace Quantum.UIComponents
         #endregion Fields
 
 
-        private IManagedCommand Command { get; }
+        public IManagedCommand Command { get; }
         private IMainMenuCommandExtractor CommandExtractor { get; }
 
         public string Header => CommandExtractor.GetMenuMetadata<Description>(Command)?.Value;
