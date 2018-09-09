@@ -25,6 +25,48 @@ namespace WPF.Commands
             Number.Value = 3;
         }
 
+
+        public IManagedCommand OpenDialog
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    CanExecuteHandler = () => true,
+                    ExecuteHandler = () =>
+                    {
+                        var dialogManager = Container.Resolve<IDialogManagerService>();
+                        var result = dialogManager.ShowDialog<ICustomDialogViewModel>();
+                        if (result == true)
+                        {
+                            MessageBox.Show("True Dialog Result");
+                        }
+
+                        else if (result == false)
+                        {
+                            MessageBox.Show("False Dialog Result");
+                        }
+
+                        else
+                        {
+                            MessageBox.Show("Null Dialog Result");
+                        }
+                    },
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 0),
+                            new Description("Open Dialog"),
+                            new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.adobe.aftereffects.png"),
+                        },
+                        new KeyShortcut(ModifierKeys.Control, Key.N)
+                    }
+                };
+            }
+        }
+
+
         public IManagedCommand Qwerty
         {
             get
@@ -73,45 +115,6 @@ namespace WPF.Commands
                 }
             };
         
-        public IManagedCommand OpenDialog
-        {
-            get
-            {
-                return new ManagedCommand()
-                {
-                    CanExecuteHandler = () => true,
-                    ExecuteHandler = () =>
-                    {
-                        var dialogManager = Container.Resolve<IDialogManagerService>();
-                        var result = dialogManager.ShowDialog<ICustomDialogViewModel>();
-                        if(result == true)
-                        {
-                            MessageBox.Show("True Dialog Result");
-                        }
-
-                        else if(result == false)
-                        {
-                            MessageBox.Show("False Dialog Result");
-                        }
-
-                        else
-                        {
-                            MessageBox.Show("Null Dialog Result");
-                        }
-                    },
-                    Metadata = new CommandMetadataCollection()
-                    {
-                        new MainMenuOption()
-                        {
-                            new MenuPath(MenuLocations.File, 0, 0), 
-                            new Description("Open Dialog"), 
-                        }, 
-                        new KeyShortcut(ModifierKeys.Control, Key.N)
-                    }
-                };
-            }
-        }
-
         public IManagedCommand Change1
         {
             get
@@ -125,7 +128,8 @@ namespace WPF.Commands
                         {
                             new MenuPath(MenuLocations.File, 1, 0),
                             new Description("Change1"),
-                            new Checkable(false)
+                            new Checkable(false),
+                            new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.camera.flash.selected.png")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D1),
                         new AutoInvalidateOnSelection(typeof(SelectedNumber))
@@ -403,6 +407,46 @@ namespace WPF.Commands
             }
         }
         
+
+        public IMultiManagedCommand SpamCommand
+        {
+            get
+            {
+                return new MultiManagedCommand()
+                {
+                    Commands = () =>
+                    {
+                        var subCommands = new List<ISubCommand>();
+                        var numberRange = Enumerable.Range(0, 200);
+                        foreach(var i in numberRange)
+                        {
+                            subCommands.Add(new SubCommand()
+                            {
+                                CanExecuteHandler = () => true,
+                                ExecuteHandler = () => MessageBox.Show($"Spam {i.ToString()}"),
+                                Metadata = new SubCommandMetadataCollection()
+                                {
+                                    new SubMainMenuOption()
+                                    {
+                                        new Description($"SpamEntry {i.ToString()}")
+                                    }
+                                }
+                            });
+                        }
+                        return subCommands;
+                    }, 
+
+                    Metadata = new MultiCommandMetadataCollection()
+                    {
+                        new MultiMainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 100, 0), 
+                        },
+                    }
+                };
+            }
+        }
+
     }
 
 }

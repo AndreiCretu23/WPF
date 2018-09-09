@@ -1,7 +1,25 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+
+    <!--<Color x:Key="Color_001">#FFFFFFFF</Color>
+    <Color x:Key="Color_002">#FFBABABA</Color>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Color_002}" />
+    <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource Color_001}" />-->
+    
+    <SolidColorBrush x:Key="Menu_Background" Color="#FF323232" Opacity="1" />
+    <SolidColorBrush x:Key="Menu_SeparatorBrush" Color="#FF515151" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_BackgroundHover" Color="#FF575757" Opacity="0.3" />
+    <SolidColorBrush x:Key="MenuItem_CheckFill" Color="#FFBABABA" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_DisabledForeground" Color="#FF888888" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_Foreground" Color="#FFBABABA" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_ScrollViewerButton_Background" Color="#FF767676" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_ScrollViewerButton_BackgroundHover" Color="#FF4E57FF" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_SubMenuIndicator_Background" Color="#FF767676" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_SubMenuIndicator_BackgroundHover" Color="#FF4E57FF" Opacity="1" />
+    <SolidColorBrush x:Key="MenuItem_TopHeader_BackgroundHover" Color="#FF575757" Opacity="0.3" /> 
+    <SolidColorBrush x:Key="MenuPopup_Background" Color="#FF1F1F1F" Opacity="1" />
+    <SolidColorBrush x:Key="MenuPopup_BorderBrush" Color="#FF898989" Opacity="1" />
 
     <SolidColorBrush x:Key="ToolBar_Background" Color="#FF323232" Opacity="1"/>
     <SolidColorBrush x:Key="ToolBar_ToggleButton_Foreground" Color="#FF686868" Opacity="1"/>
