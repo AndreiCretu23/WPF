@@ -11,14 +11,11 @@ namespace Quantum.UIComponents
         [Service]
         public IPanelManagerService PanelManager { get; set; }
         
-        private IObjectInitializationService InitializationService { get; set; }
-
         private Collection<IDynamicPanelManager> DynamicPanelManagers = new Collection<IDynamicPanelManager>();
         
         public DynamicPanelProcessingService(IObjectInitializationService initSvc)
             : base(initSvc)
-        {
-            InitializationService = initSvc;
+        {            
         }
         
         public void ProcessDynamicPanelDefinitions()

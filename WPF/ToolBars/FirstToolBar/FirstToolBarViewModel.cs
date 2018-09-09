@@ -23,13 +23,10 @@ namespace WPF.ToolBars
     {
         [Selection]
         public DynamicPanelSelection SelectedPanels { get; set; }
-
-        private IObjectInitializationService InitializationService { get; set; }
-
+        
         public FirstToolBarViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            InitializationService = initSvc;
         }
 
 

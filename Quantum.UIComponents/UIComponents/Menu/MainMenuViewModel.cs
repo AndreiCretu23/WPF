@@ -16,10 +16,7 @@ namespace Quantum.UIComponents
    
         [Service]
         public IPanelManagerService PanelManager { get; set; }
-
-        [Service]
-        public IObjectInitializationService InitializationService { get; set; }
-
+        
 
         private IEnumerable<IManagedCommand> ManagedCommands => CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any());
         private IEnumerable<IMultiManagedCommand> MultiManagedCommands => CommandManager.MultiManagedCommands.Where(c => c.Metadata.OfType<MultiMainMenuOption>().Any());

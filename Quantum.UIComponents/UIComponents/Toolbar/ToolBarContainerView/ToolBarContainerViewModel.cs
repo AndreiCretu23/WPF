@@ -13,15 +13,12 @@ namespace Quantum.UIComponents
 {
     internal class ToolBarContainerViewModel : ViewModelBase, IToolBarContainerViewModel
     {
-        private IObjectInitializationService InitializationService { get; set; }
-
         [Service]
         public IToolBarManagerService ToolBarManager { get; set; }
         
         public ToolBarContainerViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            InitializationService = initSvc;
         }
         
         // Content

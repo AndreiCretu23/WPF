@@ -13,10 +13,20 @@ namespace Quantum.UIComponents
         [Service]
         public IEventAggregator EventAggregator { get; set; }
 
+        [Service]
+        public IObjectInitializationService InitializationService { get; set; }
+
         public ViewModelBase(IObjectInitializationService initSvc)
         {
             initSvc.Initialize(this);
         }
 
+        /// <summary>
+        /// Tears down all services/events/selections initialized by the IObjectInitializationService
+        /// </summary>
+        protected void TearDown()
+        {
+            InitializationService.TeardownAll(this);
+        }
     }
 }

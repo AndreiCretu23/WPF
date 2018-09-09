@@ -11,6 +11,9 @@ namespace Quantum.Services
         [Service]
         public IEventAggregator EventAggregator { get; set; }
 
+        [Service]
+        public IObjectInitializationService InitializationService { get; set; }
+
         public QuantumServiceBase(IObjectInitializationService initSvc)
         {
             initSvc.Initialize(this);
@@ -21,7 +24,7 @@ namespace Quantum.Services
         /// </summary>
         protected void TearDown()
         {
-            Container.Resolve<IObjectInitializationService>().TeardownAll(this);
+            InitializationService.TeardownAll(this);
         }
 
     }

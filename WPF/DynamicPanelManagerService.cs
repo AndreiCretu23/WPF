@@ -21,10 +21,7 @@ namespace WPF
     {
         [Selection]
         public DynamicPanelSelection SelectedPanels { get; set; }
-
-        [Service]
-        public IObjectInitializationService InitializationService { get; set; }
-
+        
         private string SerializationFile { get { return Path.Combine(AppInfo.ApplicationRepository, "SelectedDynamicPanels.bin"); } }
 
         public DynamicPanelSelectionManagerService(IObjectInitializationService initSvc)
