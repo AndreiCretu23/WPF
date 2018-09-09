@@ -9,7 +9,7 @@ using Quantum.Events;
 
 namespace Quantum.Services
 {
-    internal class WPFEventManagerService : QuantumServiceBase, IWPFEventManagerService
+    internal class WPFEventManagerService : ServiceBase, IWPFEventManagerService
     {
         public WPFEventManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -24,7 +24,7 @@ namespace Quantum.Services
 
         private void HookApplicationExitEvent()
         {
-            Application.Current.Exit += (sender, e) => EventAggregator.GetEvent<ApplicationExitEvent>().Publish(new ApplicationExitArgs());
+            Application.Current.Exit += (sender, e) => EventAggregator.GetEvent<ShutdownEvent>().Publish(new ShutdownArgs());
         }
 
         private void HookUnhandledExceptionEvent()

@@ -9,7 +9,7 @@ using Quantum.Metadata;
 
 namespace Quantum.UIComponents
 {
-    internal class MainMenuCommandExtractor : QuantumServiceBase, IMainMenuCommandExtractor
+    internal class MainMenuCommandExtractor : ServiceBase, IMainMenuCommandExtractor
     {
         [Service]
         public ICommandManagerService CommandManager { get; set; }

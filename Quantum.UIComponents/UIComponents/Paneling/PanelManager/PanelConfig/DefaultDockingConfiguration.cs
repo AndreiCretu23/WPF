@@ -11,7 +11,7 @@ namespace Quantum.UIComponents
         public string LayoutSerializationDirectory => AppInfo.ApplicationConfigRepository;
         public string LayoutSerializationFileName => "DockingLayout";
 
-        public Type LayoutSerializationEvent => typeof(ApplicationExitEvent);
+        public Type LayoutSerializationEvent => typeof(ShutdownEvent);
         public Type LayoutDeserializationEvent => typeof(PanelsLoadedEvent);
     }
 }

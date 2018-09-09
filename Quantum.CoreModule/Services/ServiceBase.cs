@@ -3,7 +3,7 @@ using Microsoft.Practices.Unity;
 
 namespace Quantum.Services
 {
-    public abstract class QuantumServiceBase
+    public abstract class ServiceBase
     {
         [Service]
         public IUnityContainer Container { get; set; }
@@ -14,7 +14,7 @@ namespace Quantum.Services
         [Service]
         public IObjectInitializationService InitializationService { get; set; }
 
-        public QuantumServiceBase(IObjectInitializationService initSvc)
+        public ServiceBase(IObjectInitializationService initSvc)
         {
             initSvc.Initialize(this);
         }

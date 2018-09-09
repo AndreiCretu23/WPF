@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Quantum.UIComponents
 {
-    internal class DynamicPanelProcessingService : QuantumServiceBase, IDynamicPanelProcessingService
+    internal class DynamicPanelProcessingService : ServiceBase, IDynamicPanelProcessingService
     {
         [Service]
         public IPanelManagerService PanelManager { get; set; }

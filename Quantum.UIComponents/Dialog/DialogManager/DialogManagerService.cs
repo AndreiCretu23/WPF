@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Quantum.UIComponents
 {
-    internal class DialogManagerService : QuantumServiceBase, IDialogManagerService
+    internal class DialogManagerService : ServiceBase, IDialogManagerService
     {
         private Collection<IDialogDefinition> registeredDefinitions = new Collection<IDialogDefinition>();
         public IEnumerable<IDialogDefinition> RegisteredDefinitions { get { return registeredDefinitions; } }

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Quantum.Command
 {
-    internal class CommandMetadataProcessorService : QuantumServiceBase, ICommandMetadataProcessorService
+    internal class CommandMetadataProcessorService : ServiceBase, ICommandMetadataProcessorService
     {
         public CommandMetadataProcessorService(IObjectInitializationService initSvc)
             : base(initSvc)

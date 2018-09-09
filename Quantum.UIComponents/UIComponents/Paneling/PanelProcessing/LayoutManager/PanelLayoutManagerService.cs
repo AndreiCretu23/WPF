@@ -7,7 +7,7 @@ using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 namespace Quantum.UIComponents
 {
-    internal class PanelLayoutManagerService : QuantumServiceBase, IPanelLayoutManagerService
+    internal class PanelLayoutManagerService : ServiceBase, IPanelLayoutManagerService
     {
         private IDockingView DockingView { get { return Container.Resolve<IDockingView>(); } }
         

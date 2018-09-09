@@ -14,7 +14,7 @@ using WPF.Dialogs;
 
 namespace WPF.Commands
 {
-    public class CommonCommands : QuantumServiceBase, ICommonCommands
+    public class CommonCommands : ServiceBase, ICommonCommands
     {
         [Selection]
         public SelectedNumber Number { get; set; }

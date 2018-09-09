@@ -57,7 +57,7 @@
     <Compile Include="Common\IAssertable.cs" />
     <Compile Include="Common\IIdentifiable.cs" />
     <Compile Include="CoreModule.cs" />
-    <Compile Include="Events\ApplicationExitEvent.cs" />
+    <Compile Include="Events\ShutdownEvent.cs" />
     <Compile Include="Events\UnhandledExceptionEvent.cs" />
     <Compile Include="Modularity\IQuantumModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,7 +77,7 @@
     <Compile Include="Services\ObjectInitializationService\SelectionInitializer\SelectionInitializer.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceAttribute.cs" />
     <Compile Include="Services\ObjectInitializationService\ServiceInitializer\ServiceInitializer.cs" />
-    <Compile Include="Services\QuantumServiceBase.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="Services\UnityContainerHelpers.cs" />
     <Compile Include="Services\WPFEventManagerService\IWPFEventManagerService.cs" />
     <Compile Include="Services\WPFEventManagerService\WPFEventManagerService.cs" />

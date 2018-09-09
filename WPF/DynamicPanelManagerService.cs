@@ -17,7 +17,7 @@ namespace WPF
         void InitializeDynamicPanelSelection();
     }
 
-    public class DynamicPanelSelectionManagerService : QuantumServiceBase, IDynamicPanelSelectionManagerService
+    public class DynamicPanelSelectionManagerService : ServiceBase, IDynamicPanelSelectionManagerService
     {
         [Selection]
         public DynamicPanelSelection SelectedPanels { get; set; }
@@ -57,7 +57,7 @@ namespace WPF
         }
 
 
-        [Handles(typeof(ApplicationExitEvent))]
+        [Handles(typeof(ShutdownEvent))]
         public void OnAppExit()
         {
             var info = new PanelSelectionData();

@@ -15,14 +15,14 @@ namespace WPF
         void TestMethod();
     }
 
-    public class DummyService : QuantumServiceBase, IDummyService
+    public class DummyService : ServiceBase, IDummyService
     {
         public DummyService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
         }
 
-        [Handles(typeof(ApplicationExitEvent))]
+        [Handles(typeof(ShutdownEvent))]
         public void OnAppExit()
         {
             MessageBox.Show("Application Exiting");

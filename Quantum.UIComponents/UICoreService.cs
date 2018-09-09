@@ -13,7 +13,7 @@ namespace Quantum.UIComponents
         void CreateUI();
     }
 
-    internal class UICoreService : QuantumServiceBase, IUICoreService
+    internal class UICoreService : ServiceBase, IUICoreService
     {
         [Service]
         public ShellView ShellView { get; set; }

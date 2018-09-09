@@ -8,7 +8,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    internal class StaticPanelVisibilityManagerService : QuantumServiceBase, IStaticPanelVisibilityManagerService
+    internal class StaticPanelVisibilityManagerService : ServiceBase, IStaticPanelVisibilityManagerService
     {
         [Service]
         public IPanelManagerService PanelManager { get; set; }

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace Quantum.Command
 {
-    internal class CommandManagerService : QuantumServiceBase, ICommandManagerService
+    internal class CommandManagerService : ServiceBase, ICommandManagerService
     {
         [Service]
         public IMetadataAsserterService MetadataAsserter { get; set; }

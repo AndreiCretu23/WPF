@@ -13,7 +13,7 @@ using System.Windows.Controls;
 
 namespace Quantum.UIComponents
 {
-    internal class PanelManagerService : QuantumServiceBase, IPanelManagerService
+    internal class PanelManagerService : ServiceBase, IPanelManagerService
     {
         private List<IStaticPanelDefinition> staticPanelDefinitions = new List<IStaticPanelDefinition>();
         private List<IDynamicPanelDefinition> dynamicPanelDefinitions = new List<IDynamicPanelDefinition>();

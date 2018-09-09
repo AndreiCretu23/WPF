@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace Quantum.UIComponents
 {
-    internal class ToolBarManagerService : QuantumServiceBase, IToolBarManagerService
+    internal class ToolBarManagerService : ServiceBase, IToolBarManagerService
     {
         private List<IToolBarDefinition> DefaultDefinitions { get; set; } = new List<IToolBarDefinition>();
         private List<IToolBarDefinition> ToolBarDefinitions { get; set; } = new List<IToolBarDefinition>();
@@ -172,7 +172,7 @@ namespace Quantum.UIComponents
 
         #region Events
 
-        [Handles(typeof(ApplicationExitEvent))]
+        [Handles(typeof(ShutdownEvent))]
         public void OnApplicationExit()
         {
             SerializeToolBarLayout();

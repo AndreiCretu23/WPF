@@ -14,7 +14,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    internal class PanelProcessingService : QuantumServiceBase, IPanelProcessingService
+    internal class PanelProcessingService : ServiceBase, IPanelProcessingService
     {
 
         [Service]

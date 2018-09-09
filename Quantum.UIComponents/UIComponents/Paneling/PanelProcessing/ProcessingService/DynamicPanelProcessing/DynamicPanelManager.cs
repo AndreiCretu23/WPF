@@ -14,7 +14,7 @@ using System.Collections.ObjectModel;
 
 namespace Quantum.UIComponents
 {
-    internal class DynamicPanelManager : QuantumServiceBase, IDynamicPanelManager
+    internal class DynamicPanelManager : ServiceBase, IDynamicPanelManager
     {
         public IDynamicPanelDefinition Definition { get; private set; }
         public IMultipleSelection ViewModelSelection { get; private set; }

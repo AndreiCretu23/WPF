@@ -11,7 +11,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    internal class StaticPanelProcessingService : QuantumServiceBase, IStaticPanelProcessingService
+    internal class StaticPanelProcessingService : ServiceBase, IStaticPanelProcessingService
     {
         [Service]
         public IPanelManagerService PanelManager { get; set; }
