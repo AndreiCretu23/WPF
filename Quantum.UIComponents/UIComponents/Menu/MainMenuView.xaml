@@ -30,9 +30,7 @@
             <MenuItem Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
                       Header="{Binding Header}"
                       ToolTip="{Binding ToolTip}"
-                      IsCheckable="True"
-                      IsChecked="{Binding IsOpened, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      IsEnabled="{Binding IsEnabled}"/>
+                      Command="{Binding BringIntoView}"/>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type local:MainMenuSeparatorViewModel}">

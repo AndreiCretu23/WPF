@@ -61,7 +61,6 @@ namespace Quantum.UIComponents
                 }
 
                 layoutGroupData.Add(anchorable, layoutGroup);
-                EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(PanelManager.StaticPanelDefinitions.Single(o => o.View.GetGuid() == viewGuid && o.ViewModel.GetGuid() == viewModelGuid), !anchorable.IsHidden));
             }
 
             SetLayoutGroupData(layoutGroupData);

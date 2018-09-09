@@ -87,7 +87,6 @@ namespace Quantum.UIComponents
                     if (source.IsVisible)
                     {
                         VisibilityManager.UpdateContainer(source);
-                        EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(definition, false));
                     }
                 };
 
@@ -128,20 +127,6 @@ namespace Quantum.UIComponents
                 VisibilityManager.SetVisibility(anchorable, false);
             }
         }
-
-        [Handles(typeof(PanelMenuEntryStateChangedEvent))]
-        public void OnPanelVisibilityChanged(PanelMenuEntryStateChangedArgs args)
-        {
-            if (!IsUILoaded) return;
-
-            var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
-
-            VisibilityManager.SetVisibility(anchorable, args.Visibility);
-            if (args.Visibility)
-            {
-                anchorable.CanHide = anchorableDefinitions[anchorable].OfType<StaticPanelConfiguration>().Single().CanClose();
-            }
-        }
         
         [Handles(typeof(LayoutLoadedEvent))]
         public void OnLayoutLoaded(LayoutLoadedArgs args)
@@ -158,7 +143,6 @@ namespace Quantum.UIComponents
                 {
                     var source = sender.SafeCast<LayoutAnchorable>();
                     VisibilityManager.UpdateContainer(source);
-                    EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(anchorableDefinitions[source], false));
                 };
             }
         }
@@ -181,7 +165,6 @@ namespace Quantum.UIComponents
 
             if(anchorable.IsHidden && definition.CanChangeVisibility(false)) {
                 VisibilityManager.SetVisibility(anchorable, true);
-                EventAggregator.GetEvent<StaticPanelVisibilityChangedEvent>().Publish(new StaticPanelVisibilityChangedArgs(definition, true));
             }
             else
             {

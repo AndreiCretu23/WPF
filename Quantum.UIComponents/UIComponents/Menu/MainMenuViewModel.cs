@@ -113,15 +113,7 @@ namespace Quantum.UIComponents
 
                         entry.Value.IfIs((IStaticPanelDefinition def) =>
                         {
-                            children.Add(new MainMenuPanelEntryViewModel(InitializationService)
-                            {
-                                PanelDefinition = def,
-                                Header = GetPanelMenuOptionMetadata<Description>(def)?.Value,
-                                ToolTip = GetPanelMenuOptionMetadata<ToolTip>(def)?.Value,
-                                Icon = GetPanelMenuOptionMetadata<Icon>(def)?.IconPath,
-                                IsOpened = def.OfType<StaticPanelConfiguration>().Single().IsVisible(),
-                                IsEnabled = def.CanChangeVisibility(def.OfType<StaticPanelConfiguration>().Single().IsVisible())
-                            });
+                            children.Add(new MainMenuPanelEntryViewModel(InitializationService, def));
                         });
 
                         entry.Value.IfIs((AbstractMenuPath p) =>

@@ -150,9 +150,7 @@
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\BringDynamicPanelIntoViewRequest.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\BringStaticPanelIntoViewRequest.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\LayoutLoadedEvent.cs" />
-    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\StaticPanelVisibilityChangedEvent.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\StaticPanelInvalidationEvent.cs" />
-    <Compile Include="UIComponents\Paneling\PanelProcessing\PanelEvents\PanelMenuEntryStateChanged.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\IPanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\LayoutManager\PanelLayoutManagerService.cs" />
     <Compile Include="UIComponents\Paneling\PanelProcessing\ProcessingService\DynamicPanelProcessing\DynamicPanelManager.cs" />
