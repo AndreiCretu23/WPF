@@ -87,7 +87,7 @@ namespace Quantum.Services
         private void BuildConfigBody(TypeBuilder typeBuilder)
         {
             var configInterfaceProperties = ConfigInterface.GetProperties();
-            var eventAggregatorField = DeclareEventAggregatorField(typeBuilder);
+            var eventAggregatorField = BuildEventAggregatorField(typeBuilder);
             foreach (var prop in configInterfaceProperties)
             {
                 var fieldBuilder = BuildConfigPropertyField(typeBuilder, prop);
@@ -101,7 +101,7 @@ namespace Quantum.Services
             }
         }
 
-        private FieldBuilder DeclareEventAggregatorField(TypeBuilder typeBuilder)
+        private FieldBuilder BuildEventAggregatorField(TypeBuilder typeBuilder)
         {
             var fieldName = ConfigHelper.GetConfigImplementationEventAggreagatorFieldName();
             var fieldBuilder = typeBuilder.DefineField(fieldName, typeof(IEventAggregator), FieldAttributes.Public);
@@ -142,10 +142,10 @@ namespace Quantum.Services
                                                             MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig | MethodAttributes.Virtual,
                                                             configPropertyInfo.PropertyType, Type.EmptyTypes);
 
-            var propGetterIL = propGetter.GetILGenerator();
-            propGetterIL.Emit(OpCodes.Ldarg_0);
-            propGetterIL.Emit(OpCodes.Ldfld, associatedField);
-            propGetterIL.Emit(OpCodes.Ret);
+            var il = propGetter.GetILGenerator();
+            il.Emit(OpCodes.Ldarg_0);
+            il.Emit(OpCodes.Ldfld, associatedField);
+            il.Emit(OpCodes.Ret);
 
             return propGetter;
         }
