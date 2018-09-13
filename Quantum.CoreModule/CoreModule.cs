@@ -1,6 +1,11 @@
 ﻿using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Unity;
+using Quantum.Events;
 using Quantum.Services;
+using Quantum.Utils;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Quantum.CoreModule
 {
@@ -18,6 +23,12 @@ namespace Quantum.CoreModule
             container.RegisterService<IWPFEventManagerService, WPFEventManagerService>();
             container.Resolve<IWPFEventManagerService>().HookWpfEvents();
 
+            
+            container.RegisterService<IConfigManagerService, ConfigManagerService>();
+            
         }
+
     }
+    
+
 }

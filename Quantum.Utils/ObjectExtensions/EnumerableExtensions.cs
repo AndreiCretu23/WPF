@@ -114,6 +114,16 @@ namespace Quantum.Utils
         }
         
         [DebuggerHidden]
+        public static bool IsSingleElement(this IEnumerable collection)
+        {
+            collection.AssertNotNull(nameof(collection));
+            foreach(var element in collection) {
+                return true;
+            }
+            return false;
+        }
+
+        [DebuggerHidden]
         public static IEnumerable<T> ToEnumerable<T>(this T item)
         {
             item.AssertNotNull();

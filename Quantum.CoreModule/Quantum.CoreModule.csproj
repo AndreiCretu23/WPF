@@ -56,7 +56,14 @@
   <ItemGroup>
     <Compile Include="Common\IAssertable.cs" />
     <Compile Include="Common\IIdentifiable.cs" />
+    <Compile Include="Config\ConfigManagerService.cs" />
+    <Compile Include="Config\ConfigSerializer.cs" />
+    <Compile Include="Config\ConfigTypeBuilder.cs" />
+    <Compile Include="Config\ConfigTypeHelper.cs" />
+    <Compile Include="Config\ConfigInitializer.cs" />
+    <Compile Include="Config\IConfigManagerService.cs" />
     <Compile Include="CoreModule.cs" />
+    <Compile Include="Events\ConfigParamChangedEvent.cs" />
     <Compile Include="Events\ShutdownEvent.cs" />
     <Compile Include="Events\UnhandledExceptionEvent.cs" />
     <Compile Include="Modularity\IQuantumModule.cs" />

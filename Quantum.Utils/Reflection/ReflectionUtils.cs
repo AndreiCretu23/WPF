@@ -99,7 +99,7 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
-        public static PropertyInfo GetPropertyInfo<T, TResult>(Expression<Func<T, TResult>> propExpression)
+        public static PropertyInfo GetPropertyInfo<TResult>(Expression<Func<TResult>> propExpression)
         {
             propExpression = propExpression.AssertParameterNotNull(nameof(propExpression));
 
@@ -108,12 +108,63 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
-        public static PropertyInfo GetPropertyInfo<TResult>(Expression<Func<TResult>> propExpression)
+        public static PropertyInfo GetPropertyInfo<T, TResult>(Expression<Func<T, TResult>> propExpression)
         {
             propExpression = propExpression.AssertParameterNotNull(nameof(propExpression));
 
             var memberAccess = propExpression.Body.SafeCast<MemberExpression>(ReflectionErrorMessages.LambdaMustBePropertyAccess);
             return memberAccess.Member.SafeCast<PropertyInfo>(ReflectionErrorMessages.LambdaMustBePropertyAccess);
+        }
+
+        
+        public static string GetMethodName(Expression<Func<Delegate>> methodExpression)
+        {
+            methodExpression.AssertParameterNotNull(nameof(methodExpression));
+            return GetMethodInfo(methodExpression).Name;
+        }
+
+        public static string GetMethodName<T>(Expression<Func<T, Delegate>> methodExpression)
+        {
+            methodExpression.AssertParameterNotNull(nameof(methodExpression));
+            return GetMethodInfo(methodExpression).Name;
+        }
+
+        public static MemberInfo GetMethodInfo(Expression<Func<Delegate>> methodExpression)
+        {
+            methodExpression.AssertParameterNotNull(nameof(methodExpression));
+
+            var unaryExpression = methodExpression.Body.SafeCast<UnaryExpression>();
+            var methodCallExpression = unaryExpression.Operand.SafeCast<MethodCallExpression>();
+            var methodInfoExpression = methodCallExpression.Object.SafeCast<ConstantExpression>();
+            var methodInfo = methodInfoExpression.Value.SafeCast<MemberInfo>();
+
+            return methodInfo;
+        }
+
+        public static MemberInfo GetMethodInfo<T>(Expression<Func<T, Delegate>> methodExpression)
+        {
+            methodExpression.AssertParameterNotNull(nameof(methodExpression));
+
+            var unaryExpression = methodExpression.Body.SafeCast<UnaryExpression>();
+            var methodCallExpression = unaryExpression.Operand.SafeCast<MethodCallExpression>();
+            var methodInfoExpression = methodCallExpression.Object.SafeCast<ConstantExpression>();
+            var methodInfo = methodInfoExpression.Value.SafeCast<MemberInfo>();
+
+            return methodInfo;
+        }
+
+        [DebuggerHidden]
+        public static string GetPropertyGetterMethodName(PropertyInfo propertyInfo)
+        {
+            propertyInfo.AssertParameterNotNull(nameof(propertyInfo));
+            return $"get_{propertyInfo.Name}";
+        }
+
+        [DebuggerHidden]
+        public static string GetPropertySetterMethodName(PropertyInfo propertyInfo)
+        {
+            propertyInfo.AssertParameterNotNull(nameof(propertyInfo));
+            return $"set_{propertyInfo.Name}";
         }
     }
 }
