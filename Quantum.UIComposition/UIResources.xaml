@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes/ExpressionDark/Colors.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/Menu/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/MenuItem/Styles.xaml" />
         <ResourceDictionary Source="Themes/ExpressionDark/Thumb/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/ToggleButton/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/ToolBar/Styles.xaml"/>
