@@ -19,7 +19,6 @@ namespace WPF
         public void Initialize(IUnityContainer container)
         {
             container.RegisterService<IDummyService, DummyService>();
-            container.Resolve<IDummyService>().TestMethod();
 
             container.RegisterService<IDynamicPanelSelectionManagerService, DynamicPanelSelectionManagerService>();
             container.Resolve<IDynamicPanelSelectionManagerService>().InitializeDynamicPanelSelection();

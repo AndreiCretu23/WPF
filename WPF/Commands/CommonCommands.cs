@@ -22,7 +22,6 @@ namespace WPF.Commands
         public CommonCommands(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            Number.Value = 3;
         }
 
 

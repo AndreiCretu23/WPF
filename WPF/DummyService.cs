@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Threading;
 
 namespace WPF
 {
@@ -34,10 +35,10 @@ namespace WPF
             MessageBox.Show("App Crashed!");
         }
 
-
+        [Handles(typeof(SelectedNumber), ThreadOption.UIThread)]
         public void TestMethod()
         {
-            // Testing Code
+            //Thread.Sleep(10000);
         }
     }
     
