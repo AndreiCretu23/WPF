@@ -50,18 +50,21 @@ namespace Quantum.Services
 
         private void SubscribeEvent(object obj, IEventAggregator eventAggregator, MethodInfo handler, HandlesAttribute handleInfo)
         {
-            var evt = typeof(IEventAggregator).GetMethod("GetEvent").MakeGenericMethod(new Type[] { handleInfo.EventType }).Invoke(eventAggregator, new object[] { });
+            var getEvtMethodName = ReflectionUtils.GetMethodName((IEventAggregator evtAggregator) => (Func<EventBase>)evtAggregator.GetEvent<EventBase>);
+            var evt = typeof(IEventAggregator).GetMethod(getEvtMethodName).MakeGenericMethod(new Type[] { handleInfo.EventType }).Invoke(eventAggregator, new object[] { });
             var eventType = handleInfo.EventType;
             var payloadType = handleInfo.EventType.GetBaseTypeGenericArgument(typeof(CompositePresentationEvent<>));
             
             if(!handler.GetParameters().Any()) {
                 var subscriptionProxy = new SubscriptionProxy(eventAggregator);
-                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod("SubscribeEventHandler").MakeGenericMethod(new Type[] { eventType, payloadType });
+                var subscriptionMethodName = ReflectionUtils.GetMethodName((SubscriptionProxy proxy) => (Action<object, MethodInfo, ThreadOption, bool>)proxy.SubscribeEventHandler<CompositePresentationEvent<object>, object>);
+                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod(subscriptionMethodName).MakeGenericMethod(new Type[] { eventType, payloadType });
                 subscriptionMethod.Invoke(subscriptionProxy, new object[] { obj, handler, handleInfo.ThreadOption, handleInfo.KeepSubscriberReferenceAlive });
             }
             else if(handler.GetParameters().Count() == 1) {
                 var subscriptionProxy = new SubscriptionProxy(eventAggregator);
-                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod("SubscribeEventHandlerArgs").MakeGenericMethod(new Type[] { eventType, payloadType });
+                var subscriptionMethodName = ReflectionUtils.GetMethodName((SubscriptionProxy proxy) => (Action<object, MethodInfo, ThreadOption, bool>)proxy.SubscribeEventHandlerArgs<CompositePresentationEvent<object>, object>);
+                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod(subscriptionMethodName).MakeGenericMethod(new Type[] { eventType, payloadType });
                 subscriptionMethod.Invoke(subscriptionProxy, new object[] { obj, handler, handleInfo.ThreadOption, handleInfo.KeepSubscriberReferenceAlive });
             }
             else {
@@ -71,18 +74,21 @@ namespace Quantum.Services
         
         private void SubscribeSelection(object obj, IEventAggregator eventAggregator, MethodInfo handler, HandlesAttribute handleInfo)
         {
-            var selection = typeof(IEventAggregator).GetMethod("GetEvent").MakeGenericMethod(new Type[] { handleInfo.EventType }).Invoke(eventAggregator, new object[] { });
+            var getEvtMethodName = ReflectionUtils.GetMethodName((IEventAggregator evtAggregator) => (Func<EventBase>)evtAggregator.GetEvent<EventBase>);
+            var selection = typeof(IEventAggregator).GetMethod(getEvtMethodName).MakeGenericMethod(new Type[] { handleInfo.EventType }).Invoke(eventAggregator, new object[] { });
             var selectionType = handleInfo.EventType;
             var payloadType = handleInfo.EventType.GetBaseTypeGenericArgument(typeof(SelectionBase<>));
 
             if (!handler.GetParameters().Any()) {
                 var subscriptionProxy = new SubscriptionProxy(eventAggregator);
-                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod("SubscribeSelectionChangedHandler").MakeGenericMethod(new Type[] { selectionType, payloadType });
+                var subscriptionMethodName = ReflectionUtils.GetMethodName((SubscriptionProxy proxy) => (Action<object, MethodInfo, ThreadOption, bool>)proxy.SubscribeSelectionChangedHandler<SelectionBase<object>, object>);
+                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod(subscriptionMethodName).MakeGenericMethod(new Type[] { selectionType, payloadType });
                 subscriptionMethod.Invoke(subscriptionProxy, new object[] { obj, handler, handleInfo.ThreadOption, handleInfo.KeepSubscriberReferenceAlive});
             }
             else if(handler.GetParameters().Count() == 1) {
                 var subscriptionProxy = new SubscriptionProxy(eventAggregator);
-                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod("SubscribeSelectionChangedHandlerArgs").MakeGenericMethod(new Type[] { selectionType, payloadType });
+                var subscriptionMethodName = ReflectionUtils.GetMethodName((SubscriptionProxy proxy) => (Action<object, MethodInfo, ThreadOption, bool>)proxy.SubscribeSelectionChangedHandlerArgs<SelectionBase<object>, object>);
+                var subscriptionMethod = typeof(SubscriptionProxy).GetMethod(subscriptionMethodName).MakeGenericMethod(new Type[] { selectionType, payloadType });
                 subscriptionMethod.Invoke(subscriptionProxy, new object[] { obj, handler, handleInfo.ThreadOption, handleInfo.KeepSubscriberReferenceAlive });
             }
             else {
