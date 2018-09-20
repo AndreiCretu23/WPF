@@ -8,6 +8,12 @@ namespace WPF.Panels
     [Guid("577953C7-1DAC-4564-9E49-9790113C42B2")]
     public class ActivePanelViewModel : ViewModelBase, IActivePanelViewModel
     {
+        [Selection]
+        public SelectedNumber SelectedNumber { get; set; }
+
+        [InvalidateOn(typeof(SelectedNumber))]
+        public string Description => $"Selected Numer is : {SelectedNumber.Value.ToString()}";
+        
 
         public ActivePanelViewModel(IObjectInitializationService initSvc)
             : base(initSvc)

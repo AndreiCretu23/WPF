@@ -27,8 +27,15 @@
             </Button.BorderBrush>
         </Button>-->
 
+        <Label HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="0,0,0,300"
+               Content="{Binding Description}"
+               Foreground="White"/>
+
         <Button Width="300" 
                 Height="300"
+                Margin="0,150,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Style="{StaticResource ChromeCloseButtonStyle}">

@@ -209,6 +209,7 @@
     <Compile Include="UICoreService.cs" />
     <Compile Include="UIEvents\PanelsLoadedEvent.cs" />
     <Compile Include="UIEvents\UILoadedEvent.cs" />
+    <Compile Include="ViewModel\Attributes\InvalidateOnAttribute.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

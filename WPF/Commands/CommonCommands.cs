@@ -274,7 +274,7 @@ namespace WPF.Commands
                         new MainMenuOption()
                         {
                             new MenuPath(MenuLocations.File, 2, 0),
-                            new Description("Change5"),
+                            new Description("Change6"),
                         },
                         new AutoInvalidateOnSelection(typeof(SelectedNumber)),
                     }
