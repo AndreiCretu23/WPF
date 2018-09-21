@@ -41,7 +41,7 @@ namespace Quantum.UIComponents
                 var expressionProperty = Expression.Property(expressionArg, commandContainerProperty);
 
 
-                var expressionBuilder = typeof(Expression).GetMethods().Single(meth => meth.Name == "Lambda" &&
+                var expressionBuilder = typeof(Expression).GetMethods().Single(meth => meth.Name == nameof(Expression.Lambda) &&
                                                                                        meth.IsGenericMethod &&
                                                                                        meth.GetGenericArguments().Count() == 1 && 
                                                                                        meth.GetParameters().Count() == 2 && 
@@ -51,7 +51,7 @@ namespace Quantum.UIComponents
                 var funcType = typeof(Func<,>).MakeGenericType(commandContainerType, commandContainerProperty.PropertyType);
                 var expression = expressionBuilder.MakeGenericMethod(funcType).Invoke(null, new object[] { expressionProperty, new ParameterExpression[] { expressionArg } });
                 
-                var commandGetter = typeof(ICommandManagerService).GetMethods().Single(meth => meth.Name == "GetCommand" && meth.GetGenericArguments().Count() == 2);
+                var commandGetter = typeof(ICommandManagerService).GetMethods().Single(meth => meth.Name == nameof(commandManager.GetCommand) && meth.GetGenericArguments().Count() == 2);
                 try
                 {
                     var command = commandGetter.MakeGenericMethod(commandContainerType, commandContainerProperty.PropertyType).Invoke(commandManager, new object[] { expression });
