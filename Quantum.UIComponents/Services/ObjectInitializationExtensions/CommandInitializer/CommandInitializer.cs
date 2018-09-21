@@ -58,7 +58,7 @@ namespace Quantum.UIComponents
                     var command = commandGetter.MakeGenericMethod(commandContainerType, commandContainerProperty.PropertyType).Invoke(commandManager, new object[] { expression });
                     prop.SetValue(obj, command);
                 }
-                catch(InvalidOperationException)
+                catch
                 {
                     throw new Exception($"Error : Command Container {commandContainerType.Name} is not registered in the CommandManager");
                 }

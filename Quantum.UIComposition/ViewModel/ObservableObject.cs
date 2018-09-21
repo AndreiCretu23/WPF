@@ -100,5 +100,16 @@ namespace Quantum.UIComposition
                 }
             }
         }
+
+        /// <summary>
+        /// Raises the property changed event for each property owned by the type of this instance.
+        /// </summary>
+        public void InvalidateAllProperties()
+        {
+            foreach(var prop in GetType().GetProperties())
+            {
+                RaisePropertyChanged(prop.Name);
+            }
+        }
     }
 }
