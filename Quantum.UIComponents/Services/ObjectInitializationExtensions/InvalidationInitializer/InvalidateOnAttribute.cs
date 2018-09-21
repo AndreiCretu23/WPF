@@ -10,9 +10,9 @@ using Quantum.Utils;
 namespace Quantum.UIComponents
 {
     /// <summary>
-    /// In classes that extend ViewModelBase, properties which are decorated with this attribute 
-    /// will automatically be invalidated (RaisePropertyChanged will be called) when the specified 
-    /// event is triggered from the EventAggregator instance of the container.
+    /// In objects initialized by the IObjectInitializationService that extend ObservableObject, 
+    /// properties which are decorated with this attribute will automatically be invalidated (RaisePropertyChanged will be called) 
+    /// when the specified event is triggered from the EventAggregator instance of the container.
     /// </summary>
     [AttributeUsage(validOn: AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
     public class InvalidateOnAttribute : Attribute

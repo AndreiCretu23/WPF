@@ -21,7 +21,6 @@ namespace Quantum.UIComponents
         public ViewModelBase(IObjectInitializationService initSvc)
         {
             initSvc.Initialize(this);
-            ResolveInvalidationRequests();
         }
 
         /// <summary>
@@ -31,19 +30,5 @@ namespace Quantum.UIComponents
         {
             InitializationService.TeardownAll(this);
         }
-
-        private void ResolveInvalidationRequests()
-        {
-            var properties = GetType().GetProperties();
-            foreach(var prop in properties)
-            {
-                var invalidationAttributes = prop.GetCustomAttributes(true).OfType<InvalidateOnAttribute>();
-                foreach(var attribute in invalidationAttributes)
-                {
-                    EventAggregator.Subscribe(attribute.EventType, () => RaisePropertyChanged(prop.Name), ThreadOption.UIThread);
-                }
-            }
-        }
-        
     }
 }

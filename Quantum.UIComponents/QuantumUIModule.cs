@@ -10,6 +10,9 @@ namespace Quantum.UIComponents
     {
         public void Initialize(IUnityContainer container)
         {
+            //ObjectInitializationExtensions
+            container.Resolve<IObjectInitializationService>().RegisterInitializer<InvalidationInitializer>();
+
             //Metadata
             container.RegisterService<IMetadataAsserterService, MetadataAsserterService>();
 

@@ -132,6 +132,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="QuantumToolkitModule.cs" />
+    <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidationInitializer.cs" />
     <Compile Include="Toolkit\LongOperation\LongOperationService\ILongOperationService.cs" />
     <Compile Include="Toolkit\LongOperation\LongOperationService\LongOpDispatcher.cs" />
     <Compile Include="Toolkit\LongOperation\LongOperationService\LongOperationService.cs" />
@@ -209,7 +210,7 @@
     <Compile Include="UICoreService.cs" />
     <Compile Include="UIEvents\PanelsLoadedEvent.cs" />
     <Compile Include="UIEvents\UILoadedEvent.cs" />
-    <Compile Include="ViewModel\Attributes\InvalidateOnAttribute.cs" />
+    <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidateOnAttribute.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
