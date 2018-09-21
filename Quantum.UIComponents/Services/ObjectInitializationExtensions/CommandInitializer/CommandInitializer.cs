@@ -49,7 +49,6 @@ namespace Quantum.UIComponents
                                                                                        meth.GetParameters().Last().ParameterType == typeof(ParameterExpression[]));
 
                 var funcType = typeof(Func<,>).MakeGenericType(commandContainerType, commandContainerProperty.PropertyType);
-                var expressionType = typeof(Expression<>).MakeGenericType(funcType);
                 var expression = expressionBuilder.MakeGenericMethod(funcType).Invoke(null, new object[] { expressionProperty, new ParameterExpression[] { expressionArg } });
                 
                 var commandGetter = typeof(ICommandManagerService).GetMethods().Single(meth => meth.Name == "GetCommand" && meth.GetGenericArguments().Count() == 2);
