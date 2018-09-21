@@ -72,7 +72,7 @@ namespace Quantum.UIComponents
 
             foreach(var prop in obj.GetType().GetProperties().Where(prop => prop.HasAttribute<CommandAttribute>()))
             {
-                prop.SetValue(obj, null);
+                prop.SetValue(obj, prop.PropertyType.GetDefaultValue());
             }
         }
     }
