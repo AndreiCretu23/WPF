@@ -132,6 +132,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="QuantumToolkitModule.cs" />
+    <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandAttribute.cs" />
+    <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandInitializer.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidationInitializer.cs" />
     <Compile Include="Toolkit\LongOperation\LongOperationService\ILongOperationService.cs" />
     <Compile Include="Toolkit\LongOperation\LongOperationService\LongOpDispatcher.cs" />

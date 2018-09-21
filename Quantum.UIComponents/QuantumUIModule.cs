@@ -19,7 +19,8 @@ namespace Quantum.UIComponents
             //Command
             container.RegisterService<ICommandMetadataProcessorService, CommandMetadataProcessorService>();
             container.RegisterService<ICommandManagerService, CommandManagerService>();
-            
+            container.Resolve<IObjectInitializationService>().RegisterInitializer<CommandInitializer>();
+
             //ToolBar
             container.RegisterService<IToolBarManagerService, ToolBarManagerService>();
 

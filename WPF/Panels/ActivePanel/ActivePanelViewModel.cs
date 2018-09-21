@@ -1,7 +1,9 @@
-﻿using Quantum.Services;
+﻿using Quantum.Command;
+using Quantum.Services;
 using Quantum.UIComponents;
 using System;
 using System.Runtime.InteropServices;
+using WPF.Commands;
 
 namespace WPF.Panels
 {
@@ -20,6 +22,10 @@ namespace WPF.Panels
         {
 
         }
+
+
+        [Command(typeof(ICommonCommands))]
+        public IManagedCommand Change2 { get; set; }
 
     }
 }
