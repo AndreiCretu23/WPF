@@ -49,7 +49,7 @@ namespace Quantum.Services
         public void UnregisterInitializer<TInitializer>()
             where TInitializer : IObjectInitializer, new()
         {
-            var unregisterRequest = this.RegisteredInitializers.OfType<TInitializer>();
+            var unregisterRequest = this.RegisteredInitializers.OfType<TInitializer>().ToList();
 
             foreach (var initializer in unregisterRequest)
             {
