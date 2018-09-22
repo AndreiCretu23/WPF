@@ -81,6 +81,27 @@ namespace Quantum.Services
             container.Resolve(fromType);
         }
         
+        /// <summary>
+        /// Attempts to resolve the requested type from the container. A return value indicates if the resolve process was successful.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="container"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public static bool TryResolve<T>(this IUnityContainer container, out T result)
+        {
+            container.AssertNotNull(nameof(container));
+            try
+            {
+                result = container.Resolve<T>();
+                return true;
+            }
+            catch(ResolutionFailedException)
+            {
+                result = default(T);
+                return false;
+            }
+        }
         
     }
 

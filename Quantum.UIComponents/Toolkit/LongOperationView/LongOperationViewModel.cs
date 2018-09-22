@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Composite.Events;
+using Quantum.CoreModule;
 using Quantum.Events;
 using Quantum.ResourceLibrary;
 using Quantum.Services;
@@ -14,16 +15,10 @@ namespace Quantum.UIComponents
 {
     internal class LongOperationViewModel : ViewModelBase, ILongOperationViewModel
     {
-        private string description = Resources.LongOperation_DefaultDescription;
-        public string Description
-        {
-            get { return description; }
-            set
-            {
-                description = value;
-                RaisePropertyChanged(() => Description);
-            }
-        }
+        [Service]
+        public IFrameworkConfig FrameworkConfig { get; set; }
+
+        public string Description => FrameworkConfig.LongOpDescription;
         
         public LongOperationViewModel(IObjectInitializationService initSvc)
             : base(initSvc)

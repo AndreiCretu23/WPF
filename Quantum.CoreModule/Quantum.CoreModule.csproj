@@ -66,6 +66,7 @@
     <Compile Include="Events\ConfigParamChangedEvent.cs" />
     <Compile Include="Events\ShutdownEvent.cs" />
     <Compile Include="Events\UnhandledExceptionEvent.cs" />
+    <Compile Include="Modularity\IFrameworkConfig.cs" />
     <Compile Include="Modularity\IQuantumModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selection\IMultipleSelection.cs" />
@@ -90,6 +91,10 @@
     <Compile Include="Services\WPFEventManagerService\WPFEventManagerService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Quantum.ResourceLibrary\Quantum.ResourceLibrary.csproj">
+      <Project>{89DDC633-A706-4A82-BEA3-03508370FFC9}</Project>
+      <Name>Quantum.ResourceLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quantum.Utils\Quantum.Utils.csproj">
       <Project>{6052dc7e-36ce-4fc5-b91a-6bc1d83dbd33}</Project>
       <Name>Quantum.Utils</Name>

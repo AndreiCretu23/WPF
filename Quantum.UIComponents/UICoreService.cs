@@ -1,4 +1,5 @@
-﻿using Quantum.Events;
+﻿using Quantum.CoreModule;
+using Quantum.Events;
 using Quantum.Services;
 using Quantum.Utils;
 using System.Windows;
@@ -20,7 +21,9 @@ namespace Quantum.UIComponents
 
         [Service]
         public ShellViewModel ShellViewModel { get; set; }
-        
+
+        [Service]
+        public IFrameworkConfig FrameworkConfig { get; set; }
 
         public UICoreService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -32,7 +35,7 @@ namespace Quantum.UIComponents
             ShellView.Loaded += (sender, e) => EventAggregator.GetEvent<UILoadedEvent>().Publish(new UILoadedArgs());
 
             ShellView.DataContext = ShellViewModel;
-            ShellView.Title = AppInfo.ApplicationName;
+            ShellView.WindowStartupLocation = FrameworkConfig.ShellStartUpLocation;
             Application.Current.MainWindow = ShellView;
             
             ShellView.Show();

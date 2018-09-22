@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using Quantum.CoreModule;
+using Quantum.Services;
 using Quantum.UIComponents;
 using System.Collections.Generic;
 
@@ -13,8 +14,14 @@ namespace Quantum.Core
             container.RegisterInstance<IUnityContainer>(container);
             return container;
         }
+        
+        private IFrameworkConfig RegisterFrameworkConfig(IUnityContainer container)
+        {
+            container.RegisterService<IFrameworkConfig, FrameworkConfig>();
+            return container.Resolve<IFrameworkConfig>();
+        }
 
-        public abstract IEnumerable<IQuantumModule> GetApplicationModules();
+        protected virtual void OverrideConfigMetadata(IUnityContainer container, IFrameworkConfig config) { }
 
         private IEnumerable<IQuantumModule> GetFrameworkModules()
         {
@@ -22,6 +29,8 @@ namespace Quantum.Core
             yield return new QuantumUIModule();
         }
         
+        protected abstract IEnumerable<IQuantumModule> GetApplicationModules();
+
         private void CreateShell(IUnityContainer container)
         {
             container.Resolve<IUICoreService>().CreateUI();
@@ -30,6 +39,7 @@ namespace Quantum.Core
         public void Run()
         {
             var container = CreateContainer();
+            OverrideConfigMetadata(container, RegisterFrameworkConfig(container));
 
             foreach(var frameworkModule in GetFrameworkModules())
             {

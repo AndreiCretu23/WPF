@@ -9,6 +9,7 @@
 
     <converters:BoolToVisibilityConverter x:Key="b2v"/>
     <converters:NullToVisibilityConverter x:Key="n2v"/>
+    <converters:IconConverter x:Key="iconConverter" />
 
     <Style x:Key="ChromeButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent"/>

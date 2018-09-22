@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Microsoft\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\lib\Microsoft\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
@@ -46,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper\QuantumBootstrapper.cs" />
+    <Compile Include="FrameworkConfig\FrameworkConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -53,6 +58,10 @@
     <ProjectReference Include="..\Quantum.CoreModule\Quantum.CoreModule.csproj">
       <Project>{017bfe32-c335-46f7-b878-bc5fd069917e}</Project>
       <Name>Quantum.CoreModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quantum.ResourceLibrary\Quantum.ResourceLibrary.csproj">
+      <Project>{89DDC633-A706-4A82-BEA3-03508370FFC9}</Project>
+      <Name>Quantum.ResourceLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\Quantum.UIComponents\Quantum.UIComponents.csproj">
       <Project>{15e43722-0089-4ae8-a582-8ee8b7cd7728}</Project>
