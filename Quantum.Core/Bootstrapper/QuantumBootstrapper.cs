@@ -20,7 +20,6 @@ namespace Quantum.Core
         {
             yield return new QuantumCoreModule();
             yield return new QuantumUIModule();
-            yield return new QuantumToolkitModule();
         }
         
         private void CreateShell(IUnityContainer container)

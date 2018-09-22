@@ -42,6 +42,9 @@ namespace Quantum.UIComponents
             container.RegisterService<IDialogManagerService, DialogManagerService>();
 
 
+            //Services & ToolKit
+            container.RegisterService<ILongOperationService, LongOperationService>();
+
             //View Core
             container.RegisterService<IUICoreService, UICoreService>();
         }
