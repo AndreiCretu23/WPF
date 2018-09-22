@@ -135,15 +135,15 @@
     <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandAttribute.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandInitializer.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidationInitializer.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationService\ILongOperationService.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationService\LongOpDispatcher.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationService\LongOperationService.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationView\ILongOperationView.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationView\ILongOperationViewModel.cs" />
-    <Compile Include="Toolkit\LongOperation\LongOperationView\LongOperationView.xaml.cs">
+    <Compile Include="Services\LongOperation\ILongOperationService.cs" />
+    <Compile Include="Services\LongOperation\LongOpDispatcher.cs" />
+    <Compile Include="Services\LongOperation\LongOperationService.cs" />
+    <Compile Include="Toolkit\LongOperationView\ILongOperationView.cs" />
+    <Compile Include="Toolkit\LongOperationView\ILongOperationViewModel.cs" />
+    <Compile Include="Toolkit\LongOperationView\LongOperationView.xaml.cs">
       <DependentUpon>LongOperationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Toolkit\LongOperation\LongOperationView\LongOperationViewModel.cs" />
+    <Compile Include="Toolkit\LongOperationView\LongOperationViewModel.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuCommandExtractor.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuItemViewModel.cs" />
     <Compile Include="UIComponents\Menu\IMainMenuView.cs" />
@@ -246,7 +246,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Toolkit\LongOperation\LongOperationView\LongOperationView.xaml">
+    <Page Include="Toolkit\LongOperationView\LongOperationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
