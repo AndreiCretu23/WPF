@@ -6,6 +6,7 @@ using Quantum.CoreModule;
 using Quantum.Events;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace WPF
 {

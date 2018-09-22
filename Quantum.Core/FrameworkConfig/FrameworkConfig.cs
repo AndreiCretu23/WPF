@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Quantum.Core
 {
-    public class FrameworkConfig : IFrameworkConfig
+    internal class FrameworkConfig : IFrameworkConfig
     {
         public string LongOpDescription => GetValue(() => LongOpDescription);
 
