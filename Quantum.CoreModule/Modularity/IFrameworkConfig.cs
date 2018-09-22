@@ -33,40 +33,42 @@ namespace Quantum.CoreModule
         /// Returns the initial width of the MainWindow of the application.<para></para>
         /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellWidth { get; }
 
         /// <summary>
         /// Returns the initial height of the MainWindow of the application.<para></para>
         /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellHeight { get; }
 
         /// <summary>
         /// Returns the minimum width of the MainWindow of the application.<para></para>
-        /// Default value is 700.
+        /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellMinWidth { get; }
 
         /// <summary>
         /// Returns the minimum height of the MainWindow of the application.<para></para>
-        /// Default value is 600.
+        /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellMinHeight { get; }
 
         /// <summary>
         /// Returns the maximum width of the MainWindow of the application.<para></para>
         /// Default value is Double.NaN (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellMaxWidth { get; }
 
         /// <summary>
         /// Returns the maximum height of the MainWindow of the application.<para></para>
         /// Default value is Double.NaN (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         double ShellMaxHeight { get; }
 
         /// <summary>
@@ -79,14 +81,14 @@ namespace Quantum.CoreModule
         /// Returns the state of the MainWindow of the application.<para></para>
         /// Default value is Maximized. Warning, overring the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         WindowState ShellState { get; }
 
         /// <summary>
         /// Returns the StartUp Location of the MainWindow of the application.<para></para>
         /// Default value is CenterScreen. Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout deserialization process(avalon framework) to crash.")]
         WindowStartupLocation ShellStartUpLocation { get; }
         
         /// <summary>

@@ -38,6 +38,7 @@ namespace Quantum.Core
         }
         
         private Dictionary<string, ConfigPropertyDefinition> ConfigDefinitions = new Dictionary<string, ConfigPropertyDefinition>();
+        private ScopedValue<bool> DefaultMetadataOverride = new ScopedValue<bool>();
 
         private T GetValue<T>(Expression<Func<T>> property)
         {
@@ -47,16 +48,21 @@ namespace Quantum.Core
 
         public void OverrideMetadata<TMetadata>(Expression<Func<IFrameworkConfig, TMetadata>> property, Func<TMetadata> value, IEnumerable<Type> invalidators = null)
         {
-            var prop = ReflectionUtils.GetPropertyName(property);
-            AssertInvalidators(prop, invalidators);
+            var prop = ReflectionUtils.GetPropertyInfo(property);
+            AssertInvalidators(prop.Name, invalidators);
             var configDefinition = new ConfigPropertyDefinition(value, invalidators ?? Enumerable.Empty<Type>());
-            if(!ConfigDefinitions.ContainsKey(prop))
+            if(!ConfigDefinitions.ContainsKey(prop.Name))
             {
-                ConfigDefinitions.Add(prop, configDefinition);
+                ConfigDefinitions.Add(prop.Name, configDefinition);
             }
             else
             {
-                ConfigDefinitions[prop] = configDefinition;
+                ConfigDefinitions[prop.Name] = configDefinition;
+            }
+
+            if(!DefaultMetadataOverride.Value && prop.HasAttribute<UnsafeSetAttribute>())
+            {
+                Console.WriteLine($"WARNING : Overriding unsafe config property {prop.Name}. This might cause side effects.");
             }
         }
 
@@ -87,18 +93,21 @@ namespace Quantum.Core
 
         private void SetDefaultMetadata()
         {
-            OverrideMetadata(c => c.LongOpDescription, () => Resources.LongOperation_DefaultDescription);
-            OverrideMetadata(c => c.ShellTitle, () => AppInfo.ApplicationName);
-            OverrideMetadata(c => c.ShellIcon, () => null);
-            OverrideMetadata(c => c.ShellWidth, () => Double.NaN);
-            OverrideMetadata(c => c.ShellHeight, () => Double.NaN);
-            OverrideMetadata(c => c.ShellMinWidth, () => 700d);
-            OverrideMetadata(c => c.ShellMinHeight, () => 600d);
-            OverrideMetadata(c => c.ShellMaxWidth, () => Double.NaN);
-            OverrideMetadata(c => c.ShellMaxHeight, () => Double.NaN);
-            OverrideMetadata(c => c.ShellResizeMode, () => ResizeMode.CanResizeWithGrip);
-            OverrideMetadata(c => c.ShellState, () => WindowState.Maximized);
-            OverrideMetadata(c => c.ShellStartUpLocation, () => WindowStartupLocation.CenterScreen);
+            using (DefaultMetadataOverride.BeginValueScope(true))
+            {
+                OverrideMetadata(c => c.LongOpDescription, () => Resources.LongOperation_DefaultDescription);
+                OverrideMetadata(c => c.ShellTitle, () => AppInfo.ApplicationName);
+                OverrideMetadata(c => c.ShellIcon, () => null);
+                OverrideMetadata(c => c.ShellWidth, () => Double.NaN);
+                OverrideMetadata(c => c.ShellHeight, () => Double.NaN);
+                OverrideMetadata(c => c.ShellMinWidth, () => Double.NaN);
+                OverrideMetadata(c => c.ShellMinHeight, () => Double.NaN);
+                OverrideMetadata(c => c.ShellMaxWidth, () => Double.NaN);
+                OverrideMetadata(c => c.ShellMaxHeight, () => Double.NaN);
+                OverrideMetadata(c => c.ShellResizeMode, () => ResizeMode.CanResizeWithGrip);
+                OverrideMetadata(c => c.ShellState, () => WindowState.Maximized);
+                OverrideMetadata(c => c.ShellStartUpLocation, () => WindowStartupLocation.CenterScreen);
+            }
         }
 
         private class ConfigPropertyDefinition
