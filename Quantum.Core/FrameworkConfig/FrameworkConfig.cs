@@ -73,7 +73,7 @@ namespace Quantum.Core
             {
                 if(!(evt.IsSubclassOfRawGeneric(typeof(SelectionBase<>)) || evt.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>))))
                 {
-                    throw new Exception($"Error overriding metadata for the framework config property {propertyName} : " +
+                    throw new Exception($"Error overriding metadata for the framework config property {propertyName} : \n" +
                                         $"The invalidation collection contains the type {evt.Name} which is not a valid eventType. \n" +
                                         $"Supported event types are types that extend {typeof(CompositePresentationEvent<>).Name} or {typeof(SelectionBase<>).Name}");
                 }
