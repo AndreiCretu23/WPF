@@ -33,14 +33,14 @@ namespace Quantum.CoreModule
         /// Returns the initial width of the MainWindow of the application.<para></para>
         /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         double ShellWidth { get; }
 
         /// <summary>
         /// Returns the initial height of the MainWindow of the application.<para></para>
         /// Default value is Double.Nan (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         double ShellHeight { get; }
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace Quantum.CoreModule
         /// Returns the maximum width of the MainWindow of the application.<para></para>
         /// Default value is Double.NaN (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         double ShellMaxWidth { get; }
 
         /// <summary>
         /// Returns the maximum height of the MainWindow of the application.<para></para>
         /// Default value is Double.NaN (auto). Warning, overriding the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         double ShellMaxHeight { get; }
 
         /// <summary>
@@ -74,18 +74,19 @@ namespace Quantum.CoreModule
         /// Default value is CanResizeWithGrip.
         /// </summary>
         ResizeMode ShellResizeMode { get; }
-        
+
         /// <summary>
         /// Returns the state of the MainWindow of the application.<para></para>
         /// Default value is Maximized. Warning, overring the metadata for this property is not safe.
         /// </summary>
-        [UnsafeSet]
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         WindowState ShellState { get; }
 
         /// <summary>
         /// Returns the StartUp Location of the MainWindow of the application.<para></para>
-        /// Default value is CenterScreen.
+        /// Default value is CenterScreen. Warning, overriding the metadata for this property is not safe.
         /// </summary>
+        [UnsafeSet("Overriding the metadata for this property might cause the layout manager(avalon framework) to crash.")]
         WindowStartupLocation ShellStartUpLocation { get; }
         
         /// <summary>

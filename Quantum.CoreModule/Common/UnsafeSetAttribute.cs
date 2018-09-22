@@ -13,5 +13,10 @@ namespace Quantum.CoreModule
     [AttributeUsage(validOn:AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public class UnsafeSetAttribute : Attribute
     {
+        public string Reason { get; }
+
+        public UnsafeSetAttribute() { }
+        public UnsafeSetAttribute(string reason) { Reason = reason; }
+
     }
 }
