@@ -4,6 +4,9 @@ using System;
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// Provides the basic abstract view model of a DialogWindow.
+    /// </summary>
     public abstract class DialogViewModel : ViewModelBase, IDialogViewModel
     {
         internal event Action<bool> OnCloseRequest;
