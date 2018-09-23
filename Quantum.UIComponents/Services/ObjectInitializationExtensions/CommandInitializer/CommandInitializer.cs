@@ -18,7 +18,7 @@ namespace Quantum.UIComponents
 
             foreach (var prop in obj.GetType().GetProperties().Where(p => p.HasAttribute<CommandAttribute>()))
             {
-                if(prop.SetMethod == null)
+                if(prop.SetMethod == null || !prop.SetMethod.IsPublic)
                 {
                     throw new Exception($"Error : {obj.GetType().Name}.{prop.Name} : \n {typeof(CommandAttribute).Name} : \n " +
                                         $"Cannot assign the associated command because the property does not have a public set method.");
