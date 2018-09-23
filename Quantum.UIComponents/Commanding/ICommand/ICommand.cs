@@ -6,6 +6,10 @@ namespace Quantum.Command
     {
     }
 
+    public interface IDelegateCommand<T> : IDependencyCommand
+    {
+    }
+
     public interface IManagedCommand : IStaticMetadataOwnerCommand<CommandMetadataCollection, ICommandMetadata>
     {
     }
