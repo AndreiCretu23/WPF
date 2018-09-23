@@ -57,6 +57,11 @@
         /// </summary>
         public SingleSelectionCache<T> OldValue { get; private set; }
 
+        /// <summary>
+        /// Exposes the OldValue in the interface as an object.
+        /// </summary>
+        ISingleSelectionCache ISingleSelection.OldValue { get { return OldValue; } }
+
 
         protected override void OnSelectedValueChanged()
         {

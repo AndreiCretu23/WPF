@@ -21,6 +21,8 @@ namespace WPF
         [Selection]
         public SelectedNumber Number { get; set; }
 
+        public ISingleSelection SS => Number;
+
         public DummyService(IObjectInitializationService initSvc)
             : base(initSvc)
         {

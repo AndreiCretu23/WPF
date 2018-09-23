@@ -2,5 +2,6 @@
 {
     public interface ISingleSelection : ISelection
     {
+        ISingleSelectionCache OldValue { get; }
     }
 }
