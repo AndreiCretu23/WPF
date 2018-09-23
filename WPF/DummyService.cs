@@ -42,11 +42,8 @@ namespace WPF
         [Handles(typeof(SelectedNumber))]
         public void TestMethod()
         {
-            //Thread.Sleep(10000);
+
         }
-
-        
-
     }
     
     public class SelectedNumber : SingleSelection<int>

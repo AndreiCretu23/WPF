@@ -7,10 +7,9 @@ namespace Quantum.Command
     public delegate void DependencyCommandExecute<T>(T obj);
 
     public abstract class DependencyCommand<T> : UICommand, IDependencyCommand
-        where T : class
     {
-        public override bool CanExecute(object parameter) { return CanExecuteHandler(parameter as T); }
-        public override void Execute(object parameter) { ExecuteHandler(parameter as T); }
+        public override bool CanExecute(object parameter) { return CanExecuteHandler((T)parameter); }
+        public override void Execute(object parameter) { ExecuteHandler((T)parameter); }
 
         public Type DependencyType { get { return typeof(T); } }
 
