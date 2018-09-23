@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace Quantum.Events
 {
+    /// <summary>
+    /// This event is raised in the EventAggregator instance of the container whenever a config parameter in an interface
+    /// registered using the ConfigManagerService changes.
+    /// </summary>
     public class ConfigParamChangedEvent : CompositePresentationEvent<ConfigParamChangedArgs>
     {
     }
