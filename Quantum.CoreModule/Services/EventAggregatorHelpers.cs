@@ -26,7 +26,7 @@ namespace Quantum.Services
                                                 $"subtypes of SelectionBase<T>(selections).");
             }
 
-            var eventGetter = typeof(IEventAggregator).GetMethod("GetEvent").MakeGenericMethod(eventType);
+            var eventGetter = typeof(IEventAggregator).GetMethod(nameof(eventAggregator.GetEvent)).MakeGenericMethod(eventType);
             return eventGetter.Invoke(eventAggregator, new object[] { });
         }
 
@@ -48,20 +48,20 @@ namespace Quantum.Services
             if(eventType.IsSubclassOfRawGeneric(typeof(CompositePresentationEvent<>)))
             {
                 var payloadType = eventType.GetBaseTypeGenericArgument(typeof(CompositePresentationEvent<>));
-                var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod("SubscribeToEvent").MakeGenericMethod(new Type[] { eventType, payloadType });
+                var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod(nameof(EventAggregatorHelpers.SubscribeToEvent)).MakeGenericMethod(new Type[] { eventType, payloadType });
                 subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
             }
 
             else if(eventType.IsSubclassOfRawGeneric(typeof(SelectionBase<>)))
             {
                 var payloadType = eventType.GetBaseTypeGenericArgument(typeof(SelectionBase<>));
-                var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod("SubscribeToSelection").MakeGenericMethod(new Type[] { eventType, payloadType });
+                var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod(nameof(EventAggregatorHelpers.SubscribeToSelection)).MakeGenericMethod(new Type[] { eventType, payloadType });
                 subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
             }
 
             else
             {
-                throw new NotSupportedException($"{eventType.Name} is not a supported event type.");
+                throw new NotSupportedException($"{eventType.Name} is not a supported event type. Supported event types are types which extend CompositePresentationEvent or SelectionBase.");
             }
         }
 
