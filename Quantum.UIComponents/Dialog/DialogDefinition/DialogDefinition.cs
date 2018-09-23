@@ -5,15 +5,15 @@ namespace Quantum.UIComponents
     /// <summary>
     /// Represents the definition of a dialog view that is to be registered in the dialog manager.
     /// </summary>
-    /// <typeparam name="IView">The interface type the dialog's view implements. This type must extend IDialogWindow.</typeparam>
+    /// <typeparam name="ITView">The interface type the dialog's view implements. This type must extend IDialogWindow.</typeparam>
     /// <typeparam name="TView">The type of the view of the dialog. This type must extend DialogWindow.</typeparam>
-    /// <typeparam name="IViewModel">The type of the interface the view model of the dialog implements. This type must extend IDialogViewModel.</typeparam>
+    /// <typeparam name="ITViewModel">The type of the interface the view model of the dialog implements. This type must extend IDialogViewModel.</typeparam>
     /// <typeparam name="TViewModel">The type of the view model of the dialog. This type must extend DialogViewModel.</typeparam>
-    public class DialogDefinition<IView, TView, IViewModel, TViewModel> : IDialogDefinition
-        where IView : IDialogWindow
-        where TView : DialogWindow, IView, new()
-        where IViewModel : IDialogViewModel
-        where TViewModel : DialogViewModel, IViewModel
+    public class DialogDefinition<ITView, TView, ITViewModel, TViewModel> : IDialogDefinition
+        where ITView : IDialogWindow
+        where TView : DialogWindow, ITView, new()
+        where ITViewModel : IDialogViewModel
+        where TViewModel : DialogViewModel, ITViewModel
     {
         /// <summary>
         /// Returns the type of the view of the dialog. This type must extend DialogWindow.
@@ -28,12 +28,12 @@ namespace Quantum.UIComponents
         /// <summary>
         /// Returns the interface type the view implements. This type must extend IDialogWindow.
         /// </summary>
-        Type IDialogDefinition.IView => typeof(IView);
+        public Type IView => typeof(ITView);
 
         /// <summary>
         /// Returns the interface type the view model implements. This type must extend IDialogViewModel.
         /// </summary>
-        Type IDialogDefinition.IViewModel => typeof(IViewModel);
+        public Type IViewModel => typeof(ITViewModel);
 
         /// <summary>
         /// Returns a value indicating if the view model type should be registered as a single instance in the 
