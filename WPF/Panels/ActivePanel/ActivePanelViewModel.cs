@@ -27,5 +27,7 @@ namespace WPF.Panels
         [Command(typeof(ICommonCommands))]
         public IManagedCommand Change2 { get; set; }
 
+        [Command(typeof(ICommonCommands))]
+        public IManagedCommand Change3 { get; set; }
     }
 }

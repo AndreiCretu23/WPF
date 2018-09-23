@@ -20,18 +20,31 @@ namespace Quantum.UIComponents
             {
                 if(prop.SetMethod == null || !prop.SetMethod.IsPublic)
                 {
-                    throw new Exception($"Error : {obj.GetType().Name}.{prop.Name} : \n {typeof(CommandAttribute).Name} : \n " +
+                    throw new Exception($"Error : {obj.GetType().Name}.{prop.Name} : \n {nameof(CommandAttribute)} : \n " +
                                         $"Cannot assign the associated command because the property does not have a public set method.");
                 }
 
                 var cmdAttribute = prop.GetCustomAttributes(true).OfType<CommandAttribute>().Single();
                 var commandContainerType = cmdAttribute.CommandContainerType;
 
+                if(commandContainerType == null)
+                {
+                    throw new Exception($"Error : {obj.GetType().Name}.{prop.Name} : \n {nameof(CommandAttribute)} : \n " +
+                                        $"Null is not allowed for the parameter commandContainerType.");
+                }
+
+                if(!typeof(ICommandContainer).IsAssignableFrom(commandContainerType))
+                {
+                    throw new Exception($"Error : {obj.GetType().Name}.{prop.Name} : \n {nameof(CommandAttribute)} : \n " +
+                                        $"{commandContainerType.Name} is not a valid command container type. Command containers types are types " +
+                                        $"which implement the interface {nameof(ICommandContainer)}");
+                }
+
                 var commandContainerMatchingProperties = commandContainerType.GetProperties().Where(containerProp => containerProp.PropertyType == prop.PropertyType &&
                                                                                                                      containerProp.Name == prop.Name);
                 if(commandContainerMatchingProperties.Count() != 1)
                 {
-                    throw new Exception($"Error : {obj.GetType()}, Property {prop.Name}. \n {typeof(CommandAttribute).Name} : \n  " +
+                    throw new Exception($"Error : {obj.GetType()}.{prop.Name}. \n {nameof(CommandAttribute)} : \n  " +
                                         $"Cannot localize the command {prop.PropertyType.Name} {prop.Name} in commandContainer {commandContainerType.Name}.");
                 }
 
