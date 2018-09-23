@@ -18,6 +18,9 @@ namespace WPF
 
     public class DummyService : ServiceBase, IDummyService
     {
+        [Selection]
+        public SelectedNumber Number { get; set; }
+
         public DummyService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -35,7 +38,7 @@ namespace WPF
             MessageBox.Show("App Crashed!");
         }
 
-        [Handles(typeof(SelectedNumber), ThreadOption.UIThread)]
+        [Handles(typeof(SelectedNumber))]
         public void TestMethod()
         {
             //Thread.Sleep(10000);
