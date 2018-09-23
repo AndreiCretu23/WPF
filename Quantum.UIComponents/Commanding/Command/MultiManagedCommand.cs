@@ -4,9 +4,9 @@ namespace Quantum.Command
 {
     /// <summary>
     /// Multi managed commands represent a collection of application-wide commands provided by a getter delegate which are processed by the 
-    /// main window of the application. They must be defined as properties in command containers registered in the command manager service of the framework.
-    /// After they get registered in the command manager service cache, they are processed by the services which create the main window
-    /// of the application depending on their metadata : <para/>
+    /// main window of the application depending on their individual metadata. They must be defined as properties in command containers registered 
+    /// in the command manager service of the framework. After they get registered in the command manager service cache, they are processed by the services 
+    /// which create the main window of the application depending on their metadata : <para/>
     /// 1) MultiMainMenuOption - The set of commands returned by the getter delegate will appear as entries in the main menu of the application(menu location
     ///                          and other factors are configurable in each subcommand's metadata inside the getter delegate).
     ///                          This metadata type does not support multiple instances in the metadata collection of a multi managed command. <para/>
