@@ -5,10 +5,9 @@ using System.Collections.Generic;
 
 namespace Quantum.Services
 {
-    public class UnityEventAggregator : IEventAggregator
+    internal class UnityEventAggregator : IEventAggregator
     {
-        [Service]
-        public IUnityContainer Container { get; set; }
+        public IUnityContainer Container { get; }
 
         public UnityEventAggregator(IUnityContainer container)
         {
