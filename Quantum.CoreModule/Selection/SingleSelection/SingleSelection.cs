@@ -53,7 +53,7 @@
         /// a new wrapper instance is created containing the value of the previously selected item. After that, the 
         /// event is raised and handled by the application. Finally, the wrapper is disposed. <para></para>
         /// WARNING : If a subscriber handles the selection changing on a separate thread, the event raising process will just trigger the handler, 
-        ///           and it will not wait for it to finish, meaning the OldValue will get disposed immediately, and will not be accessable inside the handler. 
+        ///           and it will not wait for it to finish, meaning the OldValue will get disposed immediately, and will not be accessible inside the handler. 
         /// </summary>
         public SingleSelectionCache<T> OldValue { get; private set; }
 

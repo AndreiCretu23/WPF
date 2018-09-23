@@ -40,7 +40,7 @@ namespace WPF.ToolBars
         private void AddPanel()
         {
             var panelId = GetFirstFreeNumber(SelectedPanels.Value.OfType<IIdentifiable>().Select(o => Int32.Parse(o.Guid)));
-            SelectedPanels.Value.Add(new DynamicPanelViewModel(InitializationService)
+            SelectedPanels.Add(new DynamicPanelViewModel(InitializationService)
             {
                 Guid = panelId.ToString(),
                 DisplayText = $"DynamicPanel {panelId.ToString()}"
