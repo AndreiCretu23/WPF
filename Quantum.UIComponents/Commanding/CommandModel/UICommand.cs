@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,6 +10,7 @@ namespace Quantum.Command
     /// </summary>
     public abstract class UICommand : IUICommand
     {
+        [SuppressMessage("Microsoft.Design", "IDE1006")]
         private event EventHandler canExecuteChanged;
 
         /// <summary>

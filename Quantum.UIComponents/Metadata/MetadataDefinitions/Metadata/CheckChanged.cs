@@ -4,6 +4,12 @@ using System.Diagnostics;
 
 namespace Quantum.Metadata
 {
+    /// <summary>
+    /// This metadata type is used to attach an action when the UIDefinition owner's "Check" state changes.
+    /// Does nothing if the parent definition owner does not have a "Checkable(true)" metadata definition. <para/>
+    /// (HINT : Metadata types do different things depending on the parent collection that contains them. 
+    /// Clarifications regarding what a particular metadata type does can be found in the summaries of metadacollections / components that can contain it).
+    /// </summary>
     [Mandatory(false)]
     [SupportsMultiple(false)]
     public class CheckChanged : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata

@@ -5,6 +5,11 @@ using System;
 
 namespace Quantum.Metadata
 {
+    /// <summary>
+    /// A metadata type used to defined the type of the selection that is to be resolved from the 
+    /// event aggregator instance of the application's container determining the selection of active panels
+    /// for a DynamicPanelDefinition.
+    /// </summary>
     [Mandatory(true)]
     [SupportsMultiple(false)]
     public class PanelSelectionBinding : IAssertable, IDynamicPanelMetadata

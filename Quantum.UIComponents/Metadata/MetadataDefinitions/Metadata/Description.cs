@@ -4,6 +4,12 @@ using System.Diagnostics;
 
 namespace Quantum.Metadata
 {
+    /// <summary>
+    /// This metadata type is used to attach a description to it's UIDefinition owner. 
+    /// This metadata type is mandatory in any metadata collection that supports it. <para/>
+    /// (HINT : Metadata types do different things depending on the parent collection that contains them. 
+    /// Clarifications regarding what a particular metadata type does can be found in the summaries of metadacollections / components that can contain it).
+    /// </summary>
     [Mandatory(true)]
     [SupportsMultiple(false)]
     public class Description : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata, IPanelMenuEntryMetadata

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Quantum.Metadata
+﻿namespace Quantum.Metadata
 {
+    /// <summary>
+    /// This class represents a ToolBarDefinition's metadata collection. It supports metadata types that implement IToolBarMetadata.
+    /// </summary>
     public class ToolBarMetadataCollection : MetadataCollection<IToolBarMetadata>
     {
     }

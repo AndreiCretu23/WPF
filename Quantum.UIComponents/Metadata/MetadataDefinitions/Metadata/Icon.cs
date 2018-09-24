@@ -4,6 +4,11 @@ using System.Diagnostics;
 
 namespace Quantum.Metadata
 {
+    /// <summary>
+    /// This metadata type is used to attach an icon to it's UIDefinition owner. <para/>
+    /// (HINT : Metadata types do different things depending on the parent collection that contains them. 
+    /// Clarifications regarding what a particular metadata type does can be found in the summaries of metadacollections / components that can contain it).
+    /// </summary>
     [Mandatory(false)]
     [SupportsMultiple(false)]
     public class Icon : IAssertable, IMainMenuMetadata, ISubMainMenuMetadata, IPanelMenuEntryMetadata

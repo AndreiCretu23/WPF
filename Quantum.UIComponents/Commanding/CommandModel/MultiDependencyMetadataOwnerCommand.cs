@@ -11,8 +11,7 @@ namespace Quantum.Command
     /// <typeparam name="TCommand">The type of the dependency command associated with this MultiDependencyCommand.</typeparam>
     /// <typeparam name="TMetadataCollection">The type of the metadata collection this multi dependency command owns.</typeparam>
     /// <typeparam name="TMetadataDefinition">The metadata filter type of the metadata collection owned by this multi dependency command.</typeparam>
-    public class MultiDependencyMetadataOwnerCommand<T, TCommand, TMetadataCollection, TMetadataDefinition> : MultiDependencyCommand<T, TCommand>, IMultiDependencyMetadataOwnerCommand<TCommand, TMetadataCollection, TMetadataDefinition>
-        where T : class
+    public abstract class MultiDependencyMetadataOwnerCommand<T, TCommand, TMetadataCollection, TMetadataDefinition> : MultiDependencyCommand<T, TCommand>, IMultiDependencyMetadataOwnerCommand<TCommand, TMetadataCollection, TMetadataDefinition>
         where TCommand : IDependencyCommand
         where TMetadataCollection : MetadataCollection<TMetadataDefinition>, new()
         where TMetadataDefinition : IMetadataDefinition
