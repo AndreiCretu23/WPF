@@ -3,6 +3,9 @@ using System;
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// Provides the basic contract for a ToolBar definition. 
+    /// </summary>
     public interface IToolBarDefinition : ICloneable
     {
         /// <summary>

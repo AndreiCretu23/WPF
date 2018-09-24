@@ -5,6 +5,14 @@ using Quantum.Utils;
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// A toolbar definition is a set of metadata that can be registered in the ToolBarManagerService 
+    /// in order for it to be processed by the framework.
+    /// </summary>
+    /// <typeparam name="ITView">The type of the interface the view implements.</typeparam>
+    /// <typeparam name="TView">The type of the view.</typeparam>
+    /// <typeparam name="ITViewModel">The type of the interface the viewModel implements.</typeparam>
+    /// <typeparam name="TViewModel">The type of the viewModel.</typeparam>
     public class ToolBarDefinition<ITView, TView, ITViewModel, TViewModel> : IToolBarDefinition
         where TView : UserControl, ITView, new()
         where ITView : class

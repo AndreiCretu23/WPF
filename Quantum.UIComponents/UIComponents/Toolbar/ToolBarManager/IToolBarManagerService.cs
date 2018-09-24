@@ -3,6 +3,10 @@ using System.Windows.Controls;
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// This service is responsible for the management and serialization of all ToolBar 
+    /// definitions inside the application.
+    /// </summary>
     public interface IToolBarManagerService
     {
         /// <summary>
