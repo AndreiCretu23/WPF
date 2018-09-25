@@ -17,7 +17,7 @@ namespace Quantum.Services
         public void Initialize(object obj)
         {
             var eventAggregator = Container.Resolve<IEventAggregator>();
-            var getEventMethod = typeof(IEventAggregator).GetMethod("GetEvent");
+            var getEventMethod = typeof(IEventAggregator).GetMethod(nameof(eventAggregator.GetEvent));
 
             var selectionProperties = obj.GetType().GetProperties().Where(prop => prop.HasAttribute<SelectionAttribute>());
             foreach(var selectionProperty in selectionProperties)
