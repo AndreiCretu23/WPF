@@ -116,7 +116,8 @@ namespace WPF.Commands
                     {
                         new MenuPath(MenuLocations.Yolo1, 1, 1),
                         new Description("Yolo1"),
-                    }
+                    }, 
+                    new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
                 }
             };
         
