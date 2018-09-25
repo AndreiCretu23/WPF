@@ -11,7 +11,6 @@ namespace Quantum.Services
 
         public void Initialize(object obj)
         {
-            //var serviceProperties = obj.GetType().GetProperties().Where(o => o.GetCustomAttributes(true).OfType<ServiceAttribute>().Any());
             var serviceProperties = obj.GetType().GetProperties().Where(prop => prop.HasAttribute<ServiceAttribute>());
 
             foreach (var serviceProperty in serviceProperties)
