@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WPF.Dialogs;
+using WPF.Panels;
 
 namespace WPF.Commands
 {
@@ -95,7 +96,7 @@ namespace WPF.Commands
                     new MainMenuOption()
                     {
                         new MenuPath(MenuLocations.Yolo2, 1, 1),
-                        new Description("asd"),
+                        new Description("Yolo2"),
                     }
                 }
             };
@@ -103,13 +104,18 @@ namespace WPF.Commands
         public IManagedCommand Yolo1Command =>
             new ManagedCommand()
             {
-                CanExecuteHandler = () => true,
-                ExecuteHandler = () => { },
+                CanExecuteHandler = () => EventAggregator.GetEvent<DynamicPanelSelection>().Value.Any(),
+                ExecuteHandler = () => 
+                {
+                    var selection = EventAggregator.GetEvent<DynamicPanelSelection>();
+                    var last = selection.Value.Last();
+                    selection.Remove(last);
+                },
                 Metadata = new CommandMetadataCollection() {
                     new MainMenuOption()
                     {
                         new MenuPath(MenuLocations.Yolo1, 1, 1),
-                        new Description("asd"),
+                        new Description("Yolo1"),
                     }
                 }
             };
