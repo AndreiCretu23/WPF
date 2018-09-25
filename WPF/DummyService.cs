@@ -42,7 +42,6 @@ namespace WPF
         [Handles(typeof(SelectedNumber))]
         public void TestMethod()
         {
-
         }
     }
     

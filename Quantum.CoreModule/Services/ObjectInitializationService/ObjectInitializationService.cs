@@ -6,7 +6,7 @@ namespace Quantum.Services
 {
     /// <summary>
     /// The basic initialization service for all objects registered in the container. 
-    /// It is responsible of injecting the dependencies from the container in object it initializes depending 
+    /// It is responsible of injecting the dependencies from the container in the object it initializes depending 
     /// on the metadata provided via attributes on the properties and methods the type contains.
     /// </summary>
     public interface IObjectInitializationService
