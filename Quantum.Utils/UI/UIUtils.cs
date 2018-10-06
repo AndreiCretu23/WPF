@@ -68,9 +68,7 @@ namespace Quantum.Utils
         }
 
         #endregion Parent
-
-
-
+        
         #region Children
 
         public static DependencyObject GetVisualChild(this DependencyObject dependencyObject, int childIndex)
@@ -98,17 +96,20 @@ namespace Quantum.Utils
             dependencyObject.AssertNotNull(nameof(dependencyObject));
             return dependencyObject.GetVisualChildren(o => (o is TChild)).Cast<TChild>();
         }
+        
+        #endregion Children
 
-
+        #region Descendants
+        
         public static IEnumerable<DependencyObject> GetVisualDescendants(this DependencyObject dependencyObject, Predicate<DependencyObject> predicate = null)
         {
             dependencyObject.AssertNotNull(nameof(dependencyObject));
             predicate = predicate ?? (o => true);
 
             var result = new List<DependencyObject>();
-            foreach(var child in dependencyObject.GetVisualChildren())
+            foreach (var child in dependencyObject.GetVisualChildren())
             {
-                if(predicate(child)) result.Add(child);
+                if (predicate(child)) result.Add(child);
                 result.AddRange(child.GetVisualDescendants(predicate));
             }
 
@@ -121,9 +122,7 @@ namespace Quantum.Utils
             return dependencyObject.GetVisualDescendants(o => (o is TChild)).Cast<TChild>();
         }
 
-
-        #endregion Children
-
+        #endregion Descendants
 
         #region GetSetValue
 
