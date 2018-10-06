@@ -50,7 +50,7 @@ namespace Quantum.Core
         /// Returns the main framework modules. <para></para>
         /// CoreModule -> Contains services used by all the other modules. Provides basic utilities for the IOC container, basic services, events, selections, etc 
         /// and acts like an interface for the main components of the framework.<para></para>
-        /// UIModule -> Contains services & utilities responsible for the UI of the application : MainView : Menu, Toolbar, Paneling, Dialogs, etc.
+        /// UIModule -> Contains services and utilities responsible for the UI of the application : MainView : Menu, Toolbar, Paneling, Dialogs, etc.
         /// </summary>
         /// <returns></returns>
         private IEnumerable<IQuantumModule> GetFrameworkModules()
