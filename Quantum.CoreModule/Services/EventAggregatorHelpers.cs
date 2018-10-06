@@ -14,7 +14,7 @@ namespace Quantum.Services
         /// <param name="eventAggregator">The event aggregator instance from which to resolve the event.</param>
         /// <param name="eventType">The type of the event that is to be resolved. Supported types are types that extend CompositePresentationEvent or SelectionBase.</param>
         /// <returns></returns>
-        public static object GetEvent(this IEventAggregator eventAggregator, Type eventType)
+        public static EventBase GetEvent(this IEventAggregator eventAggregator, Type eventType)
         {
             eventAggregator.AssertNotNull(nameof(eventAggregator));
             eventType.AssertParameterNotNull(nameof(eventType));
@@ -27,7 +27,7 @@ namespace Quantum.Services
             }
 
             var eventGetter = typeof(IEventAggregator).GetMethod(nameof(eventAggregator.GetEvent)).MakeGenericMethod(eventType);
-            return eventGetter.Invoke(eventAggregator, new object[] { });
+            return (EventBase)eventGetter.Invoke(eventAggregator, new object[] { });
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Quantum.Services
         /// <param name="action">The action that is to be invoked when the specified event is fired / the specified selection changes.</param>
         /// <param name="threadOption">The thread on which the event should be handled.</param>
         /// <param name="keepSubscriberReferenceAlive">A flag indicating if a reference to the subscription should be held or not.</param>
-        public static void Subscribe(this IEventAggregator eventAggregator, Type eventType, Action action, ThreadOption threadOption = ThreadOption.PublisherThread, bool keepSubscriberReferenceAlive = true)
+        public static SubscriptionToken Subscribe(this IEventAggregator eventAggregator, Type eventType, Action action, ThreadOption threadOption = ThreadOption.PublisherThread, bool keepSubscriberReferenceAlive = true)
         {
             eventAggregator.AssertNotNull(nameof(eventAggregator));
             eventType.AssertParameterNotNull(nameof(eventType));
@@ -49,14 +49,14 @@ namespace Quantum.Services
             {
                 var payloadType = eventType.GetBaseTypeGenericArgument(typeof(CompositePresentationEvent<>));
                 var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod(nameof(EventAggregatorHelpers.SubscribeToEvent)).MakeGenericMethod(new Type[] { eventType, payloadType });
-                subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
+                return (SubscriptionToken)subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
             }
 
             else if(eventType.IsSubclassOfRawGeneric(typeof(SelectionBase<>)))
             {
                 var payloadType = eventType.GetBaseTypeGenericArgument(typeof(SelectionBase<>));
                 var subscriptionMethod = typeof(EventAggregatorHelpers).GetMethod(nameof(EventAggregatorHelpers.SubscribeToSelection)).MakeGenericMethod(new Type[] { eventType, payloadType });
-                subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
+                return (SubscriptionToken)subscriptionMethod.Invoke(null, new object[] { eventAggregator, threadOption, keepSubscriberReferenceAlive, action });
             }
 
             else
@@ -74,10 +74,10 @@ namespace Quantum.Services
         /// <param name="threadOption">The thread on which the event handler is to be invoked.</param>
         /// <param name="keepSubscriberReferenceAlive">A flag indicating if a reference to the subscription should be held or not.</param>
         /// <param name="action">The handler action to be invoked when the event is fired.</param>
-        public static void SubscribeToEvent<TEvent, TPayload>(IEventAggregator eventAggregator, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Action action)
+        public static SubscriptionToken SubscribeToEvent<TEvent, TPayload>(IEventAggregator eventAggregator, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Action action)
             where TEvent : CompositePresentationEvent<TPayload>
         {
-            eventAggregator.GetEvent<TEvent>().Subscribe(payload => action(), threadOption, keepSubscriberReferenceAlive);
+            return eventAggregator.GetEvent<TEvent>().Subscribe(payload => action(), threadOption, keepSubscriberReferenceAlive);
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace Quantum.Services
         /// <param name="threadOption">The thread on which the event handler is to be invoked.</param>
         /// <param name="keepSubscriberReferenceAlive">A flag indicating if a reference to the subscription should be held or not.</param>
         /// <param name="action">The handler action to be invoked when the selection changes.</param>
-        public static void SubscribeToSelection<TSelection, TPayload>(IEventAggregator eventAggregator, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Action action)
+        public static SubscriptionToken SubscribeToSelection<TSelection, TPayload>(IEventAggregator eventAggregator, ThreadOption threadOption, bool keepSubscriberReferenceAlive, Action action)
             where TSelection : SelectionBase<TPayload>
         {
-            eventAggregator.GetEvent<TSelection>().Subscribe(selection => action(), threadOption, keepSubscriberReferenceAlive);
+            return eventAggregator.GetEvent<TSelection>().Subscribe(selection => action(), threadOption, keepSubscriberReferenceAlive);
         }
 
     }
