@@ -62,10 +62,10 @@ namespace Quantum.UIComponents
         private void AssertDialogDefinition(IDialogDefinition definition)
         {
             definition.AssertNotNull(nameof(definition));
-            definition.AssertNotNull(nameof(definition.View));
-            definition.AssertNotNull(nameof(definition.IView));
-            definition.AssertNotNull(nameof(definition.ViewModel));
-            definition.AssertNotNull(nameof(definition.IViewModel));
+            definition.View.AssertNotNull(nameof(definition.View));
+            definition.IView.AssertNotNull(nameof(definition.IView));
+            definition.ViewModel.AssertNotNull(nameof(definition.ViewModel));
+            definition.IViewModel.AssertNotNull(nameof(definition.IViewModel));
 
             if(!definition.IView.IsInterface || !typeof(IDialogWindow).IsAssignableFrom(definition.IView))
             {
