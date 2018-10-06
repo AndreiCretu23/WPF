@@ -61,6 +61,7 @@ namespace Quantum.UIComponents
                 newConext.OnCloseRequest += result =>
                 {
                     DialogResult = result;
+                    DataContext = null;
                     Close();
                 };
             }

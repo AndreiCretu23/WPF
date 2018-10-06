@@ -34,27 +34,12 @@ namespace Quantum.UIComponents
         /// Returns the interface type the view model implements. This type must extend IDialogViewModel.
         /// </summary>
         public Type IViewModel => typeof(ITViewModel);
-
-        /// <summary>
-        /// Returns a value indicating if the view model type should be registered as a single instance in the 
-        /// container by the dialog manager. If true, each time the dialog will be shown, or an instance of 
-        /// the associated view model type will be requested from the container, the same instance will be 
-        /// returned. Otherwise, a new instance will be created every time the dialog is shown / a view model 
-        /// instance is requested from the container.
-        /// </summary>
-        public bool SingleViewModelInstance { get; }
-
+        
         /// <summary>
         /// Creates a new instance of the DialogDefinition class.
         /// </summary>
-        /// <param name="singleViewModelInstance"> A flag indicating if the view model type should be registered 
-        /// as a single instance in the container by the dialog manager. If true, each time the dialog will 
-        /// be shown, or an instance of the associated view model type will be requested from the container, 
-        /// the same instance will be returned. Otherwise, a new instance will be created every time the dialog 
-        /// is shown / a view model instance is requested from the container.</param>
-        public DialogDefinition(bool singleViewModelInstance = false)
+        public DialogDefinition()
         {
-            SingleViewModelInstance = singleViewModelInstance;
         }
 
     }

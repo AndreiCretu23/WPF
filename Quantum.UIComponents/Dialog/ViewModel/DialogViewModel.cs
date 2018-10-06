@@ -20,6 +20,7 @@ namespace Quantum.UIComponents
                 ExecuteHandler = () =>
                 {
                     Abort();
+                    TearDown();
                     OnCloseRequest?.Invoke(false);
                 }
             };
@@ -30,12 +31,12 @@ namespace Quantum.UIComponents
                 ExecuteHandler = () =>
                 {
                     SaveChanges();
+                    TearDown();
                     OnCloseRequest?.Invoke(true);
                 }
             };
         }
         
-
         /// <summary>
         /// An abort command property used for UIBinding. CanExecute returns CanAbort() and Execute returns Abort().
         /// </summary>

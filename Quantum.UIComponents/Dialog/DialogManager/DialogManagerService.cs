@@ -41,16 +41,8 @@ namespace Quantum.UIComponents
                 throw new Exception($"Error : DialogDefinition<{definition.IView.Name}, {definition.View.Name}, {definition.IViewModel.Name}, {definition.ViewModel.Name}> \n " +
                                     $"has already been registered or the View/IView/ViewModel/IViewModel have already been registered in another definition");
             }
-
-            if (definition.SingleViewModelInstance)
-            {
-                Container.RegisterService(definition.IViewModel, definition.ViewModel);
-            }
-            else
-            {
-                Container.RegisterType(definition.IViewModel, definition.ViewModel);
-            }
-
+            
+            Container.RegisterType(definition.IViewModel, definition.ViewModel);
             registeredDefinitions.Add(definition);
         }
 
