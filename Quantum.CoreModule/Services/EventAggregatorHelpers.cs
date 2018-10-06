@@ -96,4 +96,14 @@ namespace Quantum.Services
         }
 
     }
+
+    /// <summary>
+    /// Represents a simple object that stores information regarding an event subscription.
+    /// </summary>
+    public class Subscription
+    {
+        public object Object { get; set; }
+        public EventBase Event { get; set; }
+        public SubscriptionToken Token { get; set; }
+    }
 }

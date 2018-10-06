@@ -1,14 +1,12 @@
 ﻿using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Events;
 using Microsoft.Practices.Unity;
+using Quantum.Exceptions;
 using Quantum.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Threading;
-using Quantum.Exceptions;
 
 namespace Quantum.Services
 {
@@ -180,11 +178,6 @@ namespace Quantum.Services
         }
     }
 
-    internal class Subscription
-    {
-        public object Object { get; set; }
-        public EventBase Event { get; set; }
-        public SubscriptionToken Token { get; set; }
-    }
+    
 
 }
