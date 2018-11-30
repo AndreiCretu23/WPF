@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Composite.Events;
+using Microsoft.Practices.Unity;
 using Quantum.Command;
 using Quantum.Common;
 using Quantum.CoreModule;

@@ -15,11 +15,12 @@ namespace Quantum.UIComponents
 {
     internal class LongOperationViewModel : ViewModelBase, ILongOperationViewModel
     {
-        [Service]
-        public IFrameworkConfig FrameworkConfig { get; set; }
+        [Selection]
+        public SelectedLongOperationDescription SelectedDescription { get; set; }
 
-        public string Description => FrameworkConfig.LongOpDescription;
-        
+        [InvalidateOn(typeof(SelectedLongOperationDescription))]
+        public string Description { get { return SelectedDescription.Value; } }
+
         public LongOperationViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {

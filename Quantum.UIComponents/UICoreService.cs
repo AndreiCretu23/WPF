@@ -21,10 +21,7 @@ namespace Quantum.UIComponents
 
         [Service]
         public ShellViewModel ShellViewModel { get; set; }
-
-        [Service]
-        public IFrameworkConfig FrameworkConfig { get; set; }
-
+        
         public UICoreService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -35,7 +32,8 @@ namespace Quantum.UIComponents
             ShellView.Loaded += (sender, e) => EventAggregator.GetEvent<UILoadedEvent>().Publish(new UILoadedArgs());
 
             ShellView.DataContext = ShellViewModel;
-            ShellView.WindowStartupLocation = FrameworkConfig.ShellStartUpLocation;
+            ShellView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            ShellView.WindowState = WindowState.Maximized;
             Application.Current.MainWindow = ShellView;
             
             ShellView.Show();

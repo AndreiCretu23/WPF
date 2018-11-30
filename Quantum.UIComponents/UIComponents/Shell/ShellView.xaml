@@ -11,14 +11,7 @@
                       mc:Ignorable="d"
                       Title="{Binding Title, Mode=OneWay}"
                       Icon="{Binding Icon, Mode=OneWay, Converter={StaticResource iconConverter}}"
-                      Width="{Binding Width, Mode=OneWay}"
-                      Height="{Binding Height, Mode=OneWay}"
-                      MinWidth="{Binding MinWidth, Mode=OneWay}"
-                      MinHeight="{Binding MinHeight, Mode=OneWay}"
-                      MaxWidth="{Binding MaxWidth, Mode=OneWay}"
-                      MaxHeight="{Binding MaxHeight, Mode=OneWay}"
                       ResizeMode="{Binding ResizeMode, Mode=OneWay}"
-                      WindowState="{Binding WindowState, Mode=OneWay}"
                       p:AttachedProperties.Shortcuts="{Binding Shortcuts}"
                       Style="{StaticResource {x:Type controls:WindowShell}}">
 

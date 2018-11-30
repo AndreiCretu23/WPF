@@ -27,26 +27,6 @@ namespace Quantum.Core
         }
         
         /// <summary>
-        /// Registers the FrameworkConfiguration in the container. The FrameworkConfiguration is a collection of properties used by various components of 
-        /// the application and they can be customized by overriding the OverrideConfigMetadata method in the local application Bootstrapper.
-        /// </summary>
-        /// <param name="container"></param>
-        /// <returns></returns>
-        private IFrameworkConfig RegisterFrameworkConfig(IUnityContainer container)
-        {
-            container.RegisterService<IFrameworkConfig, FrameworkConfig>();
-            return container.Resolve<IFrameworkConfig>();
-        }
-
-        /// <summary>
-        /// Override this method in the local application bootstrapper in order to customize framework configuration properties.
-        /// These properties are used by various components of the framework/application. For details, see IFrameworkConfig.
-        /// </summary>
-        /// <param name="container"></param>
-        /// <param name="config"></param>
-        protected virtual void OverrideConfigMetadata(IUnityContainer container, IFrameworkConfig config) { }
-
-        /// <summary>
         /// Returns the main framework modules. <para></para>
         /// CoreModule -> Contains services used by all the other modules. Provides basic utilities for the IOC container, basic services, events, selections, etc 
         /// and acts like an interface for the main components of the framework.<para></para>
@@ -75,14 +55,13 @@ namespace Quantum.Core
         }
 
         /// <summary>
-        /// Runs the application : It creates the container, the framework configuration, customizes it, registers the framework modules, 
+        /// Runs the application : It creates the container, registers the framework modules, 
         /// then the application modules, and finally creates the MainWindow of the application.
         /// </summary>
         public void Run()
         {
             var container = CreateContainer();
-            OverrideConfigMetadata(container, RegisterFrameworkConfig(container));
-
+            
             foreach(var frameworkModule in GetFrameworkModules())
             {
                 frameworkModule.Initialize(container);
