@@ -300,6 +300,45 @@ namespace WPF.Commands
             }
         }
 
+        public IMultiManagedCommand SubRecentCommands
+        {
+            get
+            {
+                return new MultiManagedCommand()
+                {
+                    Commands = () =>
+                    {
+                        var collection = new Collection<ISubCommand>();
+                        foreach(var panel in DynamicPanelSelection.Value) {
+                            collection.Add(new SubCommand()
+                            {
+                                CanExecuteHandler = () => Int32.TryParse(panel.DisplayText, out Int32 number) && number < 5,
+                                ExecuteHandler = () => MessageBox.Show(panel.DisplayText),
+                                Metadata = new SubCommandMetadataCollection()
+                                {
+                                    new SubMainMenuOption()
+                                    {
+                                        new Description($"Show {panel.DisplayText}"),
+                                        new ToolTip($"{panel.DisplayText}")
+                                    },
+                                }
+                            });
+                        }
+                        return collection;
+                    },
+
+                    Metadata = new MultiCommandMetadataCollection()
+                    {
+                        new MultiMainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.SubRecent, 0, 0)
+                        },
+                        new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
+                    }
+                };
+            }
+        }
+
         public IManagedCommand Change6
         {
             get

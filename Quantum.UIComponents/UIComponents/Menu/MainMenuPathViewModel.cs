@@ -1,8 +1,10 @@
 ﻿using Microsoft.Practices.Composite.Presentation.Events;
 using Quantum.Command;
+using Quantum.Common;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +21,19 @@ namespace Quantum.UIComponents
         public string Icon => MenuPath.Icon?.IconPath;
         public string ToolTip => MenuPath.ToolTip?.Value;
 
-        public IEnumerable<IMainMenuItemViewModel> Children => CreateChildren();
+        private IEnumerable<IMainMenuItemViewModel> CreatedChildren { get; private set; }
+        public IEnumerable<IMainMenuItemViewModel> Children
+        {
+            get
+            {
+                if(CreatedChildren != null) {
+                    TearDownChildren();
+                }
+                var children = CreateChildren();
+                CreatedChildren = children;
+                return children;
+            }
+        }
 
         #endregion Properties
 
@@ -83,7 +97,19 @@ namespace Quantum.UIComponents
 
 
         #region Misc
-        
+
+        internal IList<Subscription> InvalidationSubscriptions { get; } = new List<Subscription>();
+
+        private void SubscribeToInvalidationEvent(Type eventType)
+        {
+            var token = EventAggregator.Subscribe(eventType, () => RaisePropertyChanged(() => Children), ThreadOption.UIThread, true);
+            InvalidationSubscriptions.Add(new Subscription()
+            {
+                Event = EventAggregator.GetEvent(eventType), 
+                Token = token,
+            });
+        }
+
         private void SubscribeToMultiCommandChildrenAutoInvalidationEvents()
         {
             var childMultiCommandsMetadata = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath).
@@ -91,8 +117,27 @@ namespace Quantum.UIComponents
 
             foreach (var metadata in childMultiCommandsMetadata)
             {
-                metadata.IfIs((AutoInvalidateOnEvent e) => EventAggregator.Subscribe(e.EventType, () => RaisePropertyChanged(() => Children), ThreadOption.UIThread, true));
-                metadata.IfIs((AutoInvalidateOnSelection s) => EventAggregator.Subscribe(s.SelectionType, () => RaisePropertyChanged(() => Children), ThreadOption.UIThread, true));
+                metadata.IfIs((AutoInvalidateOnEvent e) => SubscribeToInvalidationEvent(e.EventType));
+                metadata.IfIs((AutoInvalidateOnSelection s) => SubscribeToInvalidationEvent(s.SelectionType));
+            }
+        }
+        
+        internal void TearDownChildren()
+        {
+            if (CreatedChildren == null) return;
+
+            var initializedChildren = CreatedChildren.OfType<IInitializableObject>();
+            foreach(var child in initializedChildren) {
+                child.TearDown();
+            }
+
+            var pathChildren = initializedChildren.OfType<MainMenuPathViewModel>();
+            foreach(var child in pathChildren) {
+                foreach(var subscription in child.InvalidationSubscriptions) {
+                    subscription.Event.Unsubscribe(subscription.Token);
+                }
+                child.InvalidationSubscriptions.Clear();
+                child.TearDownChildren();
             }
         }
 

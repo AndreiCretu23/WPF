@@ -18,6 +18,7 @@ namespace WPF.Commands
         public static readonly AbstractMenuPath Yolo2 = new AbstractMenuPath(Category3To4, new Description("Yolo"), 2, 1);
         public static readonly AbstractMenuPath SubCat3To4 = new AbstractMenuPath(Category3To4, new Description("SubCategory"), 1, 3);
         public static readonly AbstractMenuPath Recent = new AbstractMenuPath(File, new Description("Recent"), 2, 1);
+        public static readonly AbstractMenuPath SubRecent = new AbstractMenuPath(Recent, new Description("SubCategory"), 1, 0);
 
         public static readonly AbstractMenuPath Category8To10 = new AbstractMenuPath(Edit, new Description("8To10"), 1, 2);
 
