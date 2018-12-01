@@ -68,8 +68,8 @@
     <Compile Include="Commanding\CommandManager\CommandCache.cs" />
     <Compile Include="Commanding\CommandManager\CommandManagerService.cs" />
     <Compile Include="Commanding\CommandManager\ICommandManagerService.cs" />
-    <Compile Include="Commanding\CommandMetadataProcessor\CommandMetadataProcessorService.cs" />
-    <Compile Include="Commanding\CommandMetadataProcessor\ICommandMetadataProcessorService.cs" />
+    <Compile Include="Commanding\CommandMetadataProcessor\CommandInvalidationManagerService.cs" />
+    <Compile Include="Commanding\CommandMetadataProcessor\ICommandInvalidationManagerService.cs" />
     <Compile Include="Commanding\CommandModel\DependencyMetadataOwnerCommand.cs" />
     <Compile Include="Commanding\CommandModel\MultiDependencyCommand.cs" />
     <Compile Include="Commanding\CommandModel\MultiDependencyMetadataOwnerCommand.cs" />

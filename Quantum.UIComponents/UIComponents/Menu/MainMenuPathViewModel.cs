@@ -21,7 +21,7 @@ namespace Quantum.UIComponents
         public string Icon => MenuPath.Icon?.IconPath;
         public string ToolTip => MenuPath.ToolTip?.Value;
 
-        private IEnumerable<IMainMenuItemViewModel> CreatedChildren { get; private set; }
+        private IEnumerable<IMainMenuItemViewModel> CreatedChildren { get; set; }
         public IEnumerable<IMainMenuItemViewModel> Children
         {
             get

@@ -16,7 +16,7 @@ namespace Quantum.Command
         public IMetadataAsserterService MetadataAsserter { get; set; }
 
         [Service]
-        public ICommandMetadataProcessorService CommandMetadataProcessor { get; set; }
+        public ICommandInvalidationManagerService InvalidationManager { get; set; }
         
         private CommandCache CachedCommands { get; set; } = new CommandCache();
         public IEnumerable<object> Commands { get => CachedCommands.GetCommands(); }
@@ -74,7 +74,7 @@ namespace Quantum.Command
             containerManagedCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
-                CommandMetadataProcessor.ProcessMetadata(c, cmd => cmd.Metadata);
+                InvalidationManager.ProcessInvalidators(c);
             });
 
             containerMultiManagedCommands.ForEach(c =>
@@ -85,9 +85,9 @@ namespace Quantum.Command
                     computedCommands.ForEach(_ =>
                     {
                         MetadataAsserter.AssertMetadataCollectionProperties(_, $"{commandNames[c]} -> ComputedCommands");
-                        CommandMetadataProcessor.ProcessMetadata(_, subCmd => subCmd.Metadata);
                     });
                 };
+                InvalidationManager.ProcessInvalidators(c);
             });
             
             containerManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));

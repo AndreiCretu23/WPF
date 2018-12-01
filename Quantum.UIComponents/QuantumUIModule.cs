@@ -17,7 +17,7 @@ namespace Quantum.UIComponents
             container.RegisterService<IMetadataAsserterService, MetadataAsserterService>();
 
             //Command
-            container.RegisterService<ICommandMetadataProcessorService, CommandMetadataProcessorService>();
+            container.RegisterService<ICommandInvalidationManagerService, CommandInvalidationManagerService>();
             container.RegisterService<ICommandManagerService, CommandManagerService>();
             container.Resolve<IObjectInitializationService>().RegisterInitializer<CommandInitializer>();
 
