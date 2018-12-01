@@ -9,6 +9,8 @@ namespace WPF.Commands
 {
     public interface ICommonCommands : ICommandContainer
     {
+        IManagedCommand RemoveLastPanel { get; }
+
         IManagedCommand Qwerty { get; }
         IManagedCommand Yolo1Command { get; }
         IManagedCommand Yolo2Command { get; }

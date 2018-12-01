@@ -115,10 +115,11 @@ namespace WPF
                 new DynamicPanelConfiguration<IDynamicPanelViewModel>()
                 {
                     CanFloat = o => true,
-                    Title = o => $"DynamicPanel{o.SafeCast<IIdentifiable>().Guid}",
+                    Title = o => $"DynamicPanel{o.SafeCast<IIdentifiable>().Guid}{container.Resolve<SelectedNumber>().Value.ToString()}",
                     Placement = PanelPlacement.Center,
                 },
-                new PanelSelectionBinding(typeof(DynamicPanelSelection))
+                new PanelSelectionBinding(typeof(DynamicPanelSelection)),
+                new AutoInvalidateOnSelection(typeof(SelectedNumber))
             };
         }
 

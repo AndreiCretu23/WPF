@@ -20,6 +20,9 @@ namespace WPF.Commands
         [Selection]
         public SelectedNumber Number { get; set; }
 
+        [Selection]
+        public DynamicPanelSelection DynamicPanelSelection { get; set; }
+
         public CommonCommands(IObjectInitializationService initSvc)
             : base(initSvc)
         {
@@ -61,6 +64,34 @@ namespace WPF.Commands
                             new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.adobe.aftereffects.png"),
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.N)
+                    }
+                };
+            }
+        }
+
+        public IManagedCommand RemoveLastPanel
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    CanExecuteHandler = () => true,
+                    ExecuteHandler = () =>
+                    {
+                        var lastValue = DynamicPanelSelection.Value.LastOrDefault();
+                        if(lastValue != null) {
+                            DynamicPanelSelection.Remove(lastValue);
+                        }
+                    },
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 100),
+                            new Description("Remove DPanel"),
+                        },
+
+                        new KeyShortcut(ModifierKeys.Control, Key.R),
                     }
                 };
             }
