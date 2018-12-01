@@ -126,7 +126,7 @@ namespace Quantum.UIComponents
         {
             if (CreatedChildren == null) return;
 
-            var initializedChildren = CreatedChildren.OfType<IInitializableObject>();
+            var initializedChildren = CreatedChildren.OfType<IInitializableObject>().Where(o => o.IsInitialized);
             foreach(var child in initializedChildren) {
                 child.TearDown();
             }
