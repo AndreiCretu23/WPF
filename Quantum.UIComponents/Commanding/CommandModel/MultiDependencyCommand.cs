@@ -13,36 +13,56 @@ namespace Quantum.Command
     public abstract class MultiDependencyCommand<T, TCommand> : IMultiDependencyCommand<TCommand>
         where TCommand : IDependencyCommand
     {
+        private IEnumerable<TCommand> subCommands;
+        private Func<T, IEnumerable<TCommand>> commands = null;
+        
+
         /// <summary>
         /// Returns the dependency type of the command type associated with this MultiDependencyCommand.
         /// </summary>
         public Type DependencyType { get { return typeof(T); } }
         
-
+        
         /// <summary>
-        /// Occurs when the set of commands have been computed from the command getter delegate.
+        /// Returns the last computed command set.
         /// </summary>
-        public event Action<IEnumerable<TCommand>> OnCommandsComputed;
+        public IEnumerable<TCommand> SubCommands { get { return null; } }
+
 
         /// <summary>
         /// A publicly settable delegate which computes the sub-dependency commands associated with this MultiDependencyCommand.
         /// </summary>
-        public Func<T, IEnumerable<TCommand>> Commands { private get; set; } = o => Enumerable.Empty<TCommand>();
+        public Func<T, IEnumerable<TCommand>> Commands
+        {
+            private get { return commands; }
+            set { subCommands = null; commands = value; }
+        }
+
 
         /// <summary>
-        /// Computes the commands using the "Commands" delegate, notifies the listenes that the set of sub-dependency commands associated 
-        /// with this MultiDependencyCommand has been generated and then returns the resulted commands.
+        /// Occurs when the set of commands have been computed from the command getter delegate. 
+        /// The first parameter represents the old command set, and the second parameter represents the new comand set.
         /// </summary>
-        /// <returns></returns>
-        public IEnumerable<TCommand> ComputeCommands(object o)
+        public event Action<IEnumerable<TCommand>, IEnumerable<TCommand>> OnCommandsComputed;
+
+
+        /// <summary>
+        /// Computes the commands using the "Commands" delegate and notifies the listenes that the set of sub-dependency commands associated 
+        /// with this MultiDependencyCommand has been generated.
+        /// </summary>
+        public void ComputeCommands(object o)
         {
-            var commands = Commands?.Invoke((T)o) ?? Enumerable.Empty<TCommand>();
-            if(commands.Any(cmd => cmd.DependencyType != DependencyType))
-            {
+            var newCommands = Commands?.Invoke((T)o) ?? Enumerable.Empty<TCommand>();
+            var oldCommands = subCommands ?? Enumerable.Empty<TCommand>();
+
+            if(newCommands.Any(cmd => cmd.DependencyType != DependencyType)) {
                 throw new Exception($"Error : The dependency type of all the dependency commands returned by the getter delegate must match the dependency type of the MultiDependencyCommand.");
             }
-            OnCommandsComputed?.Invoke(commands);
-            return commands;
+
+            subCommands = newCommands;
+            OnCommandsComputed?.Invoke(oldCommands, newCommands);
         }
+
+
     }
 }

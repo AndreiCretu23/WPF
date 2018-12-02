@@ -73,7 +73,7 @@ namespace Quantum.UIComponents
 
                     entry.Value.IfIs((IMultiManagedCommand c) =>
                     {
-                        var subCommands = c.ComputeCommands().Where(subCmd => subCmd.Metadata.OfType<SubMainMenuOption>().Any());
+                        var subCommands = c.SubCommands.Where(subCmd => subCmd.Metadata.OfType<SubMainMenuOption>().Any());
                         foreach (var subCommand in subCommands)
                         {
                             children.Add(new MainMenuSubCommandViewModel(InitializationService, CommandExtractor, subCommand));
@@ -97,47 +97,34 @@ namespace Quantum.UIComponents
 
 
         #region Misc
-
-        internal IList<Subscription> InvalidationSubscriptions { get; } = new List<Subscription>();
-
-        private void SubscribeToInvalidationEvent(Type eventType)
+        
+        private void MultiCommandInvalidationDelegate(IEnumerable<ISubCommand> oldCommands, IEnumerable<ISubCommand> newCommands)
         {
-            var token = EventAggregator.Subscribe(eventType, () => RaisePropertyChanged(() => Children), ThreadOption.UIThread, true);
-            InvalidationSubscriptions.Add(new Subscription()
-            {
-                Event = EventAggregator.GetEvent(eventType), 
-                Token = token,
-            });
+            RaisePropertyChanged(() => Children);
         }
 
         private void SubscribeToMultiCommandChildrenAutoInvalidationEvents()
         {
-            var childMultiCommandsMetadata = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath).
-                                                                  SelectMany(c => c.Metadata);
+            var childMultiCommands = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            foreach(var multiCommand in childMultiCommands) {
+                multiCommand.OnCommandsComputed += MultiCommandInvalidationDelegate;
+            }
+        }
 
-            foreach (var metadata in childMultiCommandsMetadata)
-            {
-                metadata.IfIs((AutoInvalidateOnEvent e) => SubscribeToInvalidationEvent(e.EventType));
-                metadata.IfIs((AutoInvalidateOnSelection s) => SubscribeToInvalidationEvent(s.SelectionType));
+        internal void UnsubscribeToMultiCommandChildrenAutoInvalidationEvents()
+        {
+            var childMultiCommands = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            foreach(var multiCommand in childMultiCommands) {
+                multiCommand.OnCommandsComputed -= MultiCommandInvalidationDelegate;
             }
         }
         
         internal void TearDownChildren()
         {
-            if (CreatedChildren == null) return;
-
-            var initializedChildren = CreatedChildren.OfType<IInitializableObject>().Where(o => o.IsInitialized);
-            foreach(var child in initializedChildren) {
-                child.TearDown();
-            }
-
-            var pathChildren = initializedChildren.OfType<MainMenuPathViewModel>();
-            foreach(var child in pathChildren) {
-                foreach(var subscription in child.InvalidationSubscriptions) {
-                    subscription.Event.Unsubscribe(subscription.Token);
-                }
-                child.InvalidationSubscriptions.Clear();
+            var pathViewModelChildren = CreatedChildren.OfType<MainMenuPathViewModel>();
+            foreach(var child in pathViewModelChildren) {
                 child.TearDownChildren();
+                child.UnsubscribeToMultiCommandChildrenAutoInvalidationEvents();
             }
         }
 

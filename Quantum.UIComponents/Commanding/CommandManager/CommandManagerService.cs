@@ -80,9 +80,9 @@ namespace Quantum.Command
             containerMultiManagedCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
-                c.OnCommandsComputed += computedCommands =>
+                c.OnCommandsComputed += (oldCommands, newCommands) =>
                 {
-                    computedCommands.ForEach(_ =>
+                    newCommands.ForEach(_ =>
                     {
                         MetadataAsserter.AssertMetadataCollectionProperties(_, $"{commandNames[c]} -> ComputedCommands");
                     });

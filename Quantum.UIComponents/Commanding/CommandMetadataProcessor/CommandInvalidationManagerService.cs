@@ -46,21 +46,25 @@ namespace Quantum.Command
 
         private void ProcessMultiManagedCommandInvalidators(IMultiManagedCommand multiManagedCommand)
         {
-            multiManagedCommand.OnCommandsComputed += subCommands =>
+            multiManagedCommand.OnCommandsComputed += (oldCommands, newCommands) =>
             {
-                var previousInvalidationSubscriptions = MultiCommandsSubscriptions.Where(o => o.Object == multiManagedCommand).ToList();
-                foreach (var subscription in previousInvalidationSubscriptions) {
+                var associatedInvalidationSubscriptions = MultiCommandsSubscriptions.Where(o => oldCommands.Contains(o.Object)).ToList();
+                foreach(var subscription in associatedInvalidationSubscriptions) {
                     subscription.Event.Unsubscribe(subscription.Token);
-                    MultiCommandsSubscriptions.Remove(subscription);
                 }
-                
-                foreach(var subCommand in subCommands) {
-                    foreach(var metadata in subCommand.Metadata) {
-                        metadata.IfIs((AutoInvalidateOnEvent e) => MultiCommandsSubscriptions.Add(new Subscription() {  Event = EventAggregator.GetEvent(e.EventType), Object = multiManagedCommand, Token = EventAggregator.Subscribe(e.EventType, () => subCommand.RaiseCanExecuteChanged(), ThreadOption.UIThread, true) }));
-                        metadata.IfIs((AutoInvalidateOnSelection s) => MultiCommandsSubscriptions.Add(new Subscription() { Event = EventAggregator.GetEvent(s.SelectionType), Object = multiManagedCommand, Token = EventAggregator.Subscribe(s.SelectionType, () => subCommand.RaiseCanExecuteChanged(), ThreadOption.UIThread, true) }));
+
+                foreach(var command in newCommands) {
+                    foreach(var metadata in command.Metadata) {
+                        metadata.IfIs((AutoInvalidateOnEvent e) => MultiCommandsSubscriptions.Add(new Subscription() { Event = EventAggregator.GetEvent(e.EventType), Object = command, Token = EventAggregator.Subscribe(e.EventType, () => command.RaiseCanExecuteChanged(), ThreadOption.UIThread, true) }));
+                        metadata.IfIs((AutoInvalidateOnSelection s) => MultiCommandsSubscriptions.Add(new Subscription() { Event = EventAggregator.GetEvent(s.SelectionType), Object = command, Token = EventAggregator.Subscribe(s.SelectionType, () => command.RaiseCanExecuteChanged(), ThreadOption.UIThread, true) }));
                     }
                 }
             };
+
+            foreach(var metadata in multiManagedCommand.Metadata) {
+                metadata.IfIs((AutoInvalidateOnEvent e) => EventAggregator.Subscribe(e.EventType, () => multiManagedCommand.ComputeCommands(), ThreadOption.UIThread, true));
+                metadata.IfIs((AutoInvalidateOnSelection s) => EventAggregator.Subscribe(s.SelectionType, () => multiManagedCommand.ComputeCommands(), ThreadOption.UIThread, true));
+            }
         }
     }
 }

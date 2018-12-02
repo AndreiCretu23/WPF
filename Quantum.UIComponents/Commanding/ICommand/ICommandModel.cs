@@ -97,16 +97,21 @@ namespace Quantum.Command
         where TCommand : IStaticCommand
     {
         /// <summary>
-        /// Occurs when the set of commands have been computed from the command getter delegate.
+        /// Returns the last computed command set.
         /// </summary>
-        event Action<IEnumerable<TCommand>> OnCommandsComputed;
+        IEnumerable<TCommand> SubCommands { get; }
 
         /// <summary>
-        /// Computes the commands using the "Commands" delegate, notifies the listenes that the set of sub-static commands associated 
-        /// with this MultiStaticCommand has been generated and then returns the resulted commands.
+        /// Occurs when the set of commands have been computed from the command getter delegate. 
+        /// The first parameter represents the old command set, and the second parameter represents the new comand set.
         /// </summary>
-        /// <returns></returns>
-        IEnumerable<TCommand> ComputeCommands();
+        event Action<IEnumerable<TCommand>, IEnumerable<TCommand>> OnCommandsComputed;
+
+        /// <summary>
+        /// Computes the commands using the "Commands" delegate and notifies the listenes that the set of sub-static commands associated 
+        /// with this MultiStaticCommand has been generated.
+        /// </summary>
+        void ComputeCommands();
     }
 
     /// <summary>
@@ -139,16 +144,21 @@ namespace Quantum.Command
         where TCommand : IDependencyCommand
     {
         /// <summary>
-        /// Occurs when the set of commands have been computed from the command getter delegate.
+        /// Returns the last computed command set.
         /// </summary>
-        event Action<IEnumerable<TCommand>> OnCommandsComputed;
+        IEnumerable<TCommand> SubCommands { get; }
 
         /// <summary>
-        /// Computes the commands using the "Commands" delegate, notifies the listenes that the set of sub-dependency commands associated 
-        /// with this MultiDependencyCommand has been generated and then returns the resulted commands.
+        /// Occurs when the set of commands have been computed from the command getter delegate. 
+        /// The first parameter represents the old command set, and the second parameter represents the new comand set.
         /// </summary>
-        /// <returns></returns>
-        IEnumerable<TCommand> ComputeCommands(object o);
+        event Action<IEnumerable<TCommand>, IEnumerable<TCommand>> OnCommandsComputed;
+
+        /// <summary>
+        /// Computes the commands using the "Commands" delegate and notifies the listenes that the set of sub-dependency commands associated 
+        /// with this MultiDependencyCommand has been generated.
+        /// </summary>
+        void ComputeCommands(object o);
 
         /// <summary>
         /// Returns the dependency type of the command type associated with this MultiDependencyCommand.
