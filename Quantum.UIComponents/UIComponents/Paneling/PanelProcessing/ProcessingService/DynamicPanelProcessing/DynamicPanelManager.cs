@@ -158,7 +158,7 @@ namespace Quantum.UIComponents
             }
 
             var viewModel = anchorable.Content.SafeCast<UserControl>().DataContext;
-            if(viewModel is IInitializableObject initializableObject) {
+            if(viewModel is IInitializableObject initializableObject && initializableObject.IsInitialized) {
                 initializableObject.TearDown();
             }
 
