@@ -107,9 +107,7 @@ namespace Quantum.UIComponents
 
 
         #region PanelManagement
-
         
-
         private void AddDynamicPanel(LayoutAnchorable anchorable)
         {
             var container = GetPrefferedLayoutContainer();
