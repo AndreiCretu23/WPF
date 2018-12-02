@@ -108,29 +108,7 @@ namespace Quantum.UIComponents
 
         #region PanelManagement
 
-        [SuppressMessage("Microsoft.Design", "IDE0039")]
-        private void ResolveDynamicPanelDependencies(LayoutAnchorable anchorable)
-        {
-            var invalidationSubscriptions = ProcessInvalidators(anchorable);
-            foreach (var subscription in invalidationSubscriptions) {
-                InvalidationSubscriptions.Add(subscription);
-            }
-
-            InvalidateDynamicPanel(anchorable);
-
-            EventHandler<CancelEventArgs> OnRemove = null;
-            OnRemove = (sender, e) =>
-            {
-                var viewModel = sender.SafeCast<LayoutAnchorable>().Content.SafeCast<UserControl>().DataContext;
-                ViewModelSelection.Remove(viewModel);
-                if (viewModel is IInitializableObject initializable && initializable.IsInitialized) {
-                    initializable.TearDown();
-                }
-                anchorable.Hiding -= OnRemove;
-            };
-
-            anchorable.Hiding += OnRemove;
-        }
+        
 
         private void AddDynamicPanel(LayoutAnchorable anchorable)
         {
@@ -157,11 +135,14 @@ namespace Quantum.UIComponents
                 InvalidationSubscriptions.Remove(subscription);
             }
 
-            var viewModel = anchorable.Content.SafeCast<UserControl>().DataContext;
+            var view = anchorable.Content.SafeCast<UserControl>();
+            var viewModel = view.DataContext;
+            view.DataContext = null;
             if(viewModel is IInitializableObject initializableObject && initializableObject.IsInitialized) {
                 initializableObject.TearDown();
             }
 
+            anchorable.Hiding -= OnRemoveHandler;
             if(anchorable.GetRoot() == DockingView.DockingManager.Layout) {
                 anchorable.Close();
             }
@@ -259,6 +240,37 @@ namespace Quantum.UIComponents
                 };
             }
         }
+
+        private EventHandler<CancelEventArgs> onRemoveHandler;
+        private EventHandler<CancelEventArgs> OnRemoveHandler
+        {
+            get
+            {
+                if(onRemoveHandler == null) {
+                    onRemoveHandler = new EventHandler<CancelEventArgs>((sender, e) =>
+                    {
+                        var anchorable = sender.SafeCast<LayoutAnchorable>();
+                        var viewModel = anchorable.Content.SafeCast<UserControl>().DataContext;
+                        ViewModelSelection.Remove(viewModel);
+                    });
+                }
+                return onRemoveHandler;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Design", "IDE0039")]
+        private void ResolveDynamicPanelDependencies(LayoutAnchorable anchorable)
+        {
+            var invalidationSubscriptions = ProcessInvalidators(anchorable);
+            foreach (var subscription in invalidationSubscriptions) {
+                InvalidationSubscriptions.Add(subscription);
+            }
+
+            InvalidateDynamicPanel(anchorable);
+            anchorable.Hiding += OnRemoveHandler;
+        }
+
+
 
         #endregion ContentOperations
 
