@@ -63,7 +63,8 @@ namespace WPF.Commands
                             new Description("Open Dialog"),
                             new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.adobe.aftereffects.png"),
                         },
-                        new KeyShortcut(ModifierKeys.Control, Key.N)
+                        new KeyShortcut(ModifierKeys.Control, Key.N),
+                        new CommandGuid("F6FB6107-D1CA-4C04-B1EE-8D31BC37454A"),
                     }
                 };
             }
@@ -92,6 +93,7 @@ namespace WPF.Commands
                         },
 
                         new KeyShortcut(ModifierKeys.Control, Key.R),
+                        new CommandGuid("67520506-1500-4D5A-AAE7-E27F765E438A"),
                     }
                 };
             }
@@ -112,7 +114,8 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.SubCat3To4, 0, 0),
                             new Description("qwerty"),
                         },
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("2079C609-5303-4290-B46A-A3D641361F07"),
                     },
                 };
             }
@@ -128,7 +131,8 @@ namespace WPF.Commands
                     {
                         new MenuPath(MenuLocations.Yolo2, 1, 1),
                         new Description("Yolo2"),
-                    }
+                    },
+                    new CommandGuid("0CCACCB6-169F-4F60-A3C4-4F3520709477"),
                 }
             };
 
@@ -148,8 +152,8 @@ namespace WPF.Commands
                         new MenuPath(MenuLocations.Yolo1, 1, 1),
                         new Description("Yolo1"),
                     }, 
-                    //new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
-                    new AutoInvalidateOnSelection<DynamicPanelSelection, IEnumerable<IDynamicPanelViewModel>>()
+                    new AutoInvalidateOnSelection<DynamicPanelSelection, IEnumerable<IDynamicPanelViewModel>>(),
+                    new CommandGuid("221125A9-2FA8-49F4-A9FA-02654E88A200"),
                 }
             };
         
@@ -170,7 +174,8 @@ namespace WPF.Commands
                             new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.camera.flash.selected.png")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D1),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("6A518A86-DEFD-46D7-922F-94C941DC7B97"),
                     },
                 };
             }
@@ -191,7 +196,8 @@ namespace WPF.Commands
                             new Description("Change2")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D2),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("168ED7AB-6B7F-40F6-B1D5-14ABAEE90D1D"),
                     },
                 };
             }
@@ -212,7 +218,8 @@ namespace WPF.Commands
                             new Description("Change3")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D3),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("9756C01B-34CF-472B-A16F-A4BE3E464811"),
                     }
                 };
             }
@@ -233,7 +240,8 @@ namespace WPF.Commands
                             new Description("Change4")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D4),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("B4D85D20-3ACE-4392-BD63-E307831AEDDB"),
                     }
                 };
             }
@@ -254,6 +262,7 @@ namespace WPF.Commands
                             new Description("Change5"),
                         },
                         new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("159ED877-1B2F-4338-B25C-1D46DCF2634F")
                     }
                 };
             }
@@ -355,6 +364,7 @@ namespace WPF.Commands
                             new Description("Change6"),
                         },
                         new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("E447751D-7ECE-43BA-8736-9C67E5093F2C"),
                     }
                 };
             }
@@ -375,7 +385,8 @@ namespace WPF.Commands
                             new Description("Change7")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D7),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("178DF1F5-70F2-4682-951D-5DEBFA0548E2"),
                     }
                 };
             }
@@ -396,7 +407,8 @@ namespace WPF.Commands
                             new Description("Change8")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D8),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("EEF55F74-4850-498B-B02B-A6B0C37337CC"),
                     }
                 };
             }
@@ -417,7 +429,8 @@ namespace WPF.Commands
                             new Description("Change9")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D9),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("490E5F3C-43C5-4642-88AE-809EB8B94BB8"),
                     }
                 };
             }
@@ -437,7 +450,8 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.Category8To10, 2, 1),
                             new Description("Change10"),
                         },
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("E35E88BF-6496-4459-98BA-1776796D4976"),
                     }
                 };
             }
@@ -459,7 +473,8 @@ namespace WPF.Commands
                             new Checkable(true),
                             new CheckChanged(o => MessageBox.Show(o ? "Yey" : "Nay")),
                         },
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("0584D896-63B5-46EA-9413-617ADC3E6C87"),
                     }
                 };
             }
@@ -478,7 +493,8 @@ namespace WPF.Commands
                     Metadata = new CommandMetadataCollection()
                     {
                         new KeyShortcut(ModifierKeys.Control, Key.H),
-                        new AutoInvalidateOnSelection<SelectedNumber, int>()
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                        new CommandGuid("F27015BA-A83E-4EE7-8FD2-3511119B6293"),
                     }
                 };
             }
