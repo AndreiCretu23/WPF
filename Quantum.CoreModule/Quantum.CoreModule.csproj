@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\IAssertable.cs" />
+    <Compile Include="Common\IDestructible.cs" />
     <Compile Include="Common\IIdentifiable.cs" />
     <Compile Include="Config\ConfigManagerService.cs" />
     <Compile Include="Config\ConfigSerializer.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Events\ShutdownEvent.cs" />
     <Compile Include="Events\UnhandledExceptionEvent.cs" />
     <Compile Include="Modularity\FrameworkConfig.cs" />
-    <Compile Include="Modularity\IInitializableObject.cs" />
     <Compile Include="Modularity\IQuantumModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selection\MultipleSelection\IMultipleSelection.cs" />

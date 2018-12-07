@@ -141,8 +141,8 @@ namespace Quantum.UIComponents
             var view = anchorable.Content.SafeCast<UserControl>();
             var viewModel = view.DataContext;
             view.DataContext = null;
-            if(viewModel is IInitializableObject initializableObject && initializableObject.IsInitialized) {
-                initializableObject.TearDown();
+            if(viewModel is IDestructible destructible) {
+                destructible.TearDown();
             }
 
             anchorable.Hiding -= OnRemoveHandler;
