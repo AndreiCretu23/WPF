@@ -27,7 +27,7 @@ namespace Quantum.UIComponents
         /// <summary>
         /// Tears down all services/events/selections initialized by the IObjectInitializationService
         /// </summary>
-        public void TearDown()
+        public virtual void TearDown()
         {
             InitializationService.TeardownAll(this);
         }

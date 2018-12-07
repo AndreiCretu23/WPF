@@ -23,7 +23,7 @@ namespace Quantum.Services
         /// <summary>
         /// Tears down all services/event/selections initialized by the IObjectInitializationService
         /// </summary>
-        public void TearDown()
+        public virtual void TearDown()
         {
             InitializationService.TeardownAll(this);
         }
