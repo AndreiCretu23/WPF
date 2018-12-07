@@ -45,6 +45,7 @@
             <MenuItem Icon="{Binding Icon, Converter={StaticResource iconConverter}}"
                       Header="{Binding Header}"
                       ToolTip="{Binding ToolTip}"
+                      InputGestureText="{Binding Shortcut}"
                       Command="{Binding BringIntoView}"/>
         </DataTemplate>
         

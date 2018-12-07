@@ -35,23 +35,12 @@ namespace Quantum.UIComponents
         public ResizeMode ResizeMode { get { return SelectedResizeMode.Value; } }
         
         #endregion Config
-
-        public IEnumerable<KeyBinding> Shortcuts
-        {
-            get
-            {
-                var managedCommands = CommandManager.ManagedCommands;
-                foreach(var command in managedCommands) {
-                    foreach(var shortcut in command.Metadata.OfType<KeyShortcut>()) {
-                        yield return new KeyBinding(command, new KeyGesture(shortcut.Key, shortcut.ModifierKeys));
-                    }
-                }
-            }
-        }
         
+
         public IMainMenuViewModel MainMenuViewModel { get; set; }
         public IToolBarContainerViewModel ToolBarContainerViewModel { get; set; }
         public IDockingView DockingView { get; set; }
+        public IShellShortcutsViewModel ShortcutsViewModel { get; set; }
 
         public ShellViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -59,6 +48,7 @@ namespace Quantum.UIComponents
             MainMenuViewModel = new MainMenuViewModel(initSvc);
             ToolBarContainerViewModel = new ToolBarContainerViewModel(initSvc);
             DockingView = Container.Resolve<IDockingView>();
+            ShortcutsViewModel = new ShellShortcutsViewModel(initSvc);
         }
         
     }

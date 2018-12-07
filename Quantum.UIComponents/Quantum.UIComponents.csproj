@@ -109,6 +109,7 @@
     <Compile Include="Metadata\MetadataDefinitions\MetadataAttributes.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidation.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AvalonMetadata.cs" />
+    <Compile Include="Metadata\MetadataDefinitions\Metadata\BringIntoViewOnKeyShortcut.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\Checkable.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\CheckChanged.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\CommandGuid.cs" />
@@ -194,6 +195,8 @@
     </Compile>
     <Compile Include="UIComponents\Shell\ShellViewModel.cs" />
     <Compile Include="QuantumUIModule.cs" />
+    <Compile Include="UIComponents\Shortcuts\IShellShortcutsViewModel.cs" />
+    <Compile Include="UIComponents\Shortcuts\ShellShortcutsViewModel.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarContainerView\IToolBarContainerView.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarContainerView\IToolBarContainerViewModel.cs" />
     <Compile Include="UIComponents\Toolbar\ToolBarContainerView\ToolBarContainerView.xaml.cs">

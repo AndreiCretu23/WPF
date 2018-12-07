@@ -13,7 +13,8 @@ namespace Quantum.UIComponents
         public string Header => CommandExtractor.GetPanelMenuOptionMetadata<Description>(PanelDefinition)?.Value;
         public string ToolTip => CommandExtractor.GetPanelMenuOptionMetadata<ToolTip>(PanelDefinition)?.Value;
         public string Icon => CommandExtractor.GetPanelMenuOptionMetadata<Icon>(PanelDefinition)?.IconPath;
-        
+        public string Shortcut => PanelDefinition.OfType<BringIntoViewOnKeyShortcut>().SingleOrDefault()?.GetInputGestureText() ?? string.Empty;
+
         public IDelegateCommand BringIntoView
         {
             get

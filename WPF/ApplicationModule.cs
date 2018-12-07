@@ -8,6 +8,7 @@ using Quantum.Services;
 using Quantum.UIComponents;
 using Quantum.Utils;
 using System.Collections.Generic;
+using System.Windows.Input;
 using WPF.Commands;
 using WPF.Dialogs;
 using WPF.Panels;
@@ -88,6 +89,7 @@ namespace WPF
                     new MenuPath(MenuLocations.View, 0, 0), 
                     new Description("ActivePanel")
                 }, 
+                new BringIntoViewOnKeyShortcut(ModifierKeys.Control | ModifierKeys.Alt, Key.A),
             };
 
             yield return new StaticPanelDefinition<ISelectionPanelView, SelectionPanelView, ISelectionPanelViewModel, SelectionPanelViewModel>()
@@ -107,7 +109,8 @@ namespace WPF
                     new Description("SelectionPanel")
                 },
 
-                new AutoInvalidateOnSelection<SelectedNumber, int>()
+                new AutoInvalidateOnSelection<SelectedNumber, int>(),
+                new BringIntoViewOnKeyShortcut(ModifierKeys.Control | ModifierKeys.Alt, Key.S)
             };
 
             yield return new DynamicPanelDefinition<IDynamicPanelView, DynamicPanelView, IDynamicPanelViewModel, DynamicPanelViewModel>()
