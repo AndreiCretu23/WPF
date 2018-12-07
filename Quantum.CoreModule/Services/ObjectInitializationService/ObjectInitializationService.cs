@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -56,7 +57,7 @@ namespace Quantum.Services
 
         public ObjectInitializationService(IUnityContainer container)
         {
-            this.Container = container;
+            Container = container;
             RegisteredInitializers = new List<IObjectInitializer>();
         }
 
@@ -71,7 +72,9 @@ namespace Quantum.Services
         public void RegisterInitializer<TInitializer>()
             where TInitializer : IObjectInitializer, new()
         {
-            if (this.RegisteredInitializers.OfType<TInitializer>().Any()) return;
+            if (RegisteredInitializers.OfType<TInitializer>().Any()) {
+                throw new Exception($"Error : ObjectInitializer {typeof(TInitializer).Name} has already been registered in the ObjectInitializationService.");
+            }
 
             RegisteredInitializers.Add(new TInitializer()
             {
@@ -82,7 +85,7 @@ namespace Quantum.Services
         public void UnregisterInitializer<TInitializer>()
             where TInitializer : IObjectInitializer, new()
         {
-            var unregisterRequest = this.RegisteredInitializers.OfType<TInitializer>().ToList();
+            var unregisterRequest = RegisteredInitializers.OfType<TInitializer>().ToList();
 
             foreach (var initializer in unregisterRequest)
             {
