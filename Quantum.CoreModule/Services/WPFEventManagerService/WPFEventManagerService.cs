@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Quantum.Events;
+using System;
 using System.Windows;
-using Quantum.Events;
 
 namespace Quantum.Services
 {

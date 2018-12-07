@@ -1,10 +1,8 @@
 ﻿using Microsoft.Practices.Composite.Events;
-using Microsoft.Practices.Composite.Presentation.Events;
 using Microsoft.Practices.Unity;
 using Quantum.Common;
 using Quantum.Services;
 using Quantum.UIComposition;
-using System.Linq;
 
 namespace Quantum.UIComponents
 {
@@ -25,7 +23,8 @@ namespace Quantum.UIComponents
         }
         
         /// <summary>
-        /// Tears down all services/events/selections initialized by the IObjectInitializationService
+        /// Tears down all injected services/selection and subscribed event handlers initialized by the IObjectInitializationService.
+        /// Gets called by various components of the framework when the UIElement associated with this ViewModel is disposed/invalidated.
         /// </summary>
         public virtual void TearDown()
         {
