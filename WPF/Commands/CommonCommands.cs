@@ -112,7 +112,7 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.SubCat3To4, 0, 0),
                             new Description("qwerty"),
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     },
                 };
             }
@@ -148,7 +148,8 @@ namespace WPF.Commands
                         new MenuPath(MenuLocations.Yolo1, 1, 1),
                         new Description("Yolo1"),
                     }, 
-                    new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
+                    //new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
+                    new AutoInvalidateOnSelection<DynamicPanelSelection, IEnumerable<IDynamicPanelViewModel>>()
                 }
             };
         
@@ -169,7 +170,7 @@ namespace WPF.Commands
                             new Icon("/Quantum.ResourceLibrary;component/Icons/Common/appbar.camera.flash.selected.png")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D1),
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     },
                 };
             }
@@ -189,8 +190,8 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.File, 2, 0),
                             new Description("Change2")
                         },
-                        new KeyShortcut(ModifierKeys.Control, Key.D2), 
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new KeyShortcut(ModifierKeys.Control, Key.D2),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     },
                 };
             }
@@ -210,8 +211,8 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.Category3To4, 0, 0),
                             new Description("Change3")
                         },
-                        new KeyShortcut(ModifierKeys.Control, Key.D3), 
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new KeyShortcut(ModifierKeys.Control, Key.D3),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -232,7 +233,7 @@ namespace WPF.Commands
                             new Description("Change4")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D4),
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -252,7 +253,7 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.File, 2, 0),
                             new Description("Change5"),
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber)),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
                     }
                 };
             }
@@ -280,7 +281,7 @@ namespace WPF.Commands
                                         new Description($"Print {i.ToString()}"), 
                                         new ToolTip($"{i.ToString()}")
                                     },
-                                    new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                                   new AutoInvalidateOnSelection<SelectedNumber, int>()
                                 }
                             });
                         }
@@ -293,7 +294,7 @@ namespace WPF.Commands
                         {
                             new MenuPath(MenuLocations.Recent, 0, 0)
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
 
                 };
@@ -333,7 +334,7 @@ namespace WPF.Commands
                         {
                             new MenuPath(MenuLocations.SubRecent, 0, 0)
                         },
-                        new AutoInvalidateOnSelection(typeof(DynamicPanelSelection))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -353,7 +354,7 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.File, 2, 0),
                             new Description("Change6"),
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber)),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
                     }
                 };
             }
@@ -373,8 +374,8 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.Edit, 1, 1),
                             new Description("Change7")
                         },
-                        new KeyShortcut(ModifierKeys.Control, Key.D7), 
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new KeyShortcut(ModifierKeys.Control, Key.D7),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -395,7 +396,7 @@ namespace WPF.Commands
                             new Description("Change8")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D8),
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -416,7 +417,7 @@ namespace WPF.Commands
                             new Description("Change9")
                         },
                         new KeyShortcut(ModifierKeys.Control, Key.D9),
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -436,7 +437,7 @@ namespace WPF.Commands
                             new MenuPath(MenuLocations.Category8To10, 2, 1),
                             new Description("Change10"),
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -458,7 +459,7 @@ namespace WPF.Commands
                             new Checkable(true),
                             new CheckChanged(o => MessageBox.Show(o ? "Yey" : "Nay")),
                         },
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }
@@ -476,8 +477,8 @@ namespace WPF.Commands
 
                     Metadata = new CommandMetadataCollection()
                     {
-                        new KeyShortcut(ModifierKeys.Control, Key.H), 
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new KeyShortcut(ModifierKeys.Control, Key.H),
+                        new AutoInvalidateOnSelection<SelectedNumber, int>()
                     }
                 };
             }

@@ -58,7 +58,7 @@ namespace WPF
                     Visibility = () => container.Resolve<SelectedNumber>().Value > 5,
                     ToolBarMetadata = new ToolBarMetadataCollection()
                     {
-                        new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                        new AutoInvalidateOnSelection<SelectedNumber, int>(),
                     }
                 },
 
@@ -107,7 +107,7 @@ namespace WPF
                     new Description("SelectionPanel")
                 },
 
-                new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                new AutoInvalidateOnSelection<SelectedNumber, int>()
             };
 
             yield return new DynamicPanelDefinition<IDynamicPanelView, DynamicPanelView, IDynamicPanelViewModel, DynamicPanelViewModel>()
@@ -119,7 +119,7 @@ namespace WPF
                     Placement = PanelPlacement.Center,
                 },
                 new PanelSelectionBinding(typeof(DynamicPanelSelection)),
-                new AutoInvalidateOnSelection(typeof(SelectedNumber))
+                new AutoInvalidateOnSelection<SelectedNumber, int>()
             };
         }
 

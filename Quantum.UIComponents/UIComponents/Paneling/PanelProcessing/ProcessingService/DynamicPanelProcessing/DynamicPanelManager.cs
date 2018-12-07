@@ -74,6 +74,11 @@ namespace Quantum.UIComponents
                 RemoveDynamicPanel(anchorable);
             }
 
+            foreach(var invalidationSubscription in InvalidationSubscriptions) {
+                invalidationSubscription.Event.Unsubscribe(invalidationSubscription.Token);
+            }
+
+            InvalidationSubscriptions.Clear();
             ActivePanels.Clear();
             foreach (var anchorable in matchingAnchorables) {
                 ResolveDynamicPanelDependencies(anchorable);
@@ -225,16 +230,13 @@ namespace Quantum.UIComponents
 
         private IEnumerable<Subscription> ProcessInvalidators(LayoutAnchorable anchorable)
         {
-            var invalidationTypes = Definition.OfType<AutoInvalidateOnEvent>().Select(o => o.EventType).
-                             Concat(Definition.OfType<AutoInvalidateOnSelection>().Select(o => o.SelectionType));
-
-            foreach (var invalidationType in invalidationTypes) {
-                var token = EventAggregator.Subscribe(invalidationType, () => InvalidateDynamicPanel(anchorable), ThreadOption.UIThread, true);
+            foreach(var metadata in Definition.OfType<IAutoInvalidateMetadata>()) {
+                var token = metadata.AttachMetadataDefinition(EventAggregator, () => InvalidateDynamicPanel(anchorable));
                 yield return new Subscription()
                 {
-                    Event = EventAggregator.GetEvent(invalidationType),
-                    Object = anchorable,
-                    Token = token,
+                    Event = EventAggregator.GetEvent(metadata.EventType), 
+                    Object=  anchorable, 
+                    Token = token
                 };
             }
         }

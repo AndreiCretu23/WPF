@@ -41,10 +41,9 @@ namespace Quantum.UIComponents
                     Content = contentView
                 };
                 
-                foreach(var metadata in definition.ToolBarMetadata)
+                foreach(var metadata in definition.ToolBarMetadata.OfType<IAutoInvalidateMetadata>())
                 {
-                    metadata.IfIs((AutoInvalidateOnEvent e) => EventAggregator.Subscribe(e.EventType, () => toolBarViewModel.RaiseVisibilityChanged(), ThreadOption.UIThread, true));
-                    metadata.IfIs((AutoInvalidateOnSelection s) => EventAggregator.Subscribe(s.SelectionType, () => toolBarViewModel.RaiseVisibilityChanged(), ThreadOption.UIThread, true));
+                    metadata.AttachMetadataDefinition(EventAggregator, () => toolBarViewModel.RaiseVisibilityChanged());
                 }
 
                 yield return toolBarViewModel;

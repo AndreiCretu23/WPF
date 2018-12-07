@@ -121,6 +121,8 @@ namespace Quantum.UIComponents
         
         internal void TearDownChildren()
         {
+            if (CreatedChildren == null) return;
+
             var pathViewModelChildren = CreatedChildren.OfType<MainMenuPathViewModel>();
             foreach(var child in pathViewModelChildren) {
                 child.TearDownChildren();

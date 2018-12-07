@@ -90,16 +90,8 @@ namespace Quantum.UIComponents
                     }
                 };
 
-
-                var invalidationTypes = definition.OfType<AutoInvalidateOnEvent>().Select(o => o.EventType).
-                                 Concat(definition.OfType<AutoInvalidateOnSelection>().Select(o => o.SelectionType));
-
-                foreach (var invalidationEvent in invalidationTypes)
-                {
-                    EventAggregator.Subscribe(invalidationEvent, () =>
-                    {
-                        EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition));
-                    }, ThreadOption.PublisherThread, true);
+                foreach(var metadata in definition.OfType<IAutoInvalidateMetadata>()) {
+                    metadata.AttachMetadataDefinition(EventAggregator, () => EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition)), ThreadOption.PublisherThread);
                 }
             }
             VisibilityManager.SetLayoutGroupData(layoutGroupData);

@@ -107,8 +107,7 @@
     <Compile Include="Metadata\MetadataCollections\ToolBarMetadataCollection.cs" />
     <Compile Include="Metadata\MetadataDefinitions\IMetadataDefinitions.cs" />
     <Compile Include="Metadata\MetadataDefinitions\MetadataAttributes.cs" />
-    <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidateOnEvent.cs" />
-    <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidateOnSelection.cs" />
+    <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidation.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AvalonMetadata.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\Checkable.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\CheckChanged.cs" />
