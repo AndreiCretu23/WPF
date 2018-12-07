@@ -70,7 +70,15 @@ namespace Quantum.UIComponents
 
                 anchorable.CanAutoHide = true;
                 anchorable.CanFloat = config.CanFloat();
-                
+
+                var canOpen = config.CanOpen();
+                var canClose = config.CanClose();
+
+                if (canOpen == false && canClose == false) {
+                    throw new Exception($"Error in static panel {definition.ViewModel} metadata. CanOpen() and CanClose() defined " +
+                        $"in the panel definition's configuration metadata can't both return false at the same time.");
+                }
+
                 var visibility = config.IsVisible() && config.CanOpen();
 
                 VisibilityManager.SetVisibility(anchorable, visibility);
@@ -115,6 +123,20 @@ namespace Quantum.UIComponents
             var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
             var config = args.Definition.OfType<StaticPanelConfiguration>().Single();
 
+            var canOpen = config.CanOpen();
+            var canClose = config.CanClose();
+            if(canOpen == false && canClose == false) {
+                throw new Exception($"Error invaidating static panel {args.Definition.ViewModel}. CanOpen() and CanClose() defined " +
+                    $"in the panel definition's configuration metadata can't both return false at the same time.");
+            }
+
+            if(!canOpen) {
+                VisibilityManager.SetVisibility(anchorable, false);
+            }
+            else if(!canClose) {
+                VisibilityManager.SetVisibility(anchorable, true);
+            }
+            
             anchorable.Title = config.Title();
         }
         
