@@ -11,7 +11,7 @@ namespace Quantum.Metadata
     /// Clarifications regarding what a particular metadata type does can be found in the summaries of metadacollections / components that can contain it).
     /// </summary>
     [Mandatory(false)]
-    [SupportsMultiple(true)]
+    [SupportsMultiple(false)]
     public class KeyShortcut : ICommandMetadata
     {
         public ModifierKeys ModifierKeys { get; private set; }

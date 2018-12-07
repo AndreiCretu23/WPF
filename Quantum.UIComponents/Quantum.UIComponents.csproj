@@ -210,7 +210,6 @@
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
     <Compile Include="UIEvents\PanelsLoadedEvent.cs" />
-    <Compile Include="UIEvents\ShortcutsChangedEvent.cs" />
     <Compile Include="UIEvents\UILoadedEvent.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidateOnAttribute.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
