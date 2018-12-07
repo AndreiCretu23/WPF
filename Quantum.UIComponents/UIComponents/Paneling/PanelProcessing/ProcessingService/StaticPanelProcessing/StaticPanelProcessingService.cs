@@ -70,7 +70,7 @@ namespace Quantum.UIComponents
 
                 anchorable.CanAutoHide = true;
                 anchorable.CanFloat = config.CanFloat();
-
+                
                 var visibility = config.IsVisible() && config.CanOpen();
 
                 VisibilityManager.SetVisibility(anchorable, visibility);
@@ -93,6 +93,15 @@ namespace Quantum.UIComponents
                 foreach(var metadata in definition.OfType<IAutoInvalidateMetadata>()) {
                     metadata.AttachMetadataDefinition(EventAggregator, () => EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition)), ThreadOption.PublisherThread);
                 }
+
+                foreach (var metadata in definition.OfType<IBringIntoViewOnEvent>()) {
+                    metadata.AttachToDefinition(EventAggregator, () =>
+                    {
+                        if(definition.OfType<StaticPanelConfiguration>().Single().CanOpen()) {
+                            typeof(IPanelManagerService).GetMethod(nameof(PanelManager.BringStaticPanelIntoView)).MakeGenericMethod(definition.ViewModel).Invoke(PanelManager, new object[] { });
+                        }
+                    });
+                }
             }
             VisibilityManager.SetLayoutGroupData(layoutGroupData);
 
@@ -107,17 +116,6 @@ namespace Quantum.UIComponents
             var config = args.Definition.OfType<StaticPanelConfiguration>().Single();
 
             anchorable.Title = config.Title();
-
-            var visibility = config.IsVisible();
-            if (visibility && config.CanOpen() && anchorable.IsHidden)
-            {
-                VisibilityManager.SetVisibility(anchorable, true);
-                anchorable.CanHide = config.CanClose();
-            }
-            else if (!visibility && config.CanClose() && !anchorable.IsHidden)
-            {
-                VisibilityManager.SetVisibility(anchorable, false);
-            }
         }
         
         [Handles(typeof(LayoutLoadedEvent))]

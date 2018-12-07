@@ -30,7 +30,7 @@ namespace Quantum.Metadata
         public Func<bool> CanOpen { get; set; } = () => true;
 
         /// <summary>
-        /// A delegate that returns a value indicating if the panel is visible or not.
+        /// A delegate that returns a value indicating the panel's initial visibility.
         /// </summary>
         public Func<bool> IsVisible { get; set; } = () => true;
 

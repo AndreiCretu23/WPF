@@ -90,6 +90,7 @@ namespace WPF
                     new Description("ActivePanel")
                 }, 
                 new BringIntoViewOnKeyShortcut(ModifierKeys.Control | ModifierKeys.Alt, Key.A),
+                new BringIntoViewOnSelection<SelectedNumber, int>()
             };
 
             yield return new StaticPanelDefinition<ISelectionPanelView, SelectionPanelView, ISelectionPanelViewModel, SelectionPanelViewModel>()
@@ -98,8 +99,8 @@ namespace WPF
                 {
                     CanClose = () => true,
                     CanFloat = () => true,
-                    CanOpen = () => container.Resolve<SelectedNumber>().Value > 5,
-                    IsVisible = () => container.Resolve<SelectedNumber>().Value > 5,
+                    CanOpen = () => container.Resolve<IEventAggregator>().GetEvent<SelectedNumber>().Value > 5,
+                    //IsVisible = () => container.Resolve<IEventAggregator>().GetEvent<SelectedNumber>().Value > 5,
                     Placement = PanelPlacement.TopRight,
                     Title = () => "SelectionPanel"
                 },
@@ -110,7 +111,7 @@ namespace WPF
                 },
 
                 new AutoInvalidateOnSelection<SelectedNumber, int>(),
-                new BringIntoViewOnKeyShortcut(ModifierKeys.Control | ModifierKeys.Alt, Key.S)
+                new BringIntoViewOnKeyShortcut(ModifierKeys.Control | ModifierKeys.Alt, Key.S),
             };
 
             yield return new DynamicPanelDefinition<IDynamicPanelView, DynamicPanelView, IDynamicPanelViewModel, DynamicPanelViewModel>()

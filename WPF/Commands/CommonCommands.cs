@@ -187,7 +187,7 @@ namespace WPF.Commands
             {
                 return new ManagedCommand()
                 {
-                    CanExecuteHandler = () => Number.Value > 4,
+                    CanExecuteHandler = () => true,//Number.Value > 4,
                     ExecuteHandler = () => Number.Value = 2,
                     Metadata = new CommandMetadataCollection() {
                         new MainMenuOption()

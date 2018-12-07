@@ -109,6 +109,7 @@
     <Compile Include="Metadata\MetadataDefinitions\MetadataAttributes.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AutoInvalidation.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\AvalonMetadata.cs" />
+    <Compile Include="Metadata\MetadataDefinitions\Metadata\BringIntoViewOnEvent.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\BringIntoViewOnKeyShortcut.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\Checkable.cs" />
     <Compile Include="Metadata\MetadataDefinitions\Metadata\CheckChanged.cs" />
