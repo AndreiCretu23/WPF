@@ -130,10 +130,10 @@ namespace Quantum.UIComponents
                     $"in the panel definition's configuration metadata can't both return false at the same time.");
             }
 
-            if(!canOpen) {
+            if(!canOpen && !anchorable.IsHidden) {
                 VisibilityManager.SetVisibility(anchorable, false);
             }
-            else if(!canClose) {
+            else if(!canClose && anchorable.IsHidden) {
                 VisibilityManager.SetVisibility(anchorable, true);
             }
             
