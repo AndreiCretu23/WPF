@@ -255,5 +255,46 @@ namespace Quantum.UIComponents
         }
 
         #endregion Request
+
+
+        #region Extract
+
+        public bool IsRegistered(IStaticPanelDefinition definition)
+        {
+            definition.AssertParameterNotNull(nameof(definition));
+            return StaticPanelDefinitions.Contains(definition);
+        }
+
+        public bool IsRegistered(IDynamicPanelDefinition definition)
+        {
+            definition.AssertParameterNotNull(nameof(definition));
+            return DynamicPanelDefinitions.Contains(definition);
+        }
+
+        public IStaticPanelDefinition GetStaticPanelDefinition<TViewModel>()
+        {
+            try 
+            {
+                return StaticPanelDefinitions.Single(o => o.ViewModel == typeof(TViewModel) || o.IViewModel == typeof(TViewModel));
+            }
+            catch(InvalidOperationException) 
+            {
+                throw new Exception($"Error : There is no registered static panel definition associated with a ViewModel of type {typeof(TViewModel).Name}");
+            }
+        }
+
+        public IDynamicPanelDefinition GetDynamicPanelDefinition<TViewModel>()
+        {
+            try 
+            {
+                return DynamicPanelDefinitions.Single(o => o.ViewModel == typeof(TViewModel) || o.IViewModel == typeof(TViewModel));
+            }
+            catch (InvalidOperationException) 
+            {
+                throw new Exception($"Error : There is no registered dynamic panel definition associated with a ViewModel of type {typeof(TViewModel).Name}");
+            }
+        }
+
+        #endregion Extract
     }
 }

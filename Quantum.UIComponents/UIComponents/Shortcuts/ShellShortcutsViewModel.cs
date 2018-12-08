@@ -1,8 +1,7 @@
 ﻿using Quantum.Command;
+using Quantum.Events;
 using Quantum.Metadata;
 using Quantum.Services;
-using Quantum.Utils;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -17,11 +16,16 @@ namespace Quantum.UIComponents
         [Service]
         public IPanelManagerService PanelManager { get; set; }
 
-        public IEnumerable<KeyBinding> Shortcuts { get { return GetCommandShortcuts().Concat(GetPanelBringIntoViewShortcuts()); } }
+        private IEnumerable<KeyBinding> ManagedCommandShortcuts { get; set; }
+        private IEnumerable<KeyBinding> BringPanelIntoViewShortcuts { get; set; }
+
+        public IEnumerable<KeyBinding> Shortcuts { get { return ManagedCommandShortcuts.Concat(BringPanelIntoViewShortcuts); } }
 
         public ShellShortcutsViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
+            ManagedCommandShortcuts = GetCommandShortcuts();
+            BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
         }
         
         private IEnumerable<KeyBinding> GetCommandShortcuts()
@@ -33,7 +37,7 @@ namespace Quantum.UIComponents
             }
         }
 
-        public IEnumerable<KeyBinding> GetPanelBringIntoViewShortcuts()
+        public IEnumerable<KeyBinding> GetBringPanelIntoViewShortcuts()
         {
             var panelDefinitions = PanelManager.StaticPanelDefinitions.Where(def => def.OfType<BringIntoViewOnKeyShortcut>().Any());
             foreach(var definition in panelDefinitions) {
@@ -46,6 +50,23 @@ namespace Quantum.UIComponents
 
                 yield return new KeyBinding(bringIntoViewCommand, new KeyGesture(shortcut.Key, shortcut.ModifierKeys));
             }
+        }
+        
+        [Handles(typeof(ShortcutChangedEvent))]
+        public void OnShortcutChanged(IShortcutChangedArgs args)
+        {
+            if(args is ManagedCommandShortcutChangedArgs) {
+                ManagedCommandShortcuts = GetCommandShortcuts();
+            }
+            else if(args is BringPanelIntoViewShortcutChangedArgs) {
+                BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
+            }
+            else if(args is GlobalRebuildShortcutChangedArgs) {
+                ManagedCommandShortcuts = GetCommandShortcuts();
+                BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
+            }
+
+            RaisePropertyChanged(() => Shortcuts);
         }
     }
 }

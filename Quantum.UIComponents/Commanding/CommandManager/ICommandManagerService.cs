@@ -54,5 +54,19 @@ namespace Quantum.Command
         /// <returns></returns>
         TCommand GetCommand<TCommandContainer, TCommand>(Expression<Func<TCommandContainer, TCommand>> commandProperty)
             where TCommandContainer : ICommandContainer;
+
+        /// <summary>
+        /// Returns the name of the specified command.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        string GetCommandName(object command);
+
+        /// <summary>
+        /// Returns a value indicating if the specified command in registered in the CommandManager.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        bool IsRegistered(object command);
     }
 }

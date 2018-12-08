@@ -139,6 +139,9 @@
     <Compile Include="Services\LongOperation\ILongOperationService.cs" />
     <Compile Include="Services\LongOperation\LongOpDispatcher.cs" />
     <Compile Include="Services\LongOperation\LongOperationService.cs" />
+    <Compile Include="Shortcuts\IShortcutManagerService.cs" />
+    <Compile Include="Shortcuts\ShortcutManagerService.cs" />
+    <Compile Include="Shortcuts\ShortcutSerializationDictionary.cs" />
     <Compile Include="Toolkit\LongOperationView\ILongOperationView.cs" />
     <Compile Include="Toolkit\LongOperationView\ILongOperationViewModel.cs" />
     <Compile Include="Toolkit\LongOperationView\LongOperationView.xaml.cs">
@@ -214,6 +217,7 @@
     <Compile Include="UIComponents\Toolbar\ToolBarManager\ToolBarManagerService.cs" />
     <Compile Include="UICoreService.cs" />
     <Compile Include="UIEvents\PanelsLoadedEvent.cs" />
+    <Compile Include="UIEvents\ShortcutChangedEvent.cs" />
     <Compile Include="UIEvents\UILoadedEvent.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidateOnAttribute.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />

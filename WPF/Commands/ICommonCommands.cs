@@ -9,7 +9,17 @@ namespace WPF.Commands
 {
     public interface ICommonCommands : ICommandContainer
     {
+        IManagedCommand OpenDialog { get; }
         IManagedCommand RemoveLastPanel { get; }
+
+        IManagedCommand CommandChangeNShortcut { get; }
+        IManagedCommand CommandChangeBShortcut { get; }
+        IManagedCommand CommandClearShortcut { get; }
+
+        IManagedCommand PanelChangeAShortcut { get; }
+        IManagedCommand PanelChangeQShortcut { get; }
+        IManagedCommand PanelClearShortcut { get; }
+
 
         IManagedCommand Qwerty { get; }
         IManagedCommand Yolo1Command { get; }

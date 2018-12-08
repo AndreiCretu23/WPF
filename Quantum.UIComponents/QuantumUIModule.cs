@@ -3,6 +3,7 @@ using Quantum.CoreModule;
 using Quantum.Services;
 using Quantum.Command;
 using Quantum.Metadata;
+using Quantum.Shortcuts;
 
 namespace Quantum.UIComponents
 {
@@ -37,6 +38,8 @@ namespace Quantum.UIComponents
             container.RegisterService<ShellView>();
             container.RegisterService<ShellViewModel>();
 
+            //Shortcut Manager
+            container.RegisterService<IShortcutManagerService, ShortcutManagerService>();
 
             //DialogManager
             container.RegisterService<IDialogManagerService, DialogManagerService>();

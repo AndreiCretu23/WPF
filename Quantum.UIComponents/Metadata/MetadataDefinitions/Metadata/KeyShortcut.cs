@@ -7,8 +7,8 @@ namespace Quantum.Metadata
 {
     public abstract class KeyShortcutBase
     {
-        public ModifierKeys ModifierKeys { get; private set; }
-        public Key Key { get; private set; }
+        public ModifierKeys ModifierKeys { get; internal set; }
+        public Key Key { get; internal set; }
 
         public KeyShortcutBase(ModifierKeys modifierKeys, Key key)
         {

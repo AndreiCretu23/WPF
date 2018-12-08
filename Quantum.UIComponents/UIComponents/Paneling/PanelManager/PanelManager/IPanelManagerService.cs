@@ -2,6 +2,9 @@
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// This service is responsible for managing and storing the panel definitions of the application and is used for connecting them to the UI.
+    /// </summary>
     public interface IPanelManagerService
     {
         /// <summary>
@@ -45,6 +48,36 @@ namespace Quantum.UIComponents
         /// <param name="definition"></param>
         void RegisterPanelDefinition(IPanelDefinition definition);
 
+        /// <summary>
+        /// Returns the static panel definition associated with the specified view model type. If there is no registered static panel definition associated with the 
+        /// given view model type, an exception will be thrown.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <returns></returns>
+        IStaticPanelDefinition GetStaticPanelDefinition<TViewModel>();
+
+        /// <summary>
+        /// Returns the dynamic panel definition associated with the specified view model type. If there is no registered static panel definition associated with the 
+        /// given view model type, an exception will be thrown.
+        /// </summary>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <returns></returns>
+        IDynamicPanelDefinition GetDynamicPanelDefinition<TViewModel>();
+
+        /// <summary>
+        /// Returns a value indicating if the specified static panel definition is registered in the panel manager.
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool IsRegistered(IStaticPanelDefinition definition);
+        
+        /// <summary>
+        /// Returns a value indicating if the specified dynamic panel definition is registered in the panel manager.
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        bool IsRegistered(IDynamicPanelDefinition definition);
+        
         /// <summary>
         /// Brings the static panel associated with the given ViewModel type into view. If the panel is active, the parent container will have it selected. 
         /// Otherwise, if it's hidden, it the panel will become visible and selected in it's cached container.

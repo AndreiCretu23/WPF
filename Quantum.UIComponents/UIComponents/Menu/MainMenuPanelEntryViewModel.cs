@@ -1,4 +1,5 @@
 ﻿using Quantum.Command;
+using Quantum.Events;
 using Quantum.Metadata;
 using Quantum.Services;
 using System.Linq;
@@ -48,5 +49,14 @@ namespace Quantum.UIComponents
             }
         }
         
+        [Handles(typeof(ShortcutChangedEvent))]
+        public void OnShortcutChanged(IShortcutChangedArgs args)
+        {
+            if(args is GlobalRebuildShortcutChangedArgs || 
+              (args is BringPanelIntoViewShortcutChangedArgs panelShortcutChangedArgs && panelShortcutChangedArgs.PanelDefinition == PanelDefinition)) {
+                RaisePropertyChanged(() => Shortcut);
+            }
+        }
+
     }
 }

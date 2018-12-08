@@ -119,8 +119,24 @@ namespace Quantum.Command
             return CachedCommands.GetCommand<TCommand>(typeof(TCommandContainer), ReflectionUtils.GetPropertyName(commandProperty));
         }
         
-
+        public string GetCommandName(object command)
+        {
+            command.AssertParameterNotNull(nameof(command));
+            try 
+            {
+                return CachedCommands.GetCommandName(command);
+            }
+            catch (InvalidOperationException)
+            {
+                throw new Exception($"Error retrieving the name of the requested command : The command is not registered in the CommandManager.");
+            }
+        }
         
+        public bool IsRegistered(object command)
+        {
+            command.AssertParameterNotNull(nameof(command));
+            return CachedCommands.IsRegistered(command);
+        }
 
     }
 }

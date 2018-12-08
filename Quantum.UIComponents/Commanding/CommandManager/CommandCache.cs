@@ -56,9 +56,19 @@ namespace Quantum.Command
             }
         }
 
+        internal string GetCommandName(object command)
+        {
+            return CachedCommands.Single(c => c.Command == command).CommandName;
+        }
+        
         internal IEnumerable<Type> GetRegisteredContainers()
         {
             return CachedCommands.Select(o => o.CommandContainer).Distinct();
+        }
+
+        internal bool IsRegistered(object command)
+        {
+            return CachedCommands.Any(c => c.Command == command);
         }
     }
 

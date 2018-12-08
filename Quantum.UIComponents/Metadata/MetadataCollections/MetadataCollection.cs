@@ -24,6 +24,10 @@ namespace Quantum.Metadata
         public void Add(TDefinition metadataDefinition) {
             InternalCollection.Add(metadataDefinition);
         }
+
+        internal bool Remove(TDefinition metadataDefinition) {
+            return InternalCollection.Remove(metadataDefinition);
+        }
     }
 
     

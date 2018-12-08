@@ -1,6 +1,7 @@
 ﻿using Quantum.Command;
 using Quantum.Metadata;
 using Quantum.Services;
+using Quantum.Shortcuts;
 using Quantum.UIComponents;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,15 @@ namespace WPF.Commands
 
         [Selection]
         public DynamicPanelSelection DynamicPanelSelection { get; set; }
+
+        [Service]
+        public ICommandManagerService CommandManager { get; set; }
+
+        [Service]
+        public IPanelManagerService PanelManager { get; set; }
+
+        [Service]
+        public IShortcutManagerService ShortcutManager { get; set; }
 
         public CommonCommands(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -69,7 +79,7 @@ namespace WPF.Commands
                 };
             }
         }
-
+        
         public IManagedCommand RemoveLastPanel
         {
             get
@@ -98,6 +108,163 @@ namespace WPF.Commands
                 };
             }
         }
+
+
+
+        public IManagedCommand CommandChangeNShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var command = CommandManager.GetCommand((ICommonCommands c) => c.OpenDialog);
+                        ShortcutManager.SetShortcut(command, ModifierKeys.Control, Key.N);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 200),
+                            new Description("Command Change N"),
+                        },
+                        new CommandGuid("8B4C3024-374D-492A-A78C-54ADF46DDAB6"),
+                    }
+                };
+            }
+        }
+
+        public IManagedCommand CommandChangeBShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var command = CommandManager.GetCommand((ICommonCommands c) => c.OpenDialog);
+                        ShortcutManager.SetShortcut(command, ModifierKeys.Control, Key.B);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 201),
+                            new Description("Command Change B"),
+                        },
+                        new CommandGuid("65D479E2-7342-4118-B5D0-1FA354BC380D"),
+                    }
+                };
+            }
+        }
+
+        public IManagedCommand CommandClearShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var command = CommandManager.GetCommand((ICommonCommands c) => c.OpenDialog);
+                        ShortcutManager.ClearShortcut(command);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 202),
+                            new Description("Command Clear Shortcut"),
+                        },
+                        new CommandGuid("CDC8E94A-49C9-4C1B-9CEE-F7F952C66A1A"),
+                    }
+                };
+            }
+        }
+
+
+
+        public IManagedCommand PanelChangeAShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var def = PanelManager.GetStaticPanelDefinition<IActivePanelViewModel>();
+                        ShortcutManager.SetShortcut(def, ModifierKeys.Control | ModifierKeys.Alt, Key.A);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 250),
+                            new Description("Panel Change A"),
+                        },
+                        new CommandGuid("F5D36683-11B9-4585-8BB8-AECC5F546959"),
+                    }
+                };
+            }
+        }
+
+        public IManagedCommand PanelChangeQShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var def = PanelManager.GetStaticPanelDefinition<IActivePanelViewModel>();
+                        ShortcutManager.SetShortcut(def, ModifierKeys.Control | ModifierKeys.Alt, Key.Q);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 251),
+                            new Description("Panel Change Q"),
+                        },
+                        new CommandGuid("C9AC8CE7-A484-41EB-A48D-950719E039B1"),
+                    }
+                };
+            }
+        }
+
+        public IManagedCommand PanelClearShortcut
+        {
+            get
+            {
+                return new ManagedCommand()
+                {
+                    ExecuteHandler = () =>
+                    {
+                        var def = PanelManager.GetStaticPanelDefinition<IActivePanelViewModel>();
+                        ShortcutManager.ClearShortcut(def);
+                    },
+
+                    Metadata = new CommandMetadataCollection()
+                    {
+                        new MainMenuOption()
+                        {
+                            new MenuPath(MenuLocations.File, 0, 252),
+                            new Description("Panel Clear Shortcut"),
+                        },
+                        new CommandGuid("36434E28-219D-486A-A415-250FB65E506A"),
+                    }
+                };
+            }
+        }
+
+
+
 
 
         public IManagedCommand Qwerty

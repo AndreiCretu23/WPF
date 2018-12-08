@@ -1,4 +1,5 @@
 ﻿using Quantum.Command;
+using Quantum.Events;
 using Quantum.Metadata;
 using Quantum.Services;
 using Quantum.Utils;
@@ -41,5 +42,14 @@ namespace Quantum.UIComponents
             Command = command;
         }
         
+        [Handles(typeof(ShortcutChangedEvent))]
+        public void OnShortcutChanged(IShortcutChangedArgs args)
+        {
+            if(args is GlobalRebuildShortcutChangedArgs || 
+              (args is ManagedCommandShortcutChangedArgs managedCommandShortcutChanged && managedCommandShortcutChanged.Command == Command)) {
+                RaisePropertyChanged(() => Shortcut);
+            }
+        }
+
     }
 }
