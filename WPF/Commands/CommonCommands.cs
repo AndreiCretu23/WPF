@@ -221,7 +221,7 @@ namespace WPF.Commands
                     ExecuteHandler = () =>
                     {
                         var def = PanelManager.GetStaticPanelDefinition<IActivePanelViewModel>();
-                        ShortcutManager.SetShortcut(def, ModifierKeys.Control | ModifierKeys.Alt, Key.Q);
+                        ShortcutManager.SetShortcut(def, ModifierKeys.Control | ModifierKeys.Alt, Key.B);
                     },
 
                     Metadata = new CommandMetadataCollection()

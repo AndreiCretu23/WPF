@@ -1,6 +1,8 @@
 ﻿using Quantum.Command;
 using Quantum.Metadata;
 using Quantum.UIComponents;
+using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace Quantum.Shortcuts
@@ -53,14 +55,30 @@ namespace Quantum.Shortcuts
 
         /// <summary>
         /// Sets or changes the shortcut of the specified managed command. The command must be registered in the CommandManager.
+        /// If there is any other element (ManagedCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
+        /// an exception will be thrown.
         /// </summary>
-        /// <param name="command"></param>
+        /// <param name="command">The managed command on which to set the shortcut.</param>
+        /// <param name="modifierKeys">The modifier keys of the new shortcut.</param>
+        /// <param name="key">The key of the new shortcut.</param>
         void SetShortcut(IManagedCommand command, ModifierKeys modifierKeys, Key key);
 
         /// <summary>
         /// Sets or changes the "BringIntoView" shortcut associated with the given static panel definition. The static panel definition must be registered in the PanelManager.
+        /// If there is any other element (ManagedCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
+        /// an exception will be thrown.
         /// </summary>
         /// <param name="definition"></param>
+        /// <param name="modifierKeys">The modifier keys of the new shortcut.</param>
+        /// <param name="key">The key of the new shortcut.</param>
         void SetShortcut(IStaticPanelDefinition definition, ModifierKeys modifierKeys, Key key);
+
+        /// <summary>
+        /// Returns a collection shortcut owners (ManagedCommands / ComponentCommands / StaticPanelDefinitions) which own a shortcut with the associated key combination.
+        /// </summary>
+        /// <param name="modifierKeys"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        IEnumerable<object> GetElementsMatchingShortcut(ModifierKeys modifierKeys, Key key);
     }
 }

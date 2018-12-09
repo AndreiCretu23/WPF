@@ -5,6 +5,7 @@ using Quantum.Services;
 using Quantum.UIComponents;
 using Quantum.Utils;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
@@ -21,6 +22,20 @@ namespace Quantum.Shortcuts
         public IPanelManagerService PanelManager { get; set; }
 
         private ThreadSyncScope LoadingScope { get; }
+        
+        private ShortcutDictionary DefaultShortcuts { get; set; }
+
+        private GenericComparer<KeyShortcutBase> ShortcutComparer
+        {
+            get
+            {
+                return new GenericComparer<KeyShortcutBase>
+                (
+                    (s1, s2) => s1.ModifierKeys == s2.ModifierKeys && s1.Key == s2.Key,
+                    s => s.ModifierKeys.GetHashCode() + s.Key.GetHashCode()
+                );
+            }
+        }
 
         public ShortcutManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -99,12 +114,21 @@ namespace Quantum.Shortcuts
 
 
         #region SetShortcut
-
+        
         public void SetShortcut(IManagedCommand command, ModifierKeys modifierKeys, Key key)
         {
             command.AssertParameterNotNull(nameof(command));
             if (!CommandManager.IsRegistered(command)) {
                 throw new Exception("Error : Cannot set the shortcut for the specified command : The command is not registered in the command manager.");
+            }
+            
+            if(!LoadingScope.IsInScope) {
+                var matchingElements = GetElementsMatchingShortcut(modifierKeys, key).Where(o => !(o == command));
+                if(matchingElements.Any()) {
+                    throw new Exception($"Error setting the shortcut {modifierKeys.ToString()}+{key.ToString()} on command {GetElementName(command)} " +
+                                        $"because element(s) {string.Join(",", matchingElements.Select(o => GetElementName(o)))} already have a shortcut with the same " +
+                                        $"key combination.");
+                }
             }
             
             if(HasShortcut(command)) {
@@ -129,7 +153,16 @@ namespace Quantum.Shortcuts
                 throw new Exception("Error : Cannot set the BringIntoView shortcut for the specified static panel definition : The definition is not registered in the panel manager.");
             }
 
-            if(HasShortcut(definition)) {
+            if (!LoadingScope.IsInScope) {
+                var matchingElements = GetElementsMatchingShortcut(modifierKeys, key).Where(o => !(o == definition));
+                if (matchingElements.Any()) {
+                    throw new Exception($"Error setting the shortcut {modifierKeys.ToString()}+{key.ToString()} on command {GetElementName(definition)} " +
+                                        $"because element(s) {string.Join(",", matchingElements.Select(o => GetElementName(o)))} already have a shortcut with the same " +
+                                        $"key combination.");
+                }
+            }
+
+            if (HasShortcut(definition)) {
                 var shortcut = GetShortcut(definition);
                 if(shortcut.ModifierKeys == modifierKeys && shortcut.Key == key) {
                     return;
@@ -208,53 +241,50 @@ namespace Quantum.Shortcuts
         [Handles(typeof(UILoadedEvent))]
         public void LoadShortcuts()
         {
+            AssertShortcuts();
+            DefaultShortcuts = GetShortcutDictionaryForCurrentState();
+
             if (!File.Exists(ShortcutSerializationFile)) return;
 
-            ShortcutSerializationDictionary shortcutDictionary = null;
-            var serializer = new XmlSerializer(typeof(ShortcutSerializationDictionary));
+            ShortcutDictionary shortcutDictionary = null;
+            var serializer = new XmlSerializer(typeof(ShortcutDictionary));
             using (var reader = new StreamReader(ShortcutSerializationFile)) {
-                shortcutDictionary = (ShortcutSerializationDictionary)serializer.Deserialize(reader);
+                shortcutDictionary = (ShortcutDictionary)serializer.Deserialize(reader);
             }
 
             using (LoadingScope.BeginThreadScope()) {
                 foreach(var managedCommand in CommandManager.ManagedCommands) {
-                    var shortcutInfo = shortcutDictionary.ManagedCommandShortcutSerializationInfo.SingleOrDefault(o => o.Matches(managedCommand));
+                    var shortcutInfo = shortcutDictionary.ManagedCommandShortcutInfo.SingleOrDefault(o => o.Matches(managedCommand));
                     if (shortcutInfo == null) continue;
-
-                    bool hasShortcutByDefault = managedCommand.Metadata.OfType<KeyShortcut>().Any();
-
-                    if (hasShortcutByDefault) {
-                        var defaultShortcut = managedCommand.Metadata.OfType<KeyShortcut>().Single();
-                        if(defaultShortcut.ModifierKeys != shortcutInfo.ModifierKeys || defaultShortcut.Key != shortcutInfo.Key) {
-                            SetShortcut(managedCommand, shortcutInfo.ModifierKeys, shortcutInfo.Key);
-                        }
-                    }
-                    else {
+                    
+                    if(!shortcutInfo.IsDefault) {
                         if(shortcutInfo.HasShortcut) {
                             SetShortcut(managedCommand, shortcutInfo.ModifierKeys, shortcutInfo.Key);
                         }
+                        else {
+                            ClearShortcut(managedCommand);
+                        }
                     }
                 }
+
                 foreach(var staticPanelDefinition in PanelManager.StaticPanelDefinitions) {
-                    var shortcutInfo = shortcutDictionary.BringPanelIntoViewShortcutSerializationInfo.SingleOrDefault(o => o.Matches(staticPanelDefinition));
+                    var shortcutInfo = shortcutDictionary.StaticPanelShortcutInfo.SingleOrDefault(o => o.Matches(staticPanelDefinition));
                     if (shortcutInfo == null) continue;
 
                     bool hasShortcutByDefault = staticPanelDefinition.OfType<BringIntoViewOnKeyShortcut>().Any();
 
-                    if (hasShortcutByDefault) {
-                        var defaultShortcut = staticPanelDefinition.OfType<BringIntoViewOnKeyShortcut>().Single();
-                        if (defaultShortcut.ModifierKeys != shortcutInfo.ModifierKeys || defaultShortcut.Key != shortcutInfo.Key) {
+                    if(!shortcutInfo.IsDefault) {
+                        if(shortcutInfo.HasShortcut) {
                             SetShortcut(staticPanelDefinition, shortcutInfo.ModifierKeys, shortcutInfo.Key);
                         }
-                    }
-                    else {
-                        if (shortcutInfo.HasShortcut) {
-                            SetShortcut(staticPanelDefinition, shortcutInfo.ModifierKeys, shortcutInfo.Key);
+                        else {
+                            ClearShortcut(staticPanelDefinition);
                         }
                     }
                 }
             }
 
+            AssertShortcuts();
         }
         
         #endregion LoadShortcuts
@@ -265,19 +295,22 @@ namespace Quantum.Shortcuts
         [Handles(typeof(ShutdownEvent))]
         public void SaveShortcuts()
         {
-            var shortcutDictionary = ShortcutSerializationDictionary.Create();
-            foreach(var managedCommand in CommandManager.ManagedCommands) {
-                shortcutDictionary.ManagedCommandShortcutSerializationInfo.Add(ManagedCommandShortcutSerializationInfo.CreateFromManagedCommand(managedCommand));
+            var shortcutDictionary = GetShortcutDictionaryForCurrentState();
+            foreach(var shortcutInfo in shortcutDictionary.ManagedCommandShortcutInfo) {
+                var defaultShortcut = DefaultShortcuts.ManagedCommandShortcutInfo.Single(o => o.CommandGuid == shortcutInfo.CommandGuid);
+                shortcutInfo.CheckAndResolveShortcutChangedContext(defaultShortcut);
             }
-            foreach(var staticPanelDefinition in PanelManager.StaticPanelDefinitions) {
-                shortcutDictionary.BringPanelIntoViewShortcutSerializationInfo.Add(BringPanelIntoViewShortcutSerializationInfo.CreateFromDefinition(staticPanelDefinition));
+
+            foreach(var shortcutInfo in shortcutDictionary.StaticPanelShortcutInfo) {
+                var defaultShortcut = DefaultShortcuts.StaticPanelShortcutInfo.Single(o => o.Matches(shortcutInfo));
+                shortcutInfo.CheckAndResolveShortcutChangedContext(defaultShortcut);
             }
 
             if(File.Exists(ShortcutSerializationFile)) {
                 File.Delete(ShortcutSerializationFile);
             }
 
-            var serializer = new XmlSerializer(typeof(ShortcutSerializationDictionary));
+            var serializer = new XmlSerializer(typeof(ShortcutDictionary));
             using(var writer = new StreamWriter(ShortcutSerializationFile)) {
                 serializer.Serialize(writer, shortcutDictionary);
             }
@@ -285,5 +318,80 @@ namespace Quantum.Shortcuts
 
         #endregion SaveShortcuts
 
+
+        #region ShortcutDictionary
+
+        private ShortcutDictionary GetShortcutDictionaryForCurrentState()
+        {
+            var dictionary = ShortcutDictionary.Create();
+
+            foreach(var managedCommand in CommandManager.ManagedCommands) {
+                dictionary.ManagedCommandShortcutInfo.Add(ManagedCommandShortcutInformation.CreateFromManagedCommand(managedCommand));
+            }
+
+            foreach(var staticPanelDefinition in PanelManager.StaticPanelDefinitions) {
+                dictionary.StaticPanelShortcutInfo.Add(StaticPanelShortcutInformation.CreateFromDefinition(staticPanelDefinition));
+            }
+
+            return dictionary;
+        }
+        
+        #endregion ShortcutDictionary
+
+
+        #region AssertShortcuts
+
+        private void AssertShortcuts()
+        {
+            var allShortcuts = CommandManager.ManagedCommands.Where(o => o.Metadata.OfType<KeyShortcut>().Any()).SelectMany(o => o.Metadata.OfType<KeyShortcutBase>()).Concat
+                                    (PanelManager.StaticPanelDefinitions.Where(o => o.OfType<BringIntoViewOnKeyShortcut>().Any()).SelectMany(o => o.OfType<KeyShortcutBase>()));
+
+            var duplicates = allShortcuts.Duplicates(ShortcutComparer);
+            
+            if(duplicates.Any()) {
+
+                string getName(object o)
+                {
+                    if (o is IStaticPanelDefinition def) {
+                        return $"StaticPanelDefinition<{def.IView}, {def.View}, {def.IViewModel}, {def.ViewModel}>";
+                    }
+                    else if (o is IManagedCommand managedCommand) {
+                        return CommandManager.GetCommandName(managedCommand);
+                    }
+                    return String.Empty;
+                }
+
+                var duplicateShortcut = duplicates.First();
+                var matchingElements = GetElementsMatchingShortcut(duplicateShortcut.ModifierKeys, duplicateShortcut.Key);
+                var elementString = string.Join(",", matchingElements.Select(o => getName(o)));
+
+                throw new Exception($"Error : Commands/PanelDefinitions {elementString} have the same shortcut : {duplicateShortcut.ModifierKeys.ToString()} + {duplicateShortcut.Key.ToString()}");
+            }
+        }
+
+        #endregion AssertShortcuts
+
+
+        #region Misc
+
+        private string GetElementName(object o)
+        {
+            if (o is IStaticPanelDefinition def) {
+                return $"StaticPanelDefinition<{def.IView}, {def.View}, {def.IViewModel}, {def.ViewModel}>";
+            }
+            else if (o is IManagedCommand managedCommand) {
+                return CommandManager.GetCommandName(managedCommand);
+            }
+            return String.Empty;
+        }
+
+        public IEnumerable<object> GetElementsMatchingShortcut(ModifierKeys modifierKeys, Key key)
+        {
+            var keyShortcut = new KeyShortcut(modifierKeys, key);
+            return CommandManager.ManagedCommands.Where(o => o.Metadata.OfType<KeyShortcutBase>().Any() && ShortcutComparer.Equals(o.Metadata.OfType<KeyShortcutBase>().Single(), keyShortcut)).Cast<object>().Concat
+                  (PanelManager.StaticPanelDefinitions.Where(def => def.OfType<KeyShortcutBase>().Any() && ShortcutComparer.Equals(def.OfType<KeyShortcutBase>().Single(), keyShortcut)).Cast<object>());
+        }
+
+        #endregion Misc
     }
 }

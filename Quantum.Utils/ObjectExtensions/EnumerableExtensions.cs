@@ -30,6 +30,22 @@ namespace Quantum.Utils
         }
 
         [DebuggerHidden]
+        public static IEnumerable<T> Duplicates<T>(this IEnumerable<T> collection)
+        {
+            collection.AssertParameterNotNull(nameof(collection));
+            return collection.GroupBy(o => o).Where(o => o.Count() > 1).Select(o => o.Key);
+        }
+
+        [DebuggerHidden]
+        public static IEnumerable<T> Duplicates<T>(this IEnumerable<T> collection, IEqualityComparer<T> comparer)
+        {
+            collection.AssertParameterNotNull(nameof(collection));
+            comparer.AssertParameterNotNull(nameof(comparer));
+            
+            return collection.GroupBy(o => o, comparer).Where(o => o.Count() > 1).Select(o => o.Key).ToList();
+        }
+
+        [DebuggerHidden]
         public static IEnumerable<object> EmptyIfNull(this IEnumerable collection)
         {
             return (collection ?? Enumerable.Empty<object>()).Cast<object>();
