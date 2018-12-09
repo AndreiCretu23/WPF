@@ -1,5 +1,6 @@
 ﻿using Quantum.Services;
 using Quantum.Utils;
+using System;
 using System.IO;
 using System.Linq;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -16,53 +17,38 @@ namespace Quantum.UIComponents
         {
         }
 
-        public bool LoadLayout(string directory)
-        {
-            if (DockingView == null) return false;
-
-            var layoutFileName = Path.Combine(directory, "PanelLayout.xml");
-            
+        public void LoadLayout(string layoutFileName)
+        {            
             var dockingManager = DockingView.DockingManager;
 
             dockingManager.UpdateLayout();
             XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(dockingManager);
-            if (File.Exists(layoutFileName))
+            
+            using (var stream = new FileStream(layoutFileName, FileMode.Open, FileAccess.Read))
             {
-                using (var stream = new FileStream(layoutFileName, FileMode.Open, FileAccess.Read))
-                {
-                    layoutSerializer.Deserialize(stream);
-                }
+                layoutSerializer.Deserialize(stream);
+            }
                 
-                // On occasion, avalon serializes some closed panels (DynamicPanels), leading to the mess-up of the associated dynamicPanelCollection layout restoration.
-                // To avoid this, we simply re-close them.
-                var anchorables = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>().ToList();
-                foreach(var anch in anchorables)
-                {
-                    if (anch.Content == null)
-                    {
-                        anch.Close();
-                    }
-                }
-
-                EventAggregator.GetEvent<LayoutLoadedEvent>().Publish(new LayoutLoadedArgs(DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>()));
-
-                return true;
-            }
-            else
+            // On occasion, avalon serializes some closed panels (DynamicPanels), leading to the mess-up of the associated dynamicPanelCollection layout restoration.
+            // To avoid this, we simply re-close them.
+            var anchorables = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>().ToList();
+            foreach(var anch in anchorables)
             {
-                throw new FileNotFoundException($"Error : The specified Layout File does not exist.");
+                if (anch.Content == null)
+                {
+                    anch.Close();
+                }
             }
+
+            EventAggregator.GetEvent<LayoutLoadedEvent>().Publish(new LayoutLoadedArgs(DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorable>()));
         }
 
 
-        public bool SaveLayout(string directory)
+        public void SaveLayout(string layoutFileName)
         {
-            if (DockingView == null) return false;
-            
             var dockingManager = DockingView.DockingManager;
             dockingManager.UpdateLayout();
             
-            var layoutFileName = Path.Combine(directory, "PanelLayout.xml");
             IOUtils.DeleteIfExists(layoutFileName);
 
             var serializer = new XmlLayoutSerializer(dockingManager);
@@ -70,7 +56,6 @@ namespace Quantum.UIComponents
             {
                 serializer.Serialize(stream);
             }
-            return true;
         }
     }
 }

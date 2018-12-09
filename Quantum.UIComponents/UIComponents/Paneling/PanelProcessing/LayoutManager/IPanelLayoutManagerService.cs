@@ -2,7 +2,7 @@
 {
     internal interface IPanelLayoutManagerService
     {
-        bool LoadLayout(string directory);
-        bool SaveLayout(string directory);
+        void LoadLayout(string directory);
+        void SaveLayout(string directory);
     }
 }
