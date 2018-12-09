@@ -99,7 +99,7 @@ namespace Quantum.UIComponents
                 };
 
                 foreach(var metadata in definition.OfType<IAutoInvalidateMetadata>()) {
-                    metadata.AttachMetadataDefinition(EventAggregator, () => EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition)), ThreadOption.PublisherThread);
+                    metadata.AttachMetadataDefinition(EventAggregator, () => InvalidateStaticPanel(definition), ThreadOption.PublisherThread);
                 }
 
                 foreach (var metadata in definition.OfType<IBringIntoViewOnEvent>()) {
@@ -115,18 +115,17 @@ namespace Quantum.UIComponents
 
         }
         
-        [Handles(typeof(StaticPanelInvalidationEvent))]
-        public void OnPanelInvalidation(StaticPanelInvalidationArgs args)
+        private void InvalidateStaticPanel(IStaticPanelDefinition definition)
         {
             if (!IsUILoaded) return;
 
-            var anchorable = anchorableDefinitions.Single(o => o.Value == args.Definition).Key;
-            var config = args.Definition.OfType<StaticPanelConfiguration>().Single();
+            var anchorable = anchorableDefinitions.GetKeysForValue(definition).Single();
+            var config = definition.OfType<StaticPanelConfiguration>().Single();
 
             var canOpen = config.CanOpen();
             var canClose = config.CanClose();
             if(canOpen == false && canClose == false) {
-                throw new Exception($"Error invaidating static panel {args.Definition.ViewModel}. CanOpen() and CanClose() defined " +
+                throw new Exception($"Error invaidating static panel {definition.ViewModel}. CanOpen() and CanClose() defined " +
                     $"in the panel definition's configuration metadata can't both return false at the same time.");
             }
 
@@ -138,6 +137,8 @@ namespace Quantum.UIComponents
             }
             
             anchorable.Title = config.Title();
+
+            EventAggregator.GetEvent<StaticPanelInvalidationEvent>().Publish(new StaticPanelInvalidationArgs(definition));
         }
         
         [Handles(typeof(LayoutLoadedEvent))]
