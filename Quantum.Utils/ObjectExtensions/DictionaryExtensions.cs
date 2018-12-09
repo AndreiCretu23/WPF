@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Quantum.Utils
 {
@@ -39,6 +40,13 @@ namespace Quantum.Utils
                 return result;
             }
             return dictionary[key] = creator(key);
+        }
+
+        public static IEnumerable<TKey> GetKeysForValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TValue value)
+            where TValue : class
+        {
+            dictionary.AssertParameterNotNull(nameof(dictionary));
+            return dictionary.Where(o => o.Value == value).Select(o => o.Key);
         }
     }
 }

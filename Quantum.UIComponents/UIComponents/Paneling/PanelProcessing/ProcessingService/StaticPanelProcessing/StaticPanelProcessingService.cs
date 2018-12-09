@@ -106,7 +106,7 @@ namespace Quantum.UIComponents
                     metadata.AttachToDefinition(EventAggregator, () =>
                     {
                         if(definition.OfType<StaticPanelConfiguration>().Single().CanOpen()) {
-                            typeof(IPanelManagerService).GetMethod(nameof(PanelManager.BringStaticPanelIntoView)).MakeGenericMethod(definition.ViewModel).Invoke(PanelManager, new object[] { });
+                            BringStaticPanelIntoViewInternal(definition);
                         }
                     });
                 }
@@ -163,11 +163,9 @@ namespace Quantum.UIComponents
         public void OnBringIntoViewRequest(BringStaticPanelIntoViewArgs args)
         {
             IStaticPanelDefinition definition = null;
-            LayoutAnchorable anchorable = null;
             try
             {
-                anchorable = anchorableDefinitions.Single(o => o.Value.ViewModel == args.PanelViewModel || o.Value.IViewModel == args.PanelViewModel).Key;
-                definition = anchorableDefinitions[anchorable];
+                definition = anchorableDefinitions.Select(o => o.Value).Single(o => o.ViewModel == args.PanelViewModel || o.IViewModel == args.PanelViewModel);
             }
             catch(InvalidOperationException)
             {
@@ -175,14 +173,32 @@ namespace Quantum.UIComponents
                                     $"There is no StaticPanelDefinition registered associated with the given ViewModel type.");
             }
 
-            if(anchorable.IsHidden && definition.CanChangeVisibility(false)) {
+            BringStaticPanelIntoViewInternal(definition);
+        }
+
+
+        private void BringStaticPanelIntoViewInternal(IStaticPanelDefinition definition)
+        {
+            definition.AssertParameterNotNull(nameof(definition));
+            LayoutAnchorable anchorable = null;
+            try 
+            {
+                anchorable = anchorableDefinitions.GetKeysForValue(definition).Single();
+            }
+            catch(InvalidOperationException) 
+            {
+                throw new Exception($"Error : Cannot find a unique registered anchorable associated with the static panel definition " +
+                                    $"{definition.IView},{definition.View}, {definition.IViewModel}, {definition.ViewModel}");
+            }
+
+            if (anchorable.IsHidden && definition.CanChangeVisibility(false)) {
                 VisibilityManager.SetVisibility(anchorable, true);
             }
-            else
-            {
+            else {
                 var group = anchorable.Parent.SafeCast<LayoutAnchorablePane>();
                 group.SelectedContentIndex = group.Children.IndexOf(anchorable);
             }
         }
+
     }
 }
