@@ -1,9 +1,8 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Quantum.UIComposition">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Themes/ExpressionDark/Colors.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ContextMenu/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/Menu/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/MenuItem/Styles.xaml" />
         <ResourceDictionary Source="Themes/ExpressionDark/Thumb/Styles.xaml"/>
