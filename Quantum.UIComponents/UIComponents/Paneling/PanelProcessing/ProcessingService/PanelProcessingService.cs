@@ -52,27 +52,7 @@ namespace Quantum.UIComponents
         private void ProcessConfig()
         {
             var config = PanelManager.DockingConfiguration;
-            //var configDirectory = config.LayoutSerializationDirectory;
-            //if(!Directory.Exists(configDirectory))
-            //{
-            //    throw new DirectoryNotFoundException($"Error : Panel Configuration Directory {configDirectory} not found!");
-            //}
-
-            //var layoutDirectory = Path.Combine(configDirectory, "Layout");
-            //if(!Directory.Exists(layoutDirectory)) {
-            //    Directory.CreateDirectory(layoutDirectory);
-            //}
-
-            //EventAggregator.Subscribe(config.LayoutSerializationEvent, () => LayoutManager.SaveLayout(layoutDirectory));
-            //EventAggregator.Subscribe(config.LayoutDeserializationEvent, () =>
-            //{
-            //    if(File.Exists(Path.Combine(layoutDirectory, "PanelLayout.xml")))
-            //    {
-            //        LayoutManager.LoadLayout(layoutDirectory);
-            //    }
-            //});
-
-
+            
             if(config.SerializesLayout) 
             {
                 EventAggregator.Subscribe(config.LayoutSerializationEvent, () =>
