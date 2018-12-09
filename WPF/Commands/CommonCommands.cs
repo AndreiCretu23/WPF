@@ -86,13 +86,11 @@ namespace WPF.Commands
             {
                 return new ManagedCommand()
                 {
-                    CanExecuteHandler = () => true,
+                    CanExecuteHandler = () => DynamicPanelSelection.Value.Any(),
                     ExecuteHandler = () =>
                     {
                         var lastValue = DynamicPanelSelection.Value.LastOrDefault();
-                        if(lastValue != null) {
-                            DynamicPanelSelection.Remove(lastValue);
-                        }
+                        DynamicPanelSelection.Remove(lastValue);
                     },
                     Metadata = new CommandMetadataCollection()
                     {
@@ -103,6 +101,7 @@ namespace WPF.Commands
                         },
 
                         new KeyShortcut(ModifierKeys.Control, Key.R),
+                        new AutoInvalidateOnSelection<DynamicPanelSelection, IEnumerable<IDynamicPanelViewModel>>(),
                         new CommandGuid("67520506-1500-4D5A-AAE7-E27F765E438A"),
                     }
                 };

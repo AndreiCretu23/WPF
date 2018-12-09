@@ -5,7 +5,7 @@ namespace Quantum.Metadata
     /// <summary>
     /// This service is responsible for validating metadata collections and objects containing metadata collection properties.
     /// </summary>
-    public interface IMetadataAsserterService
+    internal interface IMetadataAsserterService
     {
         /// <summary>
         /// Validates all MetadataCollection properties of an object.

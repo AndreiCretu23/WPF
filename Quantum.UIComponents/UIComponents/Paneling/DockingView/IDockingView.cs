@@ -3,7 +3,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Quantum.UIComponents
 {
-    public interface IDockingView
+    internal interface IDockingView
     {
         DockingManager DockingManager { get; }
         LayoutRoot LayoutRoot { get; }

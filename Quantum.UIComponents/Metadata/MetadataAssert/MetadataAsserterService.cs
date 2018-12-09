@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Quantum.Metadata
 {
-    public class MetadataAsserterService : ServiceBase, IMetadataAsserterService 
+    internal class MetadataAsserterService : ServiceBase, IMetadataAsserterService 
     {
         private static readonly IEnumerable<Type> MetadataTypes;
         
