@@ -1,6 +1,5 @@
 ﻿using Quantum.Services;
 using Quantum.Utils;
-using System;
 using System.IO;
 using System.Linq;
 using Xceed.Wpf.AvalonDock.Layout;
