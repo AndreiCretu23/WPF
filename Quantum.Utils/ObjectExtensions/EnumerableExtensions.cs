@@ -130,13 +130,13 @@ namespace Quantum.Utils
         }
         
         [DebuggerHidden]
-        public static bool IsSingleElement(this IEnumerable collection)
+        public static bool IsSingleElement<T>(this IEnumerable<T> collection)
         {
             collection.AssertNotNull(nameof(collection));
-            foreach(var element in collection) {
-                return true;
+            if (collection is ICollection list) return list.Count == 1; 
+            using (var iter = collection.GetEnumerator()) {
+                return iter.MoveNext() && !iter.MoveNext();
             }
-            return false;
         }
 
         [DebuggerHidden]
