@@ -24,13 +24,13 @@ namespace Quantum.UIComponents
     /// 4) AutoInvalidateOnSelection -> This metadata type instructs the framework to re-evaluate the panel's
     ///                                 state / configuration when the selection of the specified type 
     ///                                 resolved from the event aggregator instance of the application's container
-    ///                                 changes.
+    ///                                 changes. <para/>
     /// 5) BringIntoViewOnKeyShortcut -> The panel will be brought into view when the specified key combination is pressed.
     ///                                  This will occur only if the panel CanOpen at the requested time, 
     ///                                  determined by the delegate in the static panel configuration.
-    ///                                  This metadata type does not support multiple instances in the parent StaticPanelDefinition.
-    /// 6) BringIntoViewOnEvent -> The panel will be brought into view when the event of the specified type is published.
-    /// 7) BringIntoViewOnSelection -> The panel will be brought into view when the selection of the specified type changes.
+    ///                                  This metadata type does not support multiple instances in the parent StaticPanelDefinition. <para/>
+    /// 6) BringIntoViewOnEvent -> The panel will be brought into view when the event of the specified type is published. <para/>
+    /// 7) BringIntoViewOnSelection -> The panel will be brought into view when the selection of the specified type changes. <para/>
     /// 
     /// </summary>
     /// <typeparam name="ITView">The type of the interface the view implements.</typeparam>
