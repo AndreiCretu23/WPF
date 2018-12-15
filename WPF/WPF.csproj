@@ -109,6 +109,18 @@
       <DependentUpon>SelectionPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Panels\SelectionPanel\SelectionPanelViewModel.cs" />
+    <Compile Include="Panels\SourcePanel\ISourcePanelView.cs" />
+    <Compile Include="Panels\SourcePanel\ISourcePanelViewModel.cs" />
+    <Compile Include="Panels\SourcePanel\SourcePanelView.xaml.cs">
+      <DependentUpon>SourcePanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\SourcePanel\SourcePanelViewModel.cs" />
+    <Compile Include="Panels\TargetPanel\ITargetPanelView.cs" />
+    <Compile Include="Panels\TargetPanel\ITargetPanelViewModel.cs" />
+    <Compile Include="Panels\TargetPanel\TargetPanelView.xaml.cs">
+      <DependentUpon>TargetPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\TargetPanel\TargetPanelViewModel.cs" />
     <Compile Include="ToolBars\FirstToolBar\FirstToolBarView.xaml.cs">
       <DependentUpon>FirstToolBarView.xaml</DependentUpon>
     </Compile>
@@ -192,6 +204,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\SelectionPanel\SelectionPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\SourcePanel\SourcePanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\TargetPanel\TargetPanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

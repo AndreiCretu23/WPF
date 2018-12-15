@@ -93,6 +93,42 @@ namespace WPF
                 new BringIntoViewOnSelection<SelectedNumber, int>()
             };
 
+            yield return new StaticPanelDefinition<ISourcePanelView, SourcePanelView, ISourcePanelViewModel, SourcePanelViewModel>()
+            {
+                new StaticPanelConfiguration()
+                {
+                    CanClose = () => true,
+                    CanFloat = () => true,
+                    CanOpen = () => true,
+                    IsVisible = () => true,
+                    Placement = PanelPlacement.TopLeft,
+                    Title = () => "SourcePanel"
+                },
+                new PanelMenuOption()
+                {
+                    new MenuPath(MenuLocations.View, categoryIndex: 1, orderIndex: 100),
+                    new Description("Source Panel"),
+                },
+            };
+
+            yield return new StaticPanelDefinition<ITargetPanelView, TargetPanelView, ITargetPanelViewModel, TargetPanelViewModel>()
+            {
+                new StaticPanelConfiguration()
+                {
+                    CanClose = () => true,
+                    CanFloat = () => true,
+                    CanOpen = () => true,
+                    IsVisible = () => false,
+                    Placement = PanelPlacement.Center,
+                    Title = () => "TargetPanel"
+                },
+                new PanelMenuOption()
+                {
+                    new MenuPath(MenuLocations.View, categoryIndex: 1, orderIndex: 200),
+                    new Description("Target Panel"),
+                },
+            };
+
             yield return new StaticPanelDefinition<ISelectionPanelView, SelectionPanelView, ISelectionPanelViewModel, SelectionPanelViewModel>()
             {
                 new StaticPanelConfiguration()

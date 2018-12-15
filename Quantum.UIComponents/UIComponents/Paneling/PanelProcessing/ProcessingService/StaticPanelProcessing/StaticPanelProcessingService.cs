@@ -6,6 +6,7 @@ using Quantum.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
@@ -144,6 +145,10 @@ namespace Quantum.UIComponents
         [Handles(typeof(LayoutLoadedEvent))]
         public void OnLayoutLoaded(LayoutLoadedArgs args)
         {
+            var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
+
+            var oldViews = anchorableDefinitions.Select(o => o.Key.Content as UserControl).ToList();
+
             anchorableDefinitions.Clear();
             var staticAnchorables = args.LayoutAnchorables.Where(o => PanelManager.StaticPanelDefinitions.Any(def => def.View == o.Content.GetType() &&
                                                                                                                      def.ViewModel == ((UserControl)o.Content).DataContext.GetType()));
@@ -157,6 +162,79 @@ namespace Quantum.UIComponents
                     var source = sender.SafeCast<LayoutAnchorable>();
                     VisibilityManager.UpdateContainer(source);
                 };
+
+                LayoutAnchorablePane layoutGroup = null;
+                if(anchorable.Parent != null && anchorable.Parent is LayoutAnchorablePane) {
+                    layoutGroup = anchorable.Parent as LayoutAnchorablePane;
+                }
+                else {
+                    layoutGroup = anchorable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).
+                                  Single(prop => prop.Name == "PreviousContainer").GetValue(anchorable) as LayoutAnchorablePane;
+                }
+
+                layoutGroupData.Add(anchorable, layoutGroup);
+            }
+
+            // Resolve static panel definitions that were not included in the layout.
+            var resolvedDefinitions = anchorableDefinitions.Select(o => o.Value);
+            var newDefinitions = PanelManager.StaticPanelDefinitions.Where(o => !resolvedDefinitions.Contains(o)).ToList();
+            foreach(var definition in newDefinitions) {
+                var config = definition.OfType<StaticPanelConfiguration>().Single();
+
+                var anchorable = new LayoutAnchorable();
+
+                var view = oldViews.Single(o => o.GetType() == definition.View);
+                
+                anchorable.Content = view;
+                anchorable.ContentId = definition.View.GetGuid();
+                anchorable.Title = config.Title();
+                
+                LayoutAnchorablePane container = null;
+                
+                if (anchorableDefinitions.Any(o => o.Value.OfType<StaticPanelConfiguration>().Single().Placement == config.Placement)) {
+                    container = anchorableDefinitions.Where(o => o.Value.OfType<StaticPanelConfiguration>().Single().Placement == config.Placement).Select(o => o.Key).
+                                GroupBy(o => layoutGroupData[o]).OrderBy(o => o.Count()).Last().Key;
+                }
+                else {
+                    container = DockingView.DockingManager.Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+                }
+
+                container.Children.Add(anchorable);
+                
+                anchorable.CanAutoHide = true;
+                anchorable.CanFloat = config.CanFloat();
+
+                
+                
+                anchorable.Hiding += (sender, e) => {
+                    var source = sender.SafeCast<LayoutAnchorable>();
+                    if (source.IsVisible) {
+                        VisibilityManager.UpdateContainer(source);
+                    }
+                };
+
+                anchorableDefinitions.Add(anchorable, definition);
+                layoutGroupData.Add(anchorable, container);
+            }
+
+            VisibilityManager.SetLayoutGroupData(layoutGroupData);
+
+            foreach(var definition in newDefinitions) {
+                var config = definition.OfType<StaticPanelConfiguration>().Single();
+
+                var canOpen = config.CanOpen();
+                var canClose = config.CanClose();
+                var visibility = config.IsVisible();
+
+                if (canOpen == false && canClose == false) {
+                    throw new Exception($"Error in static panel {definition.ViewModel} metadata. CanOpen() and CanClose() defined " +
+                        $"in the panel definition's configuration metadata can't both return false at the same time.");
+                }
+
+                if (!visibility && canClose) {
+                    var anchorable = anchorableDefinitions.GetKeysForValue(definition).Single();
+                    VisibilityManager.SetVisibility(anchorable, false);
+                }
             }
         }
         

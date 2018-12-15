@@ -33,39 +33,6 @@ namespace Quantum.UIComponents
             }
         }
 
-        [Handles(typeof(LayoutLoadedEvent))]
-        public void OnLayoutLoaded(LayoutLoadedArgs args)
-        {
-            var layoutElements = DockingView.DockingManager.Layout.Descendents();
-
-            var staticAnchorables = args.LayoutAnchorables.Where(o => PanelManager.StaticPanelDefinitions.Any(def => def.View == o.Content.GetType() && 
-                                                                                                                     def.ViewModel == ((UserControl)o.Content).DataContext.GetType()));
-            var groups = layoutElements.OfType<LayoutAnchorablePane>();
-
-            var layoutGroupData = new Dictionary<LayoutAnchorable, LayoutAnchorablePane>();
-            foreach (var anchorable in staticAnchorables)
-            {
-                var viewGuid = anchorable.Content.GetType().GetGuid();
-                var viewModelGuid = anchorable.Content.SafeCast<UserControl>().DataContext.GetType().GetGuid();
-
-                LayoutAnchorablePane layoutGroup = null;
-
-                if (anchorable.Parent != null && anchorable.Parent is LayoutAnchorablePane)
-                {
-                    layoutGroup = anchorable.Parent as LayoutAnchorablePane;
-                }
-                else
-                {
-                    layoutGroup = anchorable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static).
-                                  Single(prop => prop.Name == "PreviousContainer").GetValue(anchorable) as LayoutAnchorablePane;
-                }
-
-                layoutGroupData.Add(anchorable, layoutGroup);
-            }
-
-            SetLayoutGroupData(layoutGroupData);
-        }
-
         #endregion DataManagement
 
         #region VisibilitySetter
