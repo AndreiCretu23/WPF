@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="SplineBorder\SplineBorder.cs" />
     <Compile Include="ToolBarContainer\ToolBarContainer.cs" />
+    <Compile Include="TreeViewItem\TreeViewItem.cs" />
+    <Compile Include="TreeView\TreeView.cs" />
     <Compile Include="Window\WindowShell.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,5 +82,6 @@
       <Name>Quantum.Utils</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
