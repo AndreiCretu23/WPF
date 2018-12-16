@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Themes/ExpressionDark/CheckBox/Styles.xaml" />
         <ResourceDictionary Source="Themes/ExpressionDark/Colors.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/ContextMenu/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/Label/Styles.xaml" />

@@ -6,6 +6,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsEnabled="False" Margin="0,0,150,0" />
+        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,100,0"/>
         <TextBlock HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Text="TextBlockText"/>

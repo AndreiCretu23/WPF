@@ -1343,5 +1343,8 @@
     <Resource Include="Icons\Common\appbar.youtube.png" />
     <Resource Include="Icons\Common\appbar.zune.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Common\check-mark-3-16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

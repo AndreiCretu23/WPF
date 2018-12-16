@@ -6,7 +6,17 @@
     <Color x:Key="Color_002">#FFBABABA</Color>
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource Color_002}" />
     <SolidColorBrush x:Key="LightForegroundBrush" Color="{StaticResource Color_001}" />-->
-    
+
+    <Color x:Key="CheckBox_BorderBrushColor">#FF686868</Color>
+    <Color x:Key="CheckBox_HoverBorderBrushColor">#FFBABABA</Color>
+    <SolidColorBrush x:Key="CheckBox_Background" Color="#FF424242" Opacity="1" />
+    <SolidColorBrush x:Key="CheckBox_BorderBrush" Color="{StaticResource CheckBox_BorderBrushColor}" Opacity="1" />
+    <SolidColorBrush x:Key="CheckBox_HoverBorderBrush" Color="{StaticResource CheckBox_HoverBorderBrushColor}" Opacity="1" />
+    <SolidColorBrush x:Key="CheckBox_FocusBorderBrush" Color="#FFBABABA" Opacity="1" />
+    <SolidColorBrush x:Key="CheckBox_DisabledBackground" Color="#FF898989" Opacity="1" />
+    <SolidColorBrush x:Key="CheckBox_DisabledBorderBrush" Color="#FF292929" Opacity="1" />
+
+
     <SolidColorBrush x:Key="Menu_Background" Color="#FF323232" Opacity="1" />
     <SolidColorBrush x:Key="Menu_SeparatorBrush" Color="#FF515151" Opacity="1" />
     <SolidColorBrush x:Key="MenuItem_BackgroundHover" Color="#FF575757" Opacity="0.3" />
