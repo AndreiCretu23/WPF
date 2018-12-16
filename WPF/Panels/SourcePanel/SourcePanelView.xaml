@@ -8,6 +8,6 @@
     <Grid>
         <Label HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Content="SourcePanel" />
+               Content="LabelText" />
     </Grid>
 </UserControl>

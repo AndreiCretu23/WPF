@@ -22,7 +22,7 @@ namespace Quantum.Controls
 
         static ToolBarContainer()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToolBarContainer), new FrameworkPropertyMetadata(typeof(ToolBarTray)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToolBarContainer), new FrameworkPropertyMetadata(typeof(ToolBarContainer)));
         }
 
         public Style ToolBarStyle
