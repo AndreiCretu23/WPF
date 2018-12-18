@@ -2,19 +2,55 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls ="clr-namespace:Quantum.Controls;assembly=Quantum.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../TreeViewItem/Styles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
     <Style TargetType="{x:Type controls:TreeView}">
-
+        <Setter Property="Padding" Value="35,0,0,0"/>
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <controls:TreeViewItem/>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TreeView}">
                     <Border Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}" 
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Primitive TreeView" />
+                        <ScrollViewer CanContentScroll="True"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      VerticalScrollBarVisibility="Auto"
+                                      VirtualizingPanel.IsVirtualizing="{TemplateBinding VirtualizingPanel.IsVirtualizing}">
+                            <ItemsPresenter Margin="{TemplateBinding Padding}" />
+                        </ScrollViewer>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="True">
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
         
     </Style>
     

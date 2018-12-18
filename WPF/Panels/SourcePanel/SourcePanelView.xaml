@@ -7,6 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Children}">
+            <controls:TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type controls:TreeViewItem}" BasedOn="{StaticResource {x:Type controls:TreeViewItem}}">
+                    <Setter Property="Background" Value="Orange"/>
+                    <Setter Property="ItemsSource" Value="{Binding Children}"/>
+                </Style>
+            </controls:TreeView.ItemContainerStyle>
+        </controls:TreeView>
+
     </Grid>
 </UserControl>
