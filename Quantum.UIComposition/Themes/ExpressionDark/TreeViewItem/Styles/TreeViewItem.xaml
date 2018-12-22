@@ -99,7 +99,6 @@
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
@@ -109,36 +108,33 @@
                                           Style="{StaticResource TreeViewItemToggleButtonStyle}"/>
 
 
-                            <CheckBox Grid.Column="1"
-                                      IsChecked="{TemplateBinding IsChecked}"
-                                      Visibility="{TemplateBinding IsCheckable, Converter={StaticResource VisibilityConverter}}"/>
-                            
-                            
-                            <Border Grid.Column="2"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="20"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    
-                                    <Image Grid.Column="0"
-                                           Source="{TemplateBinding Icon}"
-                                           Visibility="{TemplateBinding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
 
-                                    <TextBlock Grid.Column="1" 
-                                               VerticalAlignment="Center"
-                                               Foreground="{TemplateBinding Foreground}"
-                                               FontFamily="{TemplateBinding FontFamily}"
-                                               FontSize="{TemplateBinding FontSize}"
-                                               FontStretch="{TemplateBinding FontStretch}"
-                                               FontStyle="{TemplateBinding FontStyle}"
-                                               FontWeight="{TemplateBinding FontWeight}"
-                                               Text="{TemplateBinding Header}"/>
-                                </Grid>
-                            </Border>
+                                <CheckBox IsChecked="{TemplateBinding IsChecked}"
+                                          Visibility="{TemplateBinding IsCheckable, Converter={StaticResource VisibilityConverter}}"/>
+
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <StackPanel Orientation="Horizontal">
+                                        
+                                        <Image Width="20"
+                                               Source="{TemplateBinding Icon}"
+                                               Visibility="{TemplateBinding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+                                        <TextBlock VerticalAlignment="Center"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   FontFamily="{TemplateBinding FontFamily}"
+                                                   FontSize="{TemplateBinding FontSize}"
+                                                   FontStretch="{TemplateBinding FontStretch}"
+                                                   FontStyle="{TemplateBinding FontStyle}"
+                                                   FontWeight="{TemplateBinding FontWeight}"
+                                                   Text="{TemplateBinding Header}"/>
+                                        
+                                    </StackPanel>
+                                </Border>
+
+                            </StackPanel>
                         </Grid>
 
                         <ItemsPresenter x:Name="ItemsHost" Grid.Row="2" Margin="{TemplateBinding Padding}" Visibility="Collapsed"/>
