@@ -73,8 +73,7 @@
     <Compile Include="Reflection\MemberInfoExtensions.cs" />
     <Compile Include="Reflection\ReflectionUtils.cs" />
     <Compile Include="Reflection\TypeExtensions.cs" />
-    <Compile Include="Scope\ThreadSyncScope.cs" />
-    <Compile Include="Scope\ScopedValue.cs" />
+    <Compile Include="Misc\Scope.cs" />
     <Compile Include="Serialization\BinarySerialization\BinarySerializableObjectLifetimeManager.cs" />
     <Compile Include="Serialization\BinarySerialization\BinarySerializer.cs" />
     <Compile Include="Time\DateTimeUtils.cs" />

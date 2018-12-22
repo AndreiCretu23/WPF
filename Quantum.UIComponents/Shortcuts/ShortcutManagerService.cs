@@ -21,7 +21,7 @@ namespace Quantum.Shortcuts
         [Service]
         public IPanelManagerService PanelManager { get; set; }
 
-        private ThreadSyncScope LoadingScope { get; }
+        private Scope LoadingScope { get; }
         
         private ShortcutDictionary DefaultShortcuts { get; set; }
 
@@ -40,7 +40,7 @@ namespace Quantum.Shortcuts
         public ShortcutManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            LoadingScope = new ThreadSyncScope();
+            LoadingScope = new Scope();
             LoadingScope.OnAllScopesEnd += (sender, e) => EventAggregator.GetEvent<ShortcutChangedEvent>().Publish(new GlobalRebuildShortcutChangedArgs());
         }
 
@@ -252,7 +252,7 @@ namespace Quantum.Shortcuts
                 shortcutDictionary = (ShortcutDictionary)serializer.Deserialize(reader);
             }
 
-            using (LoadingScope.BeginThreadScope()) {
+            using (LoadingScope.BeginScope()) {
                 foreach(var managedCommand in CommandManager.ManagedCommands) {
                     var shortcutInfo = shortcutDictionary.ManagedCommandShortcutInfo.SingleOrDefault(o => o.Matches(managedCommand));
                     if (shortcutInfo == null) continue;

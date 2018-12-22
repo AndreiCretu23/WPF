@@ -13,7 +13,7 @@ namespace Quantum.Services
     /// <typeparam name="T"></typeparam>
     public abstract class SelectionBase<T> : EventBase, ISelection
     {
-        private ThreadSyncScope BlockNotificationsScope { get; set; } = new ThreadSyncScope();
+        private Scope BlockNotificationsScope { get; set; } = new Scope();
 
         public SelectionBase()
         {
@@ -39,7 +39,7 @@ namespace Quantum.Services
         /// </summary>
         /// <returns></returns>
         public IDisposable BeginBlockingNotifications() {
-            return BlockNotificationsScope.BeginThreadScope();
+            return BlockNotificationsScope.BeginScope();
         }
 
         private void OnAllBlockingScopesEnd() {

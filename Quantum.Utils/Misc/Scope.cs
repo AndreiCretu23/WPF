@@ -3,7 +3,7 @@ using System.Windows.Threading;
 
 namespace Quantum.Utils
 {
-    public class ThreadSyncScope
+    public class Scope
     {
         public bool IsInScope { get; private set; }
         private Dispatcher OwnerDispatcher { get; set; }
@@ -12,30 +12,30 @@ namespace Quantum.Utils
         public EventHandler OnScopeEnd { get; set; }
         public EventHandler OnAllScopesEnd { get; set; }
 
-        private volatile int ThreadScopeCount = 0;
+        private volatile int ScopeCount = 0;
 
-        public ThreadSyncScope() {
+        public Scope() {
             OwnerDispatcher = Dispatcher.CurrentDispatcher;
         }
 
-        public IDisposable BeginThreadScope()
+        public IDisposable BeginScope()
         {
-            return new ThreadSyncScopeHelper(this);
+            return new ScopeHelper(this);
         }
 
-        private class ThreadSyncScopeHelper : IDisposable
+        private class ScopeHelper : IDisposable
         {
-            private ThreadSyncScope SyncScope { get; set; }
+            private Scope SyncScope { get; set; }
             private bool WasDisposed { get; set; }
 
-            public ThreadSyncScopeHelper(ThreadSyncScope syncScope)
+            public ScopeHelper(Scope syncScope)
             {
                 SyncScope = syncScope;
 
                 SyncScope.OwnerDispatcher.Invoke(() =>
                 {
                     SyncScope = syncScope;
-                    SyncScope.ThreadScopeCount++;
+                    SyncScope.ScopeCount++;
                     SyncScope.IsInScope = true;
                     SyncScope.OnScopeBegin?.Invoke(this, new EventArgs());
                 });
@@ -47,8 +47,8 @@ namespace Quantum.Utils
                     SyncScope.OwnerDispatcher.Invoke(() =>
                     {
                         SyncScope.OnScopeEnd?.Invoke(this, new EventArgs());
-                        SyncScope.ThreadScopeCount--;
-                        if (SyncScope.ThreadScopeCount == 0)
+                        SyncScope.ScopeCount--;
+                        if (SyncScope.ScopeCount == 0)
                         {
                             SyncScope.IsInScope = false;
                             SyncScope.OnAllScopesEnd?.Invoke(this, new EventArgs());

@@ -10,7 +10,7 @@ namespace Quantum.UIComposition
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ScopedValue<bool> BlockNotificationsScope { get; set; }
+        private Scope BlockNotificationsScope { get; set; }
         private Dictionary<string, PropertyChangedEventArgs> BlockedNotifications { get; set; }
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace Quantum.UIComposition
         {
             if(BlockNotificationsScope == null)
             {
-                BlockNotificationsScope = new ScopedValue<bool>();
+                BlockNotificationsScope = new Scope();
                 BlockNotificationsScope.OnScopeEnd += (sender, e) => OnBlockNotificationsEnd();
             }
             BlockedNotifications = new Dictionary<string, PropertyChangedEventArgs>();
-            return BlockNotificationsScope.BeginValueScope(true);
+            return BlockNotificationsScope.BeginScope();
         }
 
         private void OnBlockNotificationsEnd()
@@ -86,7 +86,7 @@ namespace Quantum.UIComposition
         {
             propArgs.AssertParameterNotNull(nameof(propArgs));
 
-            if(BlockNotificationsScope == null || !BlockNotificationsScope.Value)
+            if(BlockNotificationsScope == null || !BlockNotificationsScope.IsInScope)
             {
                 OnPropertyChanged(propArgs);
                 PropertyChanged?.Invoke(this, propArgs);
