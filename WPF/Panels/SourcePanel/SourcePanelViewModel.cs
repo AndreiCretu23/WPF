@@ -3,6 +3,7 @@ using Quantum.UIComponents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace WPF.Panels
@@ -17,6 +18,18 @@ namespace WPF.Panels
         {
         }
 
+        private IEnumerable<ViewModelItem> GetChildrenInternal()
+        {
+            yield return new ViewModelItem();
+            yield return new ViewModelItem();
+            yield return new ViewModelItem()
+            {
+                ChildrenGetter = GetChildrenInternal
+            };
+            yield return new ViewModelItem();
+            yield return new ViewModelItem();
+        }
+
         private IEnumerable<ViewModelItem> CreateChildren()
         {
             for(int i = 0; i < 10; i++) {
@@ -25,23 +38,7 @@ namespace WPF.Panels
 
             yield return new ViewModelItem()
             {
-                Children = new ObservableCollection<ViewModelItem>()
-                {
-                    new ViewModelItem(),
-                    new ViewModelItem(),
-                    new ViewModelItem()
-                    {
-                        Children = new ObservableCollection<ViewModelItem>()
-                        {
-                            new ViewModelItem(),
-                            new ViewModelItem(),
-                            new ViewModelItem(),
-                            new ViewModelItem(),
-                        }
-                    },
-                    new ViewModelItem(),
-                    new ViewModelItem(),
-                }
+                ChildrenGetter = GetChildrenInternal
             };
 
             for (int i = 0; i < 450; i++) {
@@ -53,6 +50,26 @@ namespace WPF.Panels
 
     public class ViewModelItem
     {
-        public ObservableCollection<ViewModelItem> Children { get; set; } = new ObservableCollection<ViewModelItem>();
+        public static int InstanceCount = 0;
+
+        public ViewModelItem()
+        {
+            InstanceCount++;
+        }
+
+        public Func<IEnumerable<ViewModelItem>> ChildrenGetter { get; set; }
+
+        private IEnumerable<ViewModelItem> CreateChildren()
+        {
+            if(ChildrenGetter != null) {
+                return ChildrenGetter();
+            }
+
+            else {
+                return Enumerable.Empty<ViewModelItem>();
+            }
+        }
+
+        public IEnumerable<ViewModelItem> Children { get { return CreateChildren(); } }
     }
 }

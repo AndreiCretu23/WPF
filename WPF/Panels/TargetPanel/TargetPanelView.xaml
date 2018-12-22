@@ -7,6 +7,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <!--<controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />-->
+
+        <TreeView>
+            <TreeViewItem Header="Item1"/>
+            <TreeViewItem Header="Item2"/>
+            <TreeViewItem Header="Item3">
+                <TreeViewItem Header="Item31"/>
+                <TreeViewItem Header="Item32"/>
+                <TreeViewItem Header="Item33"/>
+                <TreeViewItem Header="Item34">
+                    <TreeViewItem Header="Item 341"/>
+                    <TreeViewItem Header="Item 342"/>
+                    <TreeViewItem Header="Item 343"/>
+                    <TreeViewItem Header="Item 344"/>
+                    <TreeViewItem Header="Item 345"/>
+                </TreeViewItem>
+                <TreeViewItem Header="Item35"/>
+                <TreeViewItem Header="Item36"/>
+                <TreeViewItem Header="Item37"/>
+            </TreeViewItem>
+            <TreeViewItem Header="Item4"/>
+            <TreeViewItem Header="Item5"/>
+            <TreeViewItem Header="Item6"/>
+            <TreeViewItem Header="Item7"/>
+            <TreeViewItem Header="Item8"/>
+        </TreeView>
+        
     </Grid>
 </UserControl>

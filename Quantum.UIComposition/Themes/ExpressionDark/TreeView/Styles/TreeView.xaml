@@ -33,7 +33,8 @@
                                       HorizontalScrollBarVisibility="Auto"
                                       VerticalScrollBarVisibility="Auto"
                                       VirtualizingPanel.IsVirtualizing="{TemplateBinding VirtualizingPanel.IsVirtualizing}">
-                            <ItemsPresenter Margin="{TemplateBinding Padding}" />
+                            <ItemsPresenter Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="Left"/>
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
