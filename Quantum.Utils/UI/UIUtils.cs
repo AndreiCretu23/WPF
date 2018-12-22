@@ -22,7 +22,7 @@ namespace Quantum.Utils
                                     Result;
         }
 
-        public static IEnumerable<DependencyObject> GetVisualParents(this DependencyObject dependencyObject, Predicate<DependencyObject> predicate = null)
+        public static IEnumerable<DependencyObject> GetVisualAncestors(this DependencyObject dependencyObject, Predicate<DependencyObject> predicate = null)
         {
             dependencyObject.AssertNotNull(nameof(dependencyObject));
             predicate = predicate ?? (o => true);
@@ -38,10 +38,10 @@ namespace Quantum.Utils
             }
         }
 
-        public static IEnumerable<TObject> GetVisualParentsOfType<TObject>(this DependencyObject dependencyObject) where TObject : DependencyObject
+        public static IEnumerable<TObject> GetVisualAncestorsOfType<TObject>(this DependencyObject dependencyObject) where TObject : DependencyObject
         {
             dependencyObject.AssertNotNull(nameof(dependencyObject));
-            return dependencyObject.GetVisualParents(o => (o is TObject)).Cast<TObject>();
+            return dependencyObject.GetVisualAncestors(o => (o is TObject)).Cast<TObject>();
         }
         
         public static DependencyObject FindVisualParent(this DependencyObject dependencyObject, Predicate<DependencyObject> predicate)
