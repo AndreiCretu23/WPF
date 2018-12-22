@@ -8,6 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <converters:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
     <Style x:Key="TreeViewItemToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
@@ -58,6 +59,18 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="20,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+
+        <Setter Property="Foreground" Value="Gainsboro"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontStretch" Value="Expanded"/>
+        <Setter Property="FontStyle" Value="Normal"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        
+        <Setter Property="IsCheckable" Value="True"/>
+        <Setter Property="Icon" Value="/Quantum.ResourceLibrary;component/Icons/Common/appbar.3d.3ds.png"/>
+        <Setter Property="Header" Value="TreeViewItem"/>
+
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -85,7 +98,8 @@
                         <Grid Grid.Row="0" HorizontalAlignment="Left">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="20"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
@@ -94,11 +108,36 @@
                                           Visibility="{TemplateBinding HasItems, Converter={StaticResource VisibilityConverter}}"
                                           Style="{StaticResource TreeViewItemToggleButtonStyle}"/>
 
-                            <Border Grid.Column="1"
+
+                            <CheckBox Grid.Column="1"
+                                      IsChecked="{TemplateBinding IsChecked}"
+                                      Visibility="{TemplateBinding IsCheckable, Converter={StaticResource VisibilityConverter}}"/>
+                            
+                            
+                            <Border Grid.Column="2"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}">
-                                <TextBlock Text="TreeViewItem"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Image Grid.Column="0"
+                                           Source="{TemplateBinding Icon}"
+                                           Visibility="{TemplateBinding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+                                    <TextBlock Grid.Column="1" 
+                                               VerticalAlignment="Center"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               FontFamily="{TemplateBinding FontFamily}"
+                                               FontSize="{TemplateBinding FontSize}"
+                                               FontStretch="{TemplateBinding FontStretch}"
+                                               FontStyle="{TemplateBinding FontStyle}"
+                                               FontWeight="{TemplateBinding FontWeight}"
+                                               Text="{TemplateBinding Header}"/>
+                                </Grid>
                             </Border>
                         </Grid>
 
@@ -107,9 +146,13 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="True">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True"/>
+                                <Condition Property="IsExpanded" Value="True"/>
+                            </MultiTrigger.Conditions>
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible"/>
-                        </Trigger>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                     
                 </ControlTemplate>

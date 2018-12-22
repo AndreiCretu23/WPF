@@ -7,6 +7,9 @@
     </ResourceDictionary.MergedDictionaries>
     
     <Style TargetType="{x:Type controls:TreeView}">
+        <Setter Property="Background" Value="{StaticResource TreeView_Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TreeView_BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0.5"/>
         <Setter Property="Padding" Value="35,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
         <Setter Property="ItemsPanel">

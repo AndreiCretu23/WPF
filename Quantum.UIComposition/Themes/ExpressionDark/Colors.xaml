@@ -40,6 +40,8 @@
 
     <SolidColorBrush x:Key="ToolBarTray_Background" Color="#FF323232" Opacity="1"/>
 
+    <SolidColorBrush x:Key="TreeView_Background" Color="#FF383838" Opacity="1"/>
+    <SolidColorBrush x:Key="TreeView_BorderBrush" Color="#FFACACAC" Opacity="1"/>
     <SolidColorBrush x:Key="TreeViewItemExpander_Background" Color="#FF6A5F5F" Opacity="1"/>
     <SolidColorBrush x:Key="TreeViewItemExpander_BorderBrush" Color="#FF646464" Opacity="1"/>
 
