@@ -10,7 +10,6 @@
         <controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Children}">
             <controls:TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type controls:TreeViewItem}" BasedOn="{StaticResource {x:Type controls:TreeViewItem}}">
-                    <Setter Property="Background" Value="Orange"/>
                     <Setter Property="ItemsSource" Value="{Binding Children}"/>
                 </Style>
             </controls:TreeView.ItemContainerStyle>

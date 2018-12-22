@@ -53,7 +53,9 @@
     </Style>
 
     <Style TargetType="{x:Type controls:TreeViewItem}">
-        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="20,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
         <Setter Property="ItemsPanel">
