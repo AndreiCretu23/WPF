@@ -59,7 +59,9 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="20,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
-
+        
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        
         <Setter Property="Foreground" Value="Gainsboro"/>
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontSize" Value="14"/>
@@ -115,7 +117,9 @@
 
                                 <Border Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="1"
+                                        Margin="2,0,0,0">
                                     <StackPanel Orientation="Horizontal">
                                         
                                         <Image Width="20"
@@ -149,6 +153,9 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible"/>
                         </MultiTrigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedBackground}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                     
                 </ControlTemplate>

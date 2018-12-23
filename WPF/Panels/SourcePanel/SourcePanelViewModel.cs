@@ -1,5 +1,6 @@
 ﻿using Quantum.Services;
 using Quantum.UIComponents;
+using Quantum.UIComposition;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,51 +19,64 @@ namespace WPF.Panels
         {
         }
 
-        private IEnumerable<ViewModelItem> GetChildrenInternal()
+        private IEnumerable<ViewModelItem> GetChildrenInternal(string head)
         {
-            yield return new ViewModelItem();
-            yield return new ViewModelItem();
-            yield return new ViewModelItem()
-            {
-                ChildrenGetter = GetChildrenInternal
-            };
-            yield return new ViewModelItem();
-            yield return new ViewModelItem();
+            yield return new ViewModelItem() { Header = head + "1" };
+            yield return new ViewModelItem() { Header = head + "2" , ChildrenGetter = GetChildrenInternal };
+            yield return new ViewModelItem() { Header = head + "2" };
+            yield return new ViewModelItem() { Header = head + "3" , ChildrenGetter = GetChildrenInternal };
+            yield return new ViewModelItem() { Header = head + "4" };
         }
 
         private IEnumerable<ViewModelItem> CreateChildren()
         {
-            for(int i = 0; i < 10; i++) {
-                yield return new ViewModelItem();
+            for(int i = 0; i < 500; i++) {
+                yield return new ViewModelItem()
+                {
+                    Header = i.ToString(),
+                    ChildrenGetter = GetFunc(i),
+                };
             }
 
-            yield return new ViewModelItem()
-            {
-                ChildrenGetter = GetChildrenInternal
-            };
+        }
 
-            for (int i = 0; i < 450; i++) {
-                yield return new ViewModelItem();
+        private Func<string, IEnumerable<ViewModelItem>> GetFunc(int number)
+        {
+            if(number % 5 == 0) {
+                return GetChildrenInternal;
             }
+
+            return null;
         }
 
     }
 
-    public class ViewModelItem
+    public class ViewModelItem : ObservableObject
     {
         public static int InstanceCount = 0;
+
+        private string header;
+        public string Header
+        {
+            get { return header; }
+            set
+            {
+                header = value;
+                RaisePropertyChanged(() => Header);
+            }
+        }
 
         public ViewModelItem()
         {
             InstanceCount++;
         }
 
-        public Func<IEnumerable<ViewModelItem>> ChildrenGetter { get; set; }
+        public Func<string, IEnumerable<ViewModelItem>> ChildrenGetter { get; set; }
 
         private IEnumerable<ViewModelItem> CreateChildren()
         {
             if(ChildrenGetter != null) {
-                return ChildrenGetter();
+                return ChildrenGetter(header);
             }
 
             else {

@@ -51,6 +51,9 @@
     <Compile Include="ToolBarContainer\ToolBarContainer.cs" />
     <Compile Include="TreeViewItem\TreeViewItem.cs" />
     <Compile Include="TreeView\TreeView.cs" />
+    <Compile Include="TreeView\TreeViewArrowNavigationHandler.cs" />
+    <Compile Include="TreeView\TreeViewNavigationDirection.cs" />
+    <Compile Include="TreeView\TreeViewTraverser.cs" />
     <Compile Include="Window\WindowShell.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace Quantum.Utils
         [DebuggerHidden]
         public static IEnumerable<int> Between(int start, int end)
         {
-            return Enumerable.Range(start, end - start);
+            return Enumerable.Range(System.Math.Min(start, end), start - end + 1);
         }
 
         [DebuggerHidden]
@@ -136,6 +136,20 @@ namespace Quantum.Utils
             if (collection is ICollection list) return list.Count == 1; 
             using (var iter = collection.GetEnumerator()) {
                 return iter.MoveNext() && !iter.MoveNext();
+            }
+        }
+        
+        [DebuggerHidden]
+        public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> collection, Predicate<T> predicate)
+        {
+            collection.AssertNotNull(nameof(collection));
+            predicate.AssertParameterNotNull(nameof(predicate));
+
+            foreach(var element in collection) {
+                yield return element;
+                if(predicate(element)) {
+                    yield break;
+                }
             }
         }
 

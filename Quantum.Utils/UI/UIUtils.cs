@@ -34,7 +34,7 @@ namespace Quantum.Utils
                 {
                     yield return parent;
                 }
-                parent = dependencyObject.GetVisualParent();
+                parent = parent.GetVisualParent();
             }
         }
 
