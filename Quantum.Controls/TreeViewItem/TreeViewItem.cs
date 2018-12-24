@@ -107,8 +107,10 @@ namespace Quantum.Controls
         
         #endregion Properties
         
-        public TreeView Root { get; private set; }
-        public new UIItemsControl Parent { get; private set; }
+        internal TreeView Root { get; private set; }
+        internal new UIItemsControl Parent { get; private set; }
+
+        internal TreeViewSelectionManager SelectionManager { get { return Root.SelectionManager; } }
 
         public TreeViewItem()
         {
@@ -176,35 +178,38 @@ namespace Quantum.Controls
 
 
         #region Selection
-
-
+        
         private void OnSelectionChanged()
         {
-            Root.NotifySelectionChanged(this);
+            SelectionManager.NotifySelectionChanged(this);
         }
+
+        #endregion Selection
+
+        #region Keyboard
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) {
                 if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift)) {
-                    Root.SelectItemsBetweenLastSelectedAnd(this);
+                    SelectionManager.SelectItemsBetweenLastSelectedAnd(this);
                 }
                 else if (Keyboard.Modifiers == ModifierKeys.Shift) {
-                    Root.SelectOnlyItemsBetweenLastSelectedAnd(this);
+                    SelectionManager.SelectOnlyItemsBetweenLastSelectedAnd(this);
                 }
                 else if (Keyboard.Modifiers == ModifierKeys.Control) {
-                    Root.ToggleItemSelection(this);
+                    SelectionManager.ToggleItemSelection(this);
                 }
                 else {
-                    Root.SelectSingleItem(this);
+                    SelectionManager.SelectSingleItem(this);
                 }
             }
 
             else if (e.ChangedButton == MouseButton.Right) {                
                 if(!Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && 
                    !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && 
-                   !Root.IsMultipleSelection) {
-                    Root.SelectSingleItem(this);
+                   !SelectionManager.IsMultipleSelection) {
+                    SelectionManager.SelectSingleItem(this);
                 }
 
             }
@@ -212,14 +217,7 @@ namespace Quantum.Controls
             e.Handled = true;
         }
 
-        #endregion Selection
-
-
-        #region Utils
+        #endregion Keyboard
         
-        
-
-        #endregion Utils
-
     }
 }

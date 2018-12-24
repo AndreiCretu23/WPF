@@ -2,7 +2,9 @@
 {
     internal class TreeViewArrowNavigationHandler
     {
-        private TreeView Root { get; }
+        internal TreeView Root { get; }
+        private TreeViewSelectionManager SelectionManager { get { return Root.SelectionManager; } }
+
         private TreeViewItem Origin { get; }
         private TreeViewNavigationDirection Direction { get; set; }
         private TreeViewItem CurrentNavigationItem { get; set; }
@@ -31,14 +33,14 @@
 
             if (previous != Origin) {
                 if (ShouldNavigationSelect) {
-                    Root.SelectItem(previous);
+                    SelectionManager.SelectItem(previous);
                 }
                 else {
-                    Root.UnselectItem(lastSelectedItem);
+                    SelectionManager.UnselectItem(lastSelectedItem);
                 }
             }
             else {
-                Root.UnselectItem(lastSelectedItem);
+                SelectionManager.UnselectItem(lastSelectedItem);
                 ShouldNavigationSelect = !ShouldNavigationSelect;
             }
 
@@ -60,14 +62,14 @@
 
             if (next != Origin) {
                 if (ShouldNavigationSelect) {
-                    Root.SelectItem(next);
+                    SelectionManager.SelectItem(next);
                 }
                 else {
-                    Root.UnselectItem(lastSelectedItem);
+                    SelectionManager.UnselectItem(lastSelectedItem);
                 }
             }
             else {
-                Root.UnselectItem(lastSelectedItem);
+                SelectionManager.UnselectItem(lastSelectedItem);
                 ShouldNavigationSelect = !ShouldNavigationSelect;
             }
 

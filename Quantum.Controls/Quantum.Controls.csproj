@@ -53,6 +53,8 @@
     <Compile Include="TreeView\TreeView.cs" />
     <Compile Include="TreeView\TreeViewArrowNavigationHandler.cs" />
     <Compile Include="TreeView\TreeViewNavigationDirection.cs" />
+    <Compile Include="TreeView\TreeViewNavigationManager.cs" />
+    <Compile Include="TreeView\TreeViewSelectionManager.cs" />
     <Compile Include="TreeView\TreeViewTraverser.cs" />
     <Compile Include="Window\WindowShell.cs" />
   </ItemGroup>

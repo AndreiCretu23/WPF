@@ -59,8 +59,13 @@ namespace Quantum.Controls
 
         #endregion Properties
 
+        internal TreeViewSelectionManager SelectionManager { get; }
+        internal TreeViewNavigationManager NavigationManager { get; }
+
         public TreeView()
         {
+            SelectionManager = new TreeViewSelectionManager(this);
+            NavigationManager = new TreeViewNavigationManager(this);
         }
 
         static TreeView()
@@ -91,268 +96,38 @@ namespace Quantum.Controls
         }
 
         #endregion AssignPropertyChanged
-
-
-        #region Selection
-
-        internal bool HasSelection { get { return SelectedItemsInternal.Any(); } }
-        internal bool IsMultipleSelection { get { return SelectedItemsInternal.Count() > 1; } }
-
-        private readonly ISet<TreeViewItem> SelectedItemsInternal = new HashSet<TreeViewItem>();
         
-        internal void NotifySelectionChanged(TreeViewItem item)
-        {
-            if (item.IsSelected) {
-                if(!AllowMultipleSelection) {
-                    foreach (var treeViewItem in SelectedItemsInternal.ToHashSet()) {
-                        treeViewItem.IsSelected = false;
-                    }
-                }
-
-                SelectedItemsInternal.Add(item);
-                item.Focus();
-            }
-            else {
-                SelectedItemsInternal.Remove(item);
-            }
-        }
-
-        internal void ClearSelection()
-        {
-            var items = SelectedItemsInternal.ToHashSet();
-            foreach(var item in items) {
-                UnselectItem(item);
-            }
-        }
         
-        internal void ClearAllSelectedExcept(TreeViewItem item)
-        {
-            var items = SelectedItemsInternal.ToHashSet();
-            if(items.Contains(item)) {
-                items.Remove(item);
-            }
-            foreach(var treeViewItem in items) {
-                UnselectItem(treeViewItem);
-            }
-        }
-
-        internal void SelectItem(TreeViewItem item)
-        {
-            item.IsSelected = true;
-        }
-
-        internal void UnselectItem(TreeViewItem item)
-        {
-            item.IsSelected = false;
-        }
-
-        internal void ToggleItemSelection(TreeViewItem item)
-        {
-            item.IsSelected = !item.IsSelected;
-        }
-
-        internal void SelectSingleItem(TreeViewItem item)
-        {
-            if(item.IsSelected) {
-                ClearAllSelectedExcept(item);
-            }
-            else {
-                ClearSelection();
-            }
-
-            SelectItem(item);
-        }
-
-        internal void SelectItemsBetweenLastSelectedAnd(TreeViewItem item)
-        {
-            if (!AllowMultipleSelection) {
-                SelectSingleItem(item);
-            }
-
-            if (!SelectedItemsInternal.Any()) {
-                SelectItem(item);
-            }
-            
-            else {
-                var lastSelectedItem = SelectedItemsInternal.Last();
-                
-                var items = TreeViewTraverser.GetItemsBetween(lastSelectedItem, item);
-                
-                UnselectItem(lastSelectedItem);
-                items.Remove(lastSelectedItem);
-                items.Add(lastSelectedItem);
-
-                foreach(var treeViewItem in items) {
-                    SelectItem(treeViewItem);
-                }
-            }
-        }
-
-        internal void SelectOnlyItemsBetweenLastSelectedAnd(TreeViewItem item)
-        {
-            if(!AllowMultipleSelection) {
-                SelectSingleItem(item);
-            }
-
-            if(!SelectedItemsInternal.Any()) {
-                SelectItem(item);
-            }
-            else {
-                var lastSelectedItem = SelectedItemsInternal.Last();
-                ClearSelection();
-
-                var items = TreeViewTraverser.GetItemsBetween(lastSelectedItem, item);
-
-                UnselectItem(lastSelectedItem);
-                items.Remove(lastSelectedItem);
-                items.Add(lastSelectedItem);
-
-                foreach(var treeViewItem in items) {
-                    SelectItem(treeViewItem);
-                }
-
-            }
-        }
-
-        internal void SelectAllItems()
-        {
-            if (!AllowMultipleSelection) return;
-
-            foreach(var item in this.GetVisualDescendantsOfType<TreeViewItem>()) {
-                SelectItem(item);
-            }
-        }
-
-
-        #endregion Selection
-
-
-        #region Navigation
-
-        private void HandleTabNavigation()
-        {
-            if (!AllowTabNavigation || !SelectedItemsInternal.Any()) return;
-
-            var lastSelectedItem = SelectedItemsInternal.Last();
-            var next = lastSelectedItem.GetNext();
-
-            if (next != null) {
-                SelectSingleItem(next);
-            }
-        }
-
-        private void HandleBackTabNavigation()
-        {
-            if (!AllowTabNavigation || !SelectedItemsInternal.Any()) return;
-
-            var lastSelectedItem = SelectedItemsInternal.Last();
-            var previous = lastSelectedItem.GetPrevious();
-
-            if (previous != null) {
-                SelectSingleItem(previous);
-            }
-        }
-
-        private void HandleArrowNavigation()
-        {
-            if (!AllowArrowNavigation || !SelectedItemsInternal.Any()) return;
-
-            var lastSelectedItem = SelectedItemsInternal.Last();
-            var next = lastSelectedItem.GetNext();
-
-            if (next != null) {
-                SelectSingleItem(next);
-            }
-        }
-
-        private void HandleBackArrowNavigation()
-        {
-            if (!AllowArrowNavigation || !SelectedItemsInternal.Any()) return;
-
-            var lastSelectedItem = SelectedItemsInternal.Last();
-            var previous = lastSelectedItem.GetPrevious();
-
-            if (previous != null) {
-                SelectSingleItem(previous);
-            }
-        }
-
-
-
-        // Shift + Arrow Navigation
-
-        private TreeViewArrowNavigationHandler MultipleNavigationHandler = null;
-        
-        private void TeardownMultipleArrowNavigationSession()
-        {
-            MultipleNavigationHandler = null;    
-        }
-
-        private void HandleMultipleArrowNavigation()
-        {
-            if (!AllowArrowNavigation || !SelectedItemsInternal.Any()) return;
-            
-            if(!AllowMultipleSelection) {
-                HandleArrowNavigation();
-                return;
-            }
-
-            if(MultipleNavigationHandler == null) {
-                MultipleNavigationHandler = new TreeViewArrowNavigationHandler(this, SelectedItemsInternal.Last(), TreeViewNavigationDirection.Down);
-            }
-
-            MultipleNavigationHandler.NavigateDown();
-        }
-
-        private void HandleMultipleBackArrowNavigation()
-        {
-            if (!AllowArrowNavigation || !SelectedItemsInternal.Any()) return;
-
-            if(!AllowMultipleSelection) {
-                HandleBackArrowNavigation();
-                return;
-            }
-
-            if (MultipleNavigationHandler == null) {
-                MultipleNavigationHandler = new TreeViewArrowNavigationHandler(this, SelectedItemsInternal.Last(), TreeViewNavigationDirection.Up);
-            }
-
-            MultipleNavigationHandler.NavigateUp();
-        }
-        
-        #endregion Navigation
-
-
         #region Keyboard
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.KeyboardDevice.IsKeyDown(Key.A)) {
-                SelectAllItems();
+                SelectionManager.SelectAllItems();
             }
             
             else if(e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.KeyboardDevice.IsKeyDown(Key.Tab)) {
-                HandleBackTabNavigation();
+                NavigationManager.HandleBackTabNavigation();
             }
 
             else if(e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.KeyboardDevice.IsKeyDown(Key.Up)) {
-                HandleMultipleBackArrowNavigation();
+                NavigationManager.HandleMultipleBackArrowNavigation();
             }
 
             else if (e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.KeyboardDevice.IsKeyDown(Key.Down)) {
-                HandleMultipleArrowNavigation();
+                NavigationManager.HandleMultipleArrowNavigation();
             }
 
             else if (e.KeyboardDevice.IsKeyDown(Key.Tab)) {
-                HandleTabNavigation();
+                NavigationManager.HandleTabNavigation();
             }
 
             else if (e.KeyboardDevice.IsKeyDown(Key.Up)) {
-                HandleBackArrowNavigation();
+                NavigationManager.HandleBackArrowNavigation();
             }
 
             else if (e.KeyboardDevice.IsKeyDown(Key.Down)) {
-                HandleArrowNavigation();
+                NavigationManager.HandleArrowNavigation();
             }
 
             else {
@@ -365,8 +140,8 @@ namespace Quantum.Controls
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
         {
-            if((e.Key == Key.LeftShift || e.Key == Key.RightShift) && MultipleNavigationHandler != null) {
-                TeardownMultipleArrowNavigationSession();
+            if((e.Key == Key.LeftShift || e.Key == Key.RightShift)) {
+                NavigationManager.TeardownMultipleArrowNavigationSession();
             }
             base.OnPreviewKeyUp(e);
         }
