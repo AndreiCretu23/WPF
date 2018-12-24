@@ -217,63 +217,7 @@ namespace Quantum.Controls
 
         #region Utils
         
-        public IEnumerable<UIItemsControl> GetThisAndAncestors()
-        {
-            UIItemsControl parent = this;
-            while(parent != null) {
-                yield return parent;
-                parent = parent is TreeViewItem tvi ? tvi.Parent : null;
-            }
-        }
         
-        public IEnumerable<TreeViewItem> GetChildren()
-        {
-            for(int i = 0; i < Items.Count; i++) {
-                if(ItemContainerGenerator.ContainerFromIndex(i) is TreeViewItem item) {
-                    yield return item;
-                }
-            }
-        }
-
-        public TreeViewItem GetPrevious()
-        {
-            var currentIndex = Parent.ItemContainerGenerator.IndexFromContainer(this);
-
-            if(currentIndex == 0) {
-                if(Parent is TreeViewItem item) {
-                    return item;
-                }
-                else {
-                    return null;
-                }
-            }
-
-            else {
-                var prevContainer = (TreeViewItem)Parent.ItemContainerGenerator.ContainerFromIndex(currentIndex - 1);
-                var prevContainerChildren = prevContainer.GetChildren();
-                if(prevContainerChildren.Any()) {
-                    return prevContainerChildren.Last();
-                }
-                return prevContainer;
-            }
-        }
-
-        public TreeViewItem GetNext()
-        {
-            if (ItemContainerGenerator.ContainerFromIndex(0) is TreeViewItem firstChild) {
-                return firstChild;
-            }
-            
-            else if(Parent.ItemContainerGenerator.ContainerFromIndex(Parent.ItemContainerGenerator.IndexFromContainer(this) + 1) is TreeViewItem nextElement) {
-                return nextElement;
-            }
-            
-            else if(Parent is TreeViewItem parentTreeViewItem && parentTreeViewItem.Parent != null) {
-                return parentTreeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(parentTreeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(parentTreeViewItem) + 1) as TreeViewItem;
-            }
-
-            return null;
-        }
 
         #endregion Utils
 
