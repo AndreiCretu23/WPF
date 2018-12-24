@@ -86,17 +86,6 @@ namespace Quantum.Controls
         }
 
         #endregion ItemContainerConfig
-
-
-        #region AssignPropertyChanged
-
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-        }
-
-        #endregion AssignPropertyChanged
-        
         
         #region Keyboard
 

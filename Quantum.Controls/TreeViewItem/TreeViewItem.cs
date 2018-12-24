@@ -186,6 +186,7 @@ namespace Quantum.Controls
 
         #endregion Selection
 
+
         #region Keyboard
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
