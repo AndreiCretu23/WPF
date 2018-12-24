@@ -91,11 +91,14 @@ namespace Quantum.Controls
         }
 
         #endregion AssignPropertyChanged
-        
+
 
         #region Selection
 
-        private ISet<TreeViewItem> SelectedItemsInternal = new HashSet<TreeViewItem>();
+        internal bool HasSelection { get { return SelectedItemsInternal.Any(); } }
+        internal bool IsMultipleSelection { get { return SelectedItemsInternal.Count() > 1; } }
+
+        private readonly ISet<TreeViewItem> SelectedItemsInternal = new HashSet<TreeViewItem>();
         
         internal void NotifySelectionChanged(TreeViewItem item)
         {

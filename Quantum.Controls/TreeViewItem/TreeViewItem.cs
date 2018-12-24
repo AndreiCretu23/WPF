@@ -185,20 +185,28 @@ namespace Quantum.Controls
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if(Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                Root.SelectItemsBetweenLastSelectedAnd(this);
+            if (e.ChangedButton == MouseButton.Left) {
+                if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift)) {
+                    Root.SelectItemsBetweenLastSelectedAnd(this);
+                }
+                else if (Keyboard.Modifiers == ModifierKeys.Shift) {
+                    Root.SelectOnlyItemsBetweenLastSelectedAnd(this);
+                }
+                else if (Keyboard.Modifiers == ModifierKeys.Control) {
+                    Root.ToggleItemSelection(this);
+                }
+                else {
+                    Root.SelectSingleItem(this);
+                }
             }
 
-            if(Keyboard.IsKeyDown(Key.LeftShift)) {
-                Root.SelectOnlyItemsBetweenLastSelectedAnd(this);
-            }
+            else if (e.ChangedButton == MouseButton.Right) {                
+                if(!Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && 
+                   !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && 
+                   !Root.IsMultipleSelection) {
+                    Root.SelectSingleItem(this);
+                }
 
-            else if(Keyboard.IsKeyDown(Key.LeftCtrl)) {
-                Root.ToggleItemSelection(this);
-            }
-
-            else {
-                Root.SelectSingleItem(this);
             }
             
             e.Handled = true;

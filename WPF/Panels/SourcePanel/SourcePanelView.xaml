@@ -14,6 +14,18 @@
                     <Setter Property="ItemsSource" Value="{Binding Children}"/>
                 </Style>
             </controls:TreeView.ItemContainerStyle>
+
+            <controls:TreeView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Item1"/>
+                </ContextMenu>
+            </controls:TreeView.ContextMenu>
+            
         </controls:TreeView>
 
     </Grid>
