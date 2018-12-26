@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls ="clr-namespace:Quantum.Controls;assembly=Quantum.Controls">
+                    xmlns:controls ="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
+                    xmlns:p="clr-namespace:Quantum.UIComposition">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../TreeViewItem/Styles.xaml"/>
@@ -15,6 +16,19 @@
         <Setter Property="BorderThickness" Value="0.5"/>
         <Setter Property="Padding" Value="35,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="p:AttachedProperties.SelectionBox">
+            <Setter.Value>
+                <controls:SelectionBox TargetType="{x:Type controls:TreeViewItem}"
+                                       TargetSelectionProperty="{x:Static controls:TreeViewItem.IsSelectedProperty}"
+                                       Background="{StaticResource SelectionBox_Background}"
+                                       BorderBrush="{StaticResource SelectionBox_BorderBrush}"
+                                       BorderThickness="1">
+                    <controls:SelectionBox.VisualTraverser>
+                        <controls:RecurrentItemsControlTraverser/>
+                    </controls:SelectionBox.VisualTraverser>
+                </controls:SelectionBox>
+            </Setter.Value>
+        </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -33,9 +47,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TreeView}">
                     <Border Background="{TemplateBinding Background}" 
-                            BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <ScrollViewer CanContentScroll="True"
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Focusable="False"
+                                      CanContentScroll="True"
                                       HorizontalScrollBarVisibility="Auto"
                                       VerticalScrollBarVisibility="Auto"
                                       VirtualizingPanel.IsVirtualizing="{TemplateBinding VirtualizingPanel.IsVirtualizing}">

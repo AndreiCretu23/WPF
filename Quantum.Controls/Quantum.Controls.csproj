@@ -47,6 +47,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Misc\ControlBehaviors\ICustomContentOwner.cs" />
+    <Compile Include="Misc\VisualTraverser\ItemsControlTraverser.cs" />
+    <Compile Include="Misc\VisualTraverser\IVisualTraverser.cs" />
+    <Compile Include="Misc\VisualTraverser\RecurrentItemsControlTraverser.cs" />
+    <Compile Include="Misc\VisualTraverser\VisualTraverser.cs" />
+    <Compile Include="Misc\VisualTreeExtensions\VisualTreeHelperExtensions.cs" />
+    <Compile Include="SelectionBox\SelectionBox.cs" />
+    <Compile Include="SelectionBox\SelectionBoxAdorner.cs" />
+    <Compile Include="SelectionBox\SelectionBoxElementManager.cs" />
+    <Compile Include="SelectionBox\SelectionBoxHandler.cs" />
+    <Compile Include="SelectionBox\SelectionBoxOwnerUIManager.cs" />
     <Compile Include="SplineBorder\SplineBorder.cs" />
     <Compile Include="ToolBarContainer\ToolBarContainer.cs" />
     <Compile Include="TreeViewItem\TreeViewItem.cs" />

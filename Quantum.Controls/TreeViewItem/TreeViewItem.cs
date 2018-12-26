@@ -11,7 +11,8 @@ using UIItemsControl = System.Windows.Controls.ItemsControl;
 namespace Quantum.Controls
 {
     [DebuggerDisplay("Header = {Header}")]
-    public class TreeViewItem : UIItemsControl
+    [TemplatePart(Name = "PART_ContentHost", Type = typeof(FrameworkElement))]
+    public class TreeViewItem : UIItemsControl, ICustomContentOwner
     {
         #region DependencyProperties
 
@@ -107,6 +108,8 @@ namespace Quantum.Controls
         
         #endregion Properties
         
+        private FrameworkElement ContentElement { get; set; }
+
         internal TreeView Root { get; private set; }
         internal new UIItemsControl Parent { get; private set; }
 
@@ -219,6 +222,22 @@ namespace Quantum.Controls
         }
 
         #endregion Keyboard
-        
+
+
+        #region Misc
+
+        public FrameworkElement GetVisualContent()
+        {
+            return ContentElement ?? this;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            ContentElement = Template.FindName("PART_ContentHost", this) as FrameworkElement;
+        }
+
+        #endregion Misc
+
     }
 }

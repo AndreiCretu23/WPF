@@ -119,7 +119,8 @@
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         CornerRadius="1"
-                                        Margin="2,0,0,0">
+                                        Margin="2,0,0,0"
+                                        x:Name="PART_ContentHost">
                                     <StackPanel Orientation="Horizontal">
                                         
                                         <Image Width="20"

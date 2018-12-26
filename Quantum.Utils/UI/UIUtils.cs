@@ -123,7 +123,30 @@ namespace Quantum.Utils
         }
 
         #endregion Descendants
+        
+        #region Element
 
+        public static bool IsVisualChildOf(this DependencyObject dependencyObject, DependencyObject ancestor)
+        {
+            dependencyObject.AssertNotNull(nameof(dependencyObject));
+            ancestor.AssertParameterNotNull(nameof(ancestor));
+
+            var parent = dependencyObject;
+            while(true) {
+                parent = parent.GetVisualParent();
+
+                if (parent == ancestor) {
+                    return true;
+                }
+
+                if(parent == null) {
+                    return false;
+                }
+            }
+        }
+
+        #endregion Element
+        
         #region GetSetValue
 
         public static void CheckedSetValue(this DependencyObject dependencyObject, DependencyProperty dependencyProperty, object value)

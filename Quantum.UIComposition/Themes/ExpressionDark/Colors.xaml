@@ -31,6 +31,9 @@
     <SolidColorBrush x:Key="MenuPopup_Background" Color="#FF1F1F1F" Opacity="1" />
     <SolidColorBrush x:Key="MenuPopup_BorderBrush" Color="#FF898989" Opacity="1" />
 
+    <SolidColorBrush x:Key="SelectionBox_Background" Color="#505FB4FF" Opacity="1"/>
+    <SolidColorBrush x:Key="SelectionBox_BorderBrush" Color="#FF006FD1" Opacity="1"/>
+
     <SolidColorBrush x:Key="ToolBar_Background" Color="#FF323232" Opacity="1"/>
     <SolidColorBrush x:Key="ToolBar_ToggleButton_Foreground" Color="#FF686868" Opacity="1"/>
     <SolidColorBrush x:Key="ToolBar_OverFlowToggle_Foreground" Color="#FFD1D1D1" Opacity="1"/>

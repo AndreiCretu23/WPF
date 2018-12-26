@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\AppInfo.cs" />
+    <Compile Include="Math\RectangleExtensions.cs" />
     <Compile Include="Misc\GenericComparer.cs" />
     <Compile Include="Threading\DelayedExecutor.cs" />
     <Compile Include="Events\WeakEventListener.cs" />

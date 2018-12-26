@@ -7,6 +7,7 @@ using UIItemsControl = System.Windows.Controls.ItemsControl;
 
 namespace Quantum.Controls
 {
+    [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(TreeViewItem))]
     public class TreeView : UIItemsControl
     {
         #region DependencyProperties
