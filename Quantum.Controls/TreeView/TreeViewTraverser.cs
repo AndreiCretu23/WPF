@@ -1,6 +1,8 @@
 ﻿using Quantum.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using UIItemsControl = System.Windows.Controls.ItemsControl;
 
 namespace Quantum.Controls
@@ -84,8 +86,17 @@ namespace Quantum.Controls
         {
             treeViewItem.AssertParameterNotNull(nameof(treeViewItem));
 
-            var currentIndex = treeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(treeViewItem);
+            TreeViewItem getBottomChild(TreeViewItem relativeTo)
+            {
+                var children = relativeTo.GetChildren().Where(o => o.IsVisible);
+                if (children.Any()) {
+                    return getBottomChild(children.Last());
+                }
+                return relativeTo;
+            }
 
+            var currentIndex = treeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(treeViewItem);
+            
             if (currentIndex == 0) {
                 if (treeViewItem.Parent is TreeViewItem item) {
                     return item;
@@ -94,14 +105,11 @@ namespace Quantum.Controls
                     return null;
                 }
             }
-
-            else {
+            
+            else
+            {
                 var prevContainer = (TreeViewItem)treeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(currentIndex - 1);
-                var prevContainerChildren = prevContainer.GetChildren();
-                if (prevContainerChildren.Any()) {
-                    return prevContainerChildren.Last();
-                }
-                return prevContainer;
+                return getBottomChild(prevContainer);
             }
         }
 
@@ -109,16 +117,19 @@ namespace Quantum.Controls
         {
             treeViewItem.AssertParameterNotNull(nameof(treeViewItem));
 
-            if (treeViewItem.ItemContainerGenerator.ContainerFromIndex(0) is TreeViewItem firstChild) {
+            if (treeViewItem.ItemContainerGenerator.ContainerFromIndex(0) is TreeViewItem firstChild && firstChild.IsVisible) {
                 return firstChild;
             }
 
-            else if (treeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(treeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(treeViewItem) + 1) is TreeViewItem nextElement) {
+            else if (treeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(treeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(treeViewItem) + 1) is TreeViewItem nextElement && nextElement.IsVisible) {
                 return nextElement;
             }
 
             else if (treeViewItem.Parent is TreeViewItem parentTreeViewItem && parentTreeViewItem.Parent != null) {
-                return parentTreeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(parentTreeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(parentTreeViewItem) + 1) as TreeViewItem;
+                var nextUpperElement = parentTreeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(parentTreeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(parentTreeViewItem) + 1) as TreeViewItem;
+                if(nextUpperElement != null && nextUpperElement.IsVisible) {
+                    return nextUpperElement;
+                }
             }
 
             return null;
