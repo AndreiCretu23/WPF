@@ -10,7 +10,22 @@
         <!--<controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />-->
 
         <TreeView>
-            <TreeViewItem Header="Item1"/>
+            <TreeViewItem Header="Item1">
+                <TreeViewItem Header="Item21"/>
+                <TreeViewItem Header="Item22"/>
+                <TreeViewItem Header="Item23"/>
+                <TreeViewItem Header="Item24"/>
+                <TreeViewItem Header="Item25"/>
+                <TreeViewItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Standard TVI Item 1"/>
+                        <MenuItem Header="Standard TVI Item 2"/>
+                        <MenuItem Header="Standard TVI Item 3"/>
+                        <MenuItem Header="Standard TVI Item 4"/>
+                        <MenuItem Header="Standard TVI Item 5"/>
+                    </ContextMenu>
+                </TreeViewItem.ContextMenu>
+            </TreeViewItem>
             <TreeViewItem Header="Item2"/>
             <TreeViewItem Header="Item3">
                 <TreeViewItem Header="Item31"/>

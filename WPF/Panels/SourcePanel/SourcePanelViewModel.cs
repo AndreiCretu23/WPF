@@ -1,11 +1,15 @@
-﻿using Quantum.Services;
+﻿using Quantum.Command;
+using Quantum.Services;
 using Quantum.UIComponents;
 using Quantum.UIComposition;
+using Quantum.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Input;
 
 namespace WPF.Panels
 {
@@ -66,6 +70,45 @@ namespace WPF.Panels
             }
         }
 
+        private bool isEditing;
+        public bool IsEditing
+        {
+            get { return isEditing; }
+            set
+            {
+                isEditing = value;
+                RaisePropertyChanged(() => IsEditing);
+            }
+        }
+
+        private string editableHeader;
+        public string EditableHeader
+        {
+            get { return editableHeader; }
+            set
+            {
+                editableHeader = value;
+                RaisePropertyChanged(() => EditableHeader);
+            }
+        }
+
+        public IEnumerable<KeyBinding> VMIShortcuts
+        {
+            get
+            {
+                return new Collection<KeyBinding>()
+                {
+                    new KeyBinding()
+                    {
+                        Command = TreeViewItemCommands.Rename,
+                        CommandParameter = this,
+                        Modifiers = ModifierKeys.None,
+                        Key = Key.F2, 
+                    }
+                };
+            }
+        }
+
         public ViewModelItem()
         {
             InstanceCount++;
@@ -85,5 +128,33 @@ namespace WPF.Panels
         }
 
         public IEnumerable<ViewModelItem> Children { get { return CreateChildren(); } }
+    }
+    
+    public static class TreeViewItemCommands
+    {
+        public static IDelegateCommand<ViewModelItem> Rename
+        {
+            get
+            {
+                return new DelegateCommand<ViewModelItem>()
+                {
+                    ExecuteHandler = vm =>
+                    {
+                        PropertyChangedEventHandler renameHandler = null;
+                        renameHandler = (sender, e) =>
+                        {
+                            if (e.PropertyName == ReflectionUtils.GetPropertyName((ViewModelItem o) => o.IsEditing)) {
+                                vm.Header = vm.EditableHeader;
+                                ((INotifyPropertyChanged)sender).PropertyChanged -= renameHandler;
+                            }
+                        };
+
+                        vm.EditableHeader = vm.Header;
+                        vm.IsEditing = true;
+                        vm.PropertyChanged += renameHandler;
+                    }
+                };
+            }
+        }
     }
 }

@@ -37,6 +37,10 @@ namespace Quantum.AttachedProperties
             uiElement.InputBindings.Clear();
 
             var keyBindings = (IEnumerable<KeyBinding>)e.NewValue;
+            if(keyBindings == null) {
+                return;
+            }
+
             foreach(var keyBinding in keyBindings)
             {
                 uiElement.InputBindings.Add(keyBinding);

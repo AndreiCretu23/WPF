@@ -4,16 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Quantum.Controls
 {
     internal class TreeViewSelectionManager
     {
         public TreeView TreeView { get; }
-
+        
         private bool AllowMultipleSelection { get { return TreeView.AllowMultipleSelection; } }
 
         internal bool HasSelection { get { return SelectedItemsInternal.Any(); } }
+        internal bool IsSingleSelection { get { return HasSelection && !IsMultipleSelection; } }
         internal bool IsMultipleSelection { get { return SelectedItemsInternal.Count() > 1; } }
 
         private readonly ISet<TreeViewItem> SelectedItemsInternal = new HashSet<TreeViewItem>();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Quantum.Controls
 {
@@ -72,7 +73,6 @@ namespace Quantum.Controls
 
 
         // Shift + Arrow Navigation
-
         internal void HandleMultipleArrowNavigation()
         {
             if (!AllowArrowNavigation || !SelectionManager.SelectedItems.Any()) return;
@@ -85,7 +85,7 @@ namespace Quantum.Controls
             if (MultipleNavigationHandler == null) {
                 MultipleNavigationHandler = new TreeViewArrowNavigationHandler(TreeView, SelectionManager.SelectedItems.Last(), TreeViewNavigationDirection.Down);
             }
-
+            
             MultipleNavigationHandler.NavigateDown();
         }
 
@@ -101,7 +101,7 @@ namespace Quantum.Controls
             if (MultipleNavigationHandler == null) {
                 MultipleNavigationHandler = new TreeViewArrowNavigationHandler(TreeView, SelectionManager.SelectedItems.Last(), TreeViewNavigationDirection.Up);
             }
-
+            
             MultipleNavigationHandler.NavigateUp();
         }
 
@@ -110,6 +110,14 @@ namespace Quantum.Controls
             if(MultipleNavigationHandler != null) {
                 MultipleNavigationHandler = null;
             }
+
+            if(!SelectionManager.HasSelection || SelectionManager.IsMultipleSelection) {
+                TreeView.Focus();
+            }
+            else {
+                SelectionManager.SelectedItems.Single().Focus();
+            }
+
         }
     }
 }

@@ -45,6 +45,7 @@
             }
 
             CurrentNavigationItem = previous;
+            CurrentNavigationItem.Focus();
         }
 
 
@@ -74,6 +75,7 @@
             }
 
             CurrentNavigationItem = next;
+            CurrentNavigationItem.Focus();
         }
 
 

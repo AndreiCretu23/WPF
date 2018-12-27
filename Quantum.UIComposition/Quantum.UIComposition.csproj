@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AttachedProperties\FrameworkElement\InheritShortcutsFromMainWindowProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElement\SelectionBoxProperty.cs" />
+    <Compile Include="AttachedProperties\TextBox\SelectAllOnFocusProperty.cs" />
     <Compile Include="AttachedProperties\UIElement\ShortcutsProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

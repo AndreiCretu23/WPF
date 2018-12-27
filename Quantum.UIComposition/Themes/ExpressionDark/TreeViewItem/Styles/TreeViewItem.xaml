@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
-                    xmlns:converters="clr-namespace:Quantum.ValueConverters">
+                    xmlns:converters="clr-namespace:Quantum.ValueConverters"
+                    xmlns:p="clr-namespace:Quantum.AttachedProperties">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colors.xaml"/>
@@ -53,13 +54,32 @@
         </Setter>
     </Style>
 
+    <Style x:Key="TreeViewItemEditingTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{StaticResource TreeViewItem_EditableTextBox_Background}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="p:TextBox.SelectAllOnFocus" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Margin="1,0,1,0"
+                                      x:Name="PART_ContentHost"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="{x:Type controls:TreeViewItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="20,0,0,0"/>
         <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
-        
+
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         
         <Setter Property="Foreground" Value="Gainsboro"/>
@@ -128,7 +148,8 @@
                                                Source="{TemplateBinding Icon}"
                                                Visibility="{TemplateBinding Icon, Converter={StaticResource NullToVisibilityConverter}}"/>
 
-                                        <TextBlock VerticalAlignment="Center"
+                                        <TextBlock x:Name="VisualHeader"
+                                                   VerticalAlignment="Center"
                                                    Foreground="{TemplateBinding Foreground}"
                                                    FontFamily="{TemplateBinding FontFamily}"
                                                    FontSize="{TemplateBinding FontSize}"
@@ -136,7 +157,19 @@
                                                    FontStyle="{TemplateBinding FontStyle}"
                                                    FontWeight="{TemplateBinding FontWeight}"
                                                    Text="{TemplateBinding Header}"/>
-                                        
+
+                                        <TextBox x:Name="VisualEditableHeader"
+                                                 Margin="2,0,2,0"
+				                                 VerticalAlignment="Center"
+				                                 Foreground="{TemplateBinding Foreground}"
+				                                 FontFamily="{TemplateBinding FontFamily}"
+				                                 FontSize="{TemplateBinding FontSize}"
+				                                 FontStretch="{TemplateBinding FontStretch}"
+				                                 FontStyle="{TemplateBinding FontStyle}"
+				                                 FontWeight="{TemplateBinding FontWeight}"
+				                                 Text="{Binding EditableHeader, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type controls:TreeViewItem}}, UpdateSourceTrigger=PropertyChanged}"
+                                                 Style="{StaticResource TreeViewItemEditingTextBoxStyle}"
+				                                 Visibility="Collapsed"/>
                                     </StackPanel>
                                 </Border>
 
@@ -158,6 +191,15 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedBackground}"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="True"/>
+                                <Condition Property="IsEditing" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="VisualHeader" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="VisualEditableHeader" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="VisualEditableHeader" Property="FocusManager.FocusedElement" Value="{Binding ElementName=VisualEditableHeader}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                     
                 </ControlTemplate>

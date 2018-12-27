@@ -30,12 +30,12 @@ namespace Quantum.Controls
 
         public void Enable()
         {
-            Owner.PreviewMouseLeftButtonDown += OnOwnerMouseLeftButtonDown;
+            Owner.MouseLeftButtonDown += OnOwnerMouseLeftButtonDown;
         }
 
         public void Disable()
         {
-            Owner.PreviewMouseLeftButtonDown -= OnOwnerMouseLeftButtonDown;
+            Owner.MouseLeftButtonDown -= OnOwnerMouseLeftButtonDown;
         }
 
 
@@ -81,6 +81,7 @@ namespace Quantum.Controls
             Owner.PreviewMouseUp += OnOwnerPreviewMouseLeftButtonUp;
             Owner.LostFocus += OnOwnerLostFocus;
             SelectionBoxAdorner = CreateSelectionBoxAdorner(Owner, SelectionBox, e.GetPosition(Owner));
+            
         }
 
         private void OnOwnerMouseMove(object sender, MouseEventArgs e)
@@ -124,8 +125,8 @@ namespace Quantum.Controls
         private void OnOwnerPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (IsSelecting) {
-                ElementManager.EndSelection();
                 FinishDrag();
+                ElementManager.EndSelection();
             }
         }
 

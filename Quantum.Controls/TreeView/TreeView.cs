@@ -92,11 +92,7 @@ namespace Quantum.Controls
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            if(e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.KeyboardDevice.IsKeyDown(Key.A)) {
-                SelectionManager.SelectAllItems();
-            }
-            
-            else if(e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.KeyboardDevice.IsKeyDown(Key.Tab)) {
+            if(e.KeyboardDevice.Modifiers == ModifierKeys.Shift && e.KeyboardDevice.IsKeyDown(Key.Tab)) {
                 NavigationManager.HandleBackTabNavigation();
             }
 
@@ -134,6 +130,16 @@ namespace Quantum.Controls
                 NavigationManager.TeardownMultipleArrowNavigationSession();
             }
             base.OnPreviewKeyUp(e);
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.KeyboardDevice.IsKeyDown(Key.A)) {
+                SelectionManager.SelectAllItems();
+                e.Handled = true;
+            }
+
+            base.OnKeyDown(e);
         }
 
         #endregion Keyboard

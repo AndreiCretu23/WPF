@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using UIItemsControl = System.Windows.Controls.ItemsControl;
@@ -27,6 +28,14 @@ namespace Quantum.Controls
         public static readonly DependencyProperty ToggleExpandOnDoubleClickProperty = DependencyProperty.Register
         (
             name: "ToggleExpandOnDoubleClick",
+            propertyType: typeof(bool),
+            ownerType: typeof(TreeViewItem),
+            typeMetadata: new PropertyMetadata(defaultValue: false)
+        );
+
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register
+        (
+            name: "IsSelected",
             propertyType: typeof(bool),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: false)
@@ -64,17 +73,25 @@ namespace Quantum.Controls
             typeMetadata: new PropertyMetadata(defaultValue: null)
         );
 
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register
+        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.Register
         (
-            name: "IsSelected",
+            name: "IsEditing",
             propertyType: typeof(bool),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: false)
         );
-        
+
+        public static readonly DependencyProperty EditableHeaderProperty = DependencyProperty.Register
+        (
+            name: "EditableHeader",
+            propertyType: typeof(string),
+            ownerType: typeof(TreeViewItem),
+            typeMetadata: new PropertyMetadata(defaultValue: null)
+        );
+
         #endregion DependencyProperties
 
-        
+
         #region Properties
 
         public bool IsExpanded
@@ -87,6 +104,12 @@ namespace Quantum.Controls
         {
             get { return (bool)GetValue(ToggleExpandOnDoubleClickProperty); }
             set { SetValue(ToggleExpandOnDoubleClickProperty, value); }
+        }
+
+        public bool IsSelected
+        {
+            get { return (bool)GetValue(IsSelectedProperty); }
+            set { SetValue(IsSelectedProperty, value); }
         }
 
         public bool IsCheckable
@@ -114,12 +137,18 @@ namespace Quantum.Controls
             set { SetValue(HeaderProperty, value); }
         }
 
-        public bool IsSelected
+        public bool IsEditing
         {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
+            get { return (bool)GetValue(IsEditingProperty); }
+            set { SetValue(IsEditingProperty, value); }
         }
-        
+
+        public string EditableHeader
+        {
+            get { return (string)GetValue(EditableHeaderProperty); }
+            set { SetValue(EditableHeaderProperty, value); }
+        }
+
         #endregion Properties
 
         private FrameworkElement ContentElement { get; set; }
@@ -152,12 +181,20 @@ namespace Quantum.Controls
             Root = ancestors.OfType<TreeView>().First();
             Parent = ancestors.First();
 
+            GetVisualContent().AddHandler(PreviewMouseDownEvent, (MouseButtonEventHandler)OnContentPreviewMouseDown);
+            GetVisualContent().AddHandler(MouseDownEvent, (MouseButtonEventHandler)OnContentMouseDown);
+            GetVisualContent().IsKeyboardFocusWithinChanged += OnContentIsKeyboardFocusWithinChanged;
+
             Loaded -= OnLoaded;
             Unloaded += OnUnloaded;
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs e)
         {
+            GetVisualContent().RemoveHandler(PreviewMouseDownEvent, (MouseButtonEventHandler)OnContentPreviewMouseDown);
+            GetVisualContent().RemoveHandler(MouseDownEvent, (MouseButtonEventHandler)OnContentMouseDown);
+            GetVisualContent().IsKeyboardFocusWithinChanged -= OnContentIsKeyboardFocusWithinChanged;
+
             Unloaded -= OnUnloaded;
             Loaded += OnLoaded;
         }
@@ -191,13 +228,25 @@ namespace Quantum.Controls
             return new TreeViewItem();
         }
 
+        public FrameworkElement GetVisualContent()
+        {
+            return ContentElement ?? this;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            ContentElement = Template.FindName("PART_ContentHost", this) as FrameworkElement;
+        }
+
         #endregion ItemContainerConfig
 
 
         #region Selection
-        
+
         private void OnSelectionChanged()
         {
+            HandleExitEditMode();
             SelectionManager.NotifySelectionChanged(this);
         }
 
@@ -206,12 +255,15 @@ namespace Quantum.Controls
             if (e.ChangedButton == MouseButton.Left) {
                 if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift)) {
                     SelectionManager.SelectItemsBetweenLastSelectedAnd(this);
+                    if(SelectionManager.IsMultipleSelection) { Root.Focus(); }
                 }
                 else if (Keyboard.Modifiers == ModifierKeys.Shift) {
                     SelectionManager.SelectOnlyItemsBetweenLastSelectedAnd(this);
+                    if (SelectionManager.IsMultipleSelection) { Root.Focus(); }
                 }
                 else if (Keyboard.Modifiers == ModifierKeys.Control) {
                     SelectionManager.ToggleItemSelection(this);
+                    if (SelectionManager.IsMultipleSelection) { Root.Focus(); }
                 }
                 else {
                     SelectionManager.SelectSingleItem(this);
@@ -232,31 +284,38 @@ namespace Quantum.Controls
 
         #region Keyboard
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        private void OnContentPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             HandleMouseSelection(e);
             HandleDoubleClickToggleExpand(e);
-
-            e.Handled = true;
         }
 
+        private void OnContentMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            HandleExitEditMode();
+        }
+
+        private void OnContentIsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == false) {
+                HandleExitEditMode();
+            }
+
+            base.OnIsKeyboardFocusWithinChanged(e);
+        }
+
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter) {
+                HandleExitEditMode();
+            }
+
+            base.OnPreviewKeyDown(e);
+        }
+
+        
+        
         #endregion Keyboard
-
-
-        #region Misc
-
-        public FrameworkElement GetVisualContent()
-        {
-            return ContentElement ?? this;
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            ContentElement = Template.FindName("PART_ContentHost", this) as FrameworkElement;
-        }
-
-        #endregion Misc
 
 
         #region Behavior
@@ -269,6 +328,36 @@ namespace Quantum.Controls
         }
 
         #endregion Behavior
+
+
+        #region Editing
+
+        private void HandleExitEditMode()
+        {
+            if(IsEditing) {
+                IsEditing = false;
+            }
+        }
+
+        #endregion Editing
+
+
+        #region ContextMenu
+
+        protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+        {
+            if(SelectionManager.IsMultipleSelection) {
+                e.Handled = true;
+                if(Root.ContextMenu != null && Root.ContextMenu.HasItems) {
+                    Root.ContextMenu.IsOpen = true;
+                }
+            }
+            else {
+                base.OnContextMenuOpening(e);
+            }
+        }
+
+        #endregion ContextMenu
 
     }
 }

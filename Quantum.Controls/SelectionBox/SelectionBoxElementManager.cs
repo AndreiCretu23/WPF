@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Quantum.Controls
 {
@@ -18,14 +19,13 @@ namespace Quantum.Controls
 
         private ISet<FrameworkElement> SelectedItems { get; set; }
         private bool IsActiveDragging { get; set; }
-
+        
         public SelectionBoxElementManager(FrameworkElement owner, SelectionBox selectionBox)
         {
             Owner = owner;
             SelectionBox = selectionBox;
         }
 
-        
 
         public void BeginSelection()
         {
@@ -70,6 +70,14 @@ namespace Quantum.Controls
         public void EndSelection()
         {
             IsActiveDragging = false;
+            Keyboard.ClearFocus();
+            if(SelectedItems.IsSingleElement()) {
+                SelectedItems.Single().Focus();
+            }
+            else {
+                Owner.Focus();
+            }
+
             SelectedItems.Clear();
             SelectedItems = null;
         }

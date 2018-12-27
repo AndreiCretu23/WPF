@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
+             xmlns:p="clr-namespace:Quantum.AttachedProperties;assembly=Quantum.UIComposition"
+             xmlns:local="clr-namespace:WPF.Panels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -12,17 +14,30 @@
                 <Style TargetType="{x:Type controls:TreeViewItem}" BasedOn="{StaticResource {x:Type controls:TreeViewItem}}">
                     <Setter Property="Header" Value="{Binding Header}"/>
                     <Setter Property="ItemsSource" Value="{Binding Children}"/>
+                    <Setter Property="IsEditing" Value="{Binding IsEditing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="EditableHeader" Value="{Binding EditableHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                <MenuItem Header="Rename"
+								          Command="{x:Static local:TreeViewItemCommands.Rename}"
+								          CommandParameter="{Binding Path=DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                          InputGestureText="F2"/>
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="p:UIElement.Shortcuts" Value="{Binding VMIShortcuts}"/>
                 </Style>
             </controls:TreeView.ItemContainerStyle>
 
             <controls:TreeView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Item1"/>
-                    <MenuItem Header="Item1"/>
-                    <MenuItem Header="Item1"/>
-                    <MenuItem Header="Item1"/>
-                    <MenuItem Header="Item1"/>
-                    <MenuItem Header="Item1"/>
+                    <MenuItem Header="Tree View Option 1"/>
+                    <MenuItem Header="Tree View Option 2"/>
+                    <MenuItem Header="Tree View Option 3"/>
+                    <MenuItem Header="Tree View Option 4"/>
+                    <MenuItem Header="Tree View Option 5"/>
+                    <MenuItem Header="Tree View Option 6"/>
                 </ContextMenu>
             </controls:TreeView.ContextMenu>
             
