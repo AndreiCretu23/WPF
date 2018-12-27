@@ -4,15 +4,20 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using StandardUIElement = System.Windows.UIElement;
 
-namespace Quantum.UIComposition
+namespace Quantum.AttachedProperties
 {
-    public static partial class AttachedProperties
+    public static partial class UIElement
     {
-        public static readonly DependencyProperty ShortcutsProperty =
-            DependencyProperty.RegisterAttached("Shortcuts", typeof(IEnumerable<KeyBinding>),
-                typeof(AttachedProperties), new UIPropertyMetadata(Enumerable.Empty<KeyBinding>(), ShortcutsChanged));
-
+        public static readonly DependencyProperty ShortcutsProperty = DependencyProperty.RegisterAttached
+        (
+            name: "Shortcuts", 
+            propertyType: typeof(IEnumerable<KeyBinding>),
+            ownerType: typeof(UIElement), 
+            defaultMetadata: new UIPropertyMetadata(Enumerable.Empty<KeyBinding>(), ShortcutsChanged)
+        );
+        
         public static IEnumerable<KeyBinding> GetShortcuts(DependencyObject obj)
         {
             return (IEnumerable<KeyBinding>)obj.GetValue(ShortcutsProperty);
@@ -22,13 +27,11 @@ namespace Quantum.UIComposition
         {
             obj.SetValue(ShortcutsProperty, value);
         }
-
-        [SuppressMessage("Microsoft.Design", "IDE0019")]
+        
         private static void ShortcutsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            var uiElement = obj as UIElement;
-            if(uiElement == null) {
-                throw new Exception($"Object of type '{obj.GetType().Name}' does not support InputBindings");
+            if(!(obj is StandardUIElement uiElement)) {
+                throw new Exception($"Error : ShortcutsProperty (Attached) can only be used on UIElements.");
             }
 
             uiElement.InputBindings.Clear();

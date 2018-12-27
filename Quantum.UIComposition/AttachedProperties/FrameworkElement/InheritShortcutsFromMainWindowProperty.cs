@@ -5,11 +5,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using UIFrameworkElement = System.Windows.FrameworkElement;
 
-namespace Quantum.UIComposition
+namespace Quantum.AttachedProperties
 {
-    [SuppressMessage("Microsoft.Design", "IDE0019")]
-    public static partial class AttachedProperties
+    public static partial class FrameworkElement
     {
         public static bool GetInheritInputBindingFromMainWindow(DependencyObject obj)
         {
@@ -22,13 +22,12 @@ namespace Quantum.UIComposition
         }
         
         public static readonly DependencyProperty InheritInputBindingFromMainWindowProperty =
-            DependencyProperty.RegisterAttached("InheritInputBindingFromMainWindow", typeof(bool), typeof(AttachedProperties),
+            DependencyProperty.RegisterAttached("InheritInputBindingFromMainWindow", typeof(bool), typeof(FrameworkElement),
             new UIPropertyMetadata(OnInheritInputBindingFromMainWindowChanged));
 
-        static void OnInheritInputBindingFromMainWindowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnInheritInputBindingFromMainWindowChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var frameworkElement = d as FrameworkElement;
-            if (frameworkElement == null)
+            if (!(d is UIFrameworkElement frameworkElement))
             {
                 throw new Exception("In order to inherit the shortcuts from the MainWindow, a binding must be created between " +
                                     "the InputBindingProperty of the UIElement and the InputBindingContext of the MainWindow." +
@@ -36,8 +35,8 @@ namespace Quantum.UIComposition
             }
 
             var mainWindow = Application.Current.MainWindow;
-            var shortcutsBinding = BindingOperations.GetBinding(mainWindow, ShortcutsProperty);
-            var currentBinding = BindingOperations.GetBinding(frameworkElement, ShortcutsProperty);
+            var shortcutsBinding = BindingOperations.GetBinding(mainWindow, UIElement.ShortcutsProperty);
+            var currentBinding = BindingOperations.GetBinding(frameworkElement, UIElement.ShortcutsProperty);
 
             if (shortcutsBinding != null)
             {
@@ -45,10 +44,10 @@ namespace Quantum.UIComposition
                 {
                     if(currentBinding != null)
                     {
-                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
+                        BindingOperations.ClearBinding(frameworkElement, UIElement.ShortcutsProperty);
                     }
 
-                    frameworkElement.SetBinding(ShortcutsProperty, new Binding()
+                    frameworkElement.SetBinding(UIElement.ShortcutsProperty, new Binding()
                     {
                         Path = shortcutsBinding.Path,
                         Source = mainWindow.DataContext,
@@ -60,7 +59,7 @@ namespace Quantum.UIComposition
                        currentBinding.Source == shortcutsBinding.Source &&
                        currentBinding.Path == shortcutsBinding.Path)
                     {
-                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
+                        BindingOperations.ClearBinding(frameworkElement, UIElement.ShortcutsProperty);
                     }
                 }
             }

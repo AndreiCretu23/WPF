@@ -5,14 +5,14 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:uiCore="clr-namespace:Quantum.UIComponents"
-                      xmlns:p="clr-namespace:Quantum.UIComposition;assembly=Quantum.UIComposition"
+                      xmlns:p="clr-namespace:Quantum.AttachedProperties;assembly=Quantum.UIComposition"
                       xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
                       xmlns:converters="clr-namespace:Quantum.ValueConverters;assembly=Quantum.UIComposition"
                       mc:Ignorable="d"
                       Title="{Binding Title, Mode=OneWay}"
                       Icon="{Binding Icon, Mode=OneWay, Converter={StaticResource iconConverter}}"
                       ResizeMode="{Binding ResizeMode, Mode=OneWay}"
-                      p:AttachedProperties.Shortcuts="{Binding ShortcutsViewModel.Shortcuts}"
+                      p:UIElement.Shortcuts="{Binding ShortcutsViewModel.Shortcuts}"
                       Style="{StaticResource {x:Type controls:WindowShell}}">
 
     <DockPanel>

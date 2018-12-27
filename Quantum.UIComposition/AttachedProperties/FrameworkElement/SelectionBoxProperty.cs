@@ -1,10 +1,11 @@
 ﻿using Quantum.Controls;
 using System;
 using System.Windows;
+using UIFrameworkElement = System.Windows.FrameworkElement;
 
-namespace Quantum.UIComposition
+namespace Quantum.AttachedProperties
 {
-    public static partial class AttachedProperties
+    public static partial class FrameworkElement
     {
         #region SelectionBoxHandler
 
@@ -12,7 +13,7 @@ namespace Quantum.UIComposition
         (
             name: "SelectionBoxHandler",
             propertyType: typeof(SelectionBoxHandler),
-            ownerType: typeof(AttachedProperties),
+            ownerType: typeof(FrameworkElement),
             defaultMetadata: new PropertyMetadata(defaultValue: null, propertyChangedCallback: OnSelectionBoxHandlerChanged)
         );
 
@@ -30,7 +31,7 @@ namespace Quantum.UIComposition
 
         public static void OnSelectionBoxHandlerChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(!(sender is FrameworkElement frameworkElement)) {
+            if(!(sender is UIFrameworkElement frameworkElement)) {
                 throw new Exception("Error : Selection box handlers are only allowed on framework elements.");
             }
             
@@ -51,7 +52,7 @@ namespace Quantum.UIComposition
         (
             name: "SelectionBox", 
             propertyType: typeof(SelectionBox),
-            ownerType: typeof(AttachedProperties),
+            ownerType: typeof(FrameworkElement),
             defaultMetadata: new UIPropertyMetadata(null, SelectionBoxChanged)
         );
 
@@ -68,7 +69,7 @@ namespace Quantum.UIComposition
         public static void SelectionBoxChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == null) return;
-            if(!(obj is FrameworkElement frameworkElement)) {
+            if(!(obj is UIFrameworkElement frameworkElement)) {
                 throw new Exception("Error : Selection boxes are only allowed on framework elements.");
             }
 
