@@ -40,7 +40,7 @@ namespace Quantum.Controls
 
             if (!typeof(FrameworkElement).IsAssignableFrom(selectionBox.TargetType)) {
                 throw new Exception($"Error : Only FrameworkElements can be targeted by a SelectionBox. The given target type {SelectionBox.TargetType.Name} " +
-                                    $"does not extend DependencyObject.");
+                                    $"does not extend FrameworkElement.");
             }
             if (selectionBox.TargetSelectionProperty == null ||
                 selectionBox.TargetSelectionProperty.ReadOnly ||
