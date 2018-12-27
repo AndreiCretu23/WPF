@@ -40,6 +40,9 @@ namespace Quantum.Controls
             }
             else {
                 SelectedItemsInternal.Remove(item);
+                if(HasSelection && !IsMultipleSelection) {
+                    SelectedItemsInternal.Single().Focus();
+                }
             }
         }
 
