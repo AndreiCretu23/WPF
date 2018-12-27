@@ -28,8 +28,8 @@ namespace WPF.Panels
             yield return new ViewModelItem() { Header = head + "1" };
             yield return new ViewModelItem() { Header = head + "2" , ChildrenGetter = GetChildrenInternal };
             yield return new ViewModelItem() { Header = head + "2" };
-            yield return new ViewModelItem() { Header = head + "3" , ChildrenGetter = GetChildrenInternal };
-            yield return new ViewModelItem() { Header = head + "4" };
+            yield return new ViewModelItem() { Header = head + "3" };
+            yield return new ViewModelItem() { Header = head + "4" , ChildrenGetter = GetChildrenInternal };
         }
 
         private IEnumerable<ViewModelItem> CreateChildren()
