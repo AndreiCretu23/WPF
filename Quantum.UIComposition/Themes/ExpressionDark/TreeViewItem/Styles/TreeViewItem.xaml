@@ -72,6 +72,7 @@
         <Setter Property="IsCheckable" Value="True"/>
         <Setter Property="Icon" Value="/Quantum.ResourceLibrary;component/Icons/Common/appbar.3d.3ds.png"/>
         <Setter Property="Header" Value="TreeViewItem"/>
+        <Setter Property="ToggleExpandOnDoubleClick" Value="True"/>
 
         <Setter Property="ItemsPanel">
             <Setter.Value>

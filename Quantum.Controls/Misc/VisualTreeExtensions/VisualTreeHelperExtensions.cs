@@ -16,14 +16,21 @@ namespace Quantum.Controls
             return element;
         }
 
-        public static Rect GetBoundingBox(this FrameworkElement element, Visual relativeTo)
+        public static Rect GetContentBoundingBox(this FrameworkElement element, Visual relativeTo)
         {
             element.AssertParameterNotNull(nameof(element));
             relativeTo.AssertNotNull(nameof(relativeTo));
 
-            var contentElement = element.GetVisualContent();
-            var contentElementRectangle = new Rect(0, 0, contentElement.ActualWidth, contentElement.ActualHeight);
-            return contentElement.TransformToAncestor(relativeTo).TransformBounds(contentElementRectangle);
+            return element.GetVisualContent().GetBoundingBox(relativeTo);
+        }
+
+        public static Rect GetBoundingBox(this FrameworkElement element, Visual relativeTo)
+        {
+            element.AssertNotNull(nameof(element));
+            relativeTo.AssertParameterNotNull(nameof(relativeTo));
+
+            var elementRectangle = new Rect(0, 0, element.ActualWidth, element.ActualHeight);
+            return element.TransformToAncestor(relativeTo).TransformBounds(elementRectangle);
         }
     }
 }

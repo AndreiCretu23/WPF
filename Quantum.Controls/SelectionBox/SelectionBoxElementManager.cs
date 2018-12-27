@@ -40,46 +40,25 @@ namespace Quantum.Controls
             }
 
             var selectedItems = new HashSet<FrameworkElement>();
-            var passedSelectionBox = false;
-            FrameworkElement firstAboveElement = null;
-
+            
             VisualTraverser.Traverse
             (
                 root: Owner,
                 filter: o =>
                 {
-                    if (!(o is FrameworkElement element) || element.Visibility != Visibility.Visible) {
-                        return TraverseBehavior.ContinueSkipChildren;
+                    if(!(o is FrameworkElement frameworkElement) || frameworkElement.Visibility != Visibility.Visible) {
+                        return VisualTraverseBehavior.Continue;
+                    }
+                
+                    if(frameworkElement.GetBoundingBox(Owner).IntersectsWith(selectionRectangle)) {
+                        return VisualTraverseBehavior.Continue | VisualTraverseBehavior.TraverseChildren | VisualTraverseBehavior.Process;
                     }
 
-                    if (!passedSelectionBox) {
-                        var boundingBox = element.GetBoundingBox(Owner);
-                        if (boundingBox.IsBelow(selectionRectangle)) {
-                            return TraverseBehavior.ContinueSkipChildren;
-                        }
-                        else if (boundingBox.IsAbove(selectionRectangle)) {
-                            firstAboveElement = element;
-                            passedSelectionBox = true;
-                            return TraverseBehavior.Continue;
-                        }
-                        if (boundingBox.IntersectsWith(selectionRectangle)) {
-                            return TraverseBehavior.Continue;
-                        }
-
-                            // The bounding box of the element is not above or below the selection rectangle nor intersects with it, meaning it's 
-                            // left or right of the rectangle, in which case we continue to check it's descendants.
-                            return TraverseBehavior.Continue;
-                    }
-                    else {
-                        if (element.IsVisualChildOf(firstAboveElement)) {
-                            return TraverseBehavior.Continue;
-                        }
-                        return TraverseBehavior.Stop;
-                    }
+                    return VisualTraverseBehavior.Continue;
                 },
                 targetAction: o => {
                     if (o.GetType() == TargetType &&
-                      ((FrameworkElement)o).GetBoundingBox(Owner).IntersectsWith(selectionRectangle)) {
+                      ((FrameworkElement)o).GetContentBoundingBox(Owner).IntersectsWith(selectionRectangle)) {
                         selectedItems.Add((FrameworkElement)o);
                     }
                 }
@@ -103,7 +82,7 @@ namespace Quantum.Controls
             VisualTraverser.Traverse
             (
                 root: Owner,
-                filter: o => TraverseBehavior.Continue,
+                filter: o => VisualTraverseBehavior.Continue | VisualTraverseBehavior.TraverseChildren | VisualTraverseBehavior.Process,
                 targetAction: o => o.SetValue(TargetSelectionProperty, false)
             );
         }

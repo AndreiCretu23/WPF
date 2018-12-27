@@ -24,6 +24,14 @@ namespace Quantum.Controls
             typeMetadata: new PropertyMetadata(defaultValue: false)
         );
 
+        public static readonly DependencyProperty ToggleExpandOnDoubleClickProperty = DependencyProperty.Register
+        (
+            name: "ToggleExpandOnDoubleClick",
+            propertyType: typeof(bool),
+            ownerType: typeof(TreeViewItem),
+            typeMetadata: new PropertyMetadata(defaultValue: false)
+        );
+
         public static readonly DependencyProperty IsCheckableProperty = DependencyProperty.Register
         (
             name: "IsCheckable",
@@ -75,6 +83,12 @@ namespace Quantum.Controls
             set { SetValue(IsExpandedProperty, value); }
         }
 
+        public bool ToggleExpandOnDoubleClick
+        {
+            get { return (bool)GetValue(ToggleExpandOnDoubleClickProperty); }
+            set { SetValue(ToggleExpandOnDoubleClickProperty, value); }
+        }
+
         public bool IsCheckable
         {
             get { return (bool)GetValue(IsCheckableProperty); }
@@ -107,7 +121,7 @@ namespace Quantum.Controls
         }
         
         #endregion Properties
-        
+
         private FrameworkElement ContentElement { get; set; }
 
         internal TreeView Root { get; private set; }
@@ -187,12 +201,7 @@ namespace Quantum.Controls
             SelectionManager.NotifySelectionChanged(this);
         }
 
-        #endregion Selection
-
-
-        #region Keyboard
-
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        private void HandleMouseSelection(MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) {
                 if (Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift)) {
@@ -209,15 +218,25 @@ namespace Quantum.Controls
                 }
             }
 
-            else if (e.ChangedButton == MouseButton.Right) {                
-                if(!Keyboard.Modifiers.HasFlag(ModifierKeys.Control) && 
-                   !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) && 
-                   !SelectionManager.IsMultipleSelection) {
+            else if (e.ChangedButton == MouseButton.Right) {
+                if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control) &&
+                    !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) &&
+                    !SelectionManager.IsMultipleSelection) {
                     SelectionManager.SelectSingleItem(this);
                 }
-
             }
-            
+        }
+
+        #endregion Selection
+
+
+        #region Keyboard
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            HandleMouseSelection(e);
+            HandleDoubleClickToggleExpand(e);
+
             e.Handled = true;
         }
 
@@ -238,6 +257,18 @@ namespace Quantum.Controls
         }
 
         #endregion Misc
+
+
+        #region Behavior
+
+        private void HandleDoubleClickToggleExpand(MouseButtonEventArgs e)
+        {
+            if(e.ClickCount == 2 && ToggleExpandOnDoubleClick) {
+                IsExpanded = !IsExpanded;
+            }
+        }
+
+        #endregion Behavior
 
     }
 }

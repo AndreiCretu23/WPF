@@ -6,13 +6,13 @@ namespace Quantum.Controls
 {
     public class RecurrentItemsControlTraverser : IVisualTraverser
     {
-        public void Traverse(DependencyObject root, Func<DependencyObject, TraverseBehavior> filter, Action<DependencyObject> targetAction)
+        public void Traverse(DependencyObject root, Func<DependencyObject, VisualTraverseBehavior> filter, Action<DependencyObject> targetAction)
         {
             if (!(root is ItemsControl)) {
                 throw new Exception("Error : ItemsControlTraverser can only be used on an ItemsControl root element.");
             }
 
-            filter = filter ?? (o => TraverseBehavior.Continue);
+            filter = filter ?? (o => VisualTraverseBehavior.Continue | VisualTraverseBehavior.TraverseChildren | VisualTraverseBehavior.Process);
             targetAction = targetAction ?? (o => { });
 
             var itemsControl = (ItemsControl)root;
@@ -20,22 +20,24 @@ namespace Quantum.Controls
             TraversePrivate(itemsControl, filter, targetAction);
         }
 
-        private TraverseBehavior TraversePrivate(ItemsControl element, Func<DependencyObject, TraverseBehavior> filter, Action<DependencyObject> targetAction)
+        private VisualTraverseBehavior TraversePrivate(ItemsControl element, Func<DependencyObject, VisualTraverseBehavior> filter, Action<DependencyObject> targetAction)
         {
             var behavior = filter(element);
 
-            if (behavior == TraverseBehavior.Stop) {
-                return behavior;
+            if (behavior.HasFlag(VisualTraverseBehavior.Process)) {
+                targetAction(element);
             }
 
-            targetAction(element);
-
-            if (behavior != TraverseBehavior.ContinueSkipChildren) {
+            if (!behavior.HasFlag(VisualTraverseBehavior.Continue)) {
+                return behavior;
+            }
+            
+            if (behavior.HasFlag(VisualTraverseBehavior.TraverseChildren)) {
                 for (int i = element.Items.Count; i >= 0; i--) {
                     var child = element.ItemContainerGenerator.ContainerFromIndex(i);
                     if(child is ItemsControl childItemsControl) {
                         var result = TraversePrivate(childItemsControl, filter, targetAction);
-                        if (result == TraverseBehavior.Stop) {
+                        if (!result.HasFlag(VisualTraverseBehavior.Continue)) {
                             return result;
                         }
                     }

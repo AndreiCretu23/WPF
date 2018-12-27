@@ -7,33 +7,35 @@ namespace Quantum.Controls
 {
     public class VisualTraverser : IVisualTraverser
     {
-        public void Traverse(DependencyObject root, Func<DependencyObject, TraverseBehavior> filter, Action<DependencyObject> targetAction)
+        public void Traverse(DependencyObject root, Func<DependencyObject, VisualTraverseBehavior> filter, Action<DependencyObject> targetAction)
         {
             root.AssertParameterNotNull(nameof(root));
 
-            filter = filter ?? (o => TraverseBehavior.Continue);
+            filter = filter ?? (o => VisualTraverseBehavior.Continue | VisualTraverseBehavior.TraverseChildren | VisualTraverseBehavior.Process);
             targetAction = targetAction ?? (o => { });
 
             TraversePrivate(root, filter, targetAction);
         }
 
 
-        private TraverseBehavior TraversePrivate(DependencyObject element, Func<DependencyObject, TraverseBehavior> filter, Action<DependencyObject> targetAction)
+        private VisualTraverseBehavior TraversePrivate(DependencyObject element, Func<DependencyObject, VisualTraverseBehavior> filter, Action<DependencyObject> targetAction)
         {
             var behavior = filter(element);
             
-            if(behavior == TraverseBehavior.Stop) {
+            if(behavior.HasFlag(VisualTraverseBehavior.Process)) {
+                targetAction(element);
+            }
+
+            if (!behavior.HasFlag(VisualTraverseBehavior.Continue)) {
                 return behavior;
             }
 
-            targetAction(element);
-
-            if(behavior != TraverseBehavior.ContinueSkipChildren) {
+            if(behavior.HasFlag(VisualTraverseBehavior.TraverseChildren)) {
                 var lastChildIndex = VisualTreeHelper.GetChildrenCount(element) - 1;
                 for(int i = lastChildIndex; i >= 0; i--) {
                     var child = VisualTreeHelper.GetChild(element, i);
                     var result = TraversePrivate(child, filter, targetAction);
-                    if(result == TraverseBehavior.Stop) {
+                    if(!result.HasFlag(VisualTraverseBehavior.Continue)) {
                         return result;
                     }
                 }

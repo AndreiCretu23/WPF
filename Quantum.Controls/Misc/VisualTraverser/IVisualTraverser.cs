@@ -5,13 +5,15 @@ namespace Quantum.Controls
 {
     public interface IVisualTraverser
     {
-        void Traverse(DependencyObject root, Func<DependencyObject, TraverseBehavior> filter, Action<DependencyObject> targetAction);
+        void Traverse(DependencyObject root, Func<DependencyObject, VisualTraverseBehavior> filter, Action<DependencyObject> targetAction);
     }
 
-    public enum TraverseBehavior
+    [Flags]
+    public enum VisualTraverseBehavior
     {
-        Continue, 
-        ContinueSkipChildren,
-        Stop
+        None = 0,
+        Continue = 1, 
+        TraverseChildren = 2,
+        Process = 4
     }
 }
