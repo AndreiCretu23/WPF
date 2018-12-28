@@ -8,7 +8,7 @@
     </ResourceDictionary.MergedDictionaries>
     
     <Style TargetType="{x:Type controls:TreeView}">
-        <Setter Property="AllowMultipleSelection" Value="False"/>
+        <Setter Property="AllowMultipleSelection" Value="True"/>
         <Setter Property="AllowTabNavigation" Value="True"/>
         <Setter Property="AllowArrowNavigation" Value="True"/>
         <Setter Property="Background" Value="{StaticResource TreeView_Background}"/>
