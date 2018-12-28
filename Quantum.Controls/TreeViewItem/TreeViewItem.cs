@@ -310,7 +310,9 @@ namespace Quantum.Controls
                 HandleExitEditMode();
             }
 
-            if(IsKeyEventShortcut(e) && !IsSelected) {
+            if(IsKeyEventShortcut(e) && !IsSelected && 
+                (e.OriginalSource is TreeViewItem treeViewItem ? e.OriginalSource == this : 
+                                                               (e.OriginalSource as DependencyObject)?.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this)) {
                 e.Handled = true;
             }
 
@@ -350,7 +352,10 @@ namespace Quantum.Controls
 
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)
         {
-            if(SelectionManager.IsMultipleSelection || !IsSelected) {
+            bool isRelevant = (e.OriginalSource is TreeViewItem) ? e.OriginalSource == this :
+                                                                   (e.OriginalSource as DependencyObject)?.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this;
+
+            if ((SelectionManager.IsMultipleSelection || !IsSelected) && isRelevant) {
                 e.Handled = true;
                 if(Root.ContextMenu != null && Root.ContextMenu.HasItems) {
                     Root.ContextMenu.IsOpen = true;

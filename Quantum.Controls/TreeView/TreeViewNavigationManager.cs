@@ -107,11 +107,14 @@ namespace Quantum.Controls
 
         internal void TeardownMultipleArrowNavigationSession()
         {
-            if(MultipleNavigationHandler != null) {
-                MultipleNavigationHandler = null;
+            // If the multiple navigator handler is null, it means the teardown request was captured by a key that was part of some other event. We simply ignore it in this case.
+            if(MultipleNavigationHandler == null) {
+                return;    
             }
 
-            if(!SelectionManager.HasSelection || SelectionManager.IsMultipleSelection) {
+            MultipleNavigationHandler = null;
+
+            if (!SelectionManager.HasSelection || SelectionManager.IsMultipleSelection) {
                 TreeView.Focus();
             }
             else {
