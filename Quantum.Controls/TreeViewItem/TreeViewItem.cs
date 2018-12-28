@@ -310,10 +310,14 @@ namespace Quantum.Controls
                 HandleExitEditMode();
             }
 
-            base.OnPreviewKeyDown(e);
-        }
+            if(IsKeyEventShortcut(e) && !IsSelected) {
+                e.Handled = true;
+            }
 
-        
+            if(!e.Handled) {
+                base.OnPreviewKeyDown(e);
+            }
+        }
         
         #endregion Keyboard
 
@@ -346,7 +350,7 @@ namespace Quantum.Controls
 
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)
         {
-            if(SelectionManager.IsMultipleSelection) {
+            if(SelectionManager.IsMultipleSelection || !IsSelected) {
                 e.Handled = true;
                 if(Root.ContextMenu != null && Root.ContextMenu.HasItems) {
                     Root.ContextMenu.IsOpen = true;
@@ -358,6 +362,17 @@ namespace Quantum.Controls
         }
 
         #endregion ContextMenu
+
+
+        #region Shortcuts
+
+        private bool IsKeyEventShortcut(KeyEventArgs e)
+        {
+            return InputBindings.OfType<KeyBinding>().Any(o => e.KeyboardDevice.Modifiers == o.Modifiers &&
+                                                               e.KeyboardDevice.IsKeyDown(o.Key));
+        }
+
+        #endregion Shortcuts
 
     }
 }
