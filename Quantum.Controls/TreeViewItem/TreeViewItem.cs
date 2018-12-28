@@ -288,6 +288,9 @@ namespace Quantum.Controls
         {
             HandleMouseSelection(e);
             HandleDoubleClickToggleExpand(e);
+            if(!IsFocused) {
+                Focus();
+            }
         }
 
         private void OnContentMouseDown(object sender, MouseButtonEventArgs e)
@@ -309,10 +312,8 @@ namespace Quantum.Controls
             if(e.Key == Key.Enter) {
                 HandleExitEditMode();
             }
-
-            if(IsKeyEventShortcut(e) && !IsSelected && 
-                (e.OriginalSource is TreeViewItem treeViewItem ? e.OriginalSource == this : 
-                                                               (e.OriginalSource as DependencyObject)?.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this)) {
+            
+            if(MatchesSource(e) && IsKeyEventShortcut(e) && (!IsSelected || !IsFocused)) {
                 e.Handled = true;
             }
 
@@ -321,6 +322,22 @@ namespace Quantum.Controls
             }
         }
         
+        private bool MatchesSource(RoutedEventArgs e)
+        {
+            var originalSource = e.OriginalSource;
+            if(!(originalSource is DependencyObject dependencyObject)) {
+                return false;
+            }
+
+            else if(dependencyObject is TreeViewItem) {
+                return originalSource == this;
+            }
+            
+            else {
+                return dependencyObject.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this;
+            }
+        }
+
         #endregion Keyboard
 
 
@@ -352,10 +369,7 @@ namespace Quantum.Controls
 
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)
         {
-            bool isRelevant = (e.OriginalSource is TreeViewItem) ? e.OriginalSource == this :
-                                                                   (e.OriginalSource as DependencyObject)?.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this;
-
-            if ((SelectionManager.IsMultipleSelection || !IsSelected) && isRelevant) {
+            if (SelectionManager.IsMultipleSelection || (MatchesSource(e) && (!IsSelected || !IsFocused))) {
                 e.Handled = true;
                 if(Root.ContextMenu != null && Root.ContextMenu.HasItems) {
                     Root.ContextMenu.IsOpen = true;

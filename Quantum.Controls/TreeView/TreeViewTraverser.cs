@@ -117,22 +117,28 @@ namespace Quantum.Controls
         {
             treeViewItem.AssertParameterNotNull(nameof(treeViewItem));
 
+            TreeViewItem getNextChild(TreeViewItem item)
+            {
+                var parent = item.Parent;
+                var itemIndex = parent.ItemContainerGenerator.IndexFromContainer(item);
+                if(parent.ItemContainerGenerator.ContainerFromIndex(itemIndex + 1) is TreeViewItem tvi) {
+                    return tvi;
+                }
+                else if(parent is TreeViewItem parentTreeViewItem) {
+                    return getNextChild(parentTreeViewItem);
+                }
+                else {
+                    return null;
+                }
+            }
+
             if (treeViewItem.ItemContainerGenerator.ContainerFromIndex(0) is TreeViewItem firstChild && firstChild.IsVisible) {
                 return firstChild;
             }
 
-            else if (treeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(treeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(treeViewItem) + 1) is TreeViewItem nextElement && nextElement.IsVisible) {
-                return nextElement;
+            else {
+                return getNextChild(treeViewItem);
             }
-
-            else if (treeViewItem.Parent is TreeViewItem parentTreeViewItem && parentTreeViewItem.Parent != null) {
-                var nextUpperElement = parentTreeViewItem.Parent.ItemContainerGenerator.ContainerFromIndex(parentTreeViewItem.Parent.ItemContainerGenerator.IndexFromContainer(parentTreeViewItem) + 1) as TreeViewItem;
-                if(nextUpperElement != null && nextUpperElement.IsVisible) {
-                    return nextUpperElement;
-                }
-            }
-
-            return null;
         }
 
     }
