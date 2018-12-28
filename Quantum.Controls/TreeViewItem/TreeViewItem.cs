@@ -288,7 +288,7 @@ namespace Quantum.Controls
         {
             HandleMouseSelection(e);
             HandleDoubleClickToggleExpand(e);
-            if(!IsFocused) {
+            if(!IsFocused && !GetVisualContent().IsKeyboardFocusWithin) {
                 Focus();
             }
         }
