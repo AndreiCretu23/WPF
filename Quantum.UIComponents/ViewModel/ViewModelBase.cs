@@ -6,6 +6,9 @@ using Quantum.UIComposition;
 
 namespace Quantum.UIComponents
 {
+    /// <summary>
+    /// Provides the base class for any ViewModel that has access to the container, services and events.
+    /// </summary>
     public abstract class ViewModelBase : ObservableObject, IDestructible
     {
         [Service]

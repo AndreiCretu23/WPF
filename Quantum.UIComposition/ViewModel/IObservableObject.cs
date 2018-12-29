@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace Quantum.UIComposition
 {
     /// <summary>
-    /// Provides the basic contact for a class which has UI notification support.
+    /// Defines the basic contact for a class which has UI notification support.
     /// </summary>
     public interface IObservableObject : INotifyPropertyChanged
     {
