@@ -29,7 +29,12 @@ namespace Quantum.UIComponents
         
         public void CreateUI()
         {
-            ShellView.Loaded += (sender, e) => EventAggregator.GetEvent<UILoadedEvent>().Publish(new UILoadedArgs());
+            void onShellLoaded(object sender, RoutedEventArgs e)
+            {
+                EventAggregator.GetEvent<UILoadedEvent>().Publish(new UILoadedArgs());
+                ShellView.Loaded -= onShellLoaded;
+            }
+            ShellView.Loaded += onShellLoaded;
 
             ShellView.DataContext = ShellViewModel;
             ShellView.WindowStartupLocation = WindowStartupLocation.CenterScreen;
