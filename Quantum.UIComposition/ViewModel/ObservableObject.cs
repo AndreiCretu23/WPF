@@ -6,7 +6,11 @@ using System.Linq.Expressions;
 
 namespace Quantum.UIComposition
 {
-    public abstract class ObservableObject : INotifyPropertyChanged
+    /// <summary>
+    /// Provides basic UI notification support for any class that represents a ViewModel.
+    /// All ViewModel classes should extend this class.
+    /// </summary>
+    public abstract class ObservableObject : IObservableObject
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
