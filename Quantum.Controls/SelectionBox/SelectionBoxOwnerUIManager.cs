@@ -19,7 +19,16 @@ namespace Quantum.Controls
         private DependencyProperty TargetSelectionProperty { get { return SelectionBox.TargetSelectionProperty; } }
         private IVisualTraverser VisualTraverser { get { return SelectionBox.VisualTraverser; } }
 
-        private bool IsSelecting { get; set; }
+        private bool isSelecting = false;
+        private bool IsSelecting
+        {
+            get { return isSelecting; }
+            set
+            {
+                isSelecting = value;
+                SelectionBox.RaiseEvent(new SelectionStateChangedArgs(SelectionBox.SelectionStateChangedEvent, Owner, SelectionBox, value));
+            }
+        }
 
         public SelectionBoxOwnerUIManager(FrameworkElement owner, SelectionBox selectionBox, SelectionBoxElementManager elementManager)
         {

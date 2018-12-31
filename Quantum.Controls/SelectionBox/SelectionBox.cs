@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace Quantum.Controls
 {
-    public class SelectionBox : DependencyObject
+    public class SelectionBox : UIElement
     {
 
         #region DependencyProperties
@@ -59,9 +59,22 @@ namespace Quantum.Controls
 
         #endregion DependencyProperties
 
-
-        #region Properties
         
+        #region EventProperties
+
+        public static readonly RoutedEvent SelectionStateChangedEvent = EventManager.RegisterRoutedEvent
+        (
+            name: "SelectionStateChanged",
+            routingStrategy: RoutingStrategy.Bubble,
+            handlerType: typeof(SelectionStateChangedHandler),
+            ownerType: typeof(SelectionBox)
+        );
+
+        #endregion EventProperties
+
+        
+        #region Properties
+
         public Type TargetType
         {
             get { return (Type)GetValue(TargetTypeProperty); }
@@ -100,8 +113,36 @@ namespace Quantum.Controls
 
         #endregion Properties
 
+
+        #region Events
+        
+        public event SelectionStateChangedHandler SelectionStateChanged
+        {
+            add { AddHandler(SelectionStateChangedEvent, value); }
+            remove { RemoveHandler(SelectionStateChangedEvent, value); }
+        }
+        
+        #endregion Events
+
         public SelectionBox()
         {
+        }
+    }
+
+    public delegate void SelectionStateChangedHandler(object sender, SelectionStateChangedArgs e);
+
+    public class SelectionStateChangedArgs : RoutedEventArgs
+    {
+        public FrameworkElement Owner { get; }
+        public SelectionBox SelectionBox { get; }
+        public bool IsSelecting { get; }
+
+        public SelectionStateChangedArgs(RoutedEvent routedEvent, FrameworkElement owner, SelectionBox selectionBox, bool isSelecting)
+            : base(routedEvent)
+        {
+            Owner = owner;
+            SelectionBox = selectionBox;
+            IsSelecting = isSelecting;
         }
     }
 }

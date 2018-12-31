@@ -18,6 +18,8 @@ namespace WPF.Panels
     {
         public IEnumerable<ViewModelItem> Children { get { return CreateChildren(); } }
 
+        public bool IsSelecting { get; set; }
+
         public SourcePanelViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {

@@ -9,7 +9,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Children}">
+        <controls:TreeView HorizontalAlignment="Stretch" 
+                           VerticalAlignment="Stretch" 
+                           ItemsSource="{Binding Children}"
+                           p:FrameworkElement.IsSelecting="{Binding IsSelecting, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
             <controls:TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type controls:TreeViewItem}" BasedOn="{StaticResource {x:Type controls:TreeViewItem}}">
                     <Setter Property="Header" Value="{Binding Header}"/>

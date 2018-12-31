@@ -46,6 +46,30 @@ namespace Quantum.AttachedProperties
 
         #endregion SelectionBoxHandler
 
+
+        #region IsSelecting
+
+        public static readonly DependencyProperty IsSelectingProperty = DependencyProperty.RegisterAttached
+        (
+            name: "IsSelecting",
+            propertyType: typeof(bool),
+            ownerType: typeof(FrameworkElement),
+            defaultMetadata: new PropertyMetadata(defaultValue: false)
+        );
+
+        public static bool GetIsSelecting(DependencyObject dependencyObject)
+        {
+            return (bool)dependencyObject.GetValue(IsSelectingProperty);
+        }
+
+        public static void SetIsSelecting(DependencyObject dependencyObject, bool value)
+        {
+            dependencyObject.SetValue(IsSelectingProperty, value);
+        }
+
+        #endregion IsSelecting
+
+
         #region SelectionBox
 
         public static readonly DependencyProperty SelectionBoxProperty = DependencyProperty.RegisterAttached
@@ -73,13 +97,23 @@ namespace Quantum.AttachedProperties
                 throw new Exception("Error : Selection boxes are only allowed on framework elements.");
             }
 
+            if(e.OldValue is SelectionBox oldSelectionBox) {
+                oldSelectionBox.RemoveHandler(SelectionBox.SelectionStateChangedEvent, (SelectionStateChangedHandler)OnIsSelectingChanged);
+            }
+
             if(e.NewValue is SelectionBox selectionBox) {
                 SetSelectionBoxHandler(obj, new SelectionBoxHandler(frameworkElement, selectionBox));
+                selectionBox.AddHandler(SelectionBox.SelectionStateChangedEvent, (SelectionStateChangedHandler)OnIsSelectingChanged);
             }
 
             else {
                 SetSelectionBoxHandler(obj, null);
             }
+        }
+
+        public static void OnIsSelectingChanged(object sender, SelectionStateChangedArgs e)
+        {
+            SetIsSelecting(e.Owner, e.IsSelecting);
         }
 
         #endregion SelectionBoxHandler
