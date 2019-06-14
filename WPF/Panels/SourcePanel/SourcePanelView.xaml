@@ -9,7 +9,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox>
+        <ListBox p:FrameworkElement.ForceInvalidateContextMenu="True">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <ContextMenu.Style>
+                        <Style BasedOn="{StaticResource {x:Type ContextMenu}}" TargetType="{x:Type ContextMenu}">
+                            <Setter Property="ItemContainerStyle">
+                                <Setter.Value>
+                                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                                        <Setter Property="Header" Value="{Binding Header}"/>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="ItemsSource" Value="{Binding ContextMenuItems}"/>
+                        </Style>
+                    </ContextMenu.Style>
+                </ContextMenu>
+            </ListBox.ContextMenu>
             <ListBoxItem>Item1</ListBoxItem>
             <ListBoxItem>Item2</ListBoxItem>
             <ListBoxItem>Item3</ListBoxItem>

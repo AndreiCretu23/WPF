@@ -49,6 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttachedProperties\FrameworkElement\ForceInvalidateContextMenuProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElement\InheritShortcutsFromMainWindowProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElement\SelectionBoxProperty.cs" />
     <Compile Include="AttachedProperties\TextBox\SelectAllOnFocusProperty.cs" />
