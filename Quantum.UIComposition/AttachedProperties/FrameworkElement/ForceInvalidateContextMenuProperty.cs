@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using UIItemsControl = System.Windows.Controls.ItemsControl;
-using UIFrameworkElement = System.Windows.FrameworkElement;
 using System.Windows.Data;
+using UIFrameworkElement = System.Windows.FrameworkElement;
+using UIItemsControl = System.Windows.Controls.ItemsControl;
 
 namespace Quantum.AttachedProperties
 {
