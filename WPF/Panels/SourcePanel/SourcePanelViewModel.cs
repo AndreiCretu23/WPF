@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -27,7 +28,7 @@ namespace WPF.Panels
             get
             {
                 var s = DateTime.Now.Second;
-                for(int i = 0; i < s; i++)
+                for (int i = 0; i < s; i++)
                 {
                     yield return new ContextMenuItemViewModel()
                     {
@@ -37,6 +38,39 @@ namespace WPF.Panels
             }
         }
 
+        public IEnumerable<KeyBinding> Shortcuts
+        {
+            get
+            {
+                var second = DateTime.Now.Second;
+                if (second < 30)
+                {
+                    yield return new KeyBinding()
+                    {
+                        Modifiers = ModifierKeys.Control,
+                        Key = Key.N,
+                        Command = new DelegateCommand()
+                        {
+                            CanExecuteHandler = () => true,
+                            ExecuteHandler = () => MessageBox.Show($"First : {DateTime.Now.Second.ToString()}")
+                        }
+                    };
+                }
+                else
+                {
+                    yield return new KeyBinding()
+                    {
+                        Modifiers = ModifierKeys.Control,
+                        Key = Key.N,
+                        Command = new DelegateCommand()
+                        {
+                            CanExecuteHandler = () => true,
+                            ExecuteHandler = () => MessageBox.Show($"Second : {DateTime.Now.Second.ToString()}")
+                        }
+                    };
+                }
+            }
+        }
     }
 
     public class ContextMenuItemViewModel
