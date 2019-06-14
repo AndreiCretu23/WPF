@@ -50,14 +50,14 @@ namespace Quantum.UIComponents
         {
             var children = new List<IMainMenuItemViewModel>();
 
-            var managedCommands = CommandExtractor.ManagedCommands.Where(c => CommandExtractor.GetMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
-            var multiManagedCommands = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            var globalCommands = CommandExtractor.GlobalCommands.Where(c => CommandExtractor.GetMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            var multiGlobalCommands = CommandExtractor.MultiGlobalCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
             var subAbstractMenuPaths = CommandExtractor.AbstractMenuPaths.Where(path => path.ParentPath == MenuPath);
             var panelMenuOptions = CommandExtractor.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any() && def.OfType<PanelMenuOption>().Single().OfType<MenuPath>().Single().ParentPath == MenuPath);
 
             var rawChildren = new Dictionary<IMenuEntry, object>();
-            managedCommands.ForEach(c => rawChildren.Add(CommandExtractor.GetMenuMetadata<MenuPath>(c), c));
-            multiManagedCommands.ForEach(c => rawChildren.Add(CommandExtractor.GetMultiMenuMetadata<MenuPath>(c), c));
+            globalCommands.ForEach(c => rawChildren.Add(CommandExtractor.GetMenuMetadata<MenuPath>(c), c));
+            multiGlobalCommands.ForEach(c => rawChildren.Add(CommandExtractor.GetMultiMenuMetadata<MenuPath>(c), c));
             subAbstractMenuPaths.ForEach(path => rawChildren.Add(path, path));
             panelMenuOptions.ForEach(o => rawChildren.Add(CommandExtractor.GetPanelMenuOptionMetadata<MenuPath>(o), o));
 
@@ -69,9 +69,9 @@ namespace Quantum.UIComponents
                 categoryIndex++;
                 foreach (var entry in category.OrderBy(o => o.Key.OrderIndex))
                 {
-                    entry.Value.IfIs((IManagedCommand c) => children.Add(new MainMenuCommandViewModel(InitializationService, CommandExtractor, c)));
+                    entry.Value.IfIs((IGlobalCommand c) => children.Add(new MainMenuCommandViewModel(InitializationService, CommandExtractor, c)));
 
-                    entry.Value.IfIs((IMultiManagedCommand c) =>
+                    entry.Value.IfIs((IMultiGlobalCommand c) =>
                     {
                         var subCommands = c.SubCommands.Where(subCmd => subCmd.Metadata.OfType<SubMainMenuOption>().Any());
                         foreach (var subCommand in subCommands)
@@ -105,7 +105,7 @@ namespace Quantum.UIComponents
 
         private void SubscribeToMultiCommandChildrenAutoInvalidationEvents()
         {
-            var childMultiCommands = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            var childMultiCommands = CommandExtractor.MultiGlobalCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
             foreach(var multiCommand in childMultiCommands) {
                 multiCommand.OnCommandsComputed += MultiCommandInvalidationDelegate;
             }
@@ -113,7 +113,7 @@ namespace Quantum.UIComponents
 
         internal void UnsubscribeToMultiCommandChildrenAutoInvalidationEvents()
         {
-            var childMultiCommands = CommandExtractor.MultiManagedCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
+            var childMultiCommands = CommandExtractor.MultiGlobalCommands.Where(c => CommandExtractor.GetMultiMenuMetadata<MenuPath>(c).ParentPath == MenuPath);
             foreach(var multiCommand in childMultiCommands) {
                 multiCommand.OnCommandsComputed -= MultiCommandInvalidationDelegate;
             }

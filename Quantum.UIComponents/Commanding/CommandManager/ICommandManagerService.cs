@@ -16,14 +16,14 @@ namespace Quantum.Command
         IEnumerable<object> Commands { get; }
 
         /// <summary>
-        /// Returns all commands of type IManagedCommand registered in the command cache.
+        /// Returns all commands of type IGlobalCommand registered in the command cache.
         /// </summary>
-        IEnumerable<IManagedCommand> ManagedCommands { get; }
+        IEnumerable<IGlobalCommand> GlobalCommands { get; }
 
         /// <summary>
-        /// Returns all commands of type IMultiManagedCommand registered in the command cache.
+        /// Returns all commands of type IMultiGlobalCommand registered in the command cache.
         /// </summary>
-        IEnumerable<IMultiManagedCommand> MultiManagedCommands { get; }
+        IEnumerable<IMultiGlobalCommand> MultiGlobalCommands { get; }
 
         /// <summary>
         /// Registers all command properties in the specified command container in the command cache.

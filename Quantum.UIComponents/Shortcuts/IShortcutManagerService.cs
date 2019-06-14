@@ -17,7 +17,7 @@ namespace Quantum.Shortcuts
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        KeyShortcut GetShortcut(IManagedCommand command);
+        KeyShortcut GetShortcut(IGlobalCommand command);
 
         /// <summary>
         /// Returns the BringIntoView shortcut associated with the specified static panel definition. If the definition doesn't have an associated 
@@ -32,7 +32,7 @@ namespace Quantum.Shortcuts
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        bool HasShortcut(IManagedCommand command);
+        bool HasShortcut(IGlobalCommand command);
 
         /// <summary>
         /// Returns a value indicating if the specified static panel definition has an associated BringIntoView shortcut.
@@ -45,7 +45,7 @@ namespace Quantum.Shortcuts
         /// Removes any shortcuts associated with the specified command.
         /// </summary>
         /// <param name="command"></param>
-        void ClearShortcut(IManagedCommand command);
+        void ClearShortcut(IGlobalCommand command);
 
         /// <summary>
         /// Removes any BringIntoView shortcuts associated with the specified static panel definition.
@@ -54,18 +54,18 @@ namespace Quantum.Shortcuts
         void ClearShortcut(IStaticPanelDefinition definition);
 
         /// <summary>
-        /// Sets or changes the shortcut of the specified managed command. The command must be registered in the CommandManager.
-        /// If there is any other element (ManagedCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
+        /// Sets or changes the shortcut of the specified global command. The command must be registered in the CommandManager.
+        /// If there is any other element (GlobalCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
         /// an exception will be thrown.
         /// </summary>
-        /// <param name="command">The managed command on which to set the shortcut.</param>
+        /// <param name="command">The global command on which to set the shortcut.</param>
         /// <param name="modifierKeys">The modifier keys of the new shortcut.</param>
         /// <param name="key">The key of the new shortcut.</param>
-        void SetShortcut(IManagedCommand command, ModifierKeys modifierKeys, Key key);
+        void SetShortcut(IGlobalCommand command, ModifierKeys modifierKeys, Key key);
 
         /// <summary>
         /// Sets or changes the "BringIntoView" shortcut associated with the given static panel definition. The static panel definition must be registered in the PanelManager.
-        /// If there is any other element (ManagedCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
+        /// If there is any other element (GlobalCommand / ComponentCommand / StaticPanelDefinition) which ownes a shortcut with this exact key combination, 
         /// an exception will be thrown.
         /// </summary>
         /// <param name="definition"></param>
@@ -74,7 +74,7 @@ namespace Quantum.Shortcuts
         void SetShortcut(IStaticPanelDefinition definition, ModifierKeys modifierKeys, Key key);
 
         /// <summary>
-        /// Returns a collection shortcut owners (ManagedCommands / ComponentCommands / StaticPanelDefinitions) which own a shortcut with the associated key combination.
+        /// Returns a collection shortcut owners (GlobalCommands / ComponentCommands / StaticPanelDefinitions) which own a shortcut with the associated key combination.
         /// </summary>
         /// <param name="modifierKeys"></param>
         /// <param name="key"></param>

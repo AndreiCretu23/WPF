@@ -47,7 +47,7 @@ namespace Quantum.Shortcuts
         
         #region HasShortcut
 
-        public bool HasShortcut(IManagedCommand command)
+        public bool HasShortcut(IGlobalCommand command)
         {
             command.AssertParameterNotNull(nameof(command));
             if (!CommandManager.IsRegistered(command)) {
@@ -72,7 +72,7 @@ namespace Quantum.Shortcuts
 
         #region GetShortcut
 
-        public KeyShortcut GetShortcut(IManagedCommand command)
+        public KeyShortcut GetShortcut(IGlobalCommand command)
         {
             command.AssertParameterNotNull(nameof(command));
 
@@ -115,7 +115,7 @@ namespace Quantum.Shortcuts
 
         #region SetShortcut
         
-        public void SetShortcut(IManagedCommand command, ModifierKeys modifierKeys, Key key)
+        public void SetShortcut(IGlobalCommand command, ModifierKeys modifierKeys, Key key)
         {
             command.AssertParameterNotNull(nameof(command));
             if (!CommandManager.IsRegistered(command)) {
@@ -183,7 +183,7 @@ namespace Quantum.Shortcuts
 
         #region ClearShortcut
 
-        public void ClearShortcut(IManagedCommand command)
+        public void ClearShortcut(IGlobalCommand command)
         {
             command.AssertParameterNotNull(nameof(command));
             if(!CommandManager.IsRegistered(command)) {
@@ -217,10 +217,10 @@ namespace Quantum.Shortcuts
 
         #region Notify
 
-        private void NotifyCommandShortcutsChanged(IManagedCommand command)
+        private void NotifyCommandShortcutsChanged(IGlobalCommand command)
         {
             if(!LoadingScope.IsInScope) {
-                EventAggregator.GetEvent<ShortcutChangedEvent>().Publish(new ManagedCommandShortcutChangedArgs(command));
+                EventAggregator.GetEvent<ShortcutChangedEvent>().Publish(new GlobalCommandShortcutChangedArgs(command));
             }
         }
 
@@ -253,16 +253,16 @@ namespace Quantum.Shortcuts
             }
 
             using (LoadingScope.BeginScope()) {
-                foreach(var managedCommand in CommandManager.ManagedCommands) {
-                    var shortcutInfo = shortcutDictionary.ManagedCommandShortcutInfo.SingleOrDefault(o => o.Matches(managedCommand));
+                foreach(var globalCommand in CommandManager.GlobalCommands) {
+                    var shortcutInfo = shortcutDictionary.GlobalCommandShortcutInfo.SingleOrDefault(o => o.Matches(globalCommand));
                     if (shortcutInfo == null) continue;
                     
                     if(!shortcutInfo.IsDefault) {
                         if(shortcutInfo.HasShortcut) {
-                            SetShortcut(managedCommand, shortcutInfo.ModifierKeys, shortcutInfo.Key);
+                            SetShortcut(globalCommand, shortcutInfo.ModifierKeys, shortcutInfo.Key);
                         }
                         else {
-                            ClearShortcut(managedCommand);
+                            ClearShortcut(globalCommand);
                         }
                     }
                 }
@@ -296,8 +296,8 @@ namespace Quantum.Shortcuts
         public void SaveShortcuts()
         {
             var shortcutDictionary = GetShortcutDictionaryForCurrentState();
-            foreach(var shortcutInfo in shortcutDictionary.ManagedCommandShortcutInfo) {
-                var defaultShortcut = DefaultShortcuts.ManagedCommandShortcutInfo.Single(o => o.CommandGuid == shortcutInfo.CommandGuid);
+            foreach(var shortcutInfo in shortcutDictionary.GlobalCommandShortcutInfo) {
+                var defaultShortcut = DefaultShortcuts.GlobalCommandShortcutInfo.Single(o => o.CommandGuid == shortcutInfo.CommandGuid);
                 shortcutInfo.CheckAndResolveShortcutChangedContext(defaultShortcut);
             }
 
@@ -325,8 +325,8 @@ namespace Quantum.Shortcuts
         {
             var dictionary = ShortcutDictionary.Create();
 
-            foreach(var managedCommand in CommandManager.ManagedCommands) {
-                dictionary.ManagedCommandShortcutInfo.Add(ManagedCommandShortcutInformation.CreateFromManagedCommand(managedCommand));
+            foreach(var globalCommand in CommandManager.GlobalCommands) {
+                dictionary.GlobalCommandShortcutInfo.Add(GlobalCommandShortcutInformation.CreateFromGlobalCommand(globalCommand));
             }
 
             foreach(var staticPanelDefinition in PanelManager.StaticPanelDefinitions) {
@@ -343,7 +343,7 @@ namespace Quantum.Shortcuts
 
         private void AssertShortcuts()
         {
-            var allShortcuts = CommandManager.ManagedCommands.Where(o => o.Metadata.OfType<KeyShortcut>().Any()).SelectMany(o => o.Metadata.OfType<KeyShortcutBase>()).Concat
+            var allShortcuts = CommandManager.GlobalCommands.Where(o => o.Metadata.OfType<KeyShortcut>().Any()).SelectMany(o => o.Metadata.OfType<KeyShortcutBase>()).Concat
                                     (PanelManager.StaticPanelDefinitions.Where(o => o.OfType<BringIntoViewOnKeyShortcut>().Any()).SelectMany(o => o.OfType<KeyShortcutBase>()));
 
             var duplicates = allShortcuts.Duplicates(ShortcutComparer);
@@ -355,8 +355,8 @@ namespace Quantum.Shortcuts
                     if (o is IStaticPanelDefinition def) {
                         return $"StaticPanelDefinition<{def.IView}, {def.View}, {def.IViewModel}, {def.ViewModel}>";
                     }
-                    else if (o is IManagedCommand managedCommand) {
-                        return CommandManager.GetCommandName(managedCommand);
+                    else if (o is IGlobalCommand globalCommand) {
+                        return CommandManager.GetCommandName(globalCommand);
                     }
                     return String.Empty;
                 }
@@ -379,8 +379,8 @@ namespace Quantum.Shortcuts
             if (o is IStaticPanelDefinition def) {
                 return $"StaticPanelDefinition<{def.IView}, {def.View}, {def.IViewModel}, {def.ViewModel}>";
             }
-            else if (o is IManagedCommand managedCommand) {
-                return CommandManager.GetCommandName(managedCommand);
+            else if (o is IGlobalCommand globalCommand) {
+                return CommandManager.GetCommandName(globalCommand);
             }
             return String.Empty;
         }
@@ -388,7 +388,7 @@ namespace Quantum.Shortcuts
         public IEnumerable<object> GetElementsMatchingShortcut(ModifierKeys modifierKeys, Key key)
         {
             var keyShortcut = new KeyShortcut(modifierKeys, key);
-            return CommandManager.ManagedCommands.Where(o => o.Metadata.OfType<KeyShortcutBase>().Any() && ShortcutComparer.Equals(o.Metadata.OfType<KeyShortcutBase>().Single(), keyShortcut)).Cast<object>().Concat
+            return CommandManager.GlobalCommands.Where(o => o.Metadata.OfType<KeyShortcutBase>().Any() && ShortcutComparer.Equals(o.Metadata.OfType<KeyShortcutBase>().Single(), keyShortcut)).Cast<object>().Concat
                   (PanelManager.StaticPanelDefinitions.Where(def => def.OfType<KeyShortcutBase>().Any() && ShortcutComparer.Equals(def.OfType<KeyShortcutBase>().Single(), keyShortcut)).Cast<object>());
         }
 

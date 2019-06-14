@@ -54,7 +54,7 @@ namespace Quantum.Metadata
     /// <summary>
     /// This metadata type is used to attach a shortcut to a command. The UIElement on which the 
     /// actual gesture will be added depends on the owner command's type and configuration. 
-    /// For more details, see ManagedCommand and ComponentCommand. <para/>
+    /// For more details, see GlobalCommand and ComponentCommand. <para/>
     /// (HINT : Metadata types do different things depending on the parent collection that contains them. 
     /// Clarifications regarding what a particular metadata type does can be found in the summaries of metadacollections / components that can contain it).
     /// </summary>

@@ -20,8 +20,8 @@ namespace Quantum.Command
         
         private CommandCache CachedCommands { get; set; } = new CommandCache();
         public IEnumerable<object> Commands { get => CachedCommands.GetCommands(); }
-        public IEnumerable<IManagedCommand> ManagedCommands { get => CachedCommands.GetCommandsOfType<IManagedCommand>(); }
-        public IEnumerable<IMultiManagedCommand> MultiManagedCommands { get => CachedCommands.GetCommandsOfType<IMultiManagedCommand>(); }
+        public IEnumerable<IGlobalCommand> GlobalCommands { get => CachedCommands.GetCommandsOfType<IGlobalCommand>(); }
+        public IEnumerable<IMultiGlobalCommand> MultiGlobalCommands { get => CachedCommands.GetCommandsOfType<IMultiGlobalCommand>(); }
         
         public CommandManagerService(IObjectInitializationService initSvc)
             : base(initSvc)
@@ -47,37 +47,37 @@ namespace Quantum.Command
             var containerType = commandContainer.GetType();
             var properties = containerType.GetProperties().Where(prop => !prop.HasAttribute<IgnoreCommandAttribute>());
 
-            var containerManagedCommands = new Collection<IManagedCommand>();
-            var containerMultiManagedCommands = new Collection<IMultiManagedCommand>();
+            var containerGlobalCommands = new Collection<IGlobalCommand>();
+            var containerMultiGlobalCommands = new Collection<IMultiGlobalCommand>();
 
             var commandNames = new Dictionary<object, string>();
             
             foreach(var prop in properties)
             {
-                if(typeof(IManagedCommand).IsAssignableFrom(prop.PropertyType))
+                if(typeof(IGlobalCommand).IsAssignableFrom(prop.PropertyType))
                 {
-                    var command = (IManagedCommand)prop.GetValue(commandContainer);
+                    var command = (IGlobalCommand)prop.GetValue(commandContainer);
                     AssertCommandPropertyNotNull(command, containerType, prop.Name);
-                    containerManagedCommands.Add(command);
+                    containerGlobalCommands.Add(command);
                     commandNames.Add(command, prop.Name);   
                 }
                 
-                else if(typeof(IMultiManagedCommand).IsAssignableFrom(prop.PropertyType))
+                else if(typeof(IMultiGlobalCommand).IsAssignableFrom(prop.PropertyType))
                 {
-                    var command = (IMultiManagedCommand)prop.GetValue(commandContainer);
+                    var command = (IMultiGlobalCommand)prop.GetValue(commandContainer);
                     AssertCommandPropertyNotNull(command, containerType, prop.Name);
-                    containerMultiManagedCommands.Add(command);
+                    containerMultiGlobalCommands.Add(command);
                     commandNames.Add(command, prop.Name);
                 }
             }
             
-            containerManagedCommands.ForEach(c =>
+            containerGlobalCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
                 InvalidationManager.ProcessInvalidators(c);
             });
 
-            containerMultiManagedCommands.ForEach(c =>
+            containerMultiGlobalCommands.ForEach(c =>
             {
                 MetadataAsserter.AssertMetadataCollectionProperties(c, commandNames[c]);
                 c.OnCommandsComputed += (oldCommands, newCommands) =>
@@ -90,8 +90,8 @@ namespace Quantum.Command
                 InvalidationManager.ProcessInvalidators(c);
             });
             
-            containerManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
-            containerMultiManagedCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
+            containerGlobalCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
+            containerMultiGlobalCommands.ForEach(c => CachedCommands.AddCommand(c, containerType, commandNames[c]));
         }
 
         [DebuggerHidden]

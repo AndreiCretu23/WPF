@@ -16,7 +16,7 @@ namespace Quantum.UIComponents
         #endregion Fields
 
 
-        public IManagedCommand Command { get; }
+        public IGlobalCommand Command { get; }
         private IMainMenuCommandExtractor CommandExtractor { get; }
 
         public string Header => CommandExtractor.GetMenuMetadata<Description>(Command)?.Value;
@@ -35,7 +35,7 @@ namespace Quantum.UIComponents
         public string Shortcut => Command.Metadata.OfType<KeyShortcut>().SingleOrDefault()?.GetInputGestureText();
         public string ToolTip => CommandExtractor.GetMenuMetadata<ToolTip>(Command)?.Value;
 
-        public MainMenuCommandViewModel(IObjectInitializationService initSvc, IMainMenuCommandExtractor commandExtractor, IManagedCommand command)
+        public MainMenuCommandViewModel(IObjectInitializationService initSvc, IMainMenuCommandExtractor commandExtractor, IGlobalCommand command)
             :base(initSvc)
         {
             CommandExtractor = commandExtractor;
@@ -46,7 +46,7 @@ namespace Quantum.UIComponents
         public void OnShortcutChanged(IShortcutChangedArgs args)
         {
             if(args is GlobalRebuildShortcutChangedArgs || 
-              (args is ManagedCommandShortcutChangedArgs managedCommandShortcutChanged && managedCommandShortcutChanged.Command == Command)) {
+              (args is GlobalCommandShortcutChangedArgs globalCommandShortcutChanged && globalCommandShortcutChanged.Command == Command)) {
                 RaisePropertyChanged(() => Shortcut);
             }
         }

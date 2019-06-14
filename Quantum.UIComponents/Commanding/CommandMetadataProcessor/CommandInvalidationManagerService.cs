@@ -23,12 +23,12 @@ namespace Quantum.Command
         {
             command.AssertParameterNotNull("Internal error : A null command was parsed for invalidation processing.");
 
-            if (command is IManagedCommand managedCommand) {
-                ProcessManagedCommandInvalidators(managedCommand);
+            if (command is IGlobalCommand globalCommand) {
+                ProcessGlobalCommandInvalidators(globalCommand);
             }
 
-            else if(command is IMultiManagedCommand multiManagedCommand) {
-                ProcessMultiManagedCommandInvalidators(multiManagedCommand);
+            else if(command is IMultiGlobalCommand multiGlobalCommand) {
+                ProcessMultiGlobalCommandInvalidators(multiGlobalCommand);
             }
 
             else {
@@ -36,16 +36,16 @@ namespace Quantum.Command
             }
         }
 
-        private void ProcessManagedCommandInvalidators(IManagedCommand command)
+        private void ProcessGlobalCommandInvalidators(IGlobalCommand command)
         {
             foreach(var metadata in command.Metadata.OfType<IAutoInvalidateMetadata>()) {
                 metadata.AttachMetadataDefinition(EventAggregator, () => command.RaiseCanExecuteChanged());
             }
         }
 
-        private void ProcessMultiManagedCommandInvalidators(IMultiManagedCommand multiManagedCommand)
+        private void ProcessMultiGlobalCommandInvalidators(IMultiGlobalCommand multiGlobalCommand)
         {
-            multiManagedCommand.OnCommandsComputed += (oldCommands, newCommands) =>
+            multiGlobalCommand.OnCommandsComputed += (oldCommands, newCommands) =>
             {
                 var associatedInvalidationSubscriptions = MultiCommandsSubscriptions.Where(o => oldCommands.Contains(o.Object)).ToList();
                 foreach(var subscription in associatedInvalidationSubscriptions) {
@@ -65,8 +65,8 @@ namespace Quantum.Command
                 }
             };
 
-            foreach(var metadata in multiManagedCommand.Metadata.OfType<IAutoInvalidateMetadata>()) {
-                metadata.AttachMetadataDefinition(EventAggregator, () => multiManagedCommand.ComputeCommands());
+            foreach(var metadata in multiGlobalCommand.Metadata.OfType<IAutoInvalidateMetadata>()) {
+                metadata.AttachMetadataDefinition(EventAggregator, () => multiGlobalCommand.ComputeCommands());
             }
         }
     }

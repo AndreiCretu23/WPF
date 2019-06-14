@@ -9,38 +9,38 @@ namespace WPF.Commands
 {
     public interface ICommonCommands : ICommandContainer
     {
-        IManagedCommand OpenDialog { get; }
-        IManagedCommand RemoveLastPanel { get; }
+        IGlobalCommand OpenDialog { get; }
+        IGlobalCommand RemoveLastPanel { get; }
 
-        IManagedCommand CommandChangeNShortcut { get; }
-        IManagedCommand CommandChangeBShortcut { get; }
-        IManagedCommand CommandClearShortcut { get; }
+        IGlobalCommand CommandChangeNShortcut { get; }
+        IGlobalCommand CommandChangeBShortcut { get; }
+        IGlobalCommand CommandClearShortcut { get; }
 
-        IManagedCommand PanelChangeAShortcut { get; }
-        IManagedCommand PanelChangeQShortcut { get; }
-        IManagedCommand PanelClearShortcut { get; }
+        IGlobalCommand PanelChangeAShortcut { get; }
+        IGlobalCommand PanelChangeQShortcut { get; }
+        IGlobalCommand PanelClearShortcut { get; }
 
 
-        IManagedCommand Qwerty { get; }
-        IManagedCommand Yolo1Command { get; }
-        IManagedCommand Yolo2Command { get; }
+        IGlobalCommand Qwerty { get; }
+        IGlobalCommand Yolo1Command { get; }
+        IGlobalCommand Yolo2Command { get; }
 
-        IManagedCommand Change1 { get; }
-        IManagedCommand Change2 { get; }
-        IManagedCommand Change3 { get; }
-        IManagedCommand Change4 { get; }
-        IManagedCommand Change5 { get; }
-        IManagedCommand Change6 { get; }
-        IManagedCommand Change7 { get; }
-        IManagedCommand Change8 { get; }
-        IManagedCommand Change9 { get; }
-        IManagedCommand Change10 { get; }
+        IGlobalCommand Change1 { get; }
+        IGlobalCommand Change2 { get; }
+        IGlobalCommand Change3 { get; }
+        IGlobalCommand Change4 { get; }
+        IGlobalCommand Change5 { get; }
+        IGlobalCommand Change6 { get; }
+        IGlobalCommand Change7 { get; }
+        IGlobalCommand Change8 { get; }
+        IGlobalCommand Change9 { get; }
+        IGlobalCommand Change10 { get; }
 
-        IManagedCommand CheckCommand { get; }
-        IMultiManagedCommand RecentCommands { get; }
-        IMultiManagedCommand SubRecentCommands { get; }
+        IGlobalCommand CheckCommand { get; }
+        IMultiGlobalCommand RecentCommands { get; }
+        IMultiGlobalCommand SubRecentCommands { get; }
 
-        IManagedCommand HiddenCommand { get; }
+        IGlobalCommand HiddenCommand { get; }
         
     }
 }

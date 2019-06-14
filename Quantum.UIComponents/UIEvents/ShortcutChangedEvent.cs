@@ -16,10 +16,10 @@ namespace Quantum.Events
     {
     }
 
-    internal class ManagedCommandShortcutChangedArgs : IShortcutChangedArgs
+    internal class GlobalCommandShortcutChangedArgs : IShortcutChangedArgs
     {
-        public IManagedCommand Command { get; }
-        public ManagedCommandShortcutChangedArgs(IManagedCommand command)
+        public IGlobalCommand Command { get; }
+        public GlobalCommandShortcutChangedArgs(IGlobalCommand command)
         {
             Command = command;
         }

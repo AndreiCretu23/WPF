@@ -13,20 +13,20 @@ namespace Quantum.Shortcuts
 {
     public class ShortcutDictionary
     {
-        public List<ManagedCommandShortcutInformation> ManagedCommandShortcutInfo { get; set; }
+        public List<GlobalCommandShortcutInformation> GlobalCommandShortcutInfo { get; set; }
         public List<StaticPanelShortcutInformation> StaticPanelShortcutInfo { get; set; }
         
         public static ShortcutDictionary Create()
         {
             return new ShortcutDictionary()
             {
-                ManagedCommandShortcutInfo = new List<ManagedCommandShortcutInformation>(),
+                GlobalCommandShortcutInfo = new List<GlobalCommandShortcutInformation>(),
                 StaticPanelShortcutInfo = new List<StaticPanelShortcutInformation>()
             };
         }
     }
 
-    public class ManagedCommandShortcutInformation
+    public class GlobalCommandShortcutInformation
     {
         public string CommandGuid { get; set; }
         public bool HasShortcut { get; set; }
@@ -34,14 +34,14 @@ namespace Quantum.Shortcuts
         public ModifierKeys ModifierKeys { get; set; }
         public Key Key { get; set; }
 
-        public static ManagedCommandShortcutInformation CreateFromManagedCommand(IManagedCommand command)
+        public static GlobalCommandShortcutInformation CreateFromGlobalCommand(IGlobalCommand command)
         {
             command.AssertParameterNotNull(nameof(command));
 
             var guid = command.Metadata.OfType<CommandGuid>().Single().Guid;
             var hasShortcut = command.Metadata.OfType<KeyShortcut>().Any();
 
-            return new ManagedCommandShortcutInformation()
+            return new GlobalCommandShortcutInformation()
             {
                 CommandGuid = guid,
                 HasShortcut = hasShortcut,
@@ -51,14 +51,14 @@ namespace Quantum.Shortcuts
             };
         }
         
-        public void CheckAndResolveShortcutChangedContext(ManagedCommandShortcutInformation defaultInformation)
+        public void CheckAndResolveShortcutChangedContext(GlobalCommandShortcutInformation defaultInformation)
         {
             IsDefault = HasShortcut == defaultInformation.HasShortcut &&
                         ModifierKeys == defaultInformation.ModifierKeys &&
                         Key == defaultInformation.Key;
         }
 
-        public bool Matches(IManagedCommand command)
+        public bool Matches(IGlobalCommand command)
         {
             command.AssertParameterNotNull(nameof(command));
             return CommandGuid == command.Metadata.OfType<CommandGuid>().Single().Guid;

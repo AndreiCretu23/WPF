@@ -39,11 +39,11 @@ namespace WPF.Commands
         }
 
 
-        public IManagedCommand OpenDialog
+        public IGlobalCommand OpenDialog
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => true,
                     ExecuteHandler = () =>
@@ -80,11 +80,11 @@ namespace WPF.Commands
             }
         }
         
-        public IManagedCommand RemoveLastPanel
+        public IGlobalCommand RemoveLastPanel
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => DynamicPanelSelection.Value.Any(),
                     ExecuteHandler = () =>
@@ -110,11 +110,11 @@ namespace WPF.Commands
 
 
 
-        public IManagedCommand CommandChangeNShortcut
+        public IGlobalCommand CommandChangeNShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -135,11 +135,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand CommandChangeBShortcut
+        public IGlobalCommand CommandChangeBShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -160,11 +160,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand CommandClearShortcut
+        public IGlobalCommand CommandClearShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -187,11 +187,11 @@ namespace WPF.Commands
 
 
 
-        public IManagedCommand PanelChangeAShortcut
+        public IGlobalCommand PanelChangeAShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -212,11 +212,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand PanelChangeQShortcut
+        public IGlobalCommand PanelChangeQShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -237,11 +237,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand PanelClearShortcut
+        public IGlobalCommand PanelClearShortcut
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     ExecuteHandler = () =>
                     {
@@ -266,11 +266,11 @@ namespace WPF.Commands
 
 
 
-        public IManagedCommand Qwerty
+        public IGlobalCommand Qwerty
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => true,
                     ExecuteHandler = () => { Container.Resolve<IToolBarManagerService>().RestoreLayout(); },
@@ -287,8 +287,8 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Yolo2Command =>
-            new ManagedCommand()
+        public IGlobalCommand Yolo2Command =>
+            new GlobalCommand()
             {
                 CanExecuteHandler = () => true,
                 ExecuteHandler = () => { },
@@ -302,8 +302,8 @@ namespace WPF.Commands
                 }
             };
 
-        public IManagedCommand Yolo1Command =>
-            new ManagedCommand()
+        public IGlobalCommand Yolo1Command =>
+            new GlobalCommand()
             {
                 CanExecuteHandler = () => EventAggregator.GetEvent<DynamicPanelSelection>().Value.Any(),
                 ExecuteHandler = () => 
@@ -323,11 +323,11 @@ namespace WPF.Commands
                 }
             };
         
-        public IManagedCommand Change1
+        public IGlobalCommand Change1
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value > 3,
                     ExecuteHandler = () => Number.Value = 1,
@@ -347,11 +347,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change2
+        public IGlobalCommand Change2
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => true,//Number.Value > 4,
                     ExecuteHandler = () => Number.Value = 2,
@@ -369,11 +369,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change3
+        public IGlobalCommand Change3
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value > 5,
                     ExecuteHandler = () => Number.Value = 3,
@@ -391,11 +391,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change4
+        public IGlobalCommand Change4
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value > 6,
                     ExecuteHandler = () => Number.Value = 4,
@@ -413,11 +413,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change5
+        public IGlobalCommand Change5
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => true,
                     ExecuteHandler = () => Number.Value = 5,
@@ -434,11 +434,11 @@ namespace WPF.Commands
             }
         }
 
-        public IMultiManagedCommand RecentCommands
+        public IMultiGlobalCommand RecentCommands
         {
             get
             {
-                return new MultiManagedCommand()
+                return new MultiGlobalCommand()
                 {
                     Commands = () =>
                     {
@@ -476,11 +476,11 @@ namespace WPF.Commands
             }
         }
 
-        public IMultiManagedCommand SubRecentCommands
+        public IMultiGlobalCommand SubRecentCommands
         {
             get
             {
-                return new MultiManagedCommand()
+                return new MultiGlobalCommand()
                 {
                     Commands = () =>
                     {
@@ -515,11 +515,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change6
+        public IGlobalCommand Change6
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value < 4,
                     ExecuteHandler = () => Number.Value = 6,
@@ -536,11 +536,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change7
+        public IGlobalCommand Change7
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value < 5,
                     ExecuteHandler = () => Number.Value = 7,
@@ -558,11 +558,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change8
+        public IGlobalCommand Change8
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value < 6,
                     ExecuteHandler = () => Number.Value = 8,
@@ -580,11 +580,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change9
+        public IGlobalCommand Change9
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value < 7,
                     ExecuteHandler = () => Number.Value = 9,
@@ -602,11 +602,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand Change10
+        public IGlobalCommand Change10
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value < 8,
                     ExecuteHandler = () => Number.Value = 10,
@@ -623,11 +623,11 @@ namespace WPF.Commands
             }
         }
 
-        public IManagedCommand CheckCommand
+        public IGlobalCommand CheckCommand
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => true,
                     ExecuteHandler = () => { },
@@ -647,11 +647,11 @@ namespace WPF.Commands
         }
 
 
-        public IManagedCommand HiddenCommand
+        public IGlobalCommand HiddenCommand
         {
             get
             {
-                return new ManagedCommand()
+                return new GlobalCommand()
                 {
                     CanExecuteHandler = () => Number.Value != 7,
                     ExecuteHandler = () => MessageBox.Show("Hidden Command"),
@@ -667,11 +667,11 @@ namespace WPF.Commands
         }
         
 
-        public IMultiManagedCommand SpamCommand
+        public IMultiGlobalCommand SpamCommand
         {
             get
             {
-                return new MultiManagedCommand()
+                return new MultiGlobalCommand()
                 {
                     Commands = () =>
                     {

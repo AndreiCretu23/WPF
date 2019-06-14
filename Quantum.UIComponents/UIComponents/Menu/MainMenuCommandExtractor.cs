@@ -17,8 +17,8 @@ namespace Quantum.UIComponents
         [Service]
         public IPanelManagerService PanelManager { get; set; }
         
-        public IEnumerable<IManagedCommand> ManagedCommands => CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any());
-        public IEnumerable<IMultiManagedCommand> MultiManagedCommands => CommandManager.MultiManagedCommands.Where(c => c.Metadata.OfType<MultiMainMenuOption>().Any());
+        public IEnumerable<IGlobalCommand> GlobalCommands => CommandManager.GlobalCommands.Where(c => c.Metadata.OfType<MainMenuOption>().Any());
+        public IEnumerable<IMultiGlobalCommand> MultiGlobalCommands => CommandManager.MultiGlobalCommands.Where(c => c.Metadata.OfType<MultiMainMenuOption>().Any());
         public IEnumerable<IStaticPanelDefinition> StaticPanelDefinitions => PanelManager.StaticPanelDefinitions.Where(def => def.OfType<PanelMenuOption>().Any());
 
         public MainMenuCommandExtractor(IObjectInitializationService initSvc)
@@ -33,8 +33,8 @@ namespace Quantum.UIComponents
             {
                 if (abstractMenuPaths == null)
                 {
-                    abstractMenuPaths = ManagedCommands.Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
-                                .Concat(MultiManagedCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
+                    abstractMenuPaths = GlobalCommands.Select(c => GetMenuMetadata<MenuPath>(c).ParentPath)
+                                .Concat(MultiGlobalCommands.Select(c => GetMultiMenuMetadata<MenuPath>(c).ParentPath))
                                 .Concat(StaticPanelDefinitions.Select(def => GetPanelMenuOptionMetadata<MenuPath>(def).ParentPath)).
                              SelectMany(path => path.GetPathsToRoot()).Distinct();
                 }
@@ -43,14 +43,14 @@ namespace Quantum.UIComponents
         }
 
 
-        public TMetadata GetMenuMetadata<TMetadata>(IManagedCommand managedCommand) where TMetadata : IMainMenuMetadata
+        public TMetadata GetMenuMetadata<TMetadata>(IGlobalCommand globalCommand) where TMetadata : IMainMenuMetadata
         {
-            return managedCommand.Metadata.OfType<MainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
+            return globalCommand.Metadata.OfType<MainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
-        public TMetadata GetMultiMenuMetadata<TMetadata>(IMultiManagedCommand multiManagedCommand) where TMetadata : IMultiMainMenuMetadata
+        public TMetadata GetMultiMenuMetadata<TMetadata>(IMultiGlobalCommand multiGlobalCommand) where TMetadata : IMultiMainMenuMetadata
         {
-            return multiManagedCommand.Metadata.OfType<MultiMainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
+            return multiGlobalCommand.Metadata.OfType<MultiMainMenuOption>().Single().OfType<TMetadata>().SingleOrDefault();
         }
 
         public TMetadata GetSubmenuMetadata<TMetadata>(ISubCommand subCommand) where TMetadata : ISubMainMenuMetadata

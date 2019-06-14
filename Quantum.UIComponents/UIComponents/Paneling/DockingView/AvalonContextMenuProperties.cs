@@ -129,8 +129,7 @@ namespace Quantum.UIComponents
                         {
                             if ((item.Command == null && GetHasVisibleMenuItems(item))
                                || (item.Command != null && item.Command.CanExecute(item.CommandParameter))) visible = true;
-                            // We do not hide cheackbe items. If they have a command then that takes precedance, 
-                            // as there are commands that have state (IStatefulManagedCommands) that should be hidden if they cannot be exected
+                            
                             if (item.IsCheckable && item.Command == null) visible = true;
                             lastGroupHasItems = true;
                         }

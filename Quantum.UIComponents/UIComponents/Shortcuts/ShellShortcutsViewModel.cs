@@ -16,22 +16,22 @@ namespace Quantum.UIComponents
         [Service]
         public IPanelManagerService PanelManager { get; set; }
 
-        private IEnumerable<KeyBinding> ManagedCommandShortcuts { get; set; }
+        private IEnumerable<KeyBinding> GlobalCommandShortcuts { get; set; }
         private IEnumerable<KeyBinding> BringPanelIntoViewShortcuts { get; set; }
 
-        public IEnumerable<KeyBinding> Shortcuts { get { return ManagedCommandShortcuts.Concat(BringPanelIntoViewShortcuts); } }
+        public IEnumerable<KeyBinding> Shortcuts { get { return GlobalCommandShortcuts.Concat(BringPanelIntoViewShortcuts); } }
 
         public ShellShortcutsViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
-            ManagedCommandShortcuts = GetCommandShortcuts();
+            GlobalCommandShortcuts = GetCommandShortcuts();
             BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
         }
         
         private IEnumerable<KeyBinding> GetCommandShortcuts()
         {
-            var managedCommands = CommandManager.ManagedCommands.Where(c => c.Metadata.OfType<KeyShortcut>().Any());
-            foreach(var command in managedCommands) {
+            var globalCommands = CommandManager.GlobalCommands.Where(c => c.Metadata.OfType<KeyShortcut>().Any());
+            foreach(var command in globalCommands) {
                 var shortcut = command.Metadata.OfType<KeyShortcut>().Single();
                 yield return new KeyBinding(command, new KeyGesture(shortcut.Key, shortcut.ModifierKeys));
             }
@@ -55,14 +55,14 @@ namespace Quantum.UIComponents
         [Handles(typeof(ShortcutChangedEvent))]
         public void OnShortcutChanged(IShortcutChangedArgs args)
         {
-            if(args is ManagedCommandShortcutChangedArgs) {
-                ManagedCommandShortcuts = GetCommandShortcuts();
+            if(args is GlobalCommandShortcutChangedArgs) {
+                GlobalCommandShortcuts = GetCommandShortcuts();
             }
             else if(args is BringPanelIntoViewShortcutChangedArgs) {
                 BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
             }
             else if(args is GlobalRebuildShortcutChangedArgs) {
-                ManagedCommandShortcuts = GetCommandShortcuts();
+                GlobalCommandShortcuts = GetCommandShortcuts();
                 BringPanelIntoViewShortcuts = GetBringPanelIntoViewShortcuts();
             }
 
