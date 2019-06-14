@@ -47,6 +47,7 @@ namespace Quantum.UIComponents
 
             //Services & ToolKit
             container.RegisterService<ILongOperationService, LongOperationService>();
+            container.RegisterService<IIconManagerService, IconManagerService>();
 
             //View Core
             container.RegisterService<IUICoreService, UICoreService>();

@@ -49,6 +49,14 @@ namespace Quantum.Controls
             typeMetadata: new PropertyMetadata(defaultValue: false)
         );
 
+        public static readonly DependencyProperty IsCheckedReadonlyProperty = DependencyProperty.Register
+        (
+            name : "IsCheckedReadonly",
+            propertyType: typeof(bool),
+            ownerType: typeof(TreeViewItem),
+            typeMetadata: new PropertyMetadata(defaultValue: false)
+        );
+
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register
         (
             name: "IsChecked",
@@ -124,6 +132,11 @@ namespace Quantum.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
 
+        public bool IsCheckedReadonly
+        {
+            get { return (bool)GetValue(IsCheckedReadonlyProperty); }
+            set { SetValue(IsCheckedReadonlyProperty, value); }
+        }
 
         public ImageSource Icon
         {

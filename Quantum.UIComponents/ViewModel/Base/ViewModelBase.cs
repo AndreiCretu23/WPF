@@ -9,7 +9,7 @@ namespace Quantum.UIComponents
     /// <summary>
     /// Provides the base class for any ViewModel that has access to the container, services and events.
     /// </summary>
-    public abstract class ViewModelBase : ObservableObject, IViewModel
+    public abstract class ViewModelBase : ObservableObject
     {
         [Service]
         public IUnityContainer Container { get; set; }

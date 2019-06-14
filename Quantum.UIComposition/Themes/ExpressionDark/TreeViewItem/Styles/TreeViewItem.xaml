@@ -10,6 +10,7 @@
 
     <converters:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    <converters:NegateConverter x:Key="NegateConverter"/>
 
     <Style x:Key="TreeViewItemToggleButtonStyle" TargetType="{x:Type ToggleButton}">
         <Setter Property="Background" Value="Transparent"/>
@@ -90,6 +91,7 @@
         <Setter Property="FontWeight" Value="Normal"/>
         
         <Setter Property="IsCheckable" Value="True"/>
+        <Setter Property="IsCheckedReadonly" Value="False"/>
         <Setter Property="Icon" Value="/Quantum.ResourceLibrary;component/Icons/Common/appbar.3d.3ds.png"/>
         <Setter Property="Header" Value="TreeViewItem"/>
         <Setter Property="ToggleExpandOnDoubleClick" Value="True"/>
@@ -134,6 +136,7 @@
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
 
                                 <CheckBox IsChecked="{TemplateBinding IsChecked}"
+                                          IsEnabled="{TemplateBinding IsCheckedReadonly, Converter={StaticResource NegateConverter}}"
                                           Visibility="{TemplateBinding IsCheckable, Converter={StaticResource VisibilityConverter}}"/>
 
                                 <Border Background="{TemplateBinding Background}"

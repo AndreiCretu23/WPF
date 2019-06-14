@@ -135,6 +135,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Services\IconManager\IconManagerService.cs" />
+    <Compile Include="Services\IconManager\IIconManagerService.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandAttribute.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\CommandInitializer\CommandInitializer.cs" />
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidationInitializer.cs" />
@@ -224,9 +226,6 @@
     <Compile Include="Services\ObjectInitializationExtensions\InvalidationInitializer\InvalidateOnAttribute.cs" />
     <Compile Include="ViewModel\Base\ViewModelBase.cs" />
     <Compile Include="ViewModel\Base\ViewModelComponent.cs" />
-    <Compile Include="ViewModel\Contract\IRootViewModel.cs" />
-    <Compile Include="ViewModel\Contract\IViewModel.cs" />
-    <Compile Include="ViewModel\Contract\IViewModelItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
