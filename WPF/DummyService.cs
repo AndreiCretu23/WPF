@@ -33,11 +33,11 @@ namespace WPF
             MessageBox.Show("Application Exiting");
         }
 
-        [Handles(typeof(UnhandledExceptionEvent))]
-        public void OnUnhandledException()
-        {
-            MessageBox.Show("App Crashed!");
-        }
+        //[Handles(typeof(UnhandledExceptionEvent))]
+        //public void OnUnhandledException()
+        //{
+        //    MessageBox.Show("App Crashed!");
+        //}
 
         [Handles(typeof(SelectedNumber))]
         public void TestMethod()

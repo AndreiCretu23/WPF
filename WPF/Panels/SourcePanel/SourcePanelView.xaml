@@ -28,6 +28,11 @@
                     </ContextMenu.Style>
                 </ContextMenu>
             </ListBox.ContextMenu>
+            <ListBox.ItemContainerStyle>
+                <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="IsSelected" Value="True"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBoxItem>Item1</ListBoxItem>
             <ListBoxItem>Item2</ListBoxItem>
             <ListBoxItem>Item3</ListBoxItem>

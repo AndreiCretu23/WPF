@@ -94,8 +94,8 @@
     <Compile Include="Dialog\View\IDialogWindow.cs" />
     <Compile Include="Metadata\MetadataAssert\IMetadataAsserterService.cs" />
     <Compile Include="Metadata\MetadataAssert\MetadataAsserterService.cs" />
-    <Compile Include="Commanding\Command\ManagedCommand.cs" />
-    <Compile Include="Commanding\Command\MultiManagedCommand.cs" />
+    <Compile Include="Commanding\Command\GlobalCommand.cs" />
+    <Compile Include="Commanding\Command\MultiGlobalCommand.cs" />
     <Compile Include="Commanding\Command\SubCommand.cs" />
     <Compile Include="Commanding\CommandManager\ICommandContainer.cs" />
     <Compile Include="Metadata\MetadataCollections\CommandMetadataCollection.cs" />
