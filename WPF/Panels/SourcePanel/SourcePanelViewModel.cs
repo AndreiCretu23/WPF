@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,66 +18,64 @@ using System.Windows.Input;
 namespace WPF.Panels
 {
     [Guid("00D8BA2E-ED54-45A6-8098-0FC992C35627")]
-    public class SourcePanelViewModel : ViewModelBase, ISourcePanelViewModel
+    public class SourcePanelViewModel : ListViewModel, ISourcePanelViewModel
     {
+        [Selection]
+        public SelectedNumber SelectedNumber { get; set; }
+
+        private int CurrentCount { get; set; } = 2;
+
         public SourcePanelViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
+            //AllowMultipleSelection = true;
+            //SetSelectionBinding(new MultipleObjectSelection());
+            SetupTimer();
+
+            //AllowMultipleSelection = false;
+            //SyncItems = false;
+            //SetSelectionBinding(SelectedNumber);
         }
 
-        public IEnumerable<ContextMenuItemViewModel> ContextMenuItems
+        private void SetupTimer()
         {
-            get
+            var t = new Timer()
             {
-                var s = DateTime.Now.Second;
-                for (int i = 0; i < s; i++)
+                AutoReset = true,
+                Enabled = true,
+                Interval = 1000,
+            };
+
+            t.Elapsed += (sender, e) =>
+            {
+                CurrentCount++;
+                InvalidateChildren();
+                if(CurrentCount > 25)
                 {
-                    yield return new ContextMenuItemViewModel()
-                    {
-                        Header = i.ToString()
-                    };
+                    t.Stop();
                 }
-            }
+            };
         }
 
-        public IEnumerable<KeyBinding> Shortcuts
+        protected override IEnumerable<IListViewModelItem> CreateContentItems()
         {
-            get
+            if(CurrentCount > 10)
             {
-                var second = DateTime.Now.Second;
-                if (second < 30)
-                {
-                    yield return new KeyBinding()
-                    {
-                        Modifiers = ModifierKeys.Control,
-                        Key = Key.N,
-                        Command = new DelegateCommand()
-                        {
-                            CanExecuteHandler = () => true,
-                            ExecuteHandler = () => MessageBox.Show($"First : {DateTime.Now.Second.ToString()}")
-                        }
-                    };
+                AllowMultipleSelection = false;
+                if(HasBoundSelection) {
+                    BreakSelectionBinding();
                 }
-                else
-                {
-                    yield return new KeyBinding()
-                    {
-                        Modifiers = ModifierKeys.Control,
-                        Key = Key.N,
-                        Command = new DelegateCommand()
-                        {
-                            CanExecuteHandler = () => true,
-                            ExecuteHandler = () => MessageBox.Show($"Second : {DateTime.Now.Second.ToString()}")
-                        }
-                    };
-                }
+                SetSelectionBinding(SelectedNumber);
             }
+            
+            for(int i = 0; i < CurrentCount; i++)
+            {
+                yield return new ListViewModelItem<int>(i % 5)
+                {
+                    HeaderGetter = o => o.ToString()
+                };
+            }
+            
         }
     }
-
-    public class ContextMenuItemViewModel
-    {
-        public string Header { get; set; }
-    }
-
 }

@@ -49,7 +49,7 @@ namespace Quantum.Command
             {
                 var associatedInvalidationSubscriptions = MultiCommandsSubscriptions.Where(o => oldCommands.Contains(o.Object)).ToList();
                 foreach(var subscription in associatedInvalidationSubscriptions) {
-                    subscription.Event.Unsubscribe(subscription.Token);
+                    subscription.Break();
                 }
 
                 foreach(var command in newCommands) {

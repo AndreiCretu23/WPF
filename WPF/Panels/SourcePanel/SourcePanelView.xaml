@@ -9,38 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListBox p:FrameworkElement.ForceInvalidateContextMenu="True"
-                 p:UIElement.Shortcuts="{Binding Shortcuts}"
-                 p:UIElement.ForceInvalidateShortcuts="True">
-            <ListBox.ContextMenu>
-                <ContextMenu>
-                    <ContextMenu.Style>
-                        <Style BasedOn="{StaticResource {x:Type ContextMenu}}" TargetType="{x:Type ContextMenu}">
-                            <Setter Property="ItemContainerStyle">
-                                <Setter.Value>
-                                    <Style BasedOn="{StaticResource {x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
-                                        <Setter Property="Header" Value="{Binding Header}"/>
-                                    </Style>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="ItemsSource" Value="{Binding ContextMenuItems}"/>
-                        </Style>
-                    </ContextMenu.Style>
-                </ContextMenu>
-            </ListBox.ContextMenu>
-            <ListBox.ItemContainerStyle>
-                <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="IsSelected" Value="True"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBoxItem>Item1</ListBoxItem>
-            <ListBoxItem>Item2</ListBoxItem>
-            <ListBoxItem>Item3</ListBoxItem>
-            <ListBoxItem>Item4</ListBoxItem>
-            <ListBoxItem>Item5</ListBoxItem>
-            <ListBoxItem>Item6</ListBoxItem>
-            <ListBoxItem>Item7</ListBoxItem>
-            <ListBoxItem>Item8</ListBoxItem>
-        </ListBox>
+        <ListBox Style="{StaticResource ListBoxComponent}"/>
     </Grid>
 </UserControl>

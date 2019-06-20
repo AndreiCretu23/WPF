@@ -137,7 +137,7 @@ namespace Quantum.Services
                 var subscriptions = InitializationCache[obj];
                 foreach(var sub in subscriptions)
                 {
-                    sub.Event.Unsubscribe(sub.Token);
+                    sub.Break();
                 }
                 subscriptions.Clear();
                 InitializationCache.Remove(obj);

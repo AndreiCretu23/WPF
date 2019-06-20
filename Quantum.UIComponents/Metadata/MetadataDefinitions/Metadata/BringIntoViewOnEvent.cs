@@ -36,7 +36,7 @@ namespace Quantum.Metadata
         public SubscriptionToken AttachToDefinition(IEventAggregator eventAggregator, Action action)
         {
             if(Condition == null) {
-                return eventAggregator.GetEvent<TEvent>().Subscribe(payLoad => action());
+                return eventAggregator.GetEvent<TEvent>().Subscribe(payLoad => action(), ThreadOption.UIThread);
             }
 
             return eventAggregator.GetEvent<TEvent>().Subscribe(payload =>
@@ -44,7 +44,7 @@ namespace Quantum.Metadata
                 if (Condition(payload)) {
                     action();
                 }
-            });
+            }, ThreadOption.UIThread);
         }
     }
 
@@ -72,7 +72,7 @@ namespace Quantum.Metadata
         public SubscriptionToken AttachToDefinition(IEventAggregator eventAggregator, Action action)
         {
             if(Condition == null) {
-                return eventAggregator.GetEvent<TSelection>().Subscribe(s => action());
+                return eventAggregator.GetEvent<TSelection>().Subscribe(s => action(), ThreadOption.UIThread);
             }
 
             return eventAggregator.GetEvent<TSelection>().Subscribe(s =>
@@ -80,7 +80,7 @@ namespace Quantum.Metadata
                 if(Condition((TSelection)s)) {
                     action();
                 }
-            });
+            }, ThreadOption.UIThread);
         }
     }
 }

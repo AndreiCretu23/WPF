@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Quantum.UIComposition;component/UIResources.xaml"/>
         <ResourceDictionary Source="UIComponents/Paneling/DockingView/AvalonStyles.xaml"/>
+        <ResourceDictionary Source="ViewComponents/ViewComponents.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

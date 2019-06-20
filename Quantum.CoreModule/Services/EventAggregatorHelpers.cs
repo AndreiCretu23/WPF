@@ -105,5 +105,10 @@ namespace Quantum.Services
         public object Object { get; set; }
         public EventBase Event { get; set; }
         public SubscriptionToken Token { get; set; }
+
+        public void Break()
+        {
+            Event.Unsubscribe(Token);
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace Quantum.UIComponents
             {
                 foreach(var sub in InitializedObjects[notifier])
                 {
-                    sub.Event.Unsubscribe(sub.Token);
+                    sub.Break();
                 }
                 InitializedObjects[notifier].Clear();
                 InitializedObjects.Remove(notifier);

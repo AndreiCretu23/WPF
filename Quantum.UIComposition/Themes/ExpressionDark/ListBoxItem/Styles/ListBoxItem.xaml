@@ -9,11 +9,12 @@
         <Setter Property="Foreground" Value="{StaticResource ListBoxItemForegroundBrush}"/>
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Height" Value="22"/>
         <Setter Property="Padding" Value="6,2" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -29,7 +30,7 @@
                                 Visibility="Collapsed"
                                 BorderThickness="1"
                                 Background="{StaticResource ListBoxItemBackgroundBrush}"
-                                BorderBrush="{StaticResource ListBoxItemFocusedBorderBrush}"/>
+                                BorderBrush="{StaticResource ListBoxItemSelectedFocusedBorderBrush}"/>
 
                         <Border x:Name="HoverUnfocusedBorder"
                                 Visibility="Collapsed"
@@ -41,19 +42,19 @@
                                 Visibility="Collapsed"
                                 BorderThickness="1"
                                 Background="{StaticResource ListBoxItemHoverBackgroundBrush}"
-                                BorderBrush="{StaticResource ListBoxItemFocusedBorderBrush}"/>
+                                BorderBrush="{StaticResource ListBoxItemSelectedFocusedBorderBrush}"/>
 
                         <Border x:Name="SelectedUnfocusedBorder"
                                 Visibility="Collapsed"
                                 BorderThickness="1"
-                                Background="{StaticResource ListBoxItemSelectedBackgroundBrush}"
-                                BorderBrush="{StaticResource ListBoxItemSelectedBorderBrush}"/>
+                                Background="{StaticResource ListBoxItemSelectedUnfocusedBackgroundBrush}"
+                                BorderBrush="{StaticResource ListBoxItemSelectedUnfocusedBorderBrush}"/>
 
                         <Border x:Name="SelectedFocusedBorder"
                                 Visibility="Collapsed"
                                 BorderThickness="1"
-                                Background="{StaticResource ListBoxItemSelectedBackgroundBrush}"
-                                BorderBrush="{StaticResource ListBoxItemFocusedBorderBrush}"/>
+                                Background="{StaticResource ListBoxItemSelectedFocusedBackgroundBrush}"
+                                BorderBrush="{StaticResource ListBoxItemSelectedFocusedBorderBrush}"/>
 
                         <ContentControl x:Name="PART_Content"
                                         Foreground="{TemplateBinding Foreground}"
@@ -135,11 +136,11 @@
 
                         </MultiTrigger>
 
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
-                                <Condition Property="IsSelected" Value="True"/>
-                            </MultiTrigger.Conditions>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" Value="False"/>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
 
                             <Setter TargetName="NormalUnfocusedBorder" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="NormalFocusedBorder" Property="Visibility" Value="Collapsed"/>
@@ -150,13 +151,13 @@
 
                             <Setter Property="Foreground" Value="{StaticResource ListBoxItemFocusedForegroundBrush}"/>
 
-                        </MultiTrigger>
+                        </MultiDataTrigger>
 
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsKeyboardFocusWithin" Value="True"/>
-                                <Condition Property="IsSelected" Value="True"/>
-                            </MultiTrigger.Conditions>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBox}}}" Value="True"/>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
 
                             <Setter TargetName="NormalUnfocusedBorder" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="NormalFocusedBorder" Property="Visibility" Value="Collapsed"/>
@@ -167,7 +168,7 @@
 
                             <Setter Property="Foreground" Value="{StaticResource ListBoxItemFocusedForegroundBrush}"/>
 
-                        </MultiTrigger>
+                        </MultiDataTrigger>
 
 
                         <!-- Animations -->

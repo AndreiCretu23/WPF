@@ -72,6 +72,7 @@
     <Compile Include="ValueConverters\IconConverter.cs" />
     <Compile Include="ValueConverters\NegateConverter.cs" />
     <Compile Include="ValueConverters\NullToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\SelectionModeConverter.cs" />
     <Compile Include="ViewModel\IObservableObject.cs" />
     <Compile Include="ViewModel\ObservableObject.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

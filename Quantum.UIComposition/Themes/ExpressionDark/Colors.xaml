@@ -29,9 +29,10 @@
     <SolidColorBrush x:Key="ListBoxItemBorderBrush" Color="#00FFFFFF"/>
     <SolidColorBrush x:Key="ListBoxItemHoverBackgroundBrush" Color="#FF454545"/>
     <SolidColorBrush x:Key="ListBoxItemHoverBorderBrush" Color="#FF747474"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundBrush" Color="#FF00AADE" Opacity="0.8"/>
-    <SolidColorBrush x:Key="ListBoxItemSelectedBorderBrush" Color="#FF00AADE"/>
-    <SolidColorBrush x:Key="ListBoxItemFocusedBorderBrush" Color="#FF00AADE"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedFocusedBackgroundBrush" Color="#FF00AADE" Opacity="0.8"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedFocusedBorderBrush" Color="#FF00AADE"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedUnfocusedBackgroundBrush" Color="#AA868484"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedUnfocusedBorderBrush" Color="#FF4B4B4B"/>
     <SolidColorBrush x:Key="ListBoxItemForegroundBrush" Color="#FFBABABA" />
     <SolidColorBrush x:Key="ListBoxItemFocusedForegroundBrush" Color="#FFFFFFFF" />
     

@@ -134,7 +134,7 @@ namespace Quantum.UIComponents
         {
             var invalidationSubscriptions = InvalidationSubscriptions.Where(o => o.Object == anchorable).ToList();
             foreach(var subscription in invalidationSubscriptions) {
-                subscription.Event.Unsubscribe(subscription.Token);
+                subscription.Break();
                 InvalidationSubscriptions.Remove(subscription);
             }
 
