@@ -35,8 +35,8 @@ namespace Quantum.AttachedProperties
             }
 
             var mainWindow = Application.Current.MainWindow;
-            var shortcutsBinding = BindingOperations.GetBinding(mainWindow, UIElement.ShortcutsProperty);
-            var currentBinding = BindingOperations.GetBinding(frameworkElement, UIElement.ShortcutsProperty);
+            var shortcutsBinding = BindingOperations.GetBinding(mainWindow, ShortcutsProperty);
+            var currentBinding = BindingOperations.GetBinding(frameworkElement, ShortcutsProperty);
 
             if (shortcutsBinding != null)
             {
@@ -44,10 +44,10 @@ namespace Quantum.AttachedProperties
                 {
                     if(currentBinding != null)
                     {
-                        BindingOperations.ClearBinding(frameworkElement, UIElement.ShortcutsProperty);
+                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
                     }
 
-                    frameworkElement.SetBinding(UIElement.ShortcutsProperty, new Binding()
+                    frameworkElement.SetBinding(ShortcutsProperty, new Binding()
                     {
                         Path = shortcutsBinding.Path,
                         Source = mainWindow.DataContext,
@@ -59,7 +59,7 @@ namespace Quantum.AttachedProperties
                        currentBinding.Source == shortcutsBinding.Source &&
                        currentBinding.Path == shortcutsBinding.Path)
                     {
-                        BindingOperations.ClearBinding(frameworkElement, UIElement.ShortcutsProperty);
+                        BindingOperations.ClearBinding(frameworkElement, ShortcutsProperty);
                     }
                 }
             }

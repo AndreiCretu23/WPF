@@ -12,7 +12,7 @@
                       Title="{Binding Title, Mode=OneWay}"
                       Icon="{Binding Icon, Mode=OneWay, Converter={StaticResource iconConverter}}"
                       ResizeMode="{Binding ResizeMode, Mode=OneWay}"
-                      p:UIElement.Shortcuts="{Binding ShortcutsViewModel.Shortcuts}"
+                      p:FrameworkElement.Shortcuts="{Binding ShortcutsViewModel.Shortcuts}"
                       Style="{StaticResource {x:Type controls:WindowShell}}">
 
     <DockPanel>

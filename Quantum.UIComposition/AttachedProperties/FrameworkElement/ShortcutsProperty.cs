@@ -4,17 +4,16 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using StandardUIElement = System.Windows.UIElement;
 
 namespace Quantum.AttachedProperties
 {
-    public static partial class UIElement
+    public static partial class FrameworkElement
     {
         public static readonly DependencyProperty ShortcutsProperty = DependencyProperty.RegisterAttached
         (
             name: "Shortcuts", 
             propertyType: typeof(IEnumerable<KeyBinding>),
-            ownerType: typeof(UIElement), 
+            ownerType: typeof(FrameworkElement), 
             defaultMetadata: new UIPropertyMetadata(Enumerable.Empty<KeyBinding>(), ShortcutsChanged)
         );
         
@@ -30,7 +29,7 @@ namespace Quantum.AttachedProperties
         
         private static void ShortcutsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            if(!(obj is StandardUIElement uiElement)) {
+            if(!(obj is UIElement uiElement)) {
                 throw new Exception($"Error : ShortcutsProperty (Attached) can only be used on UIElements.");
             }
 
