@@ -2,6 +2,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ListView/ListBoxComponent.xaml"/>
+        <ResourceDictionary Source="ListView/ListViewComponent.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

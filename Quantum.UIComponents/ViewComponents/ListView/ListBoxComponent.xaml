@@ -12,30 +12,27 @@
     <conv:SelectionModeConverter x:Key="SelectionConverter"/>
     <conv:IconConverter x:Key="IconConverter"/>
     <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
-    
+
+    <Style x:Key="ListBoxItemComponent" BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Icon, Converter={StaticResource IconConverter}}"
+                                           Visibility="{Binding Source, RelativeSource={RelativeSource Self}, Converter={StaticResource NullToVisibilityConverter}}"/>
+                        <TextBlock Margin="5,0,0,0"
+                                               Text="{Binding Header}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="ListBoxComponent" BasedOn="{StaticResource {x:Type ListBox}}" TargetType="{x:Type ListBox}">
         <Setter Property="SelectionMode" Value="{Binding AllowMultipleSelection, Converter={StaticResource SelectionConverter}}"/>
         <Setter Property="ItemsSource" Value="{Binding Children}"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style BasedOn="{StaticResource {x:Type ListBoxItem}}" TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Icon, Converter={StaticResource IconConverter}}"
-                                           Visibility="{Binding Source, RelativeSource={RelativeSource Self}, Converter={StaticResource NullToVisibilityConverter}}"/>
-                                    <TextBlock Margin="5,0,0,0"
-                                               Text="{Binding Header}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemComponent}"/>
     </Style>
     
 </ResourceDictionary>
