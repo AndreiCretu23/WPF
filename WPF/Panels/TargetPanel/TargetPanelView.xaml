@@ -7,47 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!--<controls:TreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />-->
 
-        <TreeView>
-            <TreeViewItem Header="Item1">
-                <TreeViewItem Header="Item21"/>
-                <TreeViewItem Header="Item22"/>
-                <TreeViewItem Header="Item23"/>
-                <TreeViewItem Header="Item24"/>
-                <TreeViewItem Header="Item25"/>
-                <TreeViewItem.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Standard TVI Item 1"/>
-                        <MenuItem Header="Standard TVI Item 2"/>
-                        <MenuItem Header="Standard TVI Item 3"/>
-                        <MenuItem Header="Standard TVI Item 4"/>
-                        <MenuItem Header="Standard TVI Item 5"/>
-                    </ContextMenu>
-                </TreeViewItem.ContextMenu>
-            </TreeViewItem>
-            <TreeViewItem Header="Item2"/>
-            <TreeViewItem Header="Item3">
-                <TreeViewItem Header="Item31"/>
-                <TreeViewItem Header="Item32"/>
-                <TreeViewItem Header="Item33"/>
-                <TreeViewItem Header="Item34">
-                    <TreeViewItem Header="Item 341"/>
-                    <TreeViewItem Header="Item 342"/>
-                    <TreeViewItem Header="Item 343"/>
-                    <TreeViewItem Header="Item 344"/>
-                    <TreeViewItem Header="Item 345"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Item35"/>
-                <TreeViewItem Header="Item36"/>
-                <TreeViewItem Header="Item37"/>
-            </TreeViewItem>
-            <TreeViewItem Header="Item4"/>
-            <TreeViewItem Header="Item5"/>
-            <TreeViewItem Header="Item6"/>
-            <TreeViewItem Header="Item7"/>
-            <TreeViewItem Header="Item8"/>
-        </TreeView>
-        
+        <ListView ItemsSource="{Binding Children}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Header}" Width="250"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="250"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </UserControl>

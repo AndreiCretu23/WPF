@@ -7,6 +7,8 @@
         <ResourceDictionary Source="Themes/ExpressionDark/Label/Styles.xaml" />
         <ResourceDictionary Source="Themes/ExpressionDark/ListBox/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/ListBoxItem/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ListView/Styles.xaml"/>
+        <ResourceDictionary Source="Themes/ExpressionDark/ListViewItem/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/Menu/Styles.xaml"/>
         <ResourceDictionary Source="Themes/ExpressionDark/MenuItem/Styles.xaml" />
         <ResourceDictionary Source="Themes/ExpressionDark/Thumb/Styles.xaml"/>
