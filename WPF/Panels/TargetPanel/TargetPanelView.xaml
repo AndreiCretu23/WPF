@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="clr-namespace:Quantum.Controls;assembly=Quantum.Controls"
+             xmlns:p="clr-namespace:Quantum.AttachedProperties;assembly=Quantum.UIComposition"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -16,8 +17,14 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Header}" Width="250"/>
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="250"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Header}" Width="250">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader p:GridViewColumnHeader.SortKey="{Binding HeaderSortKey}" Content="Name"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="250">
+                        <GridViewColumnHeader Content="Description" p:GridViewColumnHeader.SortKey="{Binding DescriptionSortKey}"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

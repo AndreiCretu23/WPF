@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Quantum.UIComposition.Themes.ExpressionDark.ListView.Styles">
+                    xmlns:p="clr-namespace:Quantum.AttachedProperties">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colors.xaml"/>
@@ -150,6 +150,73 @@
                         </Grid>
 
                     </Border>
+
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="p:GridViewColumnHeader.IsSortable" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="HeaderBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource ListViewHeaderSortableHoverBorderBrush}"/>
+
+                            <Setter TargetName="HeaderBorder"
+                                    Property="BorderThickness"
+                                    Value="1"/>
+
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource ListViewHeaderSortableHoverForegroundBrush}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True"/>
+                                <Condition Property="p:GridViewColumnHeader.IsSortable" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="HeaderBorder"
+                                    Property="BorderThickness"
+                                    Value="2"/>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsFocused" Value="True" />
+                                <Condition Property="p:GridViewColumnHeader.IsSortable" Value="True"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="HeaderBorder"
+                                    Property="BorderBrush"
+                                    Value="{StaticResource ListViewHeaderSortableHoverBorderBrush}"/>
+
+                            <Setter TargetName="HeaderBorder"
+                                    Property="BorderThickness"
+                                    Value="1"/>
+
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="p:GridViewColumnHeader.IsSortable" Value="True"/>
+                                <Condition Property="p:GridViewColumnHeader.SortOrder" Value="Descending"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="SortArrowPath" Property="Data" Value="M50,60 L20,35 L30,35 L50,50 L70,35 L80,35 L50,60"/>
+
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="p:GridViewColumnHeader.IsSortable" Value="True"/>
+                                <Condition Property="p:GridViewColumnHeader.SortOrder" Value="Ascending"/>
+                            </MultiTrigger.Conditions>
+
+                            <Setter TargetName="SortArrowPath" Property="Data" Value="M50,40 L80,65 L70,65 L50,50 L30,65 L20,65 L50,40"/>
+
+                        </MultiTrigger>
+                        
+                    </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -54,12 +54,13 @@
     <SolidColorBrush x:Key="ListViewHeaderHoverBorderBrush" Color="#FF747474"/>
     <SolidColorBrush x:Key="ListViewHeaderFocusedBorderBrush" Color="#FF00AADE" />
     <SolidColorBrush x:Key="ListViewHeaderPressedBorderBrush" Color="#FF00AADE" />
+    <SolidColorBrush x:Key="ListViewHeaderSortableHoverBorderBrush" Color="#FF3399FF"/>
+    <SolidColorBrush x:Key="ListViewHeaderSortableHoverForegroundBrush" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="ListViewItemForegroundBrush" Color="#FFBABABA" />
     <SolidColorBrush x:Key="ListViewItemSelectedFocusedBackgroundBrush" Color="#FF3399FF" Opacity="0.5"/>
     <SolidColorBrush x:Key="ListViewItemSelectedUnfocusedBorderBrush" Color="#FF3399FF"/>
-    
-    
-    
+
+
     <!-- Menu Brushes -->
     
     <SolidColorBrush x:Key="Menu_Background" Color="#FF323232" Opacity="1" />

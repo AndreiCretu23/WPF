@@ -51,6 +51,10 @@
   <ItemGroup>
     <Compile Include="AttachedProperties\FrameworkElement\InheritShortcutsFromMainWindowProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElement\SelectionBoxProperty.cs" />
+    <Compile Include="AttachedProperties\GridViewColumnHeader\IsSortable.cs" />
+    <Compile Include="AttachedProperties\GridViewColumnHeader\SortKey.cs" />
+    <Compile Include="AttachedProperties\GridViewColumnHeader\SortOrder.cs" />
+    <Compile Include="AttachedProperties\GridViewColumnHeader\GridViewColumnSortHelper.cs" />
     <Compile Include="AttachedProperties\TextBox\SelectAllOnFocusProperty.cs" />
     <Compile Include="AttachedProperties\FrameworkElement\ShortcutsProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

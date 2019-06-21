@@ -1,8 +1,10 @@
 ﻿using Quantum.Services;
 using Quantum.UIComponents;
+using Quantum.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Timers;
 
@@ -11,6 +13,9 @@ namespace WPF.Panels
     [Guid("3AF60523-CED6-4E8B-918B-207647C018FD")]
     public class TargetPanelViewModel : ListViewModel, ITargetPanelViewModel
     {
+        public PropertyInfo HeaderSortKey { get { return ReflectionUtils.GetPropertyInfo((TargetPanelVMI vmi) => vmi.Header); } }
+        public PropertyInfo DescriptionSortKey { get { return ReflectionUtils.GetPropertyInfo((TargetPanelVMI vmi) => vmi.Description); } }
+
         private IEnumerable<Person> AllPersons { get; set; }
         private IList<Person> Persons { get; } = new List<Person>();
         private int CurrentIndex { get; set; }
