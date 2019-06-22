@@ -129,6 +129,25 @@ namespace WPF
                 },
             };
 
+            yield return new StaticPanelDefinition<ITreePanelView, TreePanelView, ITreePanelViewModel, TreePanelViewModel>()
+            {
+                new StaticPanelConfiguration()
+                {
+                    CanClose = () => true,
+                    CanFloat = () => true,
+                    CanOpen = () => true,
+                    IsVisible = () => true,
+                    Placement = PanelPlacement.TopRight,
+                    Title = () => "TreePanel"
+                },
+                new PanelMenuOption()
+                {
+                    new MenuPath(MenuLocations.View, categoryIndex: 1, orderIndex: 300),
+                    new Description("Tree Panel")
+                },
+                new BringIntoViewOnKeyShortcut(ModifierKeys.Control, Key.T)
+            };
+
             yield return new StaticPanelDefinition<ISelectionPanelView, SelectionPanelView, ISelectionPanelViewModel, SelectionPanelViewModel>()
             {
                 new StaticPanelConfiguration()

@@ -91,7 +91,13 @@
     <Compile Include="Dialogs\CustomDialogView\CustomDialogViewModel.cs" />
     <Compile Include="Dialogs\CustomDialogView\ICustomDialogView.cs" />
     <Compile Include="Dialogs\CustomDialogView\ICustomDialogViewModel.cs" />
-    <Compile Include="DynamicPanelManagerService.cs" />
+    <Compile Include="Panels\TreePanel\ITreePanelView.cs" />
+    <Compile Include="Panels\TreePanel\ITreePanelViewModel.cs" />
+    <Compile Include="Panels\TreePanel\TreePanelView.xaml.cs">
+      <DependentUpon>TreePanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\TreePanel\TreePanelViewModel.cs" />
+    <Compile Include="Services\DynamicPanelManagerService.cs" />
     <Compile Include="Panels\ActivePanel\ActivePanelView.xaml.cs">
       <DependentUpon>ActivePanelView.xaml</DependentUpon>
     </Compile>
@@ -135,7 +141,7 @@
   <ItemGroup>
     <Compile Include="ApplicationModule.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="DummyService.cs" />
+    <Compile Include="Services\DummyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -214,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Panels\ListPanel\ListPanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Panels\TreePanel\TreePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
