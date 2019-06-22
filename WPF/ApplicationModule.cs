@@ -93,7 +93,7 @@ namespace WPF
                 new BringIntoViewOnSelection<SelectedNumber, int>()
             };
 
-            yield return new StaticPanelDefinition<ISourcePanelView, SourcePanelView, ISourcePanelViewModel, SourcePanelViewModel>()
+            yield return new StaticPanelDefinition<IListBoxPanelView, ListBoxPanelView, IListBoxPanelViewModel, ListBoxPanelViewModel>()
             {
                 new StaticPanelConfiguration()
                 {
@@ -102,16 +102,16 @@ namespace WPF
                     CanOpen = () => true,
                     IsVisible = () => true,
                     Placement = PanelPlacement.TopLeft,
-                    Title = () => "SourcePanel"
+                    Title = () => "ListBoxPanel"
                 },
                 new PanelMenuOption()
                 {
                     new MenuPath(MenuLocations.View, categoryIndex: 1, orderIndex: 100),
-                    new Description("Source Panel"),
+                    new Description("List Box Panel"),
                 },
             };
 
-            yield return new StaticPanelDefinition<ITargetPanelView, TargetPanelView, ITargetPanelViewModel, TargetPanelViewModel>()
+            yield return new StaticPanelDefinition<IListPanelView, ListPanelView, IListPanelViewModel, ListPanelViewModel>()
             {
                 new StaticPanelConfiguration()
                 {
@@ -120,12 +120,12 @@ namespace WPF
                     CanOpen = () => true,
                     IsVisible = () => false,
                     Placement = PanelPlacement.Center,
-                    Title = () => "TargetPanel"
+                    Title = () => "ListPanel"
                 },
                 new PanelMenuOption()
                 {
                     new MenuPath(MenuLocations.View, categoryIndex: 1, orderIndex: 200),
-                    new Description("Target Panel"),
+                    new Description("List Panel"),
                 },
             };
 

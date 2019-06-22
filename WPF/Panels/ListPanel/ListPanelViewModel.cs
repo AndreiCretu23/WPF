@@ -11,7 +11,7 @@ using System.Timers;
 namespace WPF.Panels
 {
     [Guid("3AF60523-CED6-4E8B-918B-207647C018FD")]
-    public class TargetPanelViewModel : ListViewModel, ITargetPanelViewModel
+    public class ListPanelViewModel : ListViewModel, IListPanelViewModel
     {
         public PropertyInfo HeaderSortKey { get { return ReflectionUtils.GetPropertyInfo((TargetPanelVMI vmi) => vmi.Header); } }
         public PropertyInfo DescriptionSortKey { get { return ReflectionUtils.GetPropertyInfo((TargetPanelVMI vmi) => vmi.Description); } }
@@ -21,7 +21,7 @@ namespace WPF.Panels
         private int CurrentIndex { get; set; }
         private Timer InvalidationTimer { get; set; }
 
-        public TargetPanelViewModel(IObjectInitializationService initSvc)
+        public ListPanelViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
             AllPersons = GetPersons();

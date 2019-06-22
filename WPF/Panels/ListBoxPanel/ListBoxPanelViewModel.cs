@@ -18,14 +18,14 @@ using System.Windows.Input;
 namespace WPF.Panels
 {
     [Guid("00D8BA2E-ED54-45A6-8098-0FC992C35627")]
-    public class SourcePanelViewModel : ListViewModel, ISourcePanelViewModel
+    public class ListBoxPanelViewModel : ListViewModel, IListBoxPanelViewModel
     {
         [Selection]
         public SelectedNumber SelectedNumber { get; set; }
 
         private int CurrentCount { get; set; } = 2;
 
-        public SourcePanelViewModel(IObjectInitializationService initSvc)
+        public ListBoxPanelViewModel(IObjectInitializationService initSvc)
             : base(initSvc)
         {
             //AllowMultipleSelection = true;
