@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <!--<controls:TreeView>
+        <controls:TreeView>
             <controls:TreeViewItem Header="Item1"/>
             <controls:TreeViewItem Header="Item2" IsExpanded="True">
                 <controls:TreeViewItem Header="Item21"/>
@@ -48,6 +48,7 @@
             </controls:TreeViewItem>
             <controls:TreeViewItem Header="Item6"/>
             <controls:TreeViewItem Header="Item7"/>
-        </controls:TreeView>-->
+        </controls:TreeView>
+
     </Grid>
 </UserControl>

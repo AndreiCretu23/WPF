@@ -179,18 +179,11 @@
                             </StackPanel>
                         </Grid>
 
-                        <ItemsPresenter x:Name="ItemsHost" Grid.Row="2" Margin="{TemplateBinding Padding}" Visibility="Collapsed"/>
+                        <ItemsPresenter Grid.Row="2" Margin="{TemplateBinding Padding}" Visibility="{TemplateBinding IsExpanded, Converter={StaticResource VisibilityConverter}}"/>
 
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="True"/>
-                                <Condition Property="IsExpanded" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible"/>
-                        </MultiTrigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedBackground}"/>
                         </Trigger>

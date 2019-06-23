@@ -166,8 +166,11 @@ namespace Quantum.Controls
 
         private FrameworkElement ContentElement { get; set; }
 
-        internal TreeView Root { get; private set; }
-        internal new UIItemsControl Parent { get; private set; }
+        private TreeView root;
+        private UIItemsControl parent;
+
+        internal TreeView Root { get { return root ?? (root = this.FindVisualParentOfType<TreeView>()); } }
+        internal new UIItemsControl Parent { get { return parent ?? (parent = this.FindVisualParentOfType<UIItemsControl>()); } }
 
         internal TreeViewSelectionManager SelectionManager { get { return Root.SelectionManager; } }
 
@@ -186,14 +189,6 @@ namespace Quantum.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var ancestors = this.GetVisualAncestors(o => o is TreeView || o is TreeViewItem).Cast<UIItemsControl>();
-            if (!ancestors.OfType<TreeView>().IsSingleElement()) {
-                throw new Exception("Error : TreeViewItem is only allowed as a visual child of a TreeView.");
-            }
-
-            Root = ancestors.OfType<TreeView>().First();
-            Parent = ancestors.First();
-
             GetVisualContent().AddHandler(PreviewMouseDownEvent, (MouseButtonEventHandler)OnContentPreviewMouseDown);
             GetVisualContent().AddHandler(MouseDownEvent, (MouseButtonEventHandler)OnContentMouseDown);
             GetVisualContent().IsKeyboardFocusWithinChanged += OnContentIsKeyboardFocusWithinChanged;
@@ -214,6 +209,7 @@ namespace Quantum.Controls
 
         #endregion Initialize
 
+        
 
         #region AssignPropertyChanged
 
