@@ -1,5 +1,6 @@
 ﻿using Quantum.Utils;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -83,7 +84,7 @@ namespace Quantum.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new TreeViewItem();
+            return new TreeViewItem(this, this);
         }
 
         #endregion ItemContainerConfig
@@ -144,5 +145,9 @@ namespace Quantum.Controls
 
         #endregion Keyboard
 
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            SelectionManager.Clean();
+        }
     }
 }

@@ -4,6 +4,6 @@ namespace Quantum.Controls
 {
     public interface ICustomContentOwner
     {
-        FrameworkElement GetVisualContent();
+        FrameworkElement ContentElement { get; }
     }
 }

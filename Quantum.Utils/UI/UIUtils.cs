@@ -167,5 +167,66 @@ namespace Quantum.Utils
 
         #endregion GetSetValue
 
+        #region Misc
+
+        /// <summary>
+        /// Ensures the specified FrameworkElement is loaded before executing the specified action. <para/>
+        /// If the element is loaded, the action will be executed right away. Otherwise, the execution will be delayed until the element is loaded.
+        /// </summary>
+        /// <param name="frameworkElement"></param>
+        /// <param name="action"></param>
+        public static void EnsureLoaded(this FrameworkElement frameworkElement, Action action)
+        {
+            frameworkElement.AssertParameterNotNull(nameof(FrameworkElement));
+            action.AssertParameterNotNull(nameof(action));
+
+            if(frameworkElement.IsLoaded)
+            {
+                action();
+            }
+
+            else
+            {
+                void loadHandler(object sender, RoutedEventArgs e)
+                {
+                    action();
+                    frameworkElement.Loaded -= loadHandler;
+                }
+
+                frameworkElement.Loaded += loadHandler;
+            }
+        }
+
+
+        /// <summary>
+        /// Ensures the specified FrameworkElement is unloaded before executing the specified action. <para/>
+        /// If the element is unloaded, the action will be executed right away. Otherwise, the execution will be delayed until the element is unloaded.
+        /// </summary>
+        /// <param name="frameworkElement"></param>
+        /// <param name="action"></param>
+        public static void EnsureUnloaded(this FrameworkElement frameworkElement, Action action)
+        {
+            frameworkElement.AssertParameterNotNull(nameof(frameworkElement));
+            action.AssertParameterNotNull(nameof(action));
+
+            if(!frameworkElement.IsLoaded)
+            {
+                action();
+            }
+            
+            else
+            {
+                void unloadHandler(object sender, RoutedEventArgs e)
+                {
+                    action();
+                    frameworkElement.Unloaded -= unloadHandler;
+                }
+
+                frameworkElement.Unloaded += unloadHandler;
+            }
+        }
+
+        #endregion
+
     }
 }

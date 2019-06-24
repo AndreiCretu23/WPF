@@ -1,6 +1,7 @@
 ﻿using Quantum.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -11,15 +12,24 @@ using UIItemsControl = System.Windows.Controls.ItemsControl;
 
 namespace Quantum.Controls
 {
-    [DebuggerDisplay("Header = {Header}")]
-    [TemplatePart(Name = "PART_ContentHost", Type = typeof(FrameworkElement))]
+    [DebuggerDisplay("Header = {Content}")]
+    [ContentPart(Name = CustomContentHostTemplatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = ContentHostTemplatePartName, Type = typeof(FrameworkElement))]
     public class TreeViewItem : UIItemsControl, ICustomContentOwner
     {
+        #region TemplatePartNames
+
+        public const string ContentHostTemplatePartName = "PART_ContentHost";
+        public const string CustomContentHostTemplatePartName = "PART_CustomContentHost";
+
+        #endregion TemplatePartNames
+
+
         #region DependencyProperties
 
         public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register
         (
-            name: "IsExpanded",
+            name: nameof(IsExpanded),
             propertyType: typeof(bool),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: false)
@@ -27,7 +37,7 @@ namespace Quantum.Controls
 
         public static readonly DependencyProperty ToggleExpandOnDoubleClickProperty = DependencyProperty.Register
         (
-            name: "ToggleExpandOnDoubleClick",
+            name: nameof(ToggleExpandOnDoubleClick),
             propertyType: typeof(bool),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: false)
@@ -35,64 +45,41 @@ namespace Quantum.Controls
 
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register
         (
-            name: "IsSelected",
+            name: nameof(IsSelected),
             propertyType: typeof(bool),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: false)
         );
 
-        public static readonly DependencyProperty IsCheckableProperty = DependencyProperty.Register
-        (
-            name: "IsCheckable",
-            propertyType: typeof(bool),
-            ownerType: typeof(TreeViewItem),
-            typeMetadata: new PropertyMetadata(defaultValue: false)
-        );
 
-        public static readonly DependencyProperty IsCheckedReadonlyProperty = DependencyProperty.Register
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register
         (
-            name : "IsCheckedReadonly",
-            propertyType: typeof(bool),
+            name: nameof(Content),
+            propertyType: typeof(object),
             ownerType: typeof(TreeViewItem),
-            typeMetadata: new PropertyMetadata(defaultValue: false)
+            typeMetadata: new PropertyMetadata(defaultValue: null)
         );
-
-        public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register
+        
+        public static readonly DependencyProperty ContentTemplateProperty = DependencyProperty.Register
         (
-            name: "IsChecked",
-            propertyType: typeof(bool),
-            ownerType: typeof(TreeViewItem),
-            typeMetadata: new PropertyMetadata(defaultValue: false)
-        );
-
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register
-        (
-            name: "Icon",
-            propertyType: typeof(ImageSource), 
+            name: nameof(ContentTemplate),
+            propertyType: typeof(DataTemplate),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: null)
         );
 
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register
+        public static readonly DependencyProperty ContentTemplateSelectorProperty = DependencyProperty.Register
         (
-            name: "Header",
-            propertyType: typeof(string),
+            name: nameof(ContentTemplateSelector),
+            propertyType: typeof(DataTemplateSelector),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: null)
         );
 
-        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.Register
+        public static readonly DependencyPropertyKey ContentElementPropertyKey = DependencyProperty.RegisterReadOnly
         (
-            name: "IsEditing",
-            propertyType: typeof(bool),
-            ownerType: typeof(TreeViewItem),
-            typeMetadata: new PropertyMetadata(defaultValue: false)
-        );
-
-        public static readonly DependencyProperty EditableHeaderProperty = DependencyProperty.Register
-        (
-            name: "EditableHeader",
-            propertyType: typeof(string),
+            name: nameof(ContentElement),
+            propertyType: typeof(FrameworkElement),
             ownerType: typeof(TreeViewItem),
             typeMetadata: new PropertyMetadata(defaultValue: null)
         );
@@ -120,95 +107,48 @@ namespace Quantum.Controls
             set { SetValue(IsSelectedProperty, value); }
         }
 
-        public bool IsCheckable
+        public object Content
         {
-            get { return (bool)GetValue(IsCheckableProperty); }
-            set { SetValue(IsCheckableProperty, value); }
-        }
-
-        public bool IsChecked
-        {
-            get { return (bool)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
-        }
-
-        public bool IsCheckedReadonly
-        {
-            get { return (bool)GetValue(IsCheckedReadonlyProperty); }
-            set { SetValue(IsCheckedReadonlyProperty, value); }
-        }
-
-        public ImageSource Icon
-        {
-            get { return (ImageSource)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
+            get { return GetValue(ContentProperty); }
+            set { SetValue(ContentProperty, value); }
         }
         
-        public string Header
+        public DataTemplate ContentTemplate
         {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
+            get { return (DataTemplate)GetValue(ContentTemplateProperty); }
+            set { SetValue(ContentTemplateProperty, value); }
         }
-
-        public bool IsEditing
+        
+        public DataTemplateSelector ContentTemplateSelector
         {
-            get { return (bool)GetValue(IsEditingProperty); }
-            set { SetValue(IsEditingProperty, value); }
+            get { return (DataTemplateSelector)GetValue(ContentTemplateSelectorProperty); }
+            set { SetValue(ContentTemplateSelectorProperty, value); }
         }
-
-        public string EditableHeader
+        
+        public FrameworkElement ContentElement
         {
-            get { return (string)GetValue(EditableHeaderProperty); }
-            set { SetValue(EditableHeaderProperty, value); }
+            get { return (FrameworkElement)GetValue(ContentElementPropertyKey.DependencyProperty); }
+            private set { SetValue(ContentElementPropertyKey, value); }
         }
 
         #endregion Properties
 
-        private FrameworkElement ContentElement { get; set; }
-
-        private TreeView root;
-        private UIItemsControl parent;
-
-        internal TreeView Root { get { return root ?? (root = this.FindVisualParentOfType<TreeView>()); } }
-        internal new UIItemsControl Parent { get { return parent ?? (parent = this.FindVisualParentOfType<UIItemsControl>()); } }
+        
+        internal TreeView Root { get; }
+        internal new UIItemsControl Parent { get; }
 
         internal TreeViewSelectionManager SelectionManager { get { return Root.SelectionManager; } }
 
-        public TreeViewItem()
+        public TreeViewItem(TreeView root, UIItemsControl parent)
         {
-            Loaded += OnLoaded;
+            Root = root;
+            Parent = parent;
         }
-
+        
         static TreeViewItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TreeViewItem), new FrameworkPropertyMetadata(typeof(TreeViewItem)));
         }
-
-
-        #region Initialize
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            GetVisualContent().AddHandler(PreviewMouseDownEvent, (MouseButtonEventHandler)OnContentPreviewMouseDown);
-            GetVisualContent().AddHandler(MouseDownEvent, (MouseButtonEventHandler)OnContentMouseDown);
-            GetVisualContent().IsKeyboardFocusWithinChanged += OnContentIsKeyboardFocusWithinChanged;
-
-            Loaded -= OnLoaded;
-            Unloaded += OnUnloaded;
-        }
-
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            GetVisualContent().RemoveHandler(PreviewMouseDownEvent, (MouseButtonEventHandler)OnContentPreviewMouseDown);
-            GetVisualContent().RemoveHandler(MouseDownEvent, (MouseButtonEventHandler)OnContentMouseDown);
-            GetVisualContent().IsKeyboardFocusWithinChanged -= OnContentIsKeyboardFocusWithinChanged;
-
-            Unloaded -= OnUnloaded;
-            Loaded += OnLoaded;
-        }
-
-        #endregion Initialize
-
         
 
         #region AssignPropertyChanged
@@ -216,13 +156,38 @@ namespace Quantum.Controls
         protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             if(e.Property == IsSelectedProperty) {
-                OnSelectionChanged();
+                SelectionManager.NotifySelectionChanged(this);
             }
 
             base.OnPropertyChanged(e);
         }
 
         #endregion AssignPropertyChanged
+
+
+        #region Initialize
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            if (!(Template.FindName(ContentHostTemplatePartName, this) is ContentControl contentControl))
+            {
+                throw new Exception("Error : The template set on this TreeViewItem does not have the mandatory \"PART_ContentHost\" template part.");
+            }
+
+            contentControl.EnsureLoaded(() =>
+            {
+                if (!(VisualTreeHelper.GetChild(contentControl, 0) is ContentPresenter contentPresenter))
+                {
+                    throw new Exception("Error : The content control template part of a TreeViewItem is expected to own a ContentPresenter.");
+                }
+
+                ContentElement = (ContentTemplate?.FindName(CustomContentHostTemplatePartName, contentPresenter)) as FrameworkElement ?? contentControl;
+            });
+        }
+
+        #endregion Initialize
 
 
         #region ItemContainerConfig
@@ -234,30 +199,13 @@ namespace Quantum.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new TreeViewItem();
-        }
-
-        public FrameworkElement GetVisualContent()
-        {
-            return ContentElement ?? this;
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            ContentElement = Template.FindName("PART_ContentHost", this) as FrameworkElement;
+            return new TreeViewItem(Root, this);
         }
 
         #endregion ItemContainerConfig
 
 
         #region Selection
-
-        private void OnSelectionChanged()
-        {
-            HandleExitEditMode();
-            SelectionManager.NotifySelectionChanged(this);
-        }
 
         private void HandleMouseSelection(MouseButtonEventArgs e)
         {
@@ -277,6 +225,7 @@ namespace Quantum.Controls
                 else {
                     SelectionManager.SelectSingleItem(this);
                 }
+                e.Handled = true;
             }
 
             else if (e.ChangedButton == MouseButton.Right) {
@@ -284,74 +233,11 @@ namespace Quantum.Controls
                     !Keyboard.Modifiers.HasFlag(ModifierKeys.Shift) &&
                     !SelectionManager.IsMultipleSelection) {
                     SelectionManager.SelectSingleItem(this);
+                    e.Handled = true;
                 }
             }
         }
-
-        #endregion Selection
-
-
-        #region Keyboard
-
-        private void OnContentPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            HandleMouseSelection(e);
-            HandleDoubleClickToggleExpand(e);
-            if(!IsFocused && !GetVisualContent().IsKeyboardFocusWithin) {
-                Focus();
-            }
-        }
-
-        private void OnContentMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            HandleExitEditMode();
-        }
-
-        private void OnContentIsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((bool)e.NewValue == false) {
-                HandleExitEditMode();
-            }
-
-            base.OnIsKeyboardFocusWithinChanged(e);
-        }
-
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
-        {
-            if(e.Key == Key.Enter) {
-                HandleExitEditMode();
-            }
-            
-            if(MatchesSource(e) && IsKeyEventShortcut(e) && (!IsSelected || !IsFocused)) {
-                e.Handled = true;
-            }
-
-            if(!e.Handled) {
-                base.OnPreviewKeyDown(e);
-            }
-        }
         
-        private bool MatchesSource(RoutedEventArgs e)
-        {
-            var originalSource = e.OriginalSource;
-            if(!(originalSource is DependencyObject dependencyObject)) {
-                return false;
-            }
-
-            else if(dependencyObject is TreeViewItem) {
-                return originalSource == this;
-            }
-            
-            else {
-                return dependencyObject.GetVisualAncestorsOfType<TreeViewItem>().FirstOrDefault() == this;
-            }
-        }
-
-        #endregion Keyboard
-
-
-        #region Behavior
-
         private void HandleDoubleClickToggleExpand(MouseButtonEventArgs e)
         {
             if(e.ClickCount == 2 && ToggleExpandOnDoubleClick) {
@@ -359,48 +245,39 @@ namespace Quantum.Controls
             }
         }
 
-        #endregion Behavior
-
-
-        #region Editing
-
-        private void HandleExitEditMode()
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if(IsEditing) {
-                IsEditing = false;
+            base.OnMouseLeftButtonDown(e);
+            if(!IsWithinContent(e.OriginalSource as DependencyObject)) {
+                return;
+            }
+
+            HandleMouseSelection(e);
+            HandleDoubleClickToggleExpand(e);
+            if(!IsFocused && !ContentElement.IsKeyboardFocusWithin) {
+                Focus();
             }
         }
 
-        #endregion Editing
-
-
-        #region ContextMenu
-
-        protected override void OnContextMenuOpening(ContextMenuEventArgs e)
+        private bool IsWithinContent(DependencyObject dependencyObject)
         {
-            if (SelectionManager.IsMultipleSelection || (MatchesSource(e) && (!IsSelected || !IsFocused))) {
-                e.Handled = true;
-                if(Root.ContextMenu != null && Root.ContextMenu.HasItems) {
-                    Root.ContextMenu.IsOpen = true;
+            while(dependencyObject != null && dependencyObject != this) {
+                if(dependencyObject == ContentElement) {
+                    return true;
                 }
+
+                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
             }
-            else {
-                base.OnContextMenuOpening(e);
-            }
+
+            return false;
         }
 
-        #endregion ContextMenu
-
-
-        #region Shortcuts
-
-        private bool IsKeyEventShortcut(KeyEventArgs e)
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
-            return InputBindings.OfType<KeyBinding>().Any(o => e.KeyboardDevice.Modifiers == o.Modifiers &&
-                                                               e.KeyboardDevice.IsKeyDown(o.Key));
+            SelectionManager.Clean();
         }
 
-        #endregion Shortcuts
+        #endregion Selection
 
     }
 }

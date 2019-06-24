@@ -10,7 +10,7 @@ namespace Quantum.Controls
         {
             element.AssertParameterNotNull(nameof(element));
             if(element is ICustomContentOwner customContentOwner) {
-                return customContentOwner.GetVisualContent();
+                return customContentOwner.ContentElement;
             }
 
             return element;

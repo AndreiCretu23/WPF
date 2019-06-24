@@ -151,5 +151,14 @@ namespace Quantum.Controls
                 SelectItem(item);
             }
         }
+
+        internal void Clean()
+        {
+            foreach(var item in SelectedItemsInternal.ToList()) {
+                if(!(item.IsVisualChildOf(TreeView))) {
+                    SelectedItemsInternal.Remove(item);
+                }
+            }
+        }
     }
 }

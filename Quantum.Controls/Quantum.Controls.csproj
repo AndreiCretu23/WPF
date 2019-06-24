@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Misc\ControlBehaviors\ICustomContentOwner.cs" />
+    <Compile Include="Misc\Info\ContentPartAttribute.cs" />
     <Compile Include="Misc\VisualTraverser\ItemsControlTraverser.cs" />
     <Compile Include="Misc\VisualTraverser\IVisualTraverser.cs" />
     <Compile Include="Misc\VisualTraverser\RecurrentItemsControlTraverser.cs" />
