@@ -186,16 +186,5 @@ namespace Quantum.UIComponents
                 }
             }
         }
-        
-
-        // public void OnItemsChanging(IEnumerable<IListViewModelItem> newItems)
-        // {
-        //     using (SelectionChangedScope.BeginScope())
-        //     {
-        //         if (!newItems.Select(o => o.Value).Contains(Selection.Value)) {
-        //             Selection.Value = default;
-        //         }
-        //     }
-        // }
     }
 }
