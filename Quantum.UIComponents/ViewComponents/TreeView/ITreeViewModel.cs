@@ -9,14 +9,6 @@ namespace Quantum.UIComponents
     public interface ITreeViewModel : IViewModelOwner
     {
         /// <summary>
-        /// Gets a value indicating if the children of this tree view model have been initialized.
-        /// The children have lazy loading, therefore, they will not be created until called upon : the first time the Children property getter is called,
-        /// or when InvalidateChildren is called.
-        /// </summary>
-        bool AreChildrenInitialized { get; }
-
-
-        /// <summary>
         /// Gets all items that are direct children of this tree view model.
         /// </summary>
         IEnumerable<ITreeViewModelItem> FirstLevelItems { get; }

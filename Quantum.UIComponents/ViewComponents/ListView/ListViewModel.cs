@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Quantum.UIComponents
 {
@@ -58,6 +59,13 @@ namespace Quantum.UIComponents
         
 
         /// <summary>
+        /// Gets or sets a value indicating if the children of this list view model have been initialized.
+        /// The children have lazy loading, therefore, they will not be created until called upon : The first time the Children property getter is called.
+        /// </summary>
+        public bool AreChildrenInitialized { get; private set; }
+
+
+        /// <summary>
         /// Creates and initializes a new set of children provided by the extendable content-creation method.
         /// Also, it disposes the previously created items, releasing all associated resources. <para/>
         /// IMPORTANT : This property is only used for binding and should never be accessed in the code. To get the currently active children, use the "Items" property.
@@ -66,26 +74,11 @@ namespace Quantum.UIComponents
         {
             get
             {
-                if(!HasBoundSelection) {
-                    SetDefaultSelectionBinding();
+                if(!AreChildrenInitialized) {
+                    InvalidateChildrenInternal();
+                    AreChildrenInitialized = true;
                 }
 
-                foreach (var item in Items) {
-                    PropertyChangedEventManager.RemoveHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
-                    item.TearDown();
-                }
-
-                items.Clear();
-                
-                foreach(var item in CreateContentItems()) {
-                    item.Initialize(this);
-                    item.IsSelected = SelectionBinding.IsContainedInSelection(item);
-                    PropertyChangedEventManager.AddHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
-                    
-                    items.Add(item);
-                }
-
-                SelectionBinding.OnItemsChanging(Items);
                 return Items.ToList();
             }
         }
@@ -162,14 +155,47 @@ namespace Quantum.UIComponents
 
 
         /// <summary>
-        /// Invalidates this children of this list view model, updating the UI.
+        /// Invalidates the children of this list view model, updating the UI.
         /// </summary>
         public void InvalidateChildren()
         {
-            RaisePropertyChanged(nameof(Children));
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
+            {
+                InvalidateChildrenInternal();
+                RaisePropertyChanged(nameof(Children));
+            }));
         }
 
 
+        /// <summary>
+        /// Invalidates the children of this list view model internally, without updating the UI.
+        /// </summary>
+        private void InvalidateChildrenInternal()
+        {
+            if (!HasBoundSelection)
+            {
+                SetDefaultSelectionBinding();
+            }
+
+            foreach (var item in Items)
+            {
+                PropertyChangedEventManager.RemoveHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
+                item.TearDown();
+            }
+
+            items.Clear();
+
+            foreach (var item in CreateContentItems())
+            {
+                item.Initialize(this);
+                item.IsSelected = SelectionBinding.IsContainedInSelection(item);
+                PropertyChangedEventManager.AddHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
+
+                items.Add(item);
+            }
+
+            SelectionBinding.OnItemsChanging(Items);
+        }
 
 
 

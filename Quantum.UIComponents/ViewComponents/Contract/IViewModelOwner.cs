@@ -19,6 +19,20 @@ namespace Quantum.UIComponents
 
 
         /// <summary>
+        /// Gets a value indicating if the children of this view model owner have been initialized.
+        /// The children of any view model owner have lazy loading, therefore, they will not be created until called upon : 
+        /// the first time the Children property getter is called, or when InvalidateChildren is called.
+        /// </summary>
+        bool AreChildrenInitialized { get; }
+
+
+        /// <summary>
+        /// Returns the icon manager used by this view model item owner to determine the icon values for it's children.
+        /// </summary>
+        IIconManagerService IconManager { get; }
+
+
+        /// <summary>
         /// A collection of all the items of this view model owner.
         /// </summary>
         IEnumerable<IViewModelItem> Items { get; }
@@ -60,11 +74,5 @@ namespace Quantum.UIComponents
         /// Invalidates the children of this view model item.
         /// </summary>
         void InvalidateChildren();
-        
-
-        /// <summary>
-        /// Returns the icon manager used by this view model item owner to determine the icon values for it's children.
-        /// </summary>
-        IIconManagerService IconManager { get; }
     }
 }
