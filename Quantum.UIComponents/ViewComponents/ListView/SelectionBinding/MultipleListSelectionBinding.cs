@@ -12,31 +12,32 @@ using System.Windows.Threading;
 
 namespace Quantum.UIComponents
 {
-    internal class MultipleTreeSelectionBinding<T> : ITreeSelectionBinding
+    internal class MultipleListSelectionBinding<T> : IListSelectionBinding
     {
-        public ITreeViewModel Owner { get; private set; }
+        public IListViewModel Owner { get; private set; }
         public bool SyncItems { get; set; }
         public MultipleSelection<T> Selection { get; private set; }
         public bool IsInitialized { get; private set; }
         private Timer Timer;
         private Subscription SelectionSubscription;
-        private IList<ITreeViewModelItem> SelectionChangedItems = new List<ITreeViewModelItem>();
+        private IList<IListViewModelItem> SelectionChangedItems = new List<IListViewModelItem>();
 
         private Scope SelectionChangedScope;
 
-        ISelection ITreeSelectionBinding.BoundSelection => Selection;
+        ISelection IListSelectionBinding.BoundSelection => Selection;
 
-        public ITreeViewModelItem SelectedItem => SelectedItems.IsSingleElement() ? SelectedItems.Single() : null;
+        public IListViewModelItem SelectedItem => SelectedItems.IsSingleElement() ? SelectedItems.Single() : null;
 
-        private readonly IList<ITreeViewModelItem> selectedItems = new List<ITreeViewModelItem>();
-        public IEnumerable<ITreeViewModelItem> SelectedItems => selectedItems;
+        private readonly IList<IListViewModelItem> selectedItems = new List<IListViewModelItem>();
+        public IEnumerable<IListViewModelItem> SelectedItems => selectedItems;
 
-        public MultipleTreeSelectionBinding(MultipleSelection<T> selection)
+
+        public MultipleListSelectionBinding(MultipleSelection<T> selection)
         {
             Selection = selection;
         }
 
-        public void Initialize(ITreeViewModel viewModel)
+        public void Initialize(IListViewModel viewModel)
         {
             if (IsInitialized)
             {
@@ -61,7 +62,7 @@ namespace Quantum.UIComponents
             {
                 item.IsSelected = Selection.Value.Contains((T)item.Value);
             }
-            
+
             IsInitialized = true;
         }
 
@@ -91,19 +92,18 @@ namespace Quantum.UIComponents
 
             IsInitialized = false;
         }
-        
-        public bool IsContainedInSelection(ITreeViewModelItem item)
+
+
+        public bool IsContainedInSelection(IListViewModelItem item)
         {
             return Selection.Value.Contains((T)item.Value);
         }
 
 
 
-
         private void OnSelectionChanged()
         {
-            if (SelectionChangedScope.IsInScope)
-            {
+            if (SelectionChangedScope.IsInScope) {
                 return;
             }
 
@@ -112,7 +112,8 @@ namespace Quantum.UIComponents
                 using (SelectionChangedScope.BeginScope())
                 {
                     selectedItems.Clear();
-                    foreach (var item in Owner.Items) {
+                    foreach (var item in Owner.Items)
+                    {
                         item.IsSelected = IsContainedInSelection(item);
                         if(item.IsSelected) {
                             selectedItems.Add(item);
@@ -122,9 +123,7 @@ namespace Quantum.UIComponents
             }));
         }
 
-
-
-        public void OnItemSelectionStatusChanged(ITreeViewModelItem viewModelItem)
+        public void OnItemSelectionStatusChanged(IListViewModelItem viewModelItem)
         {
             if (SelectionChangedScope.IsInScope) {
                 return;
@@ -145,37 +144,30 @@ namespace Quantum.UIComponents
         {
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new Action(() =>
             {
-                using (SelectionChangedScope.BeginScope())
-                {
-                    using (Selection.BeginBlockingNotifications())
-                    {
-                        foreach (var item in SelectionChangedItems)
-                        {
-                            if(item.IsSelected && !SelectedItems.Contains(item))
-                            {
+                using (SelectionChangedScope.BeginScope()) {
+                    using (Selection.BeginBlockingNotifications()) {
+
+                        foreach(var item in SelectionChangedItems) {
+
+                            if(item.IsSelected && !SelectedItems.Contains(item)) {
                                 selectedItems.Add(item);
                             }
 
-                            else if(!item.IsSelected && SelectedItems.Contains(item))
-                            {
+                            else if(!item.IsSelected && SelectedItems.Contains(item)) {
                                 selectedItems.Remove(item);
                             }
 
-                            if (item.IsSelected && !IsContainedInSelection(item))
-                            {
+                            if(item.IsSelected && !IsContainedInSelection(item)) {
                                 Selection.Add((T)item.Value);
                             }
 
-                            else if (!item.IsSelected && IsContainedInSelection(item))
-                            {
+                            else if(!item.IsSelected && IsContainedInSelection(item)) {
                                 Selection.Remove((T)item.Value);
                             }
                         }
 
-                        if (SyncItems)
-                        {
-                            foreach (var item in Owner.Items.Where(o => !o.IsSelected && IsContainedInSelection(o)))
-                            {
+                        if(SyncItems) {
+                            foreach(var item in Owner.Items.Where(o => !o.IsSelected && IsContainedInSelection(o))) {
                                 item.IsSelected = true;
                                 selectedItems.Add(item);
                             }
@@ -188,10 +180,9 @@ namespace Quantum.UIComponents
 
             }));
         }
+        
 
-
-
-        public void OnItemCreated(ITreeViewModelItem viewModelItem)
+        public void OnItemCreated(IListViewModelItem viewModelItem)
         {
             if(IsContainedInSelection(viewModelItem)) {
                 using (SelectionChangedScope.BeginScope()) {
@@ -201,7 +192,7 @@ namespace Quantum.UIComponents
             }
         }
 
-        public void OnItemDisposed(ITreeViewModelItem viewModelItem)
+        public void OnItemDisposed(IListViewModelItem viewModelItem)
         {
             if(SelectedItems.Contains(viewModelItem)) {
                 using (SelectionChangedScope.BeginScope()) {

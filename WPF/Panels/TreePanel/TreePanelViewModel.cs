@@ -44,7 +44,7 @@ namespace WPF.Panels
 
         public void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
-            InvalidateChildren();
+            //InvalidateChildren();
             int b = 3;
         }
         

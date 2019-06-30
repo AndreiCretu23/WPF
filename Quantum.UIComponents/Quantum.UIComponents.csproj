@@ -231,9 +231,11 @@
     <Compile Include="ViewComponents\Contract\IViewModelOwner.cs" />
     <Compile Include="ViewComponents\ListView\IListViewModelItem.cs" />
     <Compile Include="ViewComponents\ListView\IListViewModel.cs" />
-    <Compile Include="ViewComponents\ListView\ListSelectionBinding.cs" />
     <Compile Include="ViewComponents\ListView\ListViewModel.cs" />
     <Compile Include="ViewComponents\ListView\ListViewModelItem.cs" />
+    <Compile Include="ViewComponents\ListView\SelectionBinding\IListSelectionBinding.cs" />
+    <Compile Include="ViewComponents\ListView\SelectionBinding\MultipleListSelectionBinding.cs" />
+    <Compile Include="ViewComponents\ListView\SelectionBinding\SingleListSelectionBinding.cs" />
     <Compile Include="ViewComponents\TreeView\ExpansionRetainers\ItemPathExpansionRetainer.cs" />
     <Compile Include="ViewComponents\TreeView\ExpansionRetainers\ReferencePathExpansionRetainer.cs" />
     <Compile Include="ViewComponents\TreeView\ITreeViewModel.cs" />

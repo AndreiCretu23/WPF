@@ -16,7 +16,7 @@ namespace Quantum.UIComponents
         
 
         /// <summary>
-        /// Gets selection the tree view model items are bound to.
+        /// Gets the selection the tree view model items are bound to.
         /// </summary>
         ISelection BoundSelection { get; }
 

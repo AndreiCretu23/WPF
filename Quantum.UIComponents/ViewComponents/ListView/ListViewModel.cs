@@ -172,8 +172,7 @@ namespace Quantum.UIComponents
         /// </summary>
         private void InvalidateChildrenInternal()
         {
-            if (!HasBoundSelection)
-            {
+            if (!HasBoundSelection) {
                 SetDefaultSelectionBinding();
             }
 
@@ -181,6 +180,7 @@ namespace Quantum.UIComponents
             {
                 PropertyChangedEventManager.RemoveHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
                 item.TearDown();
+                SelectionBinding.OnItemDisposed(item);
             }
 
             items.Clear();
@@ -188,13 +188,10 @@ namespace Quantum.UIComponents
             foreach (var item in CreateContentItems())
             {
                 item.Initialize(this);
-                item.IsSelected = SelectionBinding.IsContainedInSelection(item);
                 PropertyChangedEventManager.AddHandler(item, ItemSelectionChanged, nameof(item.IsSelected));
-
+                SelectionBinding.OnItemCreated(item);
                 items.Add(item);
             }
-
-            SelectionBinding.OnItemsChanging(Items);
         }
 
 
