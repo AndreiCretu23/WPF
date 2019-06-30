@@ -20,7 +20,7 @@ namespace Quantum.UIComponents
 
 
         /// <summary>
-        /// Initializes this list view model item in the context of the specified owner.
+        /// Initializes this list view model item instance in the context of the specified owner.
         /// </summary>
         /// <param name="owner"></param>
         void Initialize(IListViewModel owner);

@@ -53,6 +53,7 @@
     <Compile Include="Math\RectangleExtensions.cs" />
     <Compile Include="Misc\GenericComparer.cs" />
     <Compile Include="Misc\ManualObservableCollection.cs" />
+    <Compile Include="ObjectExtensions\ListExtensions.cs" />
     <Compile Include="Threading\DelayedExecutor.cs" />
     <Compile Include="Events\WeakEventListener.cs" />
     <Compile Include="Events\WeakEventListenerManager.cs" />

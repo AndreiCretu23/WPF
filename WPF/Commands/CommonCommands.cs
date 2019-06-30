@@ -645,7 +645,7 @@ namespace WPF.Commands
                 };
             }
         }
-
+        
 
         public IGlobalCommand HiddenCommand
         {

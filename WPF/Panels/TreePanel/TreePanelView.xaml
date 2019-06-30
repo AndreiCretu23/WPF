@@ -8,28 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
 
-        <controls:TreeView ItemsSource="{Binding Children}"
-                           AllowMultipleSelection="False">
-            <controls:TreeView.ItemContainerStyle>
-                <Style BasedOn="{StaticResource {x:Type controls:TreeViewItem}}" TargetType="{x:Type controls:TreeViewItem}">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <CheckBox/>
-                                    <Border x:Name="PART_CustomContentHost"
-                                            Margin="3,0,0,0" 
-                                            Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TreeViewItem}}}">
-                                        <TextBlock Text="{Binding NumberDisplay}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="ItemsSource" Value="{Binding Children}"/>
-                </Style>
-            </controls:TreeView.ItemContainerStyle>
-        </controls:TreeView>
+        <controls:TreeView Style="{StaticResource TreeViewComponent}"/>
 
     </Grid>
 </UserControl>

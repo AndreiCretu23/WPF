@@ -72,6 +72,9 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
+            <Trigger Property="AllowMultipleSelection" Value="False">
+                <Setter Property="p:FrameworkElement.SelectionBox" Value="{x:Null}"/>
+            </Trigger>
         </Style.Triggers>
         
     </Style>

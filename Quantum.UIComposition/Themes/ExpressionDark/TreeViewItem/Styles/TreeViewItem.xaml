@@ -75,6 +75,7 @@
     </Style>
     
     <Style TargetType="{x:Type controls:TreeViewItem}">
+
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -141,9 +142,23 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedBackground}"/>
-                        </Trigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TreeView}}}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedUnfocusedBackground}"/>
+                        </MultiDataTrigger>
+                        
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="True"/>
+                                <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TreeView}}}" Value="True"/>
+                            </MultiDataTrigger.Conditions>
+
+                            <Setter Property="Background" Value="{StaticResource TreeViewItem_SelectedFocusedBackground}"/>
+                        </MultiDataTrigger>
                     </ControlTemplate.Triggers>
                     
                 </ControlTemplate>

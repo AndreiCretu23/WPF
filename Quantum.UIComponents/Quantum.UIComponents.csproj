@@ -234,6 +234,16 @@
     <Compile Include="ViewComponents\ListView\ListSelectionBinding.cs" />
     <Compile Include="ViewComponents\ListView\ListViewModel.cs" />
     <Compile Include="ViewComponents\ListView\ListViewModelItem.cs" />
+    <Compile Include="ViewComponents\TreeView\ExpansionRetainers\ItemPathExpansionRetainer.cs" />
+    <Compile Include="ViewComponents\TreeView\ExpansionRetainers\ReferencePathExpansionRetainer.cs" />
+    <Compile Include="ViewComponents\TreeView\ITreeViewModel.cs" />
+    <Compile Include="ViewComponents\TreeView\ITreeViewModelItem.cs" />
+    <Compile Include="ViewComponents\TreeView\ExpansionRetainers\TreeExpansionRetainer.cs" />
+    <Compile Include="ViewComponents\TreeView\SelectionBinding\ITreeSelectionBinding.cs" />
+    <Compile Include="ViewComponents\TreeView\SelectionBinding\MultipleTreeSelectionBinding.cs" />
+    <Compile Include="ViewComponents\TreeView\SelectionBinding\SingleTreeSelectionBinding.cs" />
+    <Compile Include="ViewComponents\TreeView\TreeViewModel.cs" />
+    <Compile Include="ViewComponents\TreeView\TreeViewModelItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -299,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ViewComponents\ListView\ListViewComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewComponents\TreeView\TreeViewComponent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

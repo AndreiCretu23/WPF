@@ -47,6 +47,7 @@ namespace WPF
     
     public class SelectedNumber : SingleSelection<int>
     {
+        public SelectedNumber() : base(0) { }
     }
     
 }

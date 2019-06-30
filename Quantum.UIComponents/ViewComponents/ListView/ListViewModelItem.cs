@@ -7,7 +7,7 @@ namespace Quantum.UIComponents
     /// <summary>
     /// Represents the basic data context model of a list item.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of the value associated with this list view model item.</typeparam>
     public class ListViewModelItem<T> : ObservableObject, IListViewModelItem
     {
         
@@ -18,7 +18,7 @@ namespace Quantum.UIComponents
         
         
         /// <summary>
-        /// Gets the 
+        /// Gets the type of the value this list view model item is associated with.
         /// </summary>
         public Type ValueType { get { return typeof(T); } }
 
@@ -37,7 +37,7 @@ namespace Quantum.UIComponents
 
         private bool isSelected = false;
         /// <summary>
-        /// A value indicating whether this ListViewModelItem is selected or not.
+        /// Gets or sets a value indicating whether this list view model item is selected or not.
         /// </summary>
         public bool IsSelected
         {
@@ -54,13 +54,13 @@ namespace Quantum.UIComponents
         
 
         /// <summary>
-        /// Gets the header of this ListViewModelItem instance provided by the header provider lambda expression.
+        /// Gets the header of this ListViewModelItem instance provided by the value-dependant header provider lambda expression.
         /// </summary>
         public string Header { get { return HeaderGetter?.Invoke(Value) ?? typeof(T).Name; } }
         
 
         /// <summary>
-        /// Gets the Uri path of the icon associated with this list view model item provided by the icon provider lambda expression.
+        /// Gets the Uri path of the icon associated with this list view model item provided by the value-dependant icon provider lambda expression.
         /// </summary>
         public string Icon { get { return IconGetter?.Invoke(Value) ?? FallbackIcon; } }
 
@@ -72,7 +72,7 @@ namespace Quantum.UIComponents
         
 
         /// <summary>
-        /// Gets or sets a value dependants lambda expression used to determine the header of this list view model item.
+        /// Gets or sets a value-dependant lambda expression used to determine the resource-path of the icon of this list view model item.
         /// </summary>
         public Func<T, string> IconGetter { get; set; }
 

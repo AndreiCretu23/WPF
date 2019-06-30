@@ -154,7 +154,7 @@ namespace Quantum.UIComponents
 
         /// <summary>
         /// Returns the children of this list view model.
-        /// This method mult be overriden in the actual view model implementation and is responsible 
+        /// This method must be overriden in the actual view model implementation and is responsible 
         /// for providing the actual content(children) of the list view model.
         /// </summary>
         /// <returns></returns>

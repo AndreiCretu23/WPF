@@ -103,7 +103,8 @@
     <SolidColorBrush x:Key="TreeView_Background" Color="#FF323232" Opacity="1"/>
     <SolidColorBrush x:Key="TreeView_BorderBrush" Color="#FFACACAC" Opacity="1"/>
     <SolidColorBrush x:Key="TreeViewItem_EditableTextBox_Background" Color="#FF323232" Opacity="1"/>
-    <SolidColorBrush x:Key="TreeViewItem_SelectedBackground" Color="#FF2398FF" Opacity="1"/>
+    <SolidColorBrush x:Key="TreeViewItem_SelectedFocusedBackground" Color="#FF2398FF" Opacity="1"/>
+    <SolidColorBrush x:Key="TreeViewItem_SelectedUnfocusedBackground" Color="#AA868484" Opacity="1"/>
     <SolidColorBrush x:Key="TreeViewItemExpander_Background" Color="#FFBDBDBD" Opacity="1"/>
 
     

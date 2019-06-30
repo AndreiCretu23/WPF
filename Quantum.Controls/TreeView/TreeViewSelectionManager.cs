@@ -36,11 +36,13 @@ namespace Quantum.Controls
                 }
 
                 SelectedItemsInternal.Add(item);
-                item.Focus();
+                if(TreeView.IsKeyboardFocusWithin) {
+                    item.Focus();
+                }
             }
             else {
                 SelectedItemsInternal.Remove(item);
-                if(HasSelection && !IsMultipleSelection) {
+                if(HasSelection && !IsMultipleSelection && TreeView.IsKeyboardFocusWithin) {
                     SelectedItemsInternal.Single().Focus();
                 }
             }

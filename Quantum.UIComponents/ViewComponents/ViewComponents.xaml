@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ListView/ListBoxComponent.xaml"/>
         <ResourceDictionary Source="ListView/ListViewComponent.xaml"/>
+        <ResourceDictionary Source="TreeView/TreeViewComponent.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

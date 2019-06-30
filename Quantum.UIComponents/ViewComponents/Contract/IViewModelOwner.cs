@@ -12,6 +12,11 @@ namespace Quantum.UIComponents
     /// </summary>
     public interface IViewModelOwner : IViewModel
     {
+        /// <summary>
+        /// Gets a value indicating whether or not multiple selection is allowed for the items of this view model owner.
+        /// </summary>
+        bool AllowMultipleSelection { get; }
+
 
         /// <summary>
         /// A collection of all the items of this view model owner.
