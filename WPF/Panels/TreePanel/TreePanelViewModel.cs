@@ -26,8 +26,8 @@ namespace WPF.Panels
             : base(initSvc)
         {
             ExpansionRetainingStrategy = TreeExpansionRetainingStrategy.ItemPath;
-            // AllowMultipleSelection = false;
-            // SetSelectionBinding(SelectedNumber);
+            AllowMultipleSelection = false;
+            SetSelectionBinding(SelectedNumber);
 
             Wrappers = Enumerable.Range(1, 999).Select(o => new Wrapper { Value = o }).ToList();
 

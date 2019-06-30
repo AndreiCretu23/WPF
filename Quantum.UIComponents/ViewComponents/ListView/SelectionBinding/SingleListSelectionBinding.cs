@@ -114,11 +114,11 @@ namespace Quantum.UIComponents
                             if(SelectedItem != null) {
                                 SelectedItem.IsSelected = false;
                             }
-                        }
 
-                        item.IsSelected = true;
-                        SelectedItem = item;
-                        break;
+                            item.IsSelected = true;
+                            SelectedItem = item;
+                            break;
+                        }
                     }
                 }
             }));
